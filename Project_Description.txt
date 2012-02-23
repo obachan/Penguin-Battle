@@ -1,0 +1,13 @@
+Name: Ruoyi Pu
+UTCS ID: ruoyi
+UTEID: rp23895
+
+I began with the MinimumOgre framework taken from the Ogre Wiki.
+Then I removed the Ogrehead that was originally in the file and added a sphere at (0,0,0) using the sphere mesh that was originally included in the Sample folder.
+To create the box surrounding the sphere, I used 6 planes.
+In order to make the ball move I generated a random velocity vector and once the ball hit the wall the velocity vector was reflected across the normal of the plane that the ball hit.
+
+Extra Features:
+I also added texture to the walls of the box and also to the ball.
+In addition to the different textures, I also colored the ball a metallic grey and a plastic blue color.
+Every time the ball hits a wall and bounces off, the color/texture of the ball changes.
