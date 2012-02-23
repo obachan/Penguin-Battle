@@ -1,0 +1,11 @@
+Name: Ruoyi Pu
+UTCS ID: ruoyi
+UTEID: rp32895
+
+To Build: Type in "./buildit" in the main directory
+To Run: Type in "./Project1" in the main directory
+		Ogre should then ask for a renderer, which should be OpenGL
+
+The source files are MinimumOgre.cpp and Minimum Ogre.h.
+
+The project description file is called Project_Description.txt.
