@@ -1,4 +1,4 @@
-Project1-main.o: main.cpp OgreDemo.hpp OgreFramework.hpp \
+Project1-OgreDemo.o: OgreDemo.cpp OgreDemo.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
