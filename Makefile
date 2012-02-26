@@ -101,8 +101,6 @@ AUTOMAKE = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CEGUI_CFLAGS = -I/u/ruoyi/CEGUI-0.7.6/include -I/u/ruoyi/CEGUI-0.7.6/include/CEGUI  
-CEGUI_LIBS = -L/u/ruoyi/CEGUI-0.7.6/lib -lCEGUIBase  
 CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
