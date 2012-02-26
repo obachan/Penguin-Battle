@@ -23,6 +23,8 @@
 #include <OISMouse.h>
  
 #include <SdkTrays.h>
+#include "Physics.hpp"
+
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -61,6 +63,9 @@ public:
 	Ogre::Entity*				_objSphereEntity;
 	Ogre::SceneNode*			_objSphereNode;
 	Ogre::Vector3				sphere_TranslateVector;
+	PhysicsWrapper*				physics;
+
+
  
 private:
 	OgreFramework(const OgreFramework&);

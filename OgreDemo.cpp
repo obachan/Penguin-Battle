@@ -24,7 +24,7 @@ void DemoApp::startDemo()
 	m_bShutdown = false;
  
 	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Demo initialized!");
- 
+
 	setupDemoScene();
 	runDemo();
 }
@@ -149,7 +149,7 @@ void DemoApp::runDemo()
  
 			OgreFramework::getSingletonPtr()->m_pKeyboard->capture();
 			OgreFramework::getSingletonPtr()->m_pMouse->capture();
- 
+ 			
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
  

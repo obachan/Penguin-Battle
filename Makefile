@@ -53,8 +53,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-OgreDemo.$(OBJEXT) \
-	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-Physics.$(OBJEXT) \
+	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
+	Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -100,6 +101,8 @@ AUTOMAKE = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
+CEGUI_CFLAGS = -I/u/ruoyi/CEGUI-0.7.6/include -I/u/ruoyi/CEGUI-0.7.6/include/CEGUI  
+CEGUI_LIBS = -L/u/ruoyi/CEGUI-0.7.6/lib -lCEGUIBase  
 CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
@@ -214,10 +217,10 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_SOURCES = Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 EXTRA_DIST = buildit makeit
@@ -333,6 +336,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
+include ./$(DEPDIR)/Project1-Physics.Po
 include ./$(DEPDIR)/Project1-main.Po
 
 .cpp.o:
@@ -355,6 +359,20 @@ include ./$(DEPDIR)/Project1-main.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-Physics.o: Physics.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.o -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
+	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
+#	source='Physics.cpp' object='Project1-Physics.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
+
+Project1-Physics.obj: Physics.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.obj -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
+#	source='Physics.cpp' object='Project1-Physics.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
 
 Project1-OgreDemo.o: OgreDemo.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreDemo.o -MD -MP -MF $(DEPDIR)/Project1-OgreDemo.Tpo -c -o Project1-OgreDemo.o `test -f 'OgreDemo.cpp' || echo '$(srcdir)/'`OgreDemo.cpp

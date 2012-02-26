@@ -31,6 +31,8 @@ OgreFramework::OgreFramework()
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
 {
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
+	
+	physics = new PhysicsWrapper();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
 	m_pLog->setDebugOutputEnabled(true);
@@ -204,10 +206,17 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
  
 	getInput();
 	moveCamera();
- 
-	_objSphereNode->translate(timeSinceLastFrame * sphere_TranslateVector);
 
-	Ogre::Vector3 sphere_pos = _objSphereNode->getPosition();
+	if (timeSinceLastFrame!=0)
+	{
+ 		physics->stepPhysics(timeSinceLastFrame, 10);
+	
+		_objSphereNode->setPosition(physics->getBallPosition());
+	}
+	
+	//_objSphereNode->translate(timeSinceLastFrame * sphere_TranslateVector);
+
+	/*Ogre::Vector3 sphere_pos = _objSphereNode->getPosition();
 	double radius = 10.0f;
 
 	if(sphere_pos.x + radius >= 50.0){
@@ -236,10 +245,12 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 		sphere_TranslateVector.z = -sphere_TranslateVector.z;
 		sphere_pos.z = -50+radius;
 	}
-	_objSphereNode->setPosition(sphere_pos);
+	_objSphereNode->setPosition(sphere_pos);*/
 
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
         m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+
+	
 }
 
 void OgreFramework::moveCamera()
