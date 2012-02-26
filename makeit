@@ -1,6 +1,6 @@
 #!/bin/sh
 export BULLET_INSTALL_DIR=./bullet-2.79
-export CEGUI_INSTALL_DIR=/u/ruoyi/CEGUI-0.7.6
-export LD_RUN_PATH=${BULLET_INSTALL_DIR}/lib:${CEGUI_INSTALL_DIR}/lib
+#export CEGUI_INSTALL_DIR=/u/ruoyi/CEGUI-0.7.6
+export LD_RUN_PATH=${BULLET_INSTALL_DIR}/lib
 make clean
 make
