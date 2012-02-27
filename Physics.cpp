@@ -79,7 +79,7 @@ void PhysicsWrapper::initializeObjects()
 	back = new btStaticPlaneShape(btVector3(0,0,-1),-50);
 	front = new btStaticPlaneShape(btVector3(0,0,1),-50);
  
-        ball = new btSphereShape(10);
+        ball = new btSphereShape(1);
  
  
         btDefaultMotionState* bottomMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
@@ -92,30 +92,35 @@ void PhysicsWrapper::initializeObjects()
 	btDefaultMotionState* topMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));	
 	btRigidBody::btRigidBodyConstructionInfo
                 topRigidBodyCI(0,topMotionState,top,btVector3(0,0,0));
+	topRigidBodyCI.m_restitution = 1;
 	topRigidBody = new btRigidBody(topRigidBodyCI);
         dynamicsWorld->addRigidBody(topRigidBody);
 
 	btDefaultMotionState* leftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
 	btRigidBody::btRigidBodyConstructionInfo
                 leftRigidBodyCI(0,leftMotionState,left,btVector3(0,0,0));
+	leftRigidBodyCI.m_restitution = 1;
 	leftRigidBody = new btRigidBody(leftRigidBodyCI);
         dynamicsWorld->addRigidBody(leftRigidBody);
 
 	btDefaultMotionState* rightMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
 	btRigidBody::btRigidBodyConstructionInfo
                 rightRigidBodyCI(0,rightMotionState,right,btVector3(0,0,0));
+	rightRigidBodyCI.m_restitution = 1;
 	rightRigidBody = new btRigidBody(rightRigidBodyCI);
         dynamicsWorld->addRigidBody(rightRigidBody);
 
 	btDefaultMotionState* backMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
 	btRigidBody::btRigidBodyConstructionInfo
                 backRigidBodyCI(0,backMotionState,back,btVector3(0,0,0));
+	backRigidBodyCI.m_restitution = 1;
 	backRigidBody = new btRigidBody(backRigidBodyCI);
         dynamicsWorld->addRigidBody(backRigidBody);
 
 	btDefaultMotionState* frontMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
 	btRigidBody::btRigidBodyConstructionInfo
                 frontRigidBodyCI(0,frontMotionState,front,btVector3(0,0,0));
+	frontRigidBodyCI.m_restitution = 1;
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
         dynamicsWorld->addRigidBody(frontRigidBody);
  
@@ -125,8 +130,9 @@ void PhysicsWrapper::initializeObjects()
         btVector3 ballInertia(0,0,0);
         ball->calculateLocalInertia(mass,ballInertia);
         btRigidBody::btRigidBodyConstructionInfo ballRigidBodyCI(mass,ballMotionState,ball,ballInertia);
-	ballRigidBodyCI.m_restitution = 2;
+	ballRigidBodyCI.m_restitution = 0.712f;
         ballRigidBody = new btRigidBody(ballRigidBodyCI);
+	ballRigidBody->setLinearVelocity(btVector3(10,0,0));
         dynamicsWorld->addRigidBody(ballRigidBody);
 }
 

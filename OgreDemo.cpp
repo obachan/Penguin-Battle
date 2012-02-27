@@ -112,7 +112,7 @@ void DemoApp::setupDemoScene()
 	entFront->setMaterialName("Examples/Rockwall");
 
 	// Create Sphere
-	createSphere(3.5f, 10.0f, -25.0f, 0.1f, "Sphere_-X");
+	createSphere(3.5f, 10.0f, -25.0f, 0.01f, "Sphere_-X");
 /*
 	Ogre::Vector3 _v3SpherePosition = Ogre::Vector3(_rCoordX, _rCoordY, _rCoordZ);
 	Ogre::Vector3 _v3SphereScaleFactor = Ogre::Vector3(_rScaleFactor, _rScaleFactor, _rScaleFactor);
