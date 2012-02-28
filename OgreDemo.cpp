@@ -111,6 +111,13 @@ void DemoApp::setupDemoScene()
 	_frontNode->setPosition(0, 0, 50);
 	entFront->setMaterialName("Examples/Rockwall");
 
+	Ogre::Entity* paddleEntity = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("paddle", "cube.mesh");
+	Ogre::SceneNode *paddleNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
+	paddleNode->attachObject(paddleEntity);
+	paddleNode->setScale(0.1f, 0.1f, 0.005f);
+	paddleNode->setPosition(0,0,25);
+	paddleEntity->setMaterialName("Examples/Fish");
+
 
 	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(ball->ballRigidBody);
