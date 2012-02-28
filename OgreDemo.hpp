@@ -22,8 +22,9 @@ public:
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
 
 	Ball *ball;
+	Room *room;
 private:
-        void setupDemoScene();
+    void setupDemoScene();
 	void runDemo();
  
 	void createSphere(Ogre::Real _rCoordX, Ogre::Real _rCoordY, Ogre::Real _rCoordZ,

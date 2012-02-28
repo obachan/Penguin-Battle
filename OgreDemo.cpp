@@ -34,6 +34,7 @@ void DemoApp::startDemo()
 void DemoApp::setupDemoScene()
 {
 
+	// Sets global world conditions
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox");
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("Light")->setPosition(50, 50, 50); 
@@ -41,79 +42,18 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-	/*
-	m_pOgreHeadEntity = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("OgreHeadEntity", "ogrehead.mesh");
-	m_pOgreHeadNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode("OgreHeadNode");
-	m_pOgreHeadNode->attachObject(m_pOgreHeadEntity);
-	*/
-
-	// Bottom Plane
-	Ogre::Plane bottom_plane(Ogre::Vector3::UNIT_Y, -50);
-    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        bottom_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::Entity* entGround = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("GroundEntity", "ground");
-    OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
-	entGround->setMaterialName("Examples/Rockwall");
-
-	// Top Plane
-	Ogre::Plane top_plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("top", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        top_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::SceneNode *_topNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entTop = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("TopEntity", "top");
-    _topNode->attachObject(entTop);
-	_topNode->rotate(Ogre::Vector3::UNIT_X,Ogre::Degree(180));
-	_topNode->setPosition(0, 50, 0);
-	entTop->setMaterialName("Examples/Rockwall");
-
-
-	// Left Plane
-	Ogre::Plane left_plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        left_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::SceneNode *_leftNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entLeft = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("LeftEntity", "left");
-    _leftNode->attachObject(entLeft);
-	_leftNode->roll(Ogre::Degree(90));
-	_leftNode->setPosition(50, 0, 0);
-	entLeft->setMaterialName("Examples/Rockwall");
-
-	// Right Plane
-	Ogre::Plane right_plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        right_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::SceneNode *_rightNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entRight = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("RightEntity", "right");
-    _rightNode->attachObject(entRight);
-	_rightNode->roll(Ogre::Degree(-90));
-	_rightNode->setPosition(-50, 0, 0);
-	entRight->setMaterialName("Examples/Rockwall");
-
-	// Back Plane
-	Ogre::Plane back_plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("back", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        back_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::SceneNode *_backNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entBack = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("BackEntity", "back");
-    _backNode->attachObject(entBack);
-	_backNode->pitch(Ogre::Degree(90));
-	_backNode->setPosition(0, 0, -50);
-	entBack->setMaterialName("Examples/Rockwall");
-
-	// Front Plane
-	Ogre::Plane front_plane(Ogre::Vector3::UNIT_Y, 0);
-    Ogre::MeshManager::getSingleton().createPlane("front", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        front_plane, 100, 100, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-    Ogre::SceneNode *_frontNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entFront = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("FrontEntity", "front");
-    _frontNode->attachObject(entFront);
-	_frontNode->pitch(Ogre::Degree(-90));
-	_frontNode->setPosition(0, 0, 50);
-	entFront->setMaterialName("Examples/Rockwall");
-
-
+	// Create Ball
 	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(ball->ballRigidBody);
+
+	// Create Room
+	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->frontRigidBody);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->backRigidBody);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->rightRigidBody);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->leftRigidBody);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->topRigidBody);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->bottomRigidBody);
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -185,23 +125,3 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 	return true;
 }
- 
-//|||||||||||||||||||||||||||||||||||||||||||||||
-/*
-void DemoApp::createSphere(Ogre::Real _rCoordX, Ogre::Real _rCoordY, Ogre::Real _rCoordZ, Ogre::Real _rScaleFactor, Ogre::String _strObjName)
-{
-	Ogre::Vector3 _v3SpherePosition = Ogre::Vector3(_rCoordX, _rCoordY, _rCoordZ);
-	Ogre::Vector3 _v3SphereScaleFactor = Ogre::Vector3(_rScaleFactor, _rScaleFactor, _rScaleFactor);
-
-	OgreFramework::getSingletonPtr()->_objSphereEntity = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity(_strObjName, "sphere.mesh");
-	OgreFramework::getSingletonPtr()->_objSphereNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode(_strObjName);
-	OgreFramework::getSingletonPtr()->_objSphereNode->attachObject(OgreFramework::getSingletonPtr()->_objSphereEntity);
-
-	OgreFramework::getSingletonPtr()->_objSphereNode->setPosition(_v3SpherePosition);
-	OgreFramework::getSingletonPtr()->_objSphereNode->setScale(_v3SphereScaleFactor);
-
-
-	OgreFramework::getSingletonPtr()->_objSphereEntity->setMaterialName("Examples/SphereMappedRustySteel");
-
-}
-*/

@@ -41,6 +41,33 @@ private:
 
 	Ogre::Entity* 		_objSphereEntity;
 	Ogre::Vector3 		sphere_TranslateVector;
+	btDefaultMotionState* ballMotionState;
 
-	btCollisionShape* 	ball;
+	btCollisionShape* 	ball_collision_shape;
+};
+
+class Room
+{
+public:
+	Room(Ogre::SceneManager*);
+	~Room();
+
+	btRigidBody* frontRigidBody;
+	btRigidBody* backRigidBody;
+	btRigidBody* rightRigidBody;
+	btRigidBody* leftRigidBody;
+	btRigidBody* topRigidBody;
+	btRigidBody* bottomRigidBody;
+
+private:
+
+	void createRoom(Ogre::SceneManager*	);
+
+	btCollisionShape* bottom;
+	btCollisionShape* top;
+	btCollisionShape* left;
+	btCollisionShape* right;
+	btCollisionShape* back;
+	btCollisionShape* front;
+	btCollisionShape* ball;
 };
