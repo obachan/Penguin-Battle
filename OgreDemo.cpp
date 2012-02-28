@@ -42,6 +42,7 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+
 	// Create Ball
 	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(ball->ballRigidBody);
