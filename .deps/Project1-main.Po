@@ -850,8 +850,7 @@ Project1-main.o: main.cpp OgreDemo.hpp OgreFramework.hpp \
  /u/xty56/Desktop/Assignment-2/bullet-2.79/include/bullet/BulletDynamics/Vehicle/btWheelInfo.h \
  /u/xty56/Desktop/Assignment-2/bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  /u/xty56/Desktop/Assignment-2/bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h Controller.hpp \
- WorldObjects.hpp
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h WorldObjects.hpp
 
 OgreDemo.hpp:
 
@@ -2778,7 +2777,5 @@ Physics.hpp:
 /u/xty56/Desktop/Assignment-2/bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h:
-
-Controller.hpp:
 
 WorldObjects.hpp:
