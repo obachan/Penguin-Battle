@@ -24,7 +24,9 @@
  
 #include <SdkTrays.h>
 #include "Physics.hpp"
+#include "Controller.hpp"
 
+#include <iostream>
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -37,7 +39,7 @@ public:
 	bool initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener = 0, OIS::MouseListener *pMouseListener = 0);
 	void updateOgre(double timeSinceLastFrame);
 	void moveCamera();
-	void getInput();
+	void getCameraInput();
  
 	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
  
@@ -48,19 +50,22 @@ public:
 	bool mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id); 
 	bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
  
-	Ogre::Root*				m_pRoot;
+	Ogre::Root*					m_pRoot;
 	Ogre::SceneManager*			m_pSceneMgr;
 	Ogre::RenderWindow*			m_pRenderWnd;
 	Ogre::Camera*				m_pCamera;
 	Ogre::Viewport*				m_pViewport;
-	Ogre::Log*				m_pLog;
+	Ogre::Log*					m_pLog;
 	Ogre::Timer*				m_pTimer;
  
 	OIS::InputManager*			m_pInputMgr;
 	OIS::Keyboard*				m_pKeyboard;
-	OIS::Mouse*				m_pMouse;
+	OIS::Mouse*					m_pMouse;
 
 	PhysicsWrapper*				physics;
+	MyController*				controller;
+	
+	//Ogre::Vector3				m_TranslateVector;
 
  
 private:
@@ -68,16 +73,16 @@ private:
 	OgreFramework& operator= (const OgreFramework&);
  
 	OgreBites::SdkTrayManager*	        m_pTrayMgr;
-        Ogre::FrameEvent                        m_FrameEvent;
-	int					m_iNumScreenShots;
+    Ogre::FrameEvent                    m_FrameEvent;
+	int									m_iNumScreenShots;
  
-	bool					m_bShutDownOgre;
+	bool								m_bShutDownOgre;
  
-	Ogre::Vector3				m_TranslateVector;
-	Ogre::Real				m_MoveSpeed; 
-	Ogre::Degree				m_RotateSpeed; 
-	float					m_MoveScale; 
-	Ogre::Degree				m_RotScale;
+	Ogre::Vector3						m_TranslateVector;
+	Ogre::Real							m_MoveSpeed; 
+	Ogre::Degree						m_RotateSpeed; 
+	float								m_MoveScale; 
+	Ogre::Degree						m_RotScale;
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

@@ -79,6 +79,8 @@ public:
 
 	btRigidBody* paddleRigidBody;
 
+	void update(double);
+
 private:
 
 	void createPaddle(Ogre::SceneManager*);

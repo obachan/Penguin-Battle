@@ -24,8 +24,8 @@ OgreFramework::OgreFramework()
 	m_pKeyboard			= 0;
 	m_pMouse			= 0;
  
-        m_pTrayMgr                      = 0;
-        m_FrameEvent                    = Ogre::FrameEvent();
+    m_pTrayMgr                      = 0;
+    m_FrameEvent                    = Ogre::FrameEvent();
 }
 
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
@@ -33,6 +33,7 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
 	
 	physics = new PhysicsWrapper();
+	controller = new MyController();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
 	m_pLog->setDebugOutputEnabled(true);
@@ -124,6 +125,9 @@ OgreFramework::~OgreFramework()
 
 bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
+
+	// This code was initially here
+
 	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
 	{
 			m_bShutDownOgre = true;
@@ -170,7 +174,7 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
                         m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
                 }
 	}
- 
+
 	return true;
 }
 
@@ -204,7 +208,8 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
  
 	m_TranslateVector = Vector3::ZERO;
  
-	getInput();
+ 	// Get input for Camera
+	getCameraInput();
 	moveCamera();
 
 	if (timeSinceLastFrame!=0)
@@ -227,8 +232,9 @@ void OgreFramework::moveCamera()
 		m_pCamera->moveRelative(m_TranslateVector / 10);
 }
 
-void OgreFramework::getInput()
+void OgreFramework::getCameraInput()
 {
+
 	if(m_pKeyboard->isKeyDown(OIS::KC_A))
 		m_TranslateVector.x = -m_MoveScale;
  

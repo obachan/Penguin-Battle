@@ -16,6 +16,11 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr)
 	ball_collision_shape = new btSphereShape(1);
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
+    /*
+	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
+    std::cout << "Hello World" << std::endl;
+    std::cout << ball_collision_shape_test->getRadius() << std::endl;
+	*/
 
     btRigidBody::btRigidBodyConstructionInfo ballRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
 	ballRigidBodyCI.m_restitution = 0.712f;
@@ -224,7 +229,10 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 
 Paddle::~Paddle()
 {
+	delete paddleRigidBody->getMotionState();
+	delete paddleRigidBody;
 
+	delete paddle_collision_shape;
 }
 
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
@@ -235,4 +243,7 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 	paddleNode->setScale(0.1f, 0.1f, 0.005f);
 	paddleNode->setPosition(0,0,25);
 	paddleEntity->setMaterialName("WoodPallet");
+}
+
+void Paddle::update(double timeSinceLastFrame){
 }

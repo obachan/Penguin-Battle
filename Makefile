@@ -53,9 +53,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-WorldObjects.$(OBJEXT) \
-	Project1-Physics.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
-	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-Controller.$(OBJEXT) \
+	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
+	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
+	Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -215,10 +216,10 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_SOURCES = Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 EXTRA_DIST = buildit makeit
@@ -332,6 +333,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/Project1-Controller.Po
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
 include ./$(DEPDIR)/Project1-Physics.Po
@@ -358,6 +360,20 @@ include ./$(DEPDIR)/Project1-main.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-Controller.o: Controller.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.o -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
+	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
+#	source='Controller.cpp' object='Project1-Controller.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
+
+Project1-Controller.obj: Controller.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.obj -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
+#	source='Controller.cpp' object='Project1-Controller.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
 
 Project1-WorldObjects.o: WorldObjects.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp

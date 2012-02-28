@@ -85,10 +85,16 @@ void DemoApp::runDemo()
 			OgreFramework::getSingletonPtr()->m_pKeyboard->capture();
 			OgreFramework::getSingletonPtr()->m_pMouse->capture();
  			
+
+ 			// Our Team's main loop
+			processController();
+
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
 			ball->update(timeSinceLastFrame);
 
+
+			////////////////////////////////////////////////
 
 			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
  
@@ -129,4 +135,11 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
  
 	return true;
+}
+
+//||||||||||||||||||||||||||||||||||||||||||||||||
+
+void DemoApp::processController()
+{
+
 }

@@ -24,12 +24,12 @@ public:
 	Ball 	*ball;
 	Room 	*room;
 	Paddle	*paddle;
+	
 private:
     void setupDemoScene();
 	void runDemo();
- 
-	void createSphere(Ogre::Real _rCoordX, Ogre::Real _rCoordY, Ogre::Real _rCoordZ,
-						Ogre::Real _rScaleFactor, Ogre::String _strObjName);
+ 	
+ 	void processController();
 
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
