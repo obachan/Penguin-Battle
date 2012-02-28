@@ -21,8 +21,9 @@ public:
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
 
-	Ball *ball;
-	Room *room;
+	Ball 	*ball;
+	Room 	*room;
+	Paddle	*paddle;
 private:
     void setupDemoScene();
 	void runDemo();

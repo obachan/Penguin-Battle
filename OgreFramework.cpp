@@ -212,39 +212,6 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
  		physics->stepPhysics(timeSinceLastFrame, 10);
 	
 	}
-	
-	//_objSphereNode->translate(timeSinceLastFrame * sphere_TranslateVector);
-
-	/*Ogre::Vector3 sphere_pos = _objSphereNode->getPosition();
-	double radius = 10.0f;
-
-	if(sphere_pos.x + radius >= 50.0){
-		sphere_TranslateVector.x = -sphere_TranslateVector.x;
-		sphere_pos.x = 50.0-radius;
-	}
-	if(sphere_pos.x - radius <=-50.0){
-		sphere_TranslateVector.x = -sphere_TranslateVector.x;
-		sphere_pos.x = -50.0+radius;
-	}
-
-	if(sphere_pos.y + radius >= 50.0){
-		sphere_TranslateVector.y = -sphere_TranslateVector.y;
-		sphere_pos.y = 50.0-radius;
-	}
-	if(sphere_pos.y - radius <=-50.0){
-		sphere_TranslateVector.y = -sphere_TranslateVector.y;
-		sphere_pos.y = -50+radius;
-	}
-
-	if(sphere_pos.z + radius >= 50.0){
-		sphere_TranslateVector.z = -sphere_TranslateVector.z;
-		sphere_pos.z = 50-radius;
-	}
-	if(sphere_pos.z - radius <=-50.0){
-		sphere_TranslateVector.z = -sphere_TranslateVector.z;
-		sphere_pos.z = -50+radius;
-	}
-	_objSphereNode->setPosition(sphere_pos);*/
 
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
         m_pTrayMgr->frameRenderingQueued(m_FrameEvent);

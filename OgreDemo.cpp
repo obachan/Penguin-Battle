@@ -55,6 +55,10 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->leftRigidBody);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->topRigidBody);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->bottomRigidBody);
+
+	// Create Paddle
+	paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

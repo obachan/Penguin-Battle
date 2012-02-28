@@ -62,7 +62,6 @@ public:
 
 	PhysicsWrapper*				physics;
 
-
  
 private:
 	OgreFramework(const OgreFramework&);

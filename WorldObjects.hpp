@@ -61,7 +61,7 @@ public:
 
 private:
 
-	void createRoom(Ogre::SceneManager*	);
+	void createRoom(Ogre::SceneManager*, int, int);
 
 	btCollisionShape* bottom;
 	btCollisionShape* top;
@@ -69,5 +69,19 @@ private:
 	btCollisionShape* right;
 	btCollisionShape* back;
 	btCollisionShape* front;
-	btCollisionShape* ball;
+};
+
+class Paddle
+{
+public:
+	Paddle(Ogre::SceneManager*);
+	~Paddle();
+
+	btRigidBody* paddleRigidBody;
+
+private:
+
+	void createPaddle(Ogre::SceneManager*);
+
+	btCollisionShape* paddle_collision_shape;
 };

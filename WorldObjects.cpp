@@ -68,8 +68,43 @@ Ogre::Vector3 Ball::getBallPosition()
 
 Room::Room(Ogre::SceneManager* m_pSceneMgr)
 {
-	const int room_width = 100; // represents width/height or room
-	const int room_length = 300; // represents the length of the prism
+	int room_width = 100; // represents width/height or room
+	int room_length = 300; // represents the length of the prism
+
+	createRoom(m_pSceneMgr, room_width, room_length);
+    
+}
+
+Room::~Room()
+{
+	delete bottomRigidBody->getMotionState();
+    delete bottomRigidBody;
+	
+    delete topRigidBody->getMotionState();
+    delete topRigidBody;
+	
+    delete leftRigidBody->getMotionState();
+    delete leftRigidBody;
+	
+    delete rightRigidBody->getMotionState();
+    delete rightRigidBody;
+	
+    delete backRigidBody->getMotionState();
+    delete backRigidBody;
+	
+    delete frontRigidBody->getMotionState();
+    delete frontRigidBody;
+ 
+	delete bottom;
+	delete top;
+	delete left;
+	delete right;
+	delete back;
+	delete front;
+}
+
+void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_length)
+{
 
 	// Bottom Plane
 	Ogre::Plane bottom_plane(Ogre::Vector3::UNIT_Y, 0);
@@ -124,7 +159,7 @@ Room::Room(Ogre::SceneManager* m_pSceneMgr)
     _backNode->attachObject(entBack);
 	_backNode->pitch(Ogre::Degree(90));
 	_backNode->setPosition(0, 0, -room_length/2);
-	entBack->setMaterialName("Examples/Rockwall");
+	entBack->setMaterialName("Examples/WaterStream");
 
 	// Front Plane
 	Ogre::Plane front_plane(Ogre::Vector3::UNIT_Y, 0);
@@ -135,11 +170,7 @@ Room::Room(Ogre::SceneManager* m_pSceneMgr)
     _frontNode->attachObject(entFront);
 	_frontNode->pitch(Ogre::Degree(-90));
 	_frontNode->setPosition(0, 0, room_length/2);
-	entFront->setMaterialName("Examples/Rockwall");
-
-
-
-
+	entFront->setMaterialName("Examples/WaterStream2");
 
 	bottom = new btStaticPlaneShape(btVector3(0,1,0),-room_width/2);
 	top = new btStaticPlaneShape(btVector3(0,-1,0),-room_width/2);
@@ -184,5 +215,24 @@ Room::Room(Ogre::SceneManager* m_pSceneMgr)
                 frontRigidBodyCI(0,frontMotionState,front,btVector3(0,0,0));
 	frontRigidBodyCI.m_restitution = 1;
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
-    
+}
+
+Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
+{
+	createPaddle(m_pSceneMgr);    
+}
+
+Paddle::~Paddle()
+{
+
+}
+
+void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
+{
+	Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
+	Ogre::SceneNode *paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
+	paddleNode->attachObject(paddleEntity);
+	paddleNode->setScale(0.1f, 0.1f, 0.005f);
+	paddleNode->setPosition(0,0,25);
+	paddleEntity->setMaterialName("WoodPallet");
 }
