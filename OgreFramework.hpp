@@ -60,9 +60,6 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*				m_pMouse;
 
-	Ogre::Entity*				_objSphereEntity;
-	Ogre::SceneNode*			_objSphereNode;
-	Ogre::Vector3				sphere_TranslateVector;
 	PhysicsWrapper*				physics;
 
 

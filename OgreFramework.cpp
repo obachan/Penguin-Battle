@@ -211,7 +211,6 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	{
  		physics->stepPhysics(timeSinceLastFrame, 10);
 	
-		_objSphereNode->setPosition(physics->getBallPosition());
 	}
 	
 	//_objSphereNode->translate(timeSinceLastFrame * sphere_TranslateVector);

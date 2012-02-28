@@ -33,6 +33,7 @@ void DemoApp::startDemo()
  
 void DemoApp::setupDemoScene()
 {
+
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox");
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("Light")->setPosition(50, 50, 50); 
@@ -40,7 +41,6 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
- 	OgreFramework::getSingletonPtr()->sphere_TranslateVector = Ogre::Vector3(0.02, 0.02, 0.02);
 	/*
 	m_pOgreHeadEntity = OgreFramework::getSingletonPtr()->m_pSceneMgr->createEntity("OgreHeadEntity", "ogrehead.mesh");
 	m_pOgreHeadNode = OgreFramework::getSingletonPtr()->m_pSceneMgr->getRootSceneNode()->createChildSceneNode("OgreHeadNode");
@@ -111,19 +111,9 @@ void DemoApp::setupDemoScene()
 	_frontNode->setPosition(0, 0, 50);
 	entFront->setMaterialName("Examples/Rockwall");
 
-	// Create Sphere
-	createSphere(3.5f, 10.0f, -25.0f, 0.01f, "Sphere_-X");
-/*
-	Ogre::Vector3 _v3SpherePosition = Ogre::Vector3(_rCoordX, _rCoordY, _rCoordZ);
-	Ogre::Vector3 _v3SphereScaleFactor = Ogre::Vector3(_rScaleFactor, _rScaleFactor, _rScaleFactor);
 
-	Ogre::Entity *_objSphereEntity = mSceneMgr->createEntity(_strObjName, "sphere.mesh");
-	Ogre::SceneNode *_objSphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(_strObjName);
-	_objSphereNode->attachObject(_objSphereEntity);
-
-	_objSphereNode->setPosition(_v3SpherePosition);
-	_objSphereNode->setScale(_v3SphereScaleFactor);
-*/
+	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(ball->ballRigidBody);
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -151,6 +141,10 @@ void DemoApp::runDemo()
 			OgreFramework::getSingletonPtr()->m_pMouse->capture();
  			
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+
+			ball->update(timeSinceLastFrame);
+
+
 			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
  
 			timeSinceLastFrame = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
@@ -193,7 +187,7 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
-
+/*
 void DemoApp::createSphere(Ogre::Real _rCoordX, Ogre::Real _rCoordY, Ogre::Real _rCoordZ, Ogre::Real _rScaleFactor, Ogre::String _strObjName)
 {
 	Ogre::Vector3 _v3SpherePosition = Ogre::Vector3(_rCoordX, _rCoordY, _rCoordZ);
@@ -210,3 +204,4 @@ void DemoApp::createSphere(Ogre::Real _rCoordX, Ogre::Real _rCoordY, Ogre::Real 
 	OgreFramework::getSingletonPtr()->_objSphereEntity->setMaterialName("Examples/SphereMappedRustySteel");
 
 }
+*/

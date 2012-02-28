@@ -1,7 +1,6 @@
 #include "Physics.hpp"
 
 btRigidBody* ballRigidBody;
-btDiscreteDynamicsWorld* dynamicsWorld;
 
 PhysicsWrapper::PhysicsWrapper()
 {
@@ -124,6 +123,7 @@ void PhysicsWrapper::initializeObjects()
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
         dynamicsWorld->addRigidBody(frontRigidBody);
  
+
         btDefaultMotionState* ballMotionState =
                 new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(3.5f,10.0f,-25.0f)));
         btScalar mass = 1;
@@ -134,6 +134,10 @@ void PhysicsWrapper::initializeObjects()
         ballRigidBody = new btRigidBody(ballRigidBodyCI);
 	ballRigidBody->setLinearVelocity(btVector3(10,0,0));
         dynamicsWorld->addRigidBody(ballRigidBody);
+}
+
+void PhysicsWrapper::add_object_to_dynamicWorld(btRigidBody* rigid_body){
+	dynamicsWorld->addRigidBody(rigid_body);
 }
 
 Ogre::Vector3 PhysicsWrapper::getBallPosition()
@@ -147,3 +151,5 @@ void PhysicsWrapper::stepPhysics(int timestep, int maxsubsteps)
 {
 	dynamicsWorld->stepSimulation(timestep, maxsubsteps);
 }
+
+

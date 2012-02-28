@@ -6,6 +6,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 #include "OgreFramework.hpp"
+#include "WorldObjects.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -18,8 +19,9 @@ public:
 	void startDemo();
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
-	bool keyReleased(const OIS::KeyEvent &keyEventRef);
- 
+	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
+
+	Ball *ball;
 private:
         void setupDemoScene();
 	void runDemo();

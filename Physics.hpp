@@ -17,11 +17,14 @@ public:
 	void initializeWorld();
 	void initializeObjects();
 
+	void add_object_to_dynamicWorld(btRigidBody*);
+
 	Ogre::Vector3 getBallPosition();
 	void stepPhysics(int, int);
 
+	btDiscreteDynamicsWorld* dynamicsWorld;
  
-private: 
+private:
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -41,6 +44,7 @@ private:
 	btRigidBody* bottomRigidBody;
 	
 };
+
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
