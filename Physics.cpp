@@ -29,7 +29,7 @@ void PhysicsWrapper::initializeWorld()
  
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
  
-        dynamicsWorld->setGravity(btVector3(0,-9.8f,0));
+        dynamicsWorld->setGravity(btVector3(0,-0.98f,0));
 }
 
 void PhysicsWrapper::add_object_to_dynamicWorld(btRigidBody* rigid_body){

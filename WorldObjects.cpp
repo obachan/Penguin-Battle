@@ -106,10 +106,12 @@ Room::~Room()
 void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_length)
 {
 
+	//lPlane(Ogre::Vector3(1.0f, 0.0f, 0.0f), -300/2.0f),
+
 	// Bottom Plane
 	Ogre::Plane bottom_plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        bottom_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        bottom_plane, room_width, room_length, 20, 20, true, 1, room_width/20, room_length/20, Ogre::Vector3::UNIT_Z);
     Ogre::SceneNode *_botNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
     Ogre::Entity* entGround = m_pSceneMgr->createEntity("GroundEntity", "ground");
     _botNode->attachObject(entGround);
@@ -119,7 +121,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	// Top Plane
 	Ogre::Plane top_plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane("top", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        top_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        top_plane, room_width, room_length, 20, 20, true, 1, room_width/20, room_length/20, Ogre::Vector3::UNIT_Z);
     Ogre::SceneNode *_topNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entTop = m_pSceneMgr->createEntity("TopEntity", "top");
     _topNode->attachObject(entTop);
@@ -129,31 +131,43 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 
 
 	// Left Plane
-	Ogre::Plane left_plane(Ogre::Vector3::UNIT_Y, 0);
+	Ogre::Plane left_plane(Ogre::Vector3(-1.0f, 0.0f, 0.0f), -room_width/2);
+	Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, left_plane, room_length, room_width, 20, 20, true, 1, room_length/20, room_width/20, Ogre::Vector3::UNIT_Y);
+	Ogre::Entity* entLeft = m_pSceneMgr->createEntity("LeftEntity", "left");
+	m_pSceneMgr->getRootSceneNode()->createChildSceneNode("leftWall")->attachObject(entLeft);
+	entLeft->setMaterialName("Examples/Rockwall");
+
+	/*Ogre::Plane left_plane(Ogre::Vector3(1,0,0), 0);
     Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        left_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        left_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
     Ogre::SceneNode *_leftNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entLeft = m_pSceneMgr->createEntity("LeftEntity", "left");
     _leftNode->attachObject(entLeft);
-	_leftNode->roll(Ogre::Degree(90));
+	//_leftNode->roll(Ogre::Degree(90));
 	_leftNode->setPosition(room_width/2, 0, 0);
-	entLeft->setMaterialName("Examples/Rockwall");
+	entLeft->setMaterialName("Examples/Rockwall");*/
 
 	// Right Plane
-	Ogre::Plane right_plane(Ogre::Vector3::UNIT_Y, 0);
+	/*Ogre::Plane right_plane(Ogre::Vector3(1,0,0), 0);
     Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        right_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        right_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
     Ogre::SceneNode *_rightNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entRight = m_pSceneMgr->createEntity("RightEntity", "right");
     _rightNode->attachObject(entRight);
-	_rightNode->roll(Ogre::Degree(-90));
+	//_rightNode->roll(Ogre::Degree(-90));
 	_rightNode->setPosition(-room_width/2, 0, 0);
+	entRight->setMaterialName("Examples/Rockwall");*/
+
+	Ogre::Plane right_plane(Ogre::Vector3(1.0f, 0.0f, 0.0f), -room_width/2);
+	Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, right_plane, room_length, room_width, 20, 20, true, 1, room_length/20, room_width/20, Ogre::Vector3::UNIT_Y);
+	Ogre::Entity* entRight = m_pSceneMgr->createEntity("RightEntity", "right");
+	m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rightWall")->attachObject(entRight);
 	entRight->setMaterialName("Examples/Rockwall");
 
 	// Back Plane
 	Ogre::Plane back_plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane("back", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        back_plane, room_width, room_width, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        back_plane, room_width, room_width, room_width, room_width, true, 1, 1, 1, Ogre::Vector3::UNIT_Z);
     Ogre::SceneNode *_backNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entBack = m_pSceneMgr->createEntity("BackEntity", "back");
     _backNode->attachObject(entBack);
@@ -164,7 +178,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	// Front Plane
 	Ogre::Plane front_plane(Ogre::Vector3::UNIT_Y, 0);
     Ogre::MeshManager::getSingleton().createPlane("front", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        front_plane, room_width, room_width, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+        front_plane, room_width, room_width, room_width, room_width, true, 1, 1, 1, Ogre::Vector3::UNIT_Z);
     Ogre::SceneNode *_frontNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entFront = m_pSceneMgr->createEntity("FrontEntity", "front");
     _frontNode->attachObject(entFront);
