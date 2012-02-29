@@ -225,12 +225,12 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 
 	if (timeSinceLastFrame!=0)
 	{
- 		physics->stepPhysics(timeSinceLastFrame, 10);
+ 		physics->stepPhysics(timeSinceLastFrame, 5);
 	
 	}
 
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-        m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
 
 	
 }

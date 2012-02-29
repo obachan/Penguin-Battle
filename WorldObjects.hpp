@@ -20,6 +20,10 @@
 #include <btBulletDynamicsCommon.h>
 #include <OgreVector3.h>
 
+#include <BulletCollision/CollisionShapes/btBox2dShape.h>
+
+const double move_vel = 5;
+
 class Ball
 {
 public:
@@ -74,6 +78,7 @@ private:
 class Paddle
 {
 public:
+
 	Paddle(Ogre::SceneManager*);
 	~Paddle();
 
@@ -86,6 +91,11 @@ public:
 	void moveRight();
 	void moveUp();
 	void moveDown();
+
+	void moveForward();
+	void moveBackward();
+
+	void moveStop();
 
 private:
 

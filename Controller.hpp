@@ -11,6 +11,9 @@ public:
 	bool		left_control_down;
 	bool		right_control_down; 
 	bool		up_control_down; 
-	bool		bottom_control_down; 
+	bool		bottom_control_down;
+
+	bool 		forward_control_down;
+	bool 		backward_control_down;
 
 };

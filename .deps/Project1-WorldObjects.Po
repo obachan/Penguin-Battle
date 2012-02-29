@@ -848,7 +848,10 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  bullet-2.79/include/bullet/BulletDynamics/Vehicle/btWheelInfo.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
 
 WorldObjects.hpp:
 
@@ -2771,3 +2774,9 @@ bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h:
 bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:

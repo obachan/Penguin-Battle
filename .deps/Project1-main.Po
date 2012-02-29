@@ -849,7 +849,10 @@ Project1-main.o: main.cpp OgreDemo.hpp OgreFramework.hpp \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h Controller.hpp \
- WorldObjects.hpp
+ WorldObjects.hpp \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
+ bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
 
 OgreDemo.hpp:
 
@@ -2780,3 +2783,9 @@ bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 Controller.hpp:
 
 WorldObjects.hpp:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h:
+
+bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
