@@ -89,11 +89,10 @@ void DemoApp::runDemo()
 
  			// Our Team's main loop
 			processController();
-
-			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
 			ball->update(timeSinceLastFrame);
 			paddle->update(timeSinceLastFrame);
+
+			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
 
 			////////////////////////////////////////////////

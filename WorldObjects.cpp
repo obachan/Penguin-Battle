@@ -239,14 +239,14 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
-	btDefaultMotionState* paddleMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0)));
+	btDefaultMotionState* paddleMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 25)));
 
-    btScalar mass = 1;
+    btScalar mass = 0;
     btVector3 paddleInertia(0,0,0);
 
-	paddle_collision_shape = new btBox2dShape(btVector3(22, 22, 0.5));
+	//paddle_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
+	paddle_collision_shape = new btBoxShape(btVector3(5, 5, 5));
     paddle_collision_shape->calculateLocalInertia(mass,paddleInertia);
-
     /*
 	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
     std::cout << "Hello World" << std::endl;
@@ -255,10 +255,14 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 
     btRigidBody::btRigidBodyConstructionInfo paddleRigidBodyCI(mass,paddleMotionState,paddle_collision_shape,paddleInertia);
 	paddleRigidBodyCI.m_restitution = 0.712f;
+	
     paddleRigidBody = new btRigidBody(paddleRigidBodyCI);
 
     // Disable Gravity because this object will be controlled by the player
-    paddleRigidBody->setGravity(btVector3(0, 0 ,0));
+    paddleRigidBody->setGravity(btVector3(0,0,0));
+	paddleRigidBody->setCollisionFlags( paddleRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	paddleRigidBody->setActivationState(DISABLE_DEACTIVATION);
+	//paddleRigidBody->setCollisionFlags(2);
 
 	//paddleRigidBody->setLinearVelocity(btVector3(10,0,0));
 
@@ -280,7 +284,7 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 	Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
-	paddleNode->setScale(0.3f, 0.3f, 0.005f);
+	paddleNode->setScale(0.1f, 0.1f, 0.1f);
 	paddleNode->setPosition(0,0,25);
 	paddleEntity->setMaterialName("WoodPallet");
 
@@ -294,7 +298,7 @@ void Paddle::update(double timeSinceLastFrame)
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 
-	paddleNode->setPosition(vec[0], vec[1], vec[2]);
+	paddleNode->setPosition(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 }
 
 void Paddle::moveLeft()
