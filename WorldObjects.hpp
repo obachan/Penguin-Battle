@@ -77,9 +77,15 @@ public:
 	Paddle(Ogre::SceneManager*);
 	~Paddle();
 
+	Ogre::SceneNode *paddleNode;
 	btRigidBody* paddleRigidBody;
 
 	void update(double);
+
+	void moveLeft();
+	void moveRight();
+	void moveUp();
+	void moveDown();
 
 private:
 

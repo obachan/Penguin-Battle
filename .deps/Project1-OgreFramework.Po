@@ -848,7 +848,7 @@ Project1-OgreFramework.o: OgreFramework.cpp OgreFramework.hpp \
  bullet-2.79/include/bullet/BulletDynamics/Vehicle/btWheelInfo.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h Controller.hpp
 
 OgreFramework.hpp:
 
@@ -2773,3 +2773,5 @@ bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h:
 bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h:
+
+Controller.hpp:

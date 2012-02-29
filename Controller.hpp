@@ -10,7 +10,7 @@ public:
 
 	bool		left_control_down;
 	bool		right_control_down; 
-	bool		top_control_down; 
+	bool		up_control_down; 
 	bool		bottom_control_down; 
 
 };

@@ -243,6 +243,8 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 
 Paddle::~Paddle()
 {
+	delete paddleNode;
+
 	delete paddleRigidBody->getMotionState();
 	delete paddleRigidBody;
 
@@ -252,7 +254,7 @@ Paddle::~Paddle()
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 {
 	Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
-	Ogre::SceneNode *paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
+	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
 	paddleNode->setScale(0.1f, 0.1f, 0.005f);
 	paddleNode->setPosition(0,0,25);
@@ -260,6 +262,35 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 
 }
 
-void Paddle::update(double timeSinceLastFrame){
+void Paddle::update(double timeSinceLastFrame)
+{
 
+}
+
+void Paddle::moveLeft()
+{
+	//std::cout << "Left" << std::endl;		
+	Ogre::Vector3 pos = paddleNode->getPosition();
+	paddleNode->setPosition(pos.x - 1, pos.y, pos.z);
+}
+
+void Paddle::moveRight()
+{
+	//std::cout << "Right" << std::endl;	
+	Ogre::Vector3 pos = paddleNode->getPosition();
+	paddleNode->setPosition(pos.x + 1, pos.y, pos.z);
+}
+
+void Paddle::moveUp()
+{
+	//std::cout << "Up" << std::endl;	
+	Ogre::Vector3 pos = paddleNode->getPosition();
+	paddleNode->setPosition(pos.x, pos.y + 1, pos.z);
+}
+
+void Paddle::moveDown()
+{
+	//std::cout << "Down" << std::endl;	
+	Ogre::Vector3 pos = paddleNode->getPosition();
+	paddleNode->setPosition(pos.x, pos.y - 1, pos.z);
 }

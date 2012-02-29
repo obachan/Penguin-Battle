@@ -120,11 +120,33 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
  
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_F))
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
+
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_LEFT))
 	{
-		 //do something
+		//std::cout << controller->left_control_down << std::endl;
+		controller->left_control_down = true;	
+		
+	}
+
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
+	{
+		controller->right_control_down = true;
+		
 	}
  
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_UP))
+	{
+		controller->up_control_down = true;
+		
+	}
+
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_DOWN))
+	{
+		controller->bottom_control_down = true;
+		
+	}
+
 	return true;
 }
  
@@ -134,6 +156,25 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
 	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
  
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
+
+	if(keyEventRef.key == OIS::KC_LEFT){
+		std::cout << controller->left_control_down << std::endl;		
+		controller->left_control_down = false;	
+	}	
+
+	if(keyEventRef.key == OIS::KC_RIGHT){
+		controller->right_control_down = false;	
+	}	
+
+	if(keyEventRef.key == OIS::KC_UP){
+		controller->up_control_down = false;	
+	}
+
+	if(keyEventRef.key == OIS::KC_DOWN){
+		controller->bottom_control_down = false;	
+	}
+
 	return true;
 }
 
@@ -141,5 +182,21 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 
 void DemoApp::processController()
 {
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
 
+	if(controller->left_control_down == true){
+		paddle->moveLeft();
+	}
+
+	if(controller->right_control_down == true){
+		paddle->moveRight();
+	}
+
+	if(controller->up_control_down == true){
+		paddle->moveUp();
+	}
+
+	if(controller->bottom_control_down == true){
+		paddle->moveDown();
+	}
 }

@@ -175,11 +175,22 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
                 }
 	}
 
+
+	// Game Input controls
+	/*
+	if(m_pKeyboard->isKeyDown(OIS::KC_LEFT))
+	{
+			controller->left_control_down;
+	}
+	*/
+
+
 	return true;
 }
 
 bool OgreFramework::keyReleased(const OIS::KeyEvent &keyEventRef)
-{
+{	
+
 	return true;
 }
 
