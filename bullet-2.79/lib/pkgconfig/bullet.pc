@@ -5,5 +5,5 @@ Version: 2.79
 #changed from /usr/local to /u/ruoyi
 #Libs: -L/u/ruoyi/bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
 #Libs: -L./bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
-Libs: -L/u/xty56/Desktop/Assignment-2/bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
-Cflags:  -I/u/xty56/Desktop/Assignment-2/bullet-2.79/include/bullet
+Libs: -L./bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
+Cflags:  -I./bullet-2.79/include/bullet
