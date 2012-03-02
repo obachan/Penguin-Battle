@@ -1,7 +1,7 @@
 #!/bin/sh
-#export BULLET_INSTALL_DIR=./bullet-2.79
+export OpenAL_INSTALL_DIR=./openal-soft-1.13
 #export CEGUI_INSTALL_DIR=/u/ruoyi/CEGUI-0.7.6
-#export PKG_CONFIG_PATH=${BULLET_INSTALL_DIR}/lib/pkgconfig
+export PKG_CONFIG_PATH=${OpenAL_INSTALL_DIR}/lib/pkgconfig
 rm -rf autom4te.cache
 libtoolize --force --copy &&  aclocal &&  autoheader &&  automake --add-missing --force-missing --copy --foreign &&  autoconf
 ./configure && ./makeit
