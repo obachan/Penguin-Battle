@@ -239,7 +239,9 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
-	btDefaultMotionState* paddleMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 25)));
+	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+
+	paddleMotionState = new btDefaultMotionState(*paddle_position);
 
     btScalar mass = 0;
     btVector3 paddleInertia(0,0,0);
@@ -290,57 +292,84 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 
 }
 
-void Paddle::update(double timeSinceLastFrame)
+void Paddle::update(double timeSinceLastFrame, MyController* controller)
 {
+
 
 	btTransform trans;
     paddleRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 
-	paddleNode->setPosition(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	if(controller->left_control_down == true){
+		vec[0] = vec[0] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->right_control_down == true){
+		vec[0] = vec[0] + (move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->up_control_down == true){
+		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->bottom_control_down == true){
+		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->forward_control_down == true){
+		vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->backward_control_down == true){
+		vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
+	}
+
+	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
+	paddleMotionState->setWorldTransform(trans);
+	paddleNode->setPosition(vec[0], vec[1], vec[2]);
 }
 
-void Paddle::moveLeft()
+void Paddle::moveLeft(double timeSinceLastFrame)
 {
 	//std::cout << "Left" << std::endl;
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(-move_vel,vec[1],vec[2]));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(-move_vel,vec[1],vec[2]));
 }
 
-void Paddle::moveRight()
+void Paddle::moveRight(double timeSinceLastFrame)
 {
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(move_vel,vec[1],vec[2]));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(move_vel,vec[1],vec[2]));
 }
 
-void Paddle::moveUp()
+void Paddle::moveUp(double timeSinceLastFrame)
 {
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(vec[0],move_vel,vec[2]));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(vec[0],move_vel,vec[2]));
 }
 
-void Paddle::moveDown()
+void Paddle::moveDown(double timeSinceLastFrame)
 {
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(vec[0],-move_vel,vec[2]));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(vec[0],-move_vel,vec[2]));
 }
 
-void Paddle::moveForward()
+void Paddle::moveForward(double timeSinceLastFrame)
 {
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(vec[0], vec[1], -move_vel));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(vec[0], vec[1], -move_vel));
 }
 
-void Paddle::moveBackward()
+void Paddle::moveBackward(double timeSinceLastFrame)
 {
-	btVector3 vec = paddleRigidBody->getLinearVelocity();
-	paddleRigidBody->setLinearVelocity(btVector3(vec[0], vec[1], move_vel));
+	//btVector3 vec = paddleRigidBody->getLinearVelocity();
+	//paddleRigidBody->setLinearVelocity(btVector3(vec[0], vec[1], move_vel));
 }
 
 void Paddle::moveStop()
 {
-	paddleRigidBody->setLinearVelocity(btVector3(0,0,0));
+	//paddleRigidBody->setLinearVelocity(btVector3(0,0,0));
 
 }
 

@@ -1,3 +1,6 @@
+#include "OgreFramework.hpp"
+
+
 #include <OgreCamera.h>
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
@@ -22,7 +25,7 @@
 
 #include <BulletCollision/CollisionShapes/btBox2dShape.h>
 
-const double move_vel = 5;
+const double move_vel = 0.05;
 
 class Ball
 {
@@ -83,17 +86,20 @@ public:
 	~Paddle();
 
 	Ogre::SceneNode *paddleNode;
+	btDefaultMotionState* paddleMotionState;
 	btRigidBody* paddleRigidBody;
 
-	void update(double);
+	btTransform* paddle_position;
 
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
+	void update(double, MyController *);
 
-	void moveForward();
-	void moveBackward();
+	void moveLeft(double);
+	void moveRight(double);
+	void moveUp(double);
+	void moveDown(double);
+
+	void moveForward(double);
+	void moveBackward(double);
 
 	void moveStop();
 

@@ -28,8 +28,6 @@ public:
 private:
     void setupDemoScene();
 	void runDemo();
- 	
- 	void processController();
 
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;

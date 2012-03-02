@@ -88,9 +88,8 @@ void DemoApp::runDemo()
  			
 
  			// Our Team's main loop
-			processController();
 			ball->update(timeSinceLastFrame);
-			paddle->update(timeSinceLastFrame);
+			paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
@@ -154,64 +153,29 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 	if(keyEventRef.key == OIS::KC_LEFT){
 		//std::cout << controller->left_control_down << std::endl;		
 		controller->left_control_down = false;
-		paddle->moveStop();
 	}	
 
 	if(keyEventRef.key == OIS::KC_RIGHT){
 		controller->right_control_down = false;	
-		paddle->moveStop();
 	}	
 
 	if(keyEventRef.key == OIS::KC_UP){
 		controller->up_control_down = false;	
-		paddle->moveStop();
 	}
 
 	if(keyEventRef.key == OIS::KC_DOWN){
 		controller->bottom_control_down = false;	
-		paddle->moveStop();
 	}
 
 	if(keyEventRef.key == OIS::KC_P){
-		controller->forward_control_down = false;	
-		paddle->moveStop();
+		controller->forward_control_down = false;
 	}
 
 	if(keyEventRef.key == OIS::KC_SEMICOLON){
-		controller->backward_control_down = false;	
-		paddle->moveStop();
+		controller->backward_control_down = false;
 	}
 
 	return true;
 }
 
 //||||||||||||||||||||||||||||||||||||||||||||||||
-
-void DemoApp::processController()
-{
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-
-	if(controller->left_control_down == true){
-		paddle->moveLeft();
-	}
-
-	if(controller->right_control_down == true){
-		paddle->moveRight();
-	}
-
-	if(controller->up_control_down == true){
-		paddle->moveUp();
-	}
-
-	if(controller->bottom_control_down == true){
-		paddle->moveDown();
-	}
-
-	if(controller->forward_control_down == true){
-		paddle->moveForward();
-	}
-
-	if(controller->backward_control_down == true){
-		paddle->moveBackward();
-	}
-}

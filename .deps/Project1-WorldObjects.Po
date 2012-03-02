@@ -1,5 +1,5 @@
 Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
+ OgreFramework.hpp /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreConfig.h \
@@ -721,7 +721,7 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreBorderPanelOverlayElement.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePanelOverlayElement.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreTextAreaOverlayElement.h \
- bullet-2.79/include/bullet/btBulletDynamicsCommon.h \
+ Physics.hpp bullet-2.79/include/bullet/btBulletDynamicsCommon.h \
  bullet-2.79/include/bullet/btBulletCollisionCommon.h \
  bullet-2.79/include/bullet/BulletCollision/CollisionDispatch/btCollisionWorld.h \
  bullet-2.79/include/bullet/LinearMath/btVector3.h \
@@ -848,12 +848,14 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  bullet-2.79/include/bullet/BulletDynamics/Vehicle/btWheelInfo.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h Controller.hpp \
  bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
 
 WorldObjects.hpp:
+
+OgreFramework.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h:
 
@@ -2517,6 +2519,8 @@ WorldObjects.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreTextAreaOverlayElement.h:
 
+Physics.hpp:
+
 bullet-2.79/include/bullet/btBulletDynamicsCommon.h:
 
 bullet-2.79/include/bullet/btBulletCollisionCommon.h:
@@ -2774,6 +2778,8 @@ bullet-2.79/include/bullet/BulletDynamics/Dynamics/btActionInterface.h:
 bullet-2.79/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h:
+
+Controller.hpp:
 
 bullet-2.79/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
 
