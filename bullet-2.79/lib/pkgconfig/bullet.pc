@@ -1,9 +1,0 @@
-Name: bullet
-Description: Bullet Continuous Collision Detection and Physics Library
-Requires:
-Version: 2.79
-#changed from /usr/local to /u/ruoyi
-#Libs: -L/u/ruoyi/bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
-#Libs: -L./bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
-Libs: -L./bullet-2.79/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
-Cflags:  -I./bullet-2.79/include/bullet
