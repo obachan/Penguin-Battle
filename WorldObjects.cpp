@@ -283,15 +283,16 @@ Paddle::~Paddle()
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
+
 	float paddle_scale = paddle_length / 100.0;
 
-	Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
+	//Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
+	paddleEntity = m_pSceneMgr->createEntity("paddle", "penguin.mesh");
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
 	paddleNode->setScale(paddle_scale, paddle_scale, paddle_scale);
 	paddleNode->setPosition(0,0,25);
-	paddleEntity->setMaterialName("WoodPallet");
-
+	paddleEntity->setMaterialName("Penguin");
 }
 
 void Paddle::update(double timeSinceLastFrame, MyController* controller)
@@ -375,6 +376,19 @@ void Paddle::update(double timeSinceLastFrame, MyController* controller)
 	}
 	std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
 
+	if(controller->left_control_down == false &&
+		controller->right_control_down == false &&
+		controller->up_control_down == false &&
+		controller->bottom_control_down == false &&
+		controller->forward_control_down == false &&
+		controller->backward_control_down == false)
+	{
+		mAnimationState = paddleEntity->getAnimationState("amuse");
+        	mAnimationState->setLoop(true);
+        	mAnimationState->setEnabled(true);
+		mAnimationState->addTime(timeSinceLastFrame);
+	}
+
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	paddleMotionState->setWorldTransform(trans);
 	paddleNode->setPosition(vec[0], vec[1], vec[2]);
@@ -417,9 +431,8 @@ void Paddle::moveBackward(double timeSinceLastFrame)
 	//paddleRigidBody->setLinearVelocity(btVector3(vec[0], vec[1], move_vel));
 }
 
-void Paddle::moveStop()
+void Paddle::moveStop(double timeSinceLastFrame)
 {
 	//paddleRigidBody->setLinearVelocity(btVector3(0,0,0));
-
 }
 
