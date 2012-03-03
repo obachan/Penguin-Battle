@@ -96,7 +96,7 @@ void DemoApp::runDemo()
 
  			// Our Team's main loop
 			ball->update(timeSinceLastFrame);
-			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
+			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 			//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);

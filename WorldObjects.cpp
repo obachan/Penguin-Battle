@@ -137,7 +137,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, left_plane, room_length, room_width, 20, 20, true, 1, room_length/20, room_width/20, Ogre::Vector3::UNIT_Y);
 	Ogre::Entity* entLeft = m_pSceneMgr->createEntity("LeftEntity", "left");
 	m_pSceneMgr->getRootSceneNode()->createChildSceneNode("leftWall")->attachObject(entLeft);
-	entLeft->setMaterialName("Examples/Rockwall");
+	entLeft->setMaterialName("Examples/Transparent");
 
 	/*Ogre::Plane left_plane(Ogre::Vector3(1,0,0), 0);
     Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -164,7 +164,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, right_plane, room_length, room_width, 20, 20, true, 1, room_length/20, room_width/20, Ogre::Vector3::UNIT_Y);
 	Ogre::Entity* entRight = m_pSceneMgr->createEntity("RightEntity", "right");
 	m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rightWall")->attachObject(entRight);
-	entRight->setMaterialName("Examples/Rockwall");
+	entRight->setMaterialName("Examples/Transparent");
 
 	// Back Plane
 	Ogre::Plane back_plane(Ogre::Vector3::UNIT_Y, 0);
@@ -301,17 +301,24 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
 	penguinEntity->setMaterialName("Penguin");
 	penguinNode->yaw( Ogre::Degree( -180 ) );
+	penguin_direction = Ogre::Vector3(0,0,-1);
+
+	/*Ogre::Camera* camera = m_pSceneMgr->getCamera("Camera");
+	camera->setPosition(penguinNode->getPosition());
+	camera->setDirection(penguin_direction);*/
 }
 
-void Penguin::update(double timeSinceLastFrame, MyController* controller)
+void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
 
 	if(timeSinceLastFrame > 0.4f)
 		timeSinceLastFrame = 0.4f;
 
 	btTransform trans;
-    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+    	penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	
+	penguin_direction = Ogre::Vector3(vec[0],vec[1],vec[2]);
 
 	// Account for Gravity
 	if(in_air){
@@ -411,6 +418,10 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller)
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	penguinMotionState->setWorldTransform(trans);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+
+	/*camera->setPosition(vec[0], vec[1], vec[2]);
+	penguin_direction = Ogre::Vector3(vec[0] - penguin_direction[0], vec[1] - penguin_direction[1], vec[2] - penguin_direction[2]);
+	camera->setDirection(penguin_direction);*/
 }
 
 

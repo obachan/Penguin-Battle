@@ -53,13 +53,14 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-Controller.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
-	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
-	Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-SoundWrapper.$(OBJEXT) \
+	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
+	Project1-Physics.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
+	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 Project1_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(Project1_CXXFLAGS) \
@@ -158,6 +159,8 @@ PACKAGE_VERSION =
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 RANLIB = ranlib
+SDL_mixer_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I./usr/include/SDL -I/lusr/opt/libsdl-1.2.14/include/SDL  
+SDL_mixer_LIBS = ./usr/lib/libSDL_mixer.a -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL -lpthread  
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
@@ -211,6 +214,8 @@ prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
+sdl_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I/lusr/opt/libsdl-1.2.14/include/SDL  
+sdl_LIBS = -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL -lpthread  
 sharedstatedir = ${prefix}/com
 srcdir = .
 sysconfdir = ${prefix}/etc
@@ -218,12 +223,12 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
-Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS)
-Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS)
+Project1_SOURCES = SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS)
+Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS)
 EXTRA_DIST = buildit makeit
 AUTOMAKE_OPTIONS = foreign
 all: config.h
@@ -339,6 +344,7 @@ include ./$(DEPDIR)/Project1-Controller.Po
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
 include ./$(DEPDIR)/Project1-Physics.Po
+include ./$(DEPDIR)/Project1-SoundWrapper.Po
 include ./$(DEPDIR)/Project1-WorldObjects.Po
 include ./$(DEPDIR)/Project1-main.Po
 
@@ -362,6 +368,20 @@ include ./$(DEPDIR)/Project1-main.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-SoundWrapper.o: SoundWrapper.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.o -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+#	source='SoundWrapper.cpp' object='Project1-SoundWrapper.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+
+Project1-SoundWrapper.obj: SoundWrapper.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.obj -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+#	source='SoundWrapper.cpp' object='Project1-SoundWrapper.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
 
 Project1-Controller.o: Controller.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.o -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp

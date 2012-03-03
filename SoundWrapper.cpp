@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "SDL_mixer.h"
 
-Mix_Chunk *phaser = NULL;
+/*Mix_Chunk *phaser = NULL;
 Mix_Music *music = NULL;
 
 int phaserChannel = -1;
@@ -17,7 +17,7 @@ int main(void) {
   SDL_Event event;
   int done = 0;
 
-  /* Same setup as before */
+
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
   int audio_channels = 2;
@@ -30,7 +30,7 @@ int main(void) {
     exit(1);
   }
 
-  /* Pre-load sound effects */
+
   phaser = Mix_LoadWAV("phaser.wav");
 
   screen = SDL_SetVideoMode(320, 240, 0, 0);
@@ -94,4 +94,4 @@ void musicDone() {
   Mix_HaltMusic();
   Mix_FreeMusic(music);
   music = NULL;
-}
+}*/

@@ -107,9 +107,11 @@ public:
 	btTransform* penguin_position;
 
 	Ogre::Vector3 penguin_velocity;
+
+	Ogre::Vector3 penguin_direction;
 	Ogre::AnimationState *mAnimationState;
 
-	void update(double, MyController *);
+	void update(double, MyController *, Ogre::Camera*);
 
 	bool in_air;
 private:

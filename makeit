@@ -1,6 +1,6 @@
 #!/bin/sh
-#export OpenAL_INSTALL_DIR=./openal-soft-1.13
+export SDLMIXER_INSTALL_DIR=./usr
 #export CEGUI_INSTALL_DIR=/u/ruoyi/CEGUI-0.7.6
-#export LD_RUN_PATH=${OpenAL_INSTALL_DIR}/lib
+export LD_RUN_PATH=${SDLMIXER_INSTALL_DIR}/lib
 make clean
 make
