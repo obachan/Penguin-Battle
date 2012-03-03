@@ -13,3 +13,7 @@
 
 # Extra Files
 *.log
+
+#Exceptions
+!libSDL_mixer.a
+!libSDL_mixer.la
