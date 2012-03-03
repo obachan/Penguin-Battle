@@ -53,14 +53,15 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-Controller.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
-	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
-	Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-SoundWrapper.$(OBJEXT) \
+	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
+	Project1-Physics.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
+	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 Project1_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(Project1_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
@@ -93,12 +94,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11
-AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run aclocal-1.11
+AMTAR = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf
-AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader
-AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -136,7 +137,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -163,10 +164,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_builddir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
+abs_srcdir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
+abs_top_builddir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
+abs_top_srcdir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -197,7 +198,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh
+install_sh = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -206,6 +207,8 @@ lt_ECHO = echo
 mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
+openal_CFLAGS = -I./openal-soft-1.13/include  
+openal_LIBS = -L./openal-soft-1.13/lib -lopenal  
 pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
@@ -218,12 +221,12 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
-Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS)
-Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS)
+Project1_SOURCES = SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(openal_CFLAGS)
+Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(openal_LIBS)
 EXTRA_DIST = buildit makeit
 AUTOMAKE_OPTIONS = foreign
 all: config.h
@@ -339,6 +342,7 @@ include ./$(DEPDIR)/Project1-Controller.Po
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
 include ./$(DEPDIR)/Project1-Physics.Po
+include ./$(DEPDIR)/Project1-SoundWrapper.Po
 include ./$(DEPDIR)/Project1-WorldObjects.Po
 include ./$(DEPDIR)/Project1-main.Po
 
@@ -362,6 +366,20 @@ include ./$(DEPDIR)/Project1-main.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-SoundWrapper.o: SoundWrapper.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.o -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+#	source='SoundWrapper.cpp' object='Project1-SoundWrapper.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+
+Project1-SoundWrapper.obj: SoundWrapper.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.obj -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+#	source='SoundWrapper.cpp' object='Project1-SoundWrapper.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
 
 Project1-Controller.o: Controller.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.o -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
