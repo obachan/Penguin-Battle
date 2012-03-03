@@ -1,0 +1,5 @@
+/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/./lib/libopenal.so.1.13.0
+/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/./lib/libopenal.so.1
+/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/./lib/libopenal.so
+/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/./lib/pkgconfig/openal.pc
+/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/./bin/openal-info
