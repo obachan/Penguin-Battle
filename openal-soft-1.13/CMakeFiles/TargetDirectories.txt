@@ -1,2 +1,0 @@
-/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/CMakeFiles/openal.dir
-/v/filer4b/v38q001/ruoyi/Desktop/openal-soft-1.13/CMakeFiles/openal-info.dir
