@@ -88,8 +88,10 @@ public:
 	Ogre::SceneNode *paddleNode;
 	btDefaultMotionState* paddleMotionState;
 	btRigidBody* paddleRigidBody;
+	Ogre::Entity* paddleEntity;
 
 	btTransform* paddle_position;
+	Ogre::AnimationState *mAnimationState;
 
 	void update(double, MyController *);
 
@@ -101,7 +103,7 @@ public:
 	void moveForward(double);
 	void moveBackward(double);
 
-	void moveStop();
+	void moveStop(double);
 
 private:
 

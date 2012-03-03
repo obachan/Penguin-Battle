@@ -35,7 +35,7 @@ void DemoApp::setupDemoScene()
 {
 
 	// Sets global world conditions
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox");
+	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/CloudyNoonSkyBox");
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("Light")->setPosition(50, 50, 50); 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(-50, -50, -50); 
