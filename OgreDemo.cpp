@@ -37,11 +37,14 @@ void DemoApp::setupDemoScene()
 	// Sets global world conditions
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/CloudyNoonSkyBox");
 
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("Light")->setPosition(50, 50, 50); 
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(-50, -50, -50); 
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
+	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-
+ 
+    	// Create a light
+  	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
+	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
+	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
+	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
 	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);

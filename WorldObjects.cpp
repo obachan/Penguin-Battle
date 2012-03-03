@@ -129,7 +129,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
     _topNode->attachObject(entTop);
 	_topNode->rotate(Ogre::Vector3::UNIT_X,Ogre::Degree(180));
 	_topNode->setPosition(0, room_width/2, 0);
-	entTop->setMaterialName("Examples/Rockwall");
+	entTop->setMaterialName("Examples/Transparent");
 
 
 	// Left Plane
