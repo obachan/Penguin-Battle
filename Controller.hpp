@@ -16,4 +16,6 @@ public:
 	bool 		forward_control_down;
 	bool 		backward_control_down;
 
+	bool 		jump_control_down;
+
 };

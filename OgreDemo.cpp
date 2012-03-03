@@ -137,6 +137,9 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 		controller->forward_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
 		controller->backward_control_down = true;
+
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE))
+		controller->jump_control_down = true;
 		
 
 	return true;

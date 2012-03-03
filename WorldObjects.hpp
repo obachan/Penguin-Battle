@@ -25,7 +25,19 @@
 
 #include <BulletCollision/CollisionShapes/btBox2dShape.h>
 
-const double move_vel = 0.05;
+#include <cmath>
+
+const double world_grav = -0.98f;
+
+const float room_width = 100.0f; // represents width/height or room
+const float room_length = 300.0f; // represents the length of the prism
+
+const double max_fall_vel = -0.5f;
+const double move_vel = 1.5f;
+const double jump_vel = 5.0f;
+const float paddle_length = 10.0f;
+
+const float ball_radius = 2.0f;
 
 class Ball
 {
@@ -90,6 +102,7 @@ public:
 	btRigidBody* paddleRigidBody;
 
 	btTransform* paddle_position;
+	Ogre::Vector3 paddle_velocity;
 
 	void update(double, MyController *);
 
@@ -103,6 +116,7 @@ public:
 
 	void moveStop();
 
+	bool in_air;
 private:
 
 	void createPaddle(Ogre::SceneManager*);

@@ -13,7 +13,7 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr)
     btScalar mass = 1;
     btVector3 ballInertia(0,0,0);
 
-	ball_collision_shape = new btSphereShape(1);
+	ball_collision_shape = new btSphereShape(ball_radius);
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
     /*
@@ -27,7 +27,8 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr)
     ballRigidBody = new btRigidBody(ballRigidBodyCI);
 	ballRigidBody->setLinearVelocity(btVector3(10,0,0));
 	
-	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, 0.01f, "Awesome_Sphere");
+	float ball_radius_node_conversion = ball_radius / 100.0f;
+	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, "Awesome_Sphere");
 
 }
 
@@ -73,11 +74,7 @@ Ogre::Vector3 Ball::getBallPosition()
 
 Room::Room(Ogre::SceneManager* m_pSceneMgr)
 {
-	int room_width = 100; // represents width/height or room
-	int room_length = 300; // represents the length of the prism
-
-	createRoom(m_pSceneMgr, room_width, room_length);
-    
+	createRoom(m_pSceneMgr, room_width, room_length);    
 }
 
 Room::~Room()
@@ -240,6 +237,8 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
 	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+	paddle_velocity = Ogre::Vector3(0, 0, 0);
+	in_air = true;
 
 	paddleMotionState = new btDefaultMotionState(*paddle_position);
 
@@ -283,10 +282,13 @@ Paddle::~Paddle()
 
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 {
+
+	float paddle_scale = paddle_length / 100.0;
+
 	Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
-	paddleNode->setScale(0.1f, 0.1f, 0.1f);
+	paddleNode->setScale(paddle_scale, paddle_scale, paddle_scale);
 	paddleNode->setPosition(0,0,25);
 	paddleEntity->setMaterialName("WoodPallet");
 
@@ -295,35 +297,83 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 void Paddle::update(double timeSinceLastFrame, MyController* controller)
 {
 
+	if(timeSinceLastFrame > 0.4f)
+		timeSinceLastFrame = 0.4f;
 
 	btTransform trans;
     paddleRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
+	// Account for Gravity
+	if(in_air){
+		paddle_velocity[1] = paddle_velocity[1] + world_grav * timeSinceLastFrame;
+		// if paddle is falling too fast
+		if(paddle_velocity[1] < max_fall_vel)
+			paddle_velocity[1] = max_fall_vel;
+		vec[1] =  vec[1] + paddle_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
 
+		//vec[1] = vec[1] - 1;
+		std::cout << "Air " << paddle_velocity[1] << " " << vec[1] << std::endl;
+	}
+
+	// Take in user input and handle bounds
 	if(controller->left_control_down == true){
 		vec[0] = vec[0] + (-move_vel) * timeSinceLastFrame;
+		if(vec[0] < -room_width/2 + paddle_length/2)
+			vec[0] = -room_width/2 + paddle_length/2;
 	}
 
 	if(controller->right_control_down == true){
 		vec[0] = vec[0] + (move_vel) * timeSinceLastFrame;
-	}
-
-	if(controller->up_control_down == true){
-		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
-	}
-
-	if(controller->bottom_control_down == true){
-		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
+		if(vec[0] > room_width/2 - paddle_length/2)
+			vec[0] = room_width/2 - paddle_length/2;
 	}
 
 	if(controller->forward_control_down == true){
-		vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
+		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
+		if(vec[1] > room_width/2 - paddle_length/2)
+			vec[1] = room_width/2 - paddle_length/2;
 	}
 
 	if(controller->backward_control_down == true){
-		vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
+		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
+		if(vec[1] < -room_width/2 + paddle_length/2)
+			vec[1] = -room_width/2 + paddle_length/2;
 	}
+
+	if(controller->up_control_down == true){
+		vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
+		if(vec[2] < -room_length/2 + paddle_length/2)
+			vec[2] = -room_length/2 + paddle_length/2;
+	}
+
+	if(controller->bottom_control_down == true){
+		vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
+		if(vec[2] > room_length/2 - paddle_length/2)
+			vec[2] = room_length/2 - paddle_length/2;
+	}
+
+	if(controller->jump_control_down == true){
+		controller->jump_control_down = false;
+		if(!in_air){
+			in_air = true;
+			paddle_velocity[1] = jump_vel;
+		}
+	}
+
+	// If paddle touches the ground, change the paddle to ground state
+	if(vec[1] < -room_width/2 + paddle_length/2){
+		vec[1] = -room_width/2 + paddle_length/2;
+		float tolerance = abs(vec[1] - (-room_width/2 + paddle_length/2));
+		if(tolerance < 0.01f){
+
+			in_air = false;
+			paddle_velocity[1]  = 0;
+			
+			std::cout << "Ground" << std::endl;
+		}	
+	}
+	std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
 
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	paddleMotionState->setWorldTransform(trans);

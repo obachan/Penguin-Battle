@@ -9,6 +9,8 @@ MyController::MyController()
 
 	forward_control_down = false;
 	backward_control_down = false;
+
+	jump_control_down = false;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
