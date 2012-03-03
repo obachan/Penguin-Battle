@@ -35,6 +35,8 @@ const float room_length = 300.0f; // represents the length of the prism
 const double max_fall_vel = -0.5f;
 const double move_vel = 1.5f;
 const double jump_vel = 5.0f;
+const float penguin_length = 10.0f;
+
 const float paddle_length = 10.0f;
 
 const float ball_radius = 2.0f;
@@ -89,6 +91,34 @@ private:
 	btCollisionShape* back;
 	btCollisionShape* front;
 };
+
+class Penguin
+{
+public:
+
+	Penguin(Ogre::SceneManager*);
+	~Penguin();
+
+	Ogre::SceneNode *penguinNode;
+	btDefaultMotionState* penguinMotionState;
+	btRigidBody* penguinRigidBody;
+	Ogre::Entity* penguinEntity;
+
+	btTransform* penguin_position;
+
+	Ogre::Vector3 penguin_velocity;
+	Ogre::AnimationState *mAnimationState;
+
+	void update(double, MyController *);
+
+	bool in_air;
+private:
+
+	void createPenguin(Ogre::SceneManager*);
+
+	btCollisionShape* penguin_collision_shape;
+};
+
 
 class Paddle
 {

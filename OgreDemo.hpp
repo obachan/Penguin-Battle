@@ -24,6 +24,7 @@ public:
 	Ball 	*ball;
 	Room 	*room;
 	Paddle	*paddle;
+	Penguin		*penguin;
 	
 private:
     void setupDemoScene();

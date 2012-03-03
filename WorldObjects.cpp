@@ -233,10 +233,188 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
 }
 
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
+{
+
+	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+	penguin_velocity = Ogre::Vector3(0, 0, 0);
+	in_air = true;
+
+	penguinMotionState = new btDefaultMotionState(*penguin_position);
+
+    btScalar mass = 0;
+    btVector3 penguinInertia(0,0,0);
+
+	//penguin_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
+
+	const float penguin_half_length = penguin_length / 2;
+	penguin_collision_shape = new btBoxShape(btVector3(penguin_half_length, penguin_half_length, penguin_half_length));
+    penguin_collision_shape->calculateLocalInertia(mass,penguinInertia);
+    /*
+	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
+    std::cout << "Hello World" << std::endl;
+    std::cout << ball_collision_shape_test->getRadius() << std::endl;
+	*/
+
+    btRigidBody::btRigidBodyConstructionInfo penguinRigidBodyCI(mass,penguinMotionState,penguin_collision_shape,penguinInertia);
+	penguinRigidBodyCI.m_restitution = 0.712f;
+	
+    penguinRigidBody = new btRigidBody(penguinRigidBodyCI);
+
+    // Disable Gravity because this object will be controlled by the player
+    penguinRigidBody->setGravity(btVector3(0,0,0));
+	penguinRigidBody->setCollisionFlags( penguinRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	penguinRigidBody->setActivationState(DISABLE_DEACTIVATION);
+	//penguinRigidBody->setCollisionFlags(2);
+
+	//penguinRigidBody->setLinearVelocity(btVector3(10,0,0));
+
+	createPenguin(m_pSceneMgr);    
+}
+
+Penguin::~Penguin()
+{
+	delete penguinNode;
+
+	delete penguinRigidBody->getMotionState();
+	delete penguinRigidBody;
+
+	delete penguin_collision_shape;
+}
+
+void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
+{
+
+	btTransform trans;
+    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	float penguin_scale = penguin_length / 50.0;
+
+	//Ogre::Entity* penguinEntity = m_pSceneMgr->createEntity("penguin", "cube.mesh");
+	penguinEntity = m_pSceneMgr->createEntity("penguin", "penguin.mesh");
+	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("penguin");
+	penguinNode->attachObject(penguinEntity);
+	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
+	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+	penguinEntity->setMaterialName("Penguin");
+}
+
+void Penguin::update(double timeSinceLastFrame, MyController* controller)
+{
+
+	if(timeSinceLastFrame > 0.4f)
+		timeSinceLastFrame = 0.4f;
+
+	btTransform trans;
+    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	// Account for Gravity
+	if(in_air){
+		penguin_velocity[1] = penguin_velocity[1] + world_grav * timeSinceLastFrame;
+		// if penguin is falling too fast
+		if(penguin_velocity[1] < max_fall_vel)
+			penguin_velocity[1] = max_fall_vel;
+		vec[1] =  vec[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
+	}
+
+	// Take in user input and handle bounds
+	if(controller->left_control_down == true){
+		//std::cout << "left" << std::endl;
+		vec[0] = vec[0] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->right_control_down == true){
+		//std::cout << "right" << std::endl;
+		vec[0] = vec[0] + (move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->up_control_down == true){
+		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->bottom_control_down == true){
+		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->forward_control_down == true){
+		//std::cout << "forward" << std::endl;
+		vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->backward_control_down == true){
+		//std::cout << "backward" << std::endl;
+		vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
+	}
+
+	if(controller->jump_control_down == true){
+		controller->jump_control_down = false;
+		if(!in_air){
+			in_air = true;
+			penguin_velocity[1] = jump_vel;
+		}
+	}
+
+	// Handle Wall and Ceiling Collisions
+
+	if(vec[0] < -room_width/2 + penguin_length/2)
+		vec[0] = -room_width/2 + penguin_length/2;
+
+	if(vec[0] > room_width/2 - penguin_length/2)
+		vec[0] = room_width/2 - penguin_length/2;
+
+
+	if(vec[1] > room_width/2 - penguin_length/2)
+		vec[1] = room_width/2 - penguin_length/2;
+
+
+	if(vec[2] < -room_length/2 + penguin_length/2)
+		vec[2] = -room_length/2 + penguin_length/2;
+
+
+	if(vec[2] > room_length/2 - penguin_length/2)
+		vec[2] = room_length/2 - penguin_length/2;
+
+	// If penguin touches the ground, change the penguin to ground state
+	if(vec[1] < -room_width/2 + penguin_length/2){
+		vec[1] = -room_width/2 + penguin_length/2;
+		float tolerance = abs(vec[1] - (-room_width/2 + penguin_length/2));
+		if(tolerance < 0.01f){
+
+			in_air = false;
+			penguin_velocity[1]  = 0;
+		}	
+	}
+	//std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
+
+	
+	if(controller->left_control_down == true ||
+		controller->right_control_down == true ||
+		controller->up_control_down == true ||
+		controller->bottom_control_down == true ||
+		controller->forward_control_down == true ||
+		controller->backward_control_down == true)
+	{
+		mAnimationState = penguinEntity->getAnimationState("amuse");
+        mAnimationState->setLoop(true);
+        mAnimationState->setEnabled(true);
+
+        float time_scale = timeSinceLastFrame / 4.0f; // Scale the time back so it doesn't animate as fast
+		mAnimationState->addTime(time_scale);
+	}
+	
+
+	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
+	penguinMotionState->setWorldTransform(trans);
+	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+}
+
+
 Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
-	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(10, 0, -25));
 	paddle_velocity = Ogre::Vector3(0, 0, 0);
 	in_air = true;
 
@@ -246,13 +424,10 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
     btVector3 paddleInertia(0,0,0);
 
 	//paddle_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
-	paddle_collision_shape = new btBoxShape(btVector3(5, 5, 5));
+
+	float paddle_half_length = paddle_length / 2;
+	paddle_collision_shape = new btBoxShape(btVector3(paddle_half_length, paddle_half_length, paddle_half_length));
     paddle_collision_shape->calculateLocalInertia(mass,paddleInertia);
-    /*
-	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
-    std::cout << "Hello World" << std::endl;
-    std::cout << ball_collision_shape_test->getRadius() << std::endl;
-	*/
 
     btRigidBody::btRigidBodyConstructionInfo paddleRigidBodyCI(mass,paddleMotionState,paddle_collision_shape,paddleInertia);
 	paddleRigidBodyCI.m_restitution = 0.712f;
@@ -282,17 +457,20 @@ Paddle::~Paddle()
 
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 {
+	btTransform trans;
+    paddleRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 
-	float paddle_scale = paddle_length / 100.0;
+	float paddle_scale = paddle_length / 50.0;
 
 	//Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
 	paddleEntity = m_pSceneMgr->createEntity("paddle", "penguin.mesh");
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
 	paddleNode->setScale(paddle_scale, paddle_scale, paddle_scale);
-	paddleNode->setPosition(0,0,25);
-	paddleEntity->setMaterialName("Penguin");
+	paddleNode->setPosition(vec[0] ,vec[1], vec[2]);
+	//paddleEntity->setMaterialName("Penguin");
 }
 
 void Paddle::update(double timeSinceLastFrame, MyController* controller)
@@ -312,43 +490,44 @@ void Paddle::update(double timeSinceLastFrame, MyController* controller)
 		if(paddle_velocity[1] < max_fall_vel)
 			paddle_velocity[1] = max_fall_vel;
 		vec[1] =  vec[1] + paddle_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
-
-		//vec[1] = vec[1] - 1;
-		std::cout << "Air " << paddle_velocity[1] << " " << vec[1] << std::endl;
 	}
 
 	// Take in user input and handle bounds
 	if(controller->left_control_down == true){
+		//std::cout << "left" << std::endl;
 		vec[0] = vec[0] + (-move_vel) * timeSinceLastFrame;
 		if(vec[0] < -room_width/2 + paddle_length/2)
 			vec[0] = -room_width/2 + paddle_length/2;
 	}
 
 	if(controller->right_control_down == true){
+		//std::cout << "right" << std::endl;
 		vec[0] = vec[0] + (move_vel) * timeSinceLastFrame;
 		if(vec[0] > room_width/2 - paddle_length/2)
 			vec[0] = room_width/2 - paddle_length/2;
 	}
 
-	if(controller->forward_control_down == true){
+	if(controller->up_control_down == true){
 		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
 		if(vec[1] > room_width/2 - paddle_length/2)
 			vec[1] = room_width/2 - paddle_length/2;
 	}
 
-	if(controller->backward_control_down == true){
+	if(controller->bottom_control_down == true){
 		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
 		if(vec[1] < -room_width/2 + paddle_length/2)
 			vec[1] = -room_width/2 + paddle_length/2;
 	}
 
-	if(controller->up_control_down == true){
+	if(controller->forward_control_down == true){
+		//std::cout << "forward" << std::endl;
 		vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
 		if(vec[2] < -room_length/2 + paddle_length/2)
 			vec[2] = -room_length/2 + paddle_length/2;
 	}
 
-	if(controller->bottom_control_down == true){
+	if(controller->backward_control_down == true){
+		//std::cout << "backward" << std::endl;
 		vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
 		if(vec[2] > room_length/2 - paddle_length/2)
 			vec[2] = room_length/2 - paddle_length/2;
@@ -370,24 +549,26 @@ void Paddle::update(double timeSinceLastFrame, MyController* controller)
 
 			in_air = false;
 			paddle_velocity[1]  = 0;
-			
-			std::cout << "Ground" << std::endl;
 		}	
 	}
-	std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
+	//std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
 
-	if(controller->left_control_down == false &&
-		controller->right_control_down == false &&
-		controller->up_control_down == false &&
-		controller->bottom_control_down == false &&
-		controller->forward_control_down == false &&
-		controller->backward_control_down == false)
+	
+	if(controller->left_control_down == true ||
+		controller->right_control_down == true ||
+		controller->up_control_down == true ||
+		controller->bottom_control_down == true ||
+		controller->forward_control_down == true ||
+		controller->backward_control_down == true)
 	{
 		mAnimationState = paddleEntity->getAnimationState("amuse");
-        	mAnimationState->setLoop(true);
-        	mAnimationState->setEnabled(true);
-		mAnimationState->addTime(timeSinceLastFrame);
+        mAnimationState->setLoop(true);
+        mAnimationState->setEnabled(true);
+
+        float time_scale = timeSinceLastFrame / 4.0f; // Scale the time back so it doesn't animate as fast
+		mAnimationState->addTime(time_scale);
 	}
+	
 
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	paddleMotionState->setWorldTransform(trans);

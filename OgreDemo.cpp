@@ -63,6 +63,10 @@ void DemoApp::setupDemoScene()
 	paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
+	// Create Penguin
+	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(penguin->penguinRigidBody);
+
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -92,7 +96,8 @@ void DemoApp::runDemo()
 
  			// Our Team's main loop
 			ball->update(timeSinceLastFrame);
-			paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
+			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
+			//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
@@ -132,14 +137,14 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
 		controller->right_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_UP))
-		controller->up_control_down = true;
+		controller->forward_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-		controller->bottom_control_down = true;
+		controller->backward_control_down = true;
 
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_P))
-		controller->forward_control_down = true;
+		controller->up_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
-		controller->backward_control_down = true;
+		controller->bottom_control_down = true;
 
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE))
 		controller->jump_control_down = true;
@@ -166,19 +171,19 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 	}	
 
 	if(keyEventRef.key == OIS::KC_UP){
-		controller->up_control_down = false;	
+		controller->forward_control_down = false;	
 	}
 
 	if(keyEventRef.key == OIS::KC_DOWN){
-		controller->bottom_control_down = false;	
+		controller->backward_control_down = false;	
 	}
 
 	if(keyEventRef.key == OIS::KC_P){
-		controller->forward_control_down = false;
+		controller->up_control_down = false;
 	}
 
 	if(keyEventRef.key == OIS::KC_SEMICOLON){
-		controller->backward_control_down = false;
+		controller->bottom_control_down = false;
 	}
 
 	return true;
