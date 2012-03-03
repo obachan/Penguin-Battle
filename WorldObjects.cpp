@@ -269,6 +269,8 @@ Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
 
 	//penguinRigidBody->setLinearVelocity(btVector3(10,0,0));
 
+
+
 	createPenguin(m_pSceneMgr);    
 }
 
@@ -298,6 +300,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
 	penguinEntity->setMaterialName("Penguin");
+	penguinNode->yaw( Ogre::Degree( -180 ) );
 }
 
 void Penguin::update(double timeSinceLastFrame, MyController* controller)
@@ -462,15 +465,15 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 
-	float paddle_scale = paddle_length / 50.0;
+	float paddle_scale = paddle_length / 100.0;
 
-	//Ogre::Entity* paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
-	paddleEntity = m_pSceneMgr->createEntity("paddle", "penguin.mesh");
+	paddleEntity = m_pSceneMgr->createEntity("paddle", "cube.mesh");
+	//paddleEntity = m_pSceneMgr->createEntity("paddle", "penguin.mesh");
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
 	paddleNode->setScale(paddle_scale, paddle_scale, paddle_scale);
 	paddleNode->setPosition(vec[0] ,vec[1], vec[2]);
-	//paddleEntity->setMaterialName("Penguin");
+	paddleEntity->setMaterialName("WoodPallet");
 }
 
 void Paddle::update(double timeSinceLastFrame, MyController* controller)
