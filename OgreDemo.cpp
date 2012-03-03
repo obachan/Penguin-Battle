@@ -35,7 +35,7 @@ void DemoApp::setupDemoScene()
 {
 
 	// Sets global world conditions
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/CloudyNoonSkyBox");
+	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);

@@ -106,6 +106,24 @@ material Examples/SpaceSkyBox
 	}
 }
 
+material Examples/StarsSkyBox
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture stars.jpg combinedUVW
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
 material Examples/SceneSkyBox1
 {
 	technique
