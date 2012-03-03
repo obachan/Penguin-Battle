@@ -57,8 +57,8 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->bottomRigidBody);
 
 	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
+	paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
 	// Create Penguin
 	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr);

@@ -23,7 +23,7 @@ public:
 
 	Ball 	*ball;
 	Room 	*room;
-	//Paddle	*paddle;
+	Paddle	*paddle;
 	Penguin		*penguin;
 	
 private:

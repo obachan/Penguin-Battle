@@ -119,7 +119,7 @@ private:
 	btCollisionShape* penguin_collision_shape;
 };
 
-/*
+
 class Paddle
 {
 public:
@@ -156,4 +156,3 @@ private:
 
 	btCollisionShape* paddle_collision_shape;
 };
-*/

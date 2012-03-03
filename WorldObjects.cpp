@@ -246,7 +246,9 @@ Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
     btVector3 penguinInertia(0,0,0);
 
 	//penguin_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
-	penguin_collision_shape = new btBoxShape(btVector3(5, 5, 5));
+
+	const float penguin_half_length = penguin_length / 2;
+	penguin_collision_shape = new btBoxShape(btVector3(penguin_half_length, penguin_half_length, penguin_half_length));
     penguin_collision_shape->calculateLocalInertia(mass,penguinInertia);
     /*
 	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
@@ -283,6 +285,9 @@ Penguin::~Penguin()
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 {
 
+	btTransform trans;
+    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 	float penguin_scale = penguin_length / 50.0;
 
@@ -291,7 +296,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("penguin");
 	penguinNode->attachObject(penguinEntity);
 	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
-	penguinNode->setPosition(0,0,35);
+	penguinNode->setPosition(vec[0], vec[1], vec[2]);
 	penguinEntity->setMaterialName("Penguin");
 }
 
@@ -370,7 +375,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller)
 
 	if(vec[2] > room_length/2 - penguin_length/2)
 		vec[2] = room_length/2 - penguin_length/2;
-		
+
 	// If penguin touches the ground, change the penguin to ground state
 	if(vec[1] < -room_width/2 + penguin_length/2){
 		vec[1] = -room_width/2 + penguin_length/2;
@@ -404,11 +409,12 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller)
 	penguinMotionState->setWorldTransform(trans);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
 }
-/*
+
+
 Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
 
-	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(10, 0, -25));
 	paddle_velocity = Ogre::Vector3(0, 0, 0);
 	in_air = true;
 
@@ -418,7 +424,9 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
     btVector3 paddleInertia(0,0,0);
 
 	//paddle_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
-	paddle_collision_shape = new btBoxShape(btVector3(5, 5, 5));
+
+	float paddle_half_length = paddle_length / 2;
+	paddle_collision_shape = new btBoxShape(btVector3(paddle_half_length, paddle_half_length, paddle_half_length));
     paddle_collision_shape->calculateLocalInertia(mass,paddleInertia);
 
     btRigidBody::btRigidBodyConstructionInfo paddleRigidBodyCI(mass,paddleMotionState,paddle_collision_shape,paddleInertia);
@@ -449,6 +457,9 @@ Paddle::~Paddle()
 
 void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 {
+	btTransform trans;
+    paddleRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 
 	float paddle_scale = paddle_length / 50.0;
@@ -458,8 +469,8 @@ void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
 	paddleNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("paddle");
 	paddleNode->attachObject(paddleEntity);
 	paddleNode->setScale(paddle_scale, paddle_scale, paddle_scale);
-	paddleNode->setPosition(0,0,25);
-	paddleEntity->setMaterialName("Penguin");
+	paddleNode->setPosition(vec[0] ,vec[1], vec[2]);
+	//paddleEntity->setMaterialName("Penguin");
 }
 
 void Paddle::update(double timeSinceLastFrame, MyController* controller)
@@ -606,4 +617,3 @@ void Paddle::moveStop(double timeSinceLastFrame)
 	//paddleRigidBody->setLinearVelocity(btVector3(0,0,0));
 }
 
-*/
