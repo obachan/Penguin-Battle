@@ -92,6 +92,16 @@ private:
 	btCollisionShape* front;
 };
 
+class Goal
+{
+public:
+	Goal(Ogre::SceneManager*);
+	~Goal();
+
+private:
+	void createGoal(Ogre::SceneManager*);
+};
+
 class Penguin
 {
 public:

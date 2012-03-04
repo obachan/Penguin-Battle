@@ -233,6 +233,21 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
 }
 
+Goal::Goal(Ogre::SceneManager* m_pSceneMgr)
+{
+	createGoal(m_pSceneMgr);    
+}
+
+Goal::~Goal()
+{
+
+}
+
+void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
+{
+	
+}
+
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
 {
 
@@ -315,7 +330,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		timeSinceLastFrame = 0.4f;
 
 	btTransform trans;
-    	penguinRigidBody->getMotionState()->getWorldTransform(trans);
+    penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 	
 	penguin_direction = Ogre::Vector3(vec[0],vec[1],vec[2]);
