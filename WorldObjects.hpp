@@ -34,12 +34,12 @@ const float room_length = 300.0f; // represents the length of the prism
 
 const double max_fall_vel = -0.5f;
 const double move_vel = 1.5f;
-const double jump_vel = 5.0f;
+const double jump_vel = 10.0f;
 const float penguin_length = 10.0f;
 
 const float paddle_length = 10.0f;
 
-const float ball_radius = 2.0f;
+const float ball_radius = 5.0f;
 
 class Ball
 {
@@ -119,6 +119,8 @@ public:
 	Ogre::Vector3 penguin_velocity;
 
 	Ogre::Vector3 penguin_direction;
+	Ogre::Vector3 previous_direction;
+
 	Ogre::AnimationState *mAnimationState;
 
 	void update(double, MyController *, Ogre::Camera*);
