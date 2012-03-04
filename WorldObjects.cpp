@@ -302,6 +302,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	penguinEntity->setMaterialName("Penguin");
 	penguinNode->yaw( Ogre::Degree( -180 ) );
 	penguin_direction = Ogre::Vector3(0,0,-1);
+	previous_direction = Ogre::Vector3(0,0,-1);
 
 	/*Ogre::Camera* camera = m_pSceneMgr->getCamera("Camera");
 	camera->setPosition(penguinNode->getPosition());
@@ -317,8 +318,6 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	btTransform trans;
     	penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
-	
-	penguin_direction = Ogre::Vector3(vec[0],vec[1],vec[2]);
 
 	// Account for Gravity
 	if(in_air){
@@ -415,13 +414,47 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	}
 	
 
+	penguin_direction = Ogre::Vector3(vec[0], vec[1], vec[2]) - penguinNode->getPosition();
+	penguin_direction.y = 0;
+	penguin_direction.normalise();
+
+	
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	penguinMotionState->setWorldTransform(trans);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+	
+	if(penguin_direction != previous_direction)
+	{
+	std::cout << penguin_direction << std::endl;
+	std::cout << previous_direction << std::endl;
+	}
+	
+        if ((1.0f + previous_direction.dotProduct(penguin_direction)) < 0.0001f) 
+        {
+            penguinNode->yaw(Ogre::Degree(180));
+        }
+        else
+        {
+            Ogre::Quaternion quat = previous_direction.getRotationTo(penguin_direction);
+		//std::cout << quat << std::endl;
+            penguinNode->rotate(quat);
+        }
 
-	/*camera->setPosition(vec[0], vec[1], vec[2]);
-	penguin_direction = Ogre::Vector3(vec[0] - penguin_direction[0], vec[1] - penguin_direction[1], vec[2] - penguin_direction[2]);
-	camera->setDirection(penguin_direction);*/
+	if (penguin_direction != Ogre::Vector3::ZERO)
+	{
+		previous_direction = Ogre::Vector3(penguin_direction.x, 0, penguin_direction.z);
+	}
+
+	/*
+	penguin_direction.normalise();
+	Ogre::Vector3 src = penguinNode->getOrientation()*penguin_direction;
+
+	
+	
+	penguin_direction.normalise();
+        Ogre::Quaternion quat = src.getRotationTo(penguin_direction);
+        camera->setPosition(vec[0], vec[1], vec[2]);
+	camera->rotate(quat);*/
 }
 
 
