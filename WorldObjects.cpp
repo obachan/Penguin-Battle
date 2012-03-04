@@ -385,13 +385,13 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	if(vec[2] > room_length/2 - penguin_length/2)
 		vec[2] = room_length/2 - penguin_length/2;
 
+
 	// If penguin touches the ground, change the penguin to ground state
 	if(vec[1] < -room_width/2 + penguin_length/2){
+		in_air = false;
 		vec[1] = -room_width/2 + penguin_length/2;
 		float tolerance = abs(vec[1] - (-room_width/2 + penguin_length/2));
 		if(tolerance < 0.01f){
-
-			in_air = false;
 			penguin_velocity[1]  = 0;
 		}	
 	}
@@ -403,7 +403,8 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		controller->up_control_down == true ||
 		controller->bottom_control_down == true ||
 		controller->forward_control_down == true ||
-		controller->backward_control_down == true)
+		controller->backward_control_down == true ||
+		in_air)
 	{
 		mAnimationState = penguinEntity->getAnimationState("amuse");
         mAnimationState->setLoop(true);
