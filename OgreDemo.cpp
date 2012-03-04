@@ -78,8 +78,10 @@ void DemoApp::runDemo()
 	double timeSinceLastFrame = 0;
 	double startTime = 0;
  
-      OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
+    OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
  
+    OgreFramework::getSingletonPtr()->sounds->playMusic();
+
 	while(!m_bShutdown && !OgreFramework::getSingletonPtr()->isOgreToBeShutDown()) 
 	{
 		if(OgreFramework::getSingletonPtr()->m_pRenderWnd->isClosed())m_bShutdown = true;
@@ -146,9 +148,14 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
 		controller->bottom_control_down = true;
 
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE))
+	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE)){
 		controller->jump_control_down = true;
-		
+		if(!penguin->in_air)
+			OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
+	}
+
+	//if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_I))
+//		std::cout << paddle->in_air << std::endl;
 
 	return true;
 }

@@ -25,6 +25,7 @@
 #include <SdkTrays.h>
 #include "Physics.hpp"
 #include "Controller.hpp"
+#include "SoundWrapper.hpp"
 
 #include <iostream>
  
@@ -64,6 +65,7 @@ public:
 
 	PhysicsWrapper*				physics;
 	MyController*				controller;
+	SoundWrapper*				sounds;
 	
 	//Ogre::Vector3				m_TranslateVector;
 

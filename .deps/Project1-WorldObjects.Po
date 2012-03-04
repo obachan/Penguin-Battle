@@ -849,6 +849,41 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  /usr/local/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  /usr/local/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h Controller.hpp \
+ SoundWrapper.hpp /lusr/opt/libsdl-1.2.14/include/SDL/SDL.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_main.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_stdinc.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_config.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_platform.h \
+ /usr/include/strings.h /usr/include/inttypes.h /usr/include/iconv.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_audio.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_error.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_mutex.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_thread.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_rwops.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_cdrom.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_cpuinfo.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_events.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_active.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_keyboard.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_keysym.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_mouse.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_video.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_joystick.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_quit.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_loadso.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_timer.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
+ usr/include/SDL/SDL_mixer.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_types.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_rwops.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_audio.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
+ /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
@@ -2780,6 +2815,82 @@ Physics.hpp:
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreVector3.h:
 
 Controller.hpp:
+
+SoundWrapper.hpp:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_main.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_stdinc.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_config.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_platform.h:
+
+/usr/include/strings.h:
+
+/usr/include/inttypes.h:
+
+/usr/include/iconv.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/close_code.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_audio.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_error.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_mutex.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_thread.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_rwops.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_cdrom.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_cpuinfo.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_events.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_active.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_keyboard.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_keysym.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_mouse.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_video.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_joystick.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_quit.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_loadso.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_timer.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h:
+
+usr/include/SDL/SDL_mixer.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_types.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_rwops.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_audio.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h:
+
+/lusr/opt/libsdl-1.2.14/include/SDL/close_code.h:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
 

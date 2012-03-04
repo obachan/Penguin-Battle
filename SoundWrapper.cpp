@@ -1,7 +1,76 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "SDL.h"
-#include "SDL_mixer.h"
+#include "SoundWrapper.hpp"
+#include <iostream> 
+
+SoundWrapper::SoundWrapper(){
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
+    fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
+    exit(1);
+  }
+ 
+  int audio_rate = 22050;
+  Uint16 audio_format = AUDIO_S16SYS;
+  int audio_channels = 2;
+  int audio_buffers = 4096;
+ 
+  if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
+    fprintf(stderr, "Unable to initialize audio: %s\n", Mix_GetError());
+    exit(1);
+  }
+ 
+  // Sound Effect
+  jump_sound = NULL;
+  jump_sound = Mix_LoadWAV("media/sounds/jump.ogg");
+  if(jump_sound == NULL) {
+    fprintf(stderr, "Unable to load WAV file: %s\n", Mix_GetError());
+  }  
+
+  // Music 
+  is_music_playing = false;
+
+  music = Mix_LoadMUS("media/sounds/breakthru.mp3"); 
+  if(music == NULL) { 
+    printf("Unable to load media/sounds/test_music.wav file: %s\n", Mix_GetError()); 
+    exit(1);
+  }
+}
+
+SoundWrapper::~SoundWrapper(){
+
+  Mix_HaltMusic(); 
+  Mix_FreeMusic(music);
+  Mix_FreeChunk(jump_sound);
+ 
+  Mix_CloseAudio();
+  SDL_Quit();
+}
+
+void SoundWrapper::playMusic(){
+  if(!is_music_playing){
+    is_music_playing = true;
+
+      if(Mix_PlayMusic(music, -1) == -1) 
+      { 
+        printf("Unable to play media/sounds/test_music.wav file: %s\n", Mix_GetError()); 
+        exit(1); 
+      }
+
+  }
+
+}
+
+void SoundWrapper::musicDone(){
+  
+}
+
+void SoundWrapper::playJumpSoundEffect(){
+  int channel;
+ 
+  channel = Mix_PlayChannel(-1, jump_sound, 0);
+  if(channel == -1) {
+    fprintf(stderr, "Unable to play WAV file: %s\n", Mix_GetError());
+  }
+}
+
 
 /*Mix_Chunk *phaser = NULL;
 Mix_Music *music = NULL;
