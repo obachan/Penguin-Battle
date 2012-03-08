@@ -98,8 +98,14 @@ public:
 	Goal(Ogre::SceneManager*);
 	~Goal();
 
+	Ogre::SceneNode* 	goalLeftNode;
+	Ogre::Entity* 		goalLeftEntity;
+	btRigidBody* 		goalLeftBody;
+
 private:
 	void createGoal(Ogre::SceneManager*);
+
+	btCollisionShape* goalLeftShape;
 };
 
 class Penguin

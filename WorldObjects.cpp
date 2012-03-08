@@ -245,7 +245,53 @@ Goal::~Goal()
 
 void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 {
+
+	const float goalLeft_width = 5;
+	const float goalLeft_height = 15;
+	const float goalLeft_depth = 20;
+
+	//--------------------
+	// Physics
+	//--------------------
+
+	btDefaultMotionState* goalLeftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goalLeft_height/2, -30)));
+
+    btScalar mass = 1;
+    btVector3 goalLeftInertia(0,0,0);
+
+	//paddle_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
+
+	float paddle_half_length = paddle_length / 2;
+	goalLeftShape = new btBoxShape(btVector3(goalLeft_width/2, goalLeft_height/2, goalLeft_depth));
+    goalLeftShape->calculateLocalInertia(mass,goalLeftInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo goalLeftRigidBodyCI(mass, goalLeftMotionState,goalLeftShape,goalLeftInertia);
+	goalLeftRigidBodyCI.m_restitution = 0.712f;
 	
+    goalLeftBody = new btRigidBody(goalLeftRigidBodyCI);
+
+
+
+    btTransform trans;
+    goalLeftBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	//--------------------
+	// Visuals
+	//--------------------
+
+	const float cube_length = 100;
+
+	float goalLeft_width_scale = 5/cube_length;
+	float goalLeft_height_scale = 15/cube_length;
+	float goalLeft_depth_scale = 20/cube_length;
+
+	goalLeftEntity = m_pSceneMgr->createEntity("goalLeftBound", "cube.mesh");
+	goalLeftNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalLeftBound");
+	goalLeftNode->attachObject(goalLeftEntity);
+	goalLeftNode->setScale(goalLeft_width_scale, goalLeft_height_scale, goalLeft_depth_scale);
+	goalLeftNode->setPosition(vec[0], vec[1], vec[2]);
+	goalLeftEntity->setMaterialName("WoodPallet");
 }
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
@@ -476,6 +522,25 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 {
+	createPaddle(m_pSceneMgr);    
+}
+
+Paddle::~Paddle()
+{
+	delete paddleNode;
+
+	delete paddleRigidBody->getMotionState();
+	delete paddleRigidBody;
+
+	delete paddle_collision_shape;
+}
+
+void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
+{
+	//--------------------
+	// Physics
+	//--------------------
+
 
 	paddle_position = new btTransform(btQuaternion(0,0,0,1),btVector3(10, 0, -25));
 	paddle_velocity = Ogre::Vector3(0, 0, 0);
@@ -505,21 +570,10 @@ Paddle::Paddle(Ogre::SceneManager* m_pSceneMgr)
 
 	//paddleRigidBody->setLinearVelocity(btVector3(10,0,0));
 
-	createPaddle(m_pSceneMgr);    
-}
+	//--------------------
+	// Visuals
+	//--------------------
 
-Paddle::~Paddle()
-{
-	delete paddleNode;
-
-	delete paddleRigidBody->getMotionState();
-	delete paddleRigidBody;
-
-	delete paddle_collision_shape;
-}
-
-void Paddle::createPaddle(Ogre::SceneManager* m_pSceneMgr)
-{
 	btTransform trans;
     paddleRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
