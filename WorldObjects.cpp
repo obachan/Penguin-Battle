@@ -382,6 +382,8 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
+	Ogre::Vector3 cameraPosition;
+	Ogre::Vector3 cameraDirection;
 
 	// Account for Gravity
 	if(in_air){
@@ -402,6 +404,9 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
+		cameraDirection = penguin_direction;
+		//cameraDirection.y = -5;
+		camera->setDirection(cameraDirection);
 	}
 
 	if(controller->right_control_down == true){
@@ -413,6 +418,9 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
+		cameraDirection = penguin_direction;
+		//cameraDirection.y = -5;
+		camera->setDirection(cameraDirection);
 	}
 
 	if(controller->up_control_down == true){
@@ -501,6 +509,10 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	penguinMotionState->setWorldTransform(trans);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+
+	cameraPosition= vec - (20*penguin_direction);
+	cameraPosition.y += 7;
+	camera->setPosition(cameraPosition);
 	
 	/*if(penguin_direction != previous_direction)
 	{
