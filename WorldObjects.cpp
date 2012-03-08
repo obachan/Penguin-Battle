@@ -216,7 +216,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createGoal(m_pSceneMgr);
-	//attachToDynamicWorld(physics);
+	attachToDynamicWorld(physics);
 }
 
 void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
@@ -227,7 +227,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	const float cube_length = 100;
 
 	//dimensions for the side blocks
-	const float goal_left_width = 10;
+	const float goal_left_width = 2;
 	const float goal_left_height = goal_height;
 	const float goal_left_depth = 30;
 
@@ -273,6 +273,9 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	
     goalLeftBody = new btRigidBody(goalLeftRigidBodyCI);
 
+    goalLeftBody->setLinearFactor(btVector3(0,0,0));
+    goalLeftBody->setAngularFactor(btVector3(0,0,0));
+
     //--------------------
 	// Visuals - Goal Right
 	//--------------------
@@ -306,6 +309,9 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	
     goalRightBody = new btRigidBody(goalRightRigidBodyCI);
 
+    goalRightBody->setLinearFactor(btVector3(0,0,0));
+    goalRightBody->setAngularFactor(btVector3(0,0,0));
+
 
     //--------------------
 	// Visuals - Goal Right
@@ -337,6 +343,9 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	goalBackRigidBodyCI.m_restitution = 0.712f;
 	
     goalBackBody = new btRigidBody(goalBackRigidBodyCI);
+
+    goalBackBody->setLinearFactor(btVector3(0,0,0));
+    goalBackBody->setAngularFactor(btVector3(0,0,0));
 
 	//--------------------
 	// Visuals - Goal Back
@@ -370,6 +379,9 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	goalTopRigidBodyCI.m_restitution = 0.712f;
 	
     goalTopBody = new btRigidBody(goalTopRigidBodyCI);
+
+    goalTopBody->setLinearFactor(btVector3(0,0,0));
+    goalTopBody->setAngularFactor(btVector3(0,0,0));
 
     //--------------------
 	// Visuals - Goal Top
