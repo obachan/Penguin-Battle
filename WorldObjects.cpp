@@ -57,7 +57,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real _rCoordX, Og
 
 	_objSphereNode->setPosition(_v3SpherePosition);
 	_objSphereNode->setScale(_v3SphereScaleFactor);
-	_objSphereEntity->setMaterialName("Examples/SphereMappedRustySteel");
+	_objSphereEntity->setMaterialName("Examples/PinkBall");
 
 }
 
