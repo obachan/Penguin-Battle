@@ -35,6 +35,8 @@ const float room_length = 300.0f; // represents the length of the prism
 const double max_fall_vel = -0.5f;
 const double move_vel = 1.5f;
 const double jump_vel = 10.0f;
+
+const double rotation_speed = 5;
 const float penguin_length = 10.0f;
 
 const float paddle_length = 10.0f;
