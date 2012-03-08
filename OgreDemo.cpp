@@ -68,9 +68,7 @@ void DemoApp::setupDemoScene()
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(penguin->penguinRigidBody);
 
 	// Create Goal
-	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(goal->goalLeftBody);
-
+	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -101,6 +99,8 @@ void DemoApp::runDemo()
  			
 
  			// Our Team's main loop
+			goal->update(timeSinceLastFrame);
+
 			ball->update(timeSinceLastFrame);
 			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 			//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);

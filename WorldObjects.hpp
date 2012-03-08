@@ -29,19 +29,19 @@
 
 const double world_grav = -0.98f;
 
-const float room_width = 100.0f; // represents width/height or room
-const float room_length = 300.0f; // represents the length of the prism
+const float room_width = 200.0f; // represents width/height or room
+const float room_length = 400.0f; // represents the length of the prism
 
 const double max_fall_vel = -0.5f;
 const double move_vel = 1.5f;
-const double jump_vel = 10.0f;
+const double jump_vel = 7.0f;
 
-const double rotation_speed = 5;
+const double rotation_speed = 5.0f;
 const float penguin_length = 10.0f;
 
 const float paddle_length = 10.0f;
 
-const float ball_radius = 5.0f;
+const float ball_radius = 9.0f;
 
 class Ball
 {
@@ -97,17 +97,39 @@ private:
 class Goal
 {
 public:
-	Goal(Ogre::SceneManager*);
+	Goal(Ogre::SceneManager*, PhysicsWrapper*);
 	~Goal();
 
 	Ogre::SceneNode* 	goalLeftNode;
 	Ogre::Entity* 		goalLeftEntity;
 	btRigidBody* 		goalLeftBody;
 
+	Ogre::SceneNode* 	goalRightNode;
+	Ogre::Entity* 		goalRightEntity;
+	btRigidBody* 		goalRightBody;
+
+	Ogre::SceneNode* 	goalBackNode;
+	Ogre::Entity* 		goalBackEntity;
+	btRigidBody* 		goalBackBody;
+
+	Ogre::SceneNode* 	goalTopNode;
+	Ogre::Entity* 		goalTopEntity;
+	btRigidBody* 		goalTopBody;
+
+	// The front panel should be open
+	Ogre::SceneNode* 	goalFrontNode;
+	Ogre::Entity* 		goalFrontEntity;
+
+	void update(double);
+
 private:
 	void createGoal(Ogre::SceneManager*);
+	void attachToDynamicWorld(PhysicsWrapper*);
 
 	btCollisionShape* goalLeftShape;
+	btCollisionShape* goalRightShape;
+	btCollisionShape* goalBackShape;
+	btCollisionShape* goalTopShape;
 };
 
 class Penguin

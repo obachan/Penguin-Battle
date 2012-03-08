@@ -139,27 +139,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	m_pSceneMgr->getRootSceneNode()->createChildSceneNode("leftWall")->attachObject(entLeft);
 	entLeft->setMaterialName("Examples/Transparent");
 
-	/*Ogre::Plane left_plane(Ogre::Vector3(1,0,0), 0);
-    Ogre::MeshManager::getSingleton().createPlane("left", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        left_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
-    Ogre::SceneNode *_leftNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entLeft = m_pSceneMgr->createEntity("LeftEntity", "left");
-    _leftNode->attachObject(entLeft);
-	//_leftNode->roll(Ogre::Degree(90));
-	_leftNode->setPosition(room_width/2, 0, 0);
-	entLeft->setMaterialName("Examples/Rockwall");*/
-
 	// Right Plane
-	/*Ogre::Plane right_plane(Ogre::Vector3(1,0,0), 0);
-    Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        right_plane, room_width, room_length, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Y);
-    Ogre::SceneNode *_rightNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* entRight = m_pSceneMgr->createEntity("RightEntity", "right");
-    _rightNode->attachObject(entRight);
-	//_rightNode->roll(Ogre::Degree(-90));
-	_rightNode->setPosition(-room_width/2, 0, 0);
-	entRight->setMaterialName("Examples/Rockwall");*/
-
 	Ogre::Plane right_plane(Ogre::Vector3(1.0f, 0.0f, 0.0f), -room_width/2);
 	Ogre::MeshManager::getSingleton().createPlane("right", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, right_plane, room_length, room_width, 20, 20, true, 1, room_length/20, room_width/20, Ogre::Vector3::UNIT_Y);
 	Ogre::Entity* entRight = m_pSceneMgr->createEntity("RightEntity", "right");
@@ -233,9 +213,186 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
 }
 
-Goal::Goal(Ogre::SceneManager* m_pSceneMgr)
+Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-	createGoal(m_pSceneMgr);    
+	createGoal(m_pSceneMgr);
+	//attachToDynamicWorld(physics);
+}
+
+void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
+{
+
+	const float goal_length = 75;
+	const float goal_height = 50;
+	const float cube_length = 100;
+
+	//dimensions for the side blocks
+	const float goal_left_width = 10;
+	const float goal_left_height = goal_height;
+	const float goal_left_depth = 30;
+
+	float goal_left_width_scale = goal_left_width/cube_length;
+	float goal_left_height_scale = goal_left_height/cube_length;
+	float goal_left_depth_scale = goal_left_depth/cube_length;
+
+	//dimensions for the back block
+	const float goal_back_width = goal_length + 2 * goal_left_width;
+	const float goal_back_height = goal_height;
+	const float goal_back_depth = goal_left_width;
+
+	float goal_back_width_scale = goal_back_width/cube_length;
+	float goal_back_height_scale = goal_back_height/cube_length;
+	float goal_back_depth_scale = goal_back_depth/cube_length;
+
+	//dimensions for the top block
+	const float goal_top_width = goal_length + 2 * goal_left_width;
+	const float goal_top_height = goal_left_width;
+	const float goal_top_depth = goal_left_depth + goal_back_depth;
+
+	float goal_top_width_scale = goal_top_width/cube_length;
+	float goal_top_height_scale = goal_top_height/cube_length;
+	float goal_top_depth_scale = goal_top_depth/cube_length;
+
+
+	btTransform trans;
+	Ogre::Vector3 vec;
+	//--------------------
+	// Physics - Goal Left
+	//--------------------
+
+	btDefaultMotionState* goalLeftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(-goal_length/2, -room_width/2 + goal_left_height/2, 0)));
+
+    btScalar massLeft = 100;
+    btVector3 goalLeftInertia(0,0,0);
+
+	goalLeftShape = new btBoxShape(btVector3(goal_left_width/2, goal_left_height/2, goal_left_depth/2));
+    goalLeftShape->calculateLocalInertia(massLeft,goalLeftInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo goalLeftRigidBodyCI(massLeft, goalLeftMotionState,goalLeftShape,goalLeftInertia);
+	goalLeftRigidBodyCI.m_restitution = 0.712f;
+	
+    goalLeftBody = new btRigidBody(goalLeftRigidBodyCI);
+
+    //--------------------
+	// Visuals - Goal Right
+	//--------------------
+    
+    // Get the coordinates from the bullet physics model
+    goalLeftBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	goalLeftEntity = m_pSceneMgr->createEntity("goalLeftBound", "cube.mesh");
+	goalLeftNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalLeftBound");
+	goalLeftNode->attachObject(goalLeftEntity);
+	goalLeftNode->setScale(goal_left_width_scale, goal_left_height_scale, goal_left_depth_scale);
+	goalLeftNode->setPosition(vec[0], vec[1], vec[2]);
+	goalLeftEntity->setMaterialName("WoodPallet");
+
+	//--------------------
+	// Physics - Goal Right
+	//--------------------
+
+	btDefaultMotionState* goalRightMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(goal_length/2, -room_width/2 + goal_left_height/2, 0)));
+
+    btScalar massRight = 100;
+    btVector3 goalRightInertia(0,0,0);
+
+    //Goal Right is symmetrical to Goal Left
+	goalRightShape = new btBoxShape(btVector3(goal_left_width/2, goal_left_height/2, goal_left_depth/2));
+    goalRightShape->calculateLocalInertia(massRight,goalRightInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo goalRightRigidBodyCI(massRight, goalRightMotionState,goalRightShape,goalRightInertia);
+	goalRightRigidBodyCI.m_restitution = 0.712f;
+	
+    goalRightBody = new btRigidBody(goalRightRigidBodyCI);
+
+
+    //--------------------
+	// Visuals - Goal Right
+	//--------------------
+    goalRightBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	goalRightEntity = m_pSceneMgr->createEntity("goalRightBound", "cube.mesh");
+	goalRightNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalRightBound");
+	goalRightNode->attachObject(goalRightEntity);
+	goalRightNode->setScale(goal_left_width_scale, goal_left_height_scale, goal_left_depth_scale);
+	goalRightNode->setPosition(vec[0], vec[1], vec[2]);
+	goalRightEntity->setMaterialName("WoodPallet");
+
+
+	//--------------------
+	// Physics - Goal Back
+	//--------------------
+
+	btDefaultMotionState* goalBackMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_left_height/2, -(goal_left_depth/2 + goal_back_depth/2)  )));
+
+    btScalar massBack = 100;
+    btVector3 goalBackInertia(0,0,0);
+
+	goalBackShape = new btBoxShape(btVector3(goal_back_width/2, goal_back_height/2, goal_back_depth/2));
+    goalBackShape->calculateLocalInertia(massBack,goalBackInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo goalBackRigidBodyCI(massBack, goalBackMotionState,goalBackShape,goalBackInertia);
+	goalBackRigidBodyCI.m_restitution = 0.712f;
+	
+    goalBackBody = new btRigidBody(goalBackRigidBodyCI);
+
+	//--------------------
+	// Visuals - Goal Back
+	//--------------------
+
+	goalBackBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	goalBackEntity = m_pSceneMgr->createEntity("goalBackBound", "cube.mesh");
+	goalBackNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalBackBound");
+	goalBackNode->attachObject(goalBackEntity);
+	goalBackNode->setScale(goal_back_width_scale, goal_back_height_scale, goal_back_depth_scale);
+	goalBackNode->setPosition(vec[0], vec[1], vec[2]);
+	goalBackEntity->setMaterialName("WoodPallet");
+
+
+	
+	//--------------------
+	// Physics - Goal Top
+	//--------------------
+
+	btDefaultMotionState* goalTopMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_height + goal_top_height/2, 0 )));
+
+    btScalar massTop = 100;
+    btVector3 goalTopInertia(0,0,0);
+
+	goalTopShape = new btBoxShape(btVector3(goal_back_width/2, goal_back_height/2, goal_back_depth/2));
+    goalTopShape->calculateLocalInertia(massTop,goalTopInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo goalTopRigidBodyCI(massTop, goalTopMotionState,goalTopShape,goalTopInertia);
+	goalTopRigidBodyCI.m_restitution = 0.712f;
+	
+    goalTopBody = new btRigidBody(goalTopRigidBodyCI);
+
+    //--------------------
+	// Visuals - Goal Top
+	//--------------------
+
+	goalTopBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	goalTopEntity = m_pSceneMgr->createEntity("goalTopBound", "cube.mesh");
+	goalTopNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalTopBound");
+	goalTopNode->attachObject(goalTopEntity);
+	goalTopNode->setScale(goal_top_width_scale, goal_top_height_scale, goal_top_depth_scale);
+	goalTopNode->setPosition(vec[0], vec[1], vec[2]);
+	goalTopEntity->setMaterialName("WoodPallet");
+	
+}
+
+void Goal::attachToDynamicWorld(PhysicsWrapper* physics){
+
+	physics->add_object_to_dynamicWorld(goalLeftBody);
+	physics->add_object_to_dynamicWorld(goalRightBody);
+	physics->add_object_to_dynamicWorld(goalBackBody);
+	physics->add_object_to_dynamicWorld(goalTopBody);  
 }
 
 Goal::~Goal()
@@ -243,61 +400,32 @@ Goal::~Goal()
 
 }
 
-void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
-{
+void Goal::update(double timeSinceLastFrame){
 
-	const float goalLeft_width = 5;
-	const float goalLeft_height = 15;
-	const float goalLeft_depth = 20;
+	btTransform trans;
+	Ogre::Vector3 vec;
 
-	//--------------------
-	// Physics
-	//--------------------
-
-	btDefaultMotionState* goalLeftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goalLeft_height/2, -30)));
-
-    btScalar mass = 1;
-    btVector3 goalLeftInertia(0,0,0);
-
-	//paddle_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
-
-	float paddle_half_length = paddle_length / 2;
-	goalLeftShape = new btBoxShape(btVector3(goalLeft_width/2, goalLeft_height/2, goalLeft_depth));
-    goalLeftShape->calculateLocalInertia(mass,goalLeftInertia);
-
-    btRigidBody::btRigidBodyConstructionInfo goalLeftRigidBodyCI(mass, goalLeftMotionState,goalLeftShape,goalLeftInertia);
-	goalLeftRigidBodyCI.m_restitution = 0.712f;
-	
-    goalLeftBody = new btRigidBody(goalLeftRigidBodyCI);
-
-
-
-    btTransform trans;
     goalLeftBody->getMotionState()->getWorldTransform(trans);
-	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
-
-	//--------------------
-	// Visuals
-	//--------------------
-
-	const float cube_length = 100;
-
-	float goalLeft_width_scale = 5/cube_length;
-	float goalLeft_height_scale = 15/cube_length;
-	float goalLeft_depth_scale = 20/cube_length;
-
-	goalLeftEntity = m_pSceneMgr->createEntity("goalLeftBound", "cube.mesh");
-	goalLeftNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalLeftBound");
-	goalLeftNode->attachObject(goalLeftEntity);
-	goalLeftNode->setScale(goalLeft_width_scale, goalLeft_height_scale, goalLeft_depth_scale);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 	goalLeftNode->setPosition(vec[0], vec[1], vec[2]);
-	goalLeftEntity->setMaterialName("WoodPallet");
+
+	goalRightBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	goalRightNode->setPosition(vec[0], vec[1], vec[2]);
+
+	goalBackBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	goalBackNode->setPosition(vec[0], vec[1], vec[2]);
+
+	goalTopBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	goalTopNode->setPosition(vec[0], vec[1], vec[2]);
 }
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)
 {
 
-	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0));
+	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, 0));
 	penguin_velocity = Ogre::Vector3(0, 0, 0);
 	in_air = true;
 
