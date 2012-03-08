@@ -42,6 +42,7 @@ const float penguin_length = 10.0f;
 const float paddle_length = 10.0f;
 
 const float ball_radius = 9.0f;
+const float ball_mass = 5.0f;
 
 class Ball
 {
@@ -120,11 +121,12 @@ public:
 	Ogre::SceneNode* 	goalFrontNode;
 	Ogre::Entity* 		goalFrontEntity;
 
-	void update(double);
+	void update();
 
 private:
-	void createGoal(Ogre::SceneManager*);
+	void createGoal(Ogre::SceneManager*, double);
 	void attachToDynamicWorld(PhysicsWrapper*);
+	void translate(double, double, double);
 
 	btCollisionShape* goalLeftShape;
 	btCollisionShape* goalRightShape;
@@ -135,6 +137,7 @@ private:
 class Penguin
 {
 public:
+
 
 	Penguin(Ogre::SceneManager*);
 	~Penguin();

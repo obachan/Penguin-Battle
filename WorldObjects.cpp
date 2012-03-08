@@ -10,7 +10,7 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr)
 
 	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(start_pos_x, start_pos_y, start_pos_z)));
 
-    btScalar mass = 1;
+    btScalar mass = ball_mass;
     btVector3 ballInertia(0,0,0);
 
 	ball_collision_shape = new btSphereShape(ball_radius);
@@ -215,16 +215,18 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 
 Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-	createGoal(m_pSceneMgr);
+	float goal_to_edge_wall_offset = 30.0;
+
+	createGoal(m_pSceneMgr, -room_length/2 + goal_to_edge_wall_offset);
 	attachToDynamicWorld(physics);
 }
 
-void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
+void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
 {
+	const float cube_length = 100;
 
 	const float goal_length = 75;
 	const float goal_height = 50;
-	const float cube_length = 100;
 
 	//dimensions for the side blocks
 	const float goal_left_width = 2;
@@ -253,6 +255,16 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	float goal_top_height_scale = goal_top_height/cube_length;
 	float goal_top_depth_scale = goal_top_depth/cube_length;
 
+	//dimensions for the front block
+	const float goal_front_width = goal_length;
+	const float goal_front_height = goal_height;
+	const float goal_front_depth = 1;
+
+	float goal_front_width_scale = goal_front_width/cube_length;
+	float goal_front_height_scale = goal_front_height/cube_length;
+	float goal_front_depth_scale = goal_front_depth/cube_length;
+
+
 
 	btTransform trans;
 	Ogre::Vector3 vec;
@@ -260,7 +272,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	// Physics - Goal Left
 	//--------------------
 
-	btDefaultMotionState* goalLeftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(-goal_length/2, -room_width/2 + goal_left_height/2, 0)));
+	btDefaultMotionState* goalLeftMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(-goal_length/2, -room_width/2 + goal_left_height/2, 0 + translate_z)));
 
     btScalar massLeft = 100;
     btVector3 goalLeftInertia(0,0,0);
@@ -295,7 +307,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	// Physics - Goal Right
 	//--------------------
 
-	btDefaultMotionState* goalRightMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(goal_length/2, -room_width/2 + goal_left_height/2, 0)));
+	btDefaultMotionState* goalRightMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(goal_length/2, -room_width/2 + goal_left_height/2, 0 + translate_z)));
 
     btScalar massRight = 100;
     btVector3 goalRightInertia(0,0,0);
@@ -331,7 +343,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	// Physics - Goal Back
 	//--------------------
 
-	btDefaultMotionState* goalBackMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_left_height/2, -(goal_left_depth/2 + goal_back_depth/2)  )));
+	btDefaultMotionState* goalBackMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_left_height/2, -(goal_left_depth/2 + goal_back_depth/2)  + translate_z)));
 
     btScalar massBack = 100;
     btVector3 goalBackInertia(0,0,0);
@@ -367,7 +379,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	// Physics - Goal Top
 	//--------------------
 
-	btDefaultMotionState* goalTopMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_height + goal_top_height/2, 0 )));
+	btDefaultMotionState* goalTopMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2 + goal_height + goal_top_height/2, 0 + translate_z)));
 
     btScalar massTop = 100;
     btVector3 goalTopInertia(0,0,0);
@@ -396,6 +408,17 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr)
 	goalTopNode->setScale(goal_top_width_scale, goal_top_height_scale, goal_top_depth_scale);
 	goalTopNode->setPosition(vec[0], vec[1], vec[2]);
 	goalTopEntity->setMaterialName("WoodPallet");
+
+	//--------------------
+	// Visuals - Goal Front
+	//--------------------
+
+	goalFrontEntity = m_pSceneMgr->createEntity("goalFrontBound", "cube.mesh");
+	goalFrontNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("goalFrontBound");
+	goalFrontNode->attachObject(goalFrontEntity);
+	goalFrontNode->setScale(goal_front_width_scale, goal_back_height_scale, goal_back_depth_scale);
+	goalFrontNode->setPosition(0, -room_width/2 + goal_back_height/2, goal_left_depth/2 + goal_back_depth/2 + translate_z);
+	goalFrontEntity->setMaterialName("Examples/WaterStream");
 	
 }
 
@@ -412,7 +435,8 @@ Goal::~Goal()
 
 }
 
-void Goal::update(double timeSinceLastFrame){
+void Goal::update()
+{
 
 	btTransform trans;
 	Ogre::Vector3 vec;
@@ -432,6 +456,56 @@ void Goal::update(double timeSinceLastFrame){
 	goalTopBody->getMotionState()->getWorldTransform(trans);
 	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 	goalTopNode->setPosition(vec[0], vec[1], vec[2]);
+}
+
+void Goal::translate(double translate_x, double translate_y, double translate_z)
+{
+	btTransform trans;
+	Ogre::Vector3 vec;
+
+	// Translate Back Block
+    goalBackBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	trans.setOrigin(btVector3(vec[0] + translate_x, vec[1] + translate_y, vec[2] + translate_z));
+	goalBackBody->getMotionState()->setWorldTransform(trans);
+
+	// Translate Left Block
+    goalLeftBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	trans.setOrigin(btVector3(vec[0] + translate_x, vec[1] + translate_y, vec[2] + translate_z));
+	goalLeftBody->getMotionState()->setWorldTransform(trans);
+
+	// Translate Right Block
+    goalRightBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	trans.setOrigin(btVector3(vec[0] + translate_x, vec[1] + translate_y, vec[2] + translate_z));
+	goalRightBody->getMotionState()->setWorldTransform(trans);
+
+	// Translate Top Block
+    goalTopBody->getMotionState()->getWorldTransform(trans);
+	vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	trans.setOrigin(btVector3(vec[0] + translate_x, vec[1] + translate_y, vec[2] + translate_z));
+	goalTopBody->getMotionState()->setWorldTransform(trans);
+
+	// Syncs the Visuals with the Physics
+	update();
+
+	// Move the visual goal post
+	vec = goalFrontNode->getPosition();
+	goalFrontNode->setPosition(vec[0] + translate_x, vec[1] + translate_y, vec[2] + translate_z);
+
+
+
+
+	goalRightBody->getMotionState()->getWorldTransform(trans);
+	std::cout << trans.getOrigin().getX() << " " << trans.getOrigin().getY() << " " << trans.getOrigin().getZ() << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "=================" << std::endl;
 }
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr)

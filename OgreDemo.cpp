@@ -99,7 +99,7 @@ void DemoApp::runDemo()
  			
 
  			// Our Team's main loop
-			goal->update(timeSinceLastFrame);
+			goal->update(); // goal has no data that needs to be updated
 
 			ball->update(timeSinceLastFrame);
 			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
