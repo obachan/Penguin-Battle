@@ -61,6 +61,8 @@ void DemoApp::setupDemoScene()
 
 	// Create Goal
 	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+
+	pause_state = false;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -89,21 +91,21 @@ void DemoApp::runDemo()
 			OgreFramework::getSingletonPtr()->m_pKeyboard->capture();
 			OgreFramework::getSingletonPtr()->m_pMouse->capture();
  			
+			if (!pause_state)
+			{
+ 				// Our Team's main loop
+				ball->update(timeSinceLastFrame);
+				penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+				OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+				//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
+	
+				bool scored = false;
 
- 			// Our Team's main loop
-
-			ball->update(timeSinceLastFrame);
-			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-			//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
-
-			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
-			bool scored = false;
-
-			//if(ball->inGoal(goal))
+				//if(ball->inGoal(goal))
 
 
-			OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, false);
+				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, false);
+			}
 
 			////////////////////////////////////////////////
 
@@ -163,7 +165,12 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(keyEventRef.key == OIS::KC_Q)
 	{
 		penguin->toggleThirdPersonCamera();
-	}	
+	}
+
+	if(keyEventRef.key == OIS::KC_P)
+	{
+		pause_state = !pause_state;
+	}
 
 	return true;
 }

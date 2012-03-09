@@ -4,9 +4,9 @@
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 
-	const double start_pos_x = 10.5f;
-	const double start_pos_y = 3.0f;
-	const double start_pos_z = -25.0f;
+	const double start_pos_x = 0.0f;
+	const double start_pos_y = -(room_width/2) + ball_radius;
+	const double start_pos_z = 0.0f;
 	
 	float ball_radius_node_conversion = ball_radius / 100.0f;
 
@@ -30,9 +30,9 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
     btRigidBody::btRigidBodyConstructionInfo ballRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
-	ballRigidBodyCI.m_restitution = 0.95f;
+	ballRigidBodyCI.m_restitution = 0.765f;
     ballRigidBody = new btRigidBody(ballRigidBodyCI);
-	ballRigidBody->setLinearVelocity(btVector3(10,0,0));
+	ballRigidBody->setLinearVelocity(btVector3(0,0,0));
 
 	//--------------------
 	// Visual - Ball
@@ -318,7 +318,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
     goalLeftShape->calculateLocalInertia(massLeft,goalLeftInertia);
 
     btRigidBody::btRigidBodyConstructionInfo goalLeftRigidBodyCI(massLeft, goalLeftMotionState,goalLeftShape,goalLeftInertia);
-	goalLeftRigidBodyCI.m_restitution = 0.712f;
+	goalLeftRigidBodyCI.m_restitution = 1;
 	
     goalLeftBody = new btRigidBody(goalLeftRigidBodyCI);
 
@@ -354,7 +354,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
     goalRightShape->calculateLocalInertia(massRight,goalRightInertia);
 
     btRigidBody::btRigidBodyConstructionInfo goalRightRigidBodyCI(massRight, goalRightMotionState,goalRightShape,goalRightInertia);
-	goalRightRigidBodyCI.m_restitution = 0.712f;
+	goalRightRigidBodyCI.m_restitution = 1;
 	
     goalRightBody = new btRigidBody(goalRightRigidBodyCI);
 
@@ -389,7 +389,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
     goalBackShape->calculateLocalInertia(massBack,goalBackInertia);
 
     btRigidBody::btRigidBodyConstructionInfo goalBackRigidBodyCI(massBack, goalBackMotionState,goalBackShape,goalBackInertia);
-	goalBackRigidBodyCI.m_restitution = 0.712f;
+	goalBackRigidBodyCI.m_restitution = 1;
 	
     goalBackBody = new btRigidBody(goalBackRigidBodyCI);
 
@@ -425,7 +425,7 @@ void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
     goalTopShape->calculateLocalInertia(massTop,goalTopInertia);
 
     btRigidBody::btRigidBodyConstructionInfo goalTopRigidBodyCI(massTop, goalTopMotionState,goalTopShape,goalTopInertia);
-	goalTopRigidBodyCI.m_restitution = 0.712f;
+	goalTopRigidBodyCI.m_restitution = 1;
 	
     goalTopBody = new btRigidBody(goalTopRigidBodyCI);
 
@@ -514,9 +514,9 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 	const float penguin_half_length = penguin_length / 2;
 
-	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, 0));
+	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, room_length/4));
 	penguin_velocity = Ogre::Vector3(0, 0, 0);
-	in_air = true;
+	in_air = false;
 
 	penguinMotionState = new btDefaultMotionState(*penguin_position);
 
