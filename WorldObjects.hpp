@@ -158,6 +158,11 @@ private:
 
 	void createPenguin(Ogre::SceneManager*);
 	void attachToDynamicWorld(PhysicsWrapper*);
+
+	void processController(double, MyController*, Ogre::Camera*, Ogre::Vector3*);
+	void handleGravity(double, Ogre::Vector3*);
+	void handleCollisions(Ogre::Vector3*);
+	void animate(double, MyController*);
 };
 
 

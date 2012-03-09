@@ -58,7 +58,6 @@ void DemoApp::setupDemoScene()
 
 	// Create Penguin
 	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(penguin->penguinRigidBody);
 
 	// Create Goal
 	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);

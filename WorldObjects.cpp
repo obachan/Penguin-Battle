@@ -527,7 +527,8 @@ Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 
 
 
-	createPenguin(m_pSceneMgr);    
+	createPenguin(m_pSceneMgr);
+	attachToDynamicWorld(physics);
 }
 
 Penguin::~Penguin()
@@ -543,13 +544,15 @@ Penguin::~Penguin()
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 {
 
+	//--------------------
+	// Visuals - Penguin
+	//--------------------
+
+	float penguin_scale = penguin_length / 50.0;
 	btTransform trans;
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
-	float penguin_scale = penguin_length / 50.0;
-
-	//Ogre::Entity* penguinEntity = m_pSceneMgr->createEntity("penguin", "cube.mesh");
 	penguinEntity = m_pSceneMgr->createEntity("penguin", "penguin.mesh");
 	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("penguin");
 	penguinNode->attachObject(penguinEntity);
@@ -565,12 +568,22 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	camera->setDirection(penguin_direction);*/
 }
 
+
+void Penguin::attachToDynamicWorld(PhysicsWrapper* physics)
+{
+	physics->add_object_to_dynamicWorld(penguinRigidBody);
+}
+
 void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
 
+	// We cap the timeSinceLastFrame to avoid
+	// huge time steps
 	if(timeSinceLastFrame > 0.4f)
 		timeSinceLastFrame = 0.4f;
 
+	// vec is passed around to different functions to be modified
+	// At the end of update, vec is put back into the btTransform
 	btTransform trans;
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
@@ -579,121 +592,17 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	Ogre::Vector3 cameraPosition;
 	Ogre::Vector3 cameraDirection;
 
-	// Account for Gravity
-	if(in_air){
-		penguin_velocity[1] = penguin_velocity[1] + world_grav * timeSinceLastFrame;
-		// if penguin is falling too fast
-		if(penguin_velocity[1] < max_fall_vel)
-			penguin_velocity[1] = max_fall_vel;
-		vec[1] =  vec[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
-	}
+	// Process User Input to move player/camera
+	processController(timeSinceLastFrame, controller, camera, &vec);
 
-	// Take in user input and handle bounds
-	if(controller->left_control_down == true){
-		//std::cout << "left" << std::endl;
-		//vec[0] = vec[0] + (-move_vel) * timeSinceLastFrame;
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
-		penguin_direction.y = 0;
-		penguin_direction.normalise();
-		previous_direction = penguin_direction;
-		cameraDirection = penguin_direction;
-		//cameraDirection.y = -5;
-		camera->setDirection(cameraDirection);
-	}
-
-	if(controller->right_control_down == true){
-		//std::cout << "right" << std::endl;
-		//vec[0] = vec[0] + (move_vel) * timeSinceLastFrame;
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
-		penguin_direction.y = 0;
-		penguin_direction.normalise();
-		previous_direction = penguin_direction;
-		cameraDirection = penguin_direction;
-		//cameraDirection.y = -5;
-		camera->setDirection(cameraDirection);
-	}
-
-	if(controller->up_control_down == true){
-		vec[1] = vec[1] + (move_vel) * timeSinceLastFrame;
-	}
-
-	if(controller->bottom_control_down == true){
-		vec[1] = vec[1] + (-move_vel) * timeSinceLastFrame;
-	}
-
-	if(controller->forward_control_down == true){
-		//std::cout << "forward" << std::endl;
-		//vec[2] = vec[2] + (-move_vel) * timeSinceLastFrame;
-		vec = vec + (penguin_direction * move_vel * timeSinceLastFrame);
-	}
-
-	if(controller->backward_control_down == true){
-		//std::cout << "backward" << std::endl;
-		//vec[2] = vec[2] + (move_vel) * timeSinceLastFrame;
-		vec = vec + (penguin_direction * -move_vel * timeSinceLastFrame);
-	}
-
-	if(controller->jump_control_down == true){
-		controller->jump_control_down = false;
-		if(!in_air){
-			in_air = true;
-			penguin_velocity[1] = jump_vel;
-		}
-	}
+	// Factor in Gravity
+	handleGravity(timeSinceLastFrame, &vec);
 
 	// Handle Wall and Ceiling Collisions
+	handleCollisions(&vec);
 
-	if(vec[0] < -room_width/2 + penguin_length/2)
-		vec[0] = -room_width/2 + penguin_length/2;
-
-	if(vec[0] > room_width/2 - penguin_length/2)
-		vec[0] = room_width/2 - penguin_length/2;
-
-
-	if(vec[1] > room_width/2 - penguin_length/2)
-		vec[1] = room_width/2 - penguin_length/2;
-
-
-	if(vec[2] < -room_length/2 + penguin_length/2)
-		vec[2] = -room_length/2 + penguin_length/2;
-
-
-	if(vec[2] > room_length/2 - penguin_length/2)
-		vec[2] = room_length/2 - penguin_length/2;
-
-
-	// If penguin touches the ground, change the penguin to ground state
-	if(vec[1] < -room_width/2 + penguin_length/2){
-		in_air = false;
-		vec[1] = -room_width/2 + penguin_length/2;
-		float tolerance = abs(vec[1] - (-room_width/2 + penguin_length/2));
-		if(tolerance < 0.01f){
-			penguin_velocity[1]  = 0;
-		}	
-	}
-	//std::cout << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
-
-	
-	if(controller->left_control_down == true ||
-		controller->right_control_down == true ||
-		controller->up_control_down == true ||
-		controller->bottom_control_down == true ||
-		controller->forward_control_down == true ||
-		controller->backward_control_down == true ||
-		in_air)
-	{
-		mAnimationState = penguinEntity->getAnimationState("amuse");
-        mAnimationState->setLoop(true);
-        mAnimationState->setEnabled(true);
-
-        float time_scale = timeSinceLastFrame / 4.0f; // Scale the time back so it doesn't animate as fast
-		mAnimationState->addTime(time_scale);
-	}
-	
+	// Animate Penguin
+	animate(timeSinceLastFrame, controller);	
 
 	//penguin_direction = Ogre::Vector3(vec[0], vec[1], vec[2]) - penguinNode->getPosition();
 	//penguin_direction.y = 0;
@@ -745,6 +654,121 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
         Ogre::Quaternion quat = src.getRotationTo(penguin_direction);
         camera->setPosition(vec[0], vec[1], vec[2]);
 	camera->rotate(quat);*/
+}
+
+void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera, Ogre::Vector3* pos)
+{
+
+
+	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
+	Ogre::Vector3 cameraPosition;
+	Ogre::Vector3 cameraDirection;
+
+	// Left and Right on the keyboard will rotate the Penguin
+	if(controller->left_control_down == true){
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
+		penguinNode->rotate(quat);
+		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		penguin_direction.y = 0;
+		penguin_direction.normalise();
+		previous_direction = penguin_direction;
+
+		cameraDirection = penguin_direction;
+		camera->setDirection(cameraDirection);
+	}
+
+	if(controller->right_control_down == true){
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
+		penguinNode->rotate(quat);
+		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		penguin_direction.y = 0;
+		penguin_direction.normalise();
+		previous_direction = penguin_direction;
+		
+		cameraDirection = penguin_direction;
+		camera->setDirection(cameraDirection);
+	}
+
+	// Up and Down on the keyboard will move forwards and backwards
+	if(controller->forward_control_down == true){
+		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame);
+	}
+
+	if(controller->backward_control_down == true){
+		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame);
+	}
+
+	// Space on the keyboard will cause the penguin to jump
+	if(controller->jump_control_down == true){
+		controller->jump_control_down = false;
+		if(!in_air){
+			in_air = true;
+			penguin_velocity[1] = jump_vel;
+		}
+	}
+}
+
+void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
+{
+	if(in_air){
+		penguin_velocity[1] = penguin_velocity[1] + world_grav * timeSinceLastFrame;
+		// if penguin is falling too fast
+		if(penguin_velocity[1] < max_fall_vel)
+			penguin_velocity[1] = max_fall_vel;
+		pos[1] =  pos[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
+	}
+}
+
+void Penguin::handleCollisions(Ogre::Vector3* pos)
+{
+	if((*pos)[0] < -room_width/2 + penguin_length/2)
+		(*pos)[0] = -room_width/2 + penguin_length/2;
+
+	if((*pos)[0] > room_width/2 - penguin_length/2)
+		(*pos)[0] = room_width/2 - penguin_length/2;
+
+
+	if((*pos)[1] > room_width/2 - penguin_length/2)
+		(*pos)[1] = room_width/2 - penguin_length/2;
+
+
+	if((*pos)[2] < -room_length/2 + penguin_length/2)
+		(*pos)[2] = -room_length/2 + penguin_length/2;
+
+
+	if((*pos)[2] > room_length/2 - penguin_length/2)
+		(*pos)[2] = room_length/2 - penguin_length/2;
+
+
+	// If penguin touches the ground, change the penguin to ground state
+	if((*pos)[1] < -room_width/2 + penguin_length/2){
+		in_air = false;
+		(*pos)[1] = -room_width/2 + penguin_length/2;
+		float tolerance = abs((*pos)[1] - (-room_width/2 + penguin_length/2));
+		if(tolerance < 0.01f){
+			penguin_velocity[1]  = 0;
+		}	
+	}
+}
+
+void Penguin::animate(double timeSinceLastFrame, MyController* controller)
+{
+	// Animation
+	if(controller->left_control_down == true ||
+		controller->right_control_down == true ||
+		controller->up_control_down == true ||
+		controller->bottom_control_down == true ||
+		controller->forward_control_down == true ||
+		controller->backward_control_down == true ||
+		in_air)
+	{
+		mAnimationState = penguinEntity->getAnimationState("amuse");
+        mAnimationState->setLoop(true);
+        mAnimationState->setEnabled(true);
+
+        float time_scale = timeSinceLastFrame / 4.0f; // Scale the time back so it doesn't animate as fast
+		mAnimationState->addTime(time_scale);
+	}
 }
 
 
