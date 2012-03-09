@@ -113,15 +113,17 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
         //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
 	Ogre::StringVector items;
-    	items.push_back("Score: ");
-	items.push_back("Time Left: ");
+	items.push_back("Time Left		");
+    items.push_back("Target Score 	");
+    items.push_back("Score 			");
  
   	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    	mDetailsPanel->setParamValue(0, "Bilinear"); //Set initial Score Value PLEASE CHANGE
-    	mDetailsPanel->setParamValue(1, "Solid");	//Set initial Time Value PLEASE CHANGE
+    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
+    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
+    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
 	mDetailsPanel->show();	
 
-        m_pTrayMgr->hideCursor();
+    m_pTrayMgr->hideCursor();
  
 	m_pRenderWnd->setActive(true);
  
@@ -232,19 +234,23 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	}
 
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-    	m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
 	m_pTrayMgr->adjustTrays();
 
 	if (!m_pTrayMgr->isDialogVisible())
-    	{
-        	//mCameraMan->frameRenderingQueued(m_FrameEvent);   // if dialog isn't up, then update the camera
-       		if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
-        	{
+    {
+       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
+    	
+    	// if dialog isn't up, then update the camera
+    	// if details panel is visible, then update its contents
+
+    	if (mDetailsPanel->isVisible())
+       	{
 			//Change Score and Timer Value each Frame
-        	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(m_pCamera->getDerivedPosition().x));
-        	    mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(m_pCamera->getDerivedPosition().y));
-       		}
+       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(hud->timer));
+       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(hud->score));
     	}
+    }
 	
 }
 
