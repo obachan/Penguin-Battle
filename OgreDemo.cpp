@@ -148,8 +148,15 @@ bool DemoApp::keyPressed(const OIS::KeyEvent &keyEventRef)
 			OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
 	}
 
-	//if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_I))
-//		std::cout << paddle->in_air << std::endl;
+
+	if(keyEventRef.key == OIS::KC_Z){
+		controller->boost_control_down = true;
+	}
+
+	if(keyEventRef.key == OIS::KC_Q)
+	{
+		penguin->toggleThirdPersonCamera();
+	}	
 
 	return true;
 }
@@ -185,6 +192,10 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 
 	if(keyEventRef.key == OIS::KC_SEMICOLON){
 		controller->bottom_control_down = false;
+	}
+
+	if(keyEventRef.key == OIS::KC_Z){
+		controller->boost_control_down = false;
 	}
 
 	return true;

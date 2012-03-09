@@ -9,7 +9,7 @@
 #include "WorldObjects.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
- 
+
 class DemoApp : public OIS::KeyListener
 {
 public:

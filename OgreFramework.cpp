@@ -6,26 +6,26 @@ template<> OgreFramework* Ogre::Singleton<OgreFramework>::ms_Singleton = 0;
  
 OgreFramework::OgreFramework()
 {
-	m_MoveSpeed			= 0.1f;
-	m_RotateSpeed		        = 0.3f;
+	m_MoveSpeed				= 0.1f;
+	m_RotateSpeed		    = 0.3f;
  
-	m_bShutDownOgre		        = false;
-	m_iNumScreenShots	        = 0;
+	m_bShutDownOgre		    = false;
+	m_iNumScreenShots	    = 0;
  
-	m_pRoot				= 0;
-	m_pSceneMgr			= 0;
-	m_pRenderWnd		        = 0;
-	m_pCamera			= 0;
-	m_pViewport			= 0;
-	m_pLog				= 0;
-	m_pTimer			= 0;
+	m_pRoot					= 0;
+	m_pSceneMgr				= 0;
+	m_pRenderWnd		    = 0;
+	m_pCamera				= 0;
+	m_pViewport				= 0;
+	m_pLog					= 0;
+	m_pTimer				= 0;
  
-	m_pInputMgr			= 0;
-	m_pKeyboard			= 0;
-	m_pMouse			= 0;
+	m_pInputMgr				= 0;
+	m_pKeyboard				= 0;
+	m_pMouse				= 0;
  
-    m_pTrayMgr                      = 0;
-    m_FrameEvent                    = Ogre::FrameEvent();
+    m_pTrayMgr              = 0;
+    m_FrameEvent            = Ogre::FrameEvent();
 }
 
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
@@ -165,26 +165,16 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(m_pKeyboard->isKeyDown(OIS::KC_O))
 	{
 		if(m_pTrayMgr->isLogoVisible())
-                {
-                        m_pTrayMgr->hideLogo();
-                        m_pTrayMgr->hideFrameStats();
-                }
-                else
-                {
-                        m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-                        m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-                }
+        {
+            m_pTrayMgr->hideLogo();
+            m_pTrayMgr->hideFrameStats();
+        }
+        else
+        {
+        	m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        	m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+        }
 	}
-
-
-	// Game Input controls
-	/*
-	if(m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-	{
-			controller->left_control_down;
-	}
-	*/
-
 
 	return true;
 }

@@ -27,8 +27,6 @@
 
 #include <cmath>
 
-const bool third_person_camera_on = false;
-
 const double world_grav = -0.98f;
 
 const float room_width = 200.0f; // represents width/height or room
@@ -155,7 +153,9 @@ public:
 	bool 					in_air;
 
 	void update(double, MyController*, Ogre::Camera*);
+	void toggleThirdPersonCamera();
 private:
+	bool 					third_person_camera;
 	btCollisionShape* 		penguin_collision_shape;
 
 	void createPenguin(Ogre::SceneManager*);

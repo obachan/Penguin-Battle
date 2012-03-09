@@ -490,45 +490,9 @@ Goal::~Goal()
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-
-	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, 0));
-	penguin_velocity = Ogre::Vector3(0, 0, 0);
-	in_air = true;
-
-	penguinMotionState = new btDefaultMotionState(*penguin_position);
-
-    btScalar mass = 0;
-    btVector3 penguinInertia(0,0,0);
-
-	//penguin_collision_shape = new btBox2dShape(btVector3(10, 10, 0.5));
-
-	const float penguin_half_length = penguin_length / 2;
-	//penguin_collision_shape = new btBoxShape(btVector3(penguin_half_length, penguin_half_length, penguin_half_length));
-	penguin_collision_shape = new btSphereShape(penguin_half_length);
-    penguin_collision_shape->calculateLocalInertia(mass,penguinInertia);
-    /*
-	btSphereShape* ball_collision_shape_test = new btSphereShape(1);
-    std::cout << "Hello World" << std::endl;
-    std::cout << ball_collision_shape_test->getRadius() << std::endl;
-	*/
-
-    btRigidBody::btRigidBodyConstructionInfo penguinRigidBodyCI(mass,penguinMotionState,penguin_collision_shape,penguinInertia);
-	penguinRigidBodyCI.m_restitution = 1;
-	
-    penguinRigidBody = new btRigidBody(penguinRigidBodyCI);
-
-    // Disable Gravity because this object will be controlled by the player
-    penguinRigidBody->setGravity(btVector3(0,0,0));
-	penguinRigidBody->setCollisionFlags( penguinRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-	penguinRigidBody->setActivationState(DISABLE_DEACTIVATION);
-	//penguinRigidBody->setCollisionFlags(2);
-
-	//penguinRigidBody->setLinearVelocity(btVector3(10,0,0));
-
-
-
 	createPenguin(m_pSceneMgr);
 	attachToDynamicWorld(physics);
+	third_person_camera = true;
 }
 
 Penguin::~Penguin()
@@ -543,6 +507,33 @@ Penguin::~Penguin()
 
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 {
+
+	//--------------------
+	// Physics - Penguin
+	//--------------------	
+
+	const float penguin_half_length = penguin_length / 2;
+
+	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, 0));
+	penguin_velocity = Ogre::Vector3(0, 0, 0);
+	in_air = true;
+
+	penguinMotionState = new btDefaultMotionState(*penguin_position);
+
+    btScalar mass = 0;
+    btVector3 penguinInertia(0,0,0);
+	penguin_collision_shape = new btSphereShape(penguin_half_length);
+    penguin_collision_shape->calculateLocalInertia(mass,penguinInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo penguinRigidBodyCI(mass,penguinMotionState,penguin_collision_shape,penguinInertia);
+	penguinRigidBodyCI.m_restitution = 1;
+    penguinRigidBody = new btRigidBody(penguinRigidBodyCI);
+
+    // Disable Gravity because this object will be controlled by the player
+    penguinRigidBody->setGravity(btVector3(0,0,0));
+	penguinRigidBody->setCollisionFlags( penguinRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	penguinRigidBody->setActivationState(DISABLE_DEACTIVATION);
+
 
 	//--------------------
 	// Visuals - Penguin
@@ -574,6 +565,12 @@ void Penguin::attachToDynamicWorld(PhysicsWrapper* physics)
 	physics->add_object_to_dynamicWorld(penguinRigidBody);
 }
 
+void Penguin::toggleThirdPersonCamera()
+{
+	third_person_camera = !third_person_camera;
+}
+
+
 void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
 
@@ -583,41 +580,43 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		timeSinceLastFrame = 0.4f;
 
 	// 'vec' is passed around to different functions to be modified
-	// At the end of update, 'vec' is put back into the btTransform
+	// At the end of update, 'pos' is put back into the btTransform
 	btTransform trans;
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
-	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	Ogre::Vector3 pos = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 	// Factor in Gravity
-	handleGravity(timeSinceLastFrame, &vec);
+	// new penguin position is put in pos
+	handleGravity(timeSinceLastFrame, &pos);
 
 	// Handle Wall and Ceiling Collisions
-	// New penguin position is put in vec
-	handleCollisions(&vec);
+	// new penguin position is put in pos
+	handleCollisions(&pos);
 
 	// Process User Input to move player/camera
-	processController(timeSinceLastFrame, controller, camera, &vec);
+	// new penguin position is put in pos
+	processController(timeSinceLastFrame, controller, camera, &pos);
 
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
 
-	// Visuals	
-	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
+	// Sync Visuals	
+	trans.setOrigin(btVector3(pos[0], pos[1], pos[2]));
 	penguinMotionState->setWorldTransform(trans);
-	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+	penguinNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	Ogre::Vector3 cameraPosition;
-	Ogre::Vector3 cameraDirection;
+	if(third_person_camera){
+		Ogre::Vector3 cameraPosition;
+		Ogre::Vector3 cameraDirection;
 
-	if(third_person_camera_on){
 		cameraDirection = penguin_direction;
 		camera->setDirection(cameraDirection);
-		cameraPosition= vec - (20*penguin_direction);
+		cameraPosition = pos - (20*penguin_direction);
 		cameraPosition.y += 7;
 		camera->setPosition(cameraPosition);
 	}
-	
+
 	/*if(penguin_direction != previous_direction)
 	{
 	std::cout << penguin_direction << std::endl;
@@ -659,9 +658,18 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera, Ogre::Vector3* pos)
 {
-
-
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
+
+
+	// A boost modifier of 1.0 is default normal speed
+	// > 1 will cause Player to move faster
+	// < 1 will cause Player to move slower
+	float boost_modifier = 1.0;
+
+	// Z causes the player to move faster
+	if(controller->boost_control_down == true){
+		boost_modifier = 2.0;
+	}
 
 	// Left and Right on the keyboard will rotate the Penguin
 	if(controller->left_control_down == true){
@@ -684,11 +692,11 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 
 	// Up and Down on the keyboard will move Penguin forwards and backwards
 	if(controller->forward_control_down == true){
-		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame);
+		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame) * (boost_modifier);
 	}
 
 	if(controller->backward_control_down == true){
-		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame);
+		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame) * (boost_modifier);
 	}
 
 	// Space on the keyboard will cause the penguin to jump
@@ -747,7 +755,16 @@ void Penguin::handleCollisions(Ogre::Vector3* pos)
 void Penguin::animate(double timeSinceLastFrame, MyController* controller)
 {
 	// Animation
-	if(controller->left_control_down == true ||
+	if(controller->boost_control_down == true)
+	{
+		mAnimationState = penguinEntity->getAnimationState("amuse");
+        mAnimationState->setLoop(true);
+        mAnimationState->setEnabled(true);
+
+        float time_scale = timeSinceLastFrame; // Scale the time back so it doesn't animate as fast
+		mAnimationState->addTime(time_scale);
+	}
+	else if(controller->left_control_down == true ||
 		controller->right_control_down == true ||
 		controller->up_control_down == true ||
 		controller->bottom_control_down == true ||

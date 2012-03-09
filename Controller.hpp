@@ -9,7 +9,8 @@ public:
 	~MyController();
 
 	bool		left_control_down;
-	bool		right_control_down; 
+	bool		right_control_down;
+
 	bool		up_control_down; 
 	bool		bottom_control_down;
 
@@ -18,4 +19,5 @@ public:
 
 	bool 		jump_control_down;
 
+	bool 		boost_control_down;
 };

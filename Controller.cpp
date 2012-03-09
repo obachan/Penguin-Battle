@@ -4,6 +4,7 @@ MyController::MyController()
 {
 	left_control_down = false;
 	right_control_down = false;
+
 	up_control_down = false;
 	bottom_control_down = false;
 
@@ -11,6 +12,8 @@ MyController::MyController()
 	backward_control_down = false;
 
 	jump_control_down = false;
+
+	boost_control_down = false;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
