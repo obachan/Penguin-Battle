@@ -28,6 +28,9 @@
 #include "SoundWrapper.hpp"
 #include "HUD.hpp"
 
+#include <CEGUI.h>
+#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
+
 #include <iostream>
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -68,8 +71,6 @@ public:
 	MyController*				controller;
 	SoundWrapper*				sounds;
 	HUD*						hud;
-	
-	//Ogre::Vector3				m_TranslateVector;
 
  
 private:
