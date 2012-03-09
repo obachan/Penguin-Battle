@@ -47,24 +47,17 @@ void DemoApp::setupDemoScene()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
-	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(ball->ballRigidBody);
+	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
 
 	// Create Room
-	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->frontRigidBody);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->backRigidBody);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->rightRigidBody);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->leftRigidBody);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->topRigidBody);
-	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(room->bottomRigidBody);
+	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
 	// Create Penguin
-	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr);
+	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
 	OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(penguin->penguinRigidBody);
 
 	// Create Goal
@@ -99,8 +92,6 @@ void DemoApp::runDemo()
  			
 
  			// Our Team's main loop
-			goal->update(); // goal has no data that needs to be updated
-
 			ball->update(timeSinceLastFrame);
 			penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 			//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);

@@ -47,11 +47,11 @@ const float ball_mass = 5.0f;
 class Ball
 {
 public:
-	Ball(Ogre::SceneManager*);
+	Ball(Ogre::SceneManager*, PhysicsWrapper*);
 	~Ball();
 
 	btRigidBody* 		ballRigidBody;
-	Ogre::SceneNode* 	_objSphereNode;
+	Ogre::SceneNode* 	objSphereNode;
 
 	Ogre::Vector3 getBallPosition();
 	Ogre::Vector3 getBallDirectionVector();
@@ -62,18 +62,17 @@ public:
 private:
 
 	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::String);
+	void attachToDynamicWorld(PhysicsWrapper*);
 
-	Ogre::Entity* 		_objSphereEntity;
-	Ogre::Vector3 		sphere_TranslateVector;
-	btDefaultMotionState* ballMotionState;
-
-	btCollisionShape* 	ball_collision_shape;
+	Ogre::Entity* 			objSphereEntity;
+	btDefaultMotionState* 	ballMotionState;
+	btCollisionShape* 		ball_collision_shape;
 };
 
 class Room
 {
 public:
-	Room(Ogre::SceneManager*);
+	Room(Ogre::SceneManager*, PhysicsWrapper*);
 	~Room();
 
 	btRigidBody* frontRigidBody;
@@ -86,6 +85,7 @@ public:
 private:
 
 	void createRoom(Ogre::SceneManager*, int, int);
+	void attachToDynamicWorld(PhysicsWrapper*);
 
 	btCollisionShape* bottom;
 	btCollisionShape* top;
@@ -121,12 +121,9 @@ public:
 	Ogre::SceneNode* 	goalFrontNode;
 	Ogre::Entity* 		goalFrontEntity;
 
-	void update();
-
 private:
 	void createGoal(Ogre::SceneManager*, double);
 	void attachToDynamicWorld(PhysicsWrapper*);
-	void translate(double, double, double);
 
 	btCollisionShape* goalLeftShape;
 	btCollisionShape* goalRightShape;
@@ -139,31 +136,28 @@ class Penguin
 public:
 
 
-	Penguin(Ogre::SceneManager*);
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
 	~Penguin();
 
-	Ogre::SceneNode *penguinNode;
-	btDefaultMotionState* penguinMotionState;
-	btRigidBody* penguinRigidBody;
-	Ogre::Entity* penguinEntity;
+	Ogre::SceneNode*		penguinNode;
+	btDefaultMotionState* 	penguinMotionState;
+	btRigidBody* 			penguinRigidBody;
+	Ogre::Entity* 			penguinEntity;
+	Ogre::AnimationState*	mAnimationState;
 
-	btTransform* penguin_position;
+	btTransform* 			penguin_position;
+	Ogre::Vector3 			penguin_velocity;
+	Ogre::Vector3 			penguin_direction;
+	Ogre::Vector3 			previous_direction;
 
-	Ogre::Vector3 penguin_velocity;
+	bool 					in_air;
 
-	Ogre::Vector3 penguin_direction;
-	Ogre::Vector3 previous_direction;
-
-	Ogre::AnimationState *mAnimationState;
-
-	void update(double, MyController *, Ogre::Camera*);
-
-	bool in_air;
+	void update(double, MyController*, Ogre::Camera*);
 private:
+	btCollisionShape* 		penguin_collision_shape;
 
 	void createPenguin(Ogre::SceneManager*);
-
-	btCollisionShape* penguin_collision_shape;
+	void attachToDynamicWorld(PhysicsWrapper*);
 };
 
 
@@ -182,19 +176,8 @@ public:
 	btTransform* paddle_position;
 
 	Ogre::Vector3 paddle_velocity;
-	Ogre::AnimationState *mAnimationState;
 
 	void update(double, MyController *);
-
-	void moveLeft(double);
-	void moveRight(double);
-	void moveUp(double);
-	void moveDown(double);
-
-	void moveForward(double);
-	void moveBackward(double);
-
-	void moveStop(double);
 
 	bool in_air;
 private:
