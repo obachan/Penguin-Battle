@@ -716,7 +716,7 @@ void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
 		// if penguin is falling too fast
 		if(penguin_velocity[1] < max_fall_vel)
 			penguin_velocity[1] = max_fall_vel;
-		pos[1] =  pos[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
+		(*pos)[1] =  (*pos)[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
 	}
 }
 
