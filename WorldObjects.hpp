@@ -27,6 +27,8 @@
 
 #include <cmath>
 
+const bool third_person_camera_on = false;
+
 const double world_grav = -0.98f;
 
 const float room_width = 200.0f; // represents width/height or room

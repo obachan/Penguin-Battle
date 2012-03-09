@@ -582,40 +582,41 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	if(timeSinceLastFrame > 0.4f)
 		timeSinceLastFrame = 0.4f;
 
-	// vec is passed around to different functions to be modified
-	// At the end of update, vec is put back into the btTransform
+	// 'vec' is passed around to different functions to be modified
+	// At the end of update, 'vec' is put back into the btTransform
 	btTransform trans;
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
-
-	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
-	Ogre::Vector3 cameraPosition;
-	Ogre::Vector3 cameraDirection;
-
-	// Process User Input to move player/camera
-	processController(timeSinceLastFrame, controller, camera, &vec);
 
 	// Factor in Gravity
 	handleGravity(timeSinceLastFrame, &vec);
 
 	// Handle Wall and Ceiling Collisions
+	// New penguin position is put in vec
 	handleCollisions(&vec);
+
+	// Process User Input to move player/camera
+	processController(timeSinceLastFrame, controller, camera, &vec);
 
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
 
-	//penguin_direction = Ogre::Vector3(vec[0], vec[1], vec[2]) - penguinNode->getPosition();
-	//penguin_direction.y = 0;
-	//penguin_direction.normalise();
-
-	
+	// Visuals	
 	trans.setOrigin(btVector3(vec[0], vec[1], vec[2]));
 	penguinMotionState->setWorldTransform(trans);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
 
-	cameraPosition= vec - (20*penguin_direction);
-	cameraPosition.y += 7;
-	camera->setPosition(cameraPosition);
+	// Modify Camera
+	Ogre::Vector3 cameraPosition;
+	Ogre::Vector3 cameraDirection;
+
+	if(third_person_camera_on){
+		cameraDirection = penguin_direction;
+		camera->setDirection(cameraDirection);
+		cameraPosition= vec - (20*penguin_direction);
+		cameraPosition.y += 7;
+		camera->setPosition(cameraPosition);
+	}
 	
 	/*if(penguin_direction != previous_direction)
 	{
@@ -661,8 +662,6 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 
 
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
-	Ogre::Vector3 cameraPosition;
-	Ogre::Vector3 cameraDirection;
 
 	// Left and Right on the keyboard will rotate the Penguin
 	if(controller->left_control_down == true){
@@ -672,9 +671,6 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
-
-		cameraDirection = penguin_direction;
-		camera->setDirection(cameraDirection);
 	}
 
 	if(controller->right_control_down == true){
@@ -684,12 +680,9 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
-		
-		cameraDirection = penguin_direction;
-		camera->setDirection(cameraDirection);
 	}
 
-	// Up and Down on the keyboard will move forwards and backwards
+	// Up and Down on the keyboard will move Penguin forwards and backwards
 	if(controller->forward_control_down == true){
 		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame);
 	}
