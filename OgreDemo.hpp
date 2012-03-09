@@ -26,6 +26,7 @@ public:
 	Paddle		*paddle;
 	Penguin		*penguin;
 	Goal		*goal;
+	bool		pause_state;
 	
 private:
     void setupDemoScene();

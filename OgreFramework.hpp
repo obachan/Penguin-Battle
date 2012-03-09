@@ -75,6 +75,7 @@ private:
 	OgreFramework& operator= (const OgreFramework&);
  
 	OgreBites::SdkTrayManager*	        m_pTrayMgr;
+	OgreBites::ParamsPanel* mDetailsPanel;
     Ogre::FrameEvent                    m_FrameEvent;
 	int									m_iNumScreenShots;
  

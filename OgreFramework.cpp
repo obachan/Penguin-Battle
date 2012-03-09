@@ -109,7 +109,17 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
  
 	m_pTrayMgr = new OgreBites::SdkTrayManager("TrayMgr", m_pRenderWnd, m_pMouse, this);
         m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-        m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+
+	Ogre::StringVector items;
+    	items.push_back("Score: ");
+	items.push_back("Time Left: ");
+ 
+  	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
+    	mDetailsPanel->setParamValue(0, "Bilinear"); //Set initial Score Value PLEASE CHANGE
+    	mDetailsPanel->setParamValue(1, "Solid");	//Set initial Time Value PLEASE CHANGE
+	mDetailsPanel->show();	
+
         m_pTrayMgr->hideCursor();
  
 	m_pRenderWnd->setActive(true);
@@ -165,15 +175,15 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(m_pKeyboard->isKeyDown(OIS::KC_O))
 	{
 		if(m_pTrayMgr->isLogoVisible())
-        {
-            m_pTrayMgr->hideLogo();
-            m_pTrayMgr->hideFrameStats();
-        }
-        else
-        {
-        	m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-        	m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-        }
+       		{
+        	    	//m_pTrayMgr->hideLogo();
+        	    	m_pTrayMgr->hideFrameStats();
+        	}
+        	else
+        	{
+        		//m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        		m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+        	}
 	}
 
 	return true;
@@ -221,8 +231,19 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	}
 
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+    	m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+	m_pTrayMgr->adjustTrays();
 
+	if (!m_pTrayMgr->isDialogVisible())
+    	{
+        	//mCameraMan->frameRenderingQueued(m_FrameEvent);   // if dialog isn't up, then update the camera
+       		if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
+        	{
+			//Change Score and Timer Value each Frame
+        	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(m_pCamera->getDerivedPosition().x));
+        	    mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(m_pCamera->getDerivedPosition().y));
+       		}
+    	}
 	
 }
 
