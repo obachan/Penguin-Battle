@@ -26,6 +26,7 @@
 #include "Physics.hpp"
 #include "Controller.hpp"
 #include "SoundWrapper.hpp"
+#include "HUD.hpp"
 
 #include <iostream>
  
@@ -66,6 +67,7 @@ public:
 	PhysicsWrapper*				physics;
 	MyController*				controller;
 	SoundWrapper*				sounds;
+	HUD*						hud;
 	
 	//Ogre::Vector3				m_TranslateVector;
 

@@ -53,10 +53,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-SoundWrapper.$(OBJEXT) \
-	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
-	Project1-Physics.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
-	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-HUD.$(OBJEXT) \
+	Project1-SoundWrapper.$(OBJEXT) Project1-Controller.$(OBJEXT) \
+	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
+	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
+	Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -223,10 +224,10 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_SOURCES = HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS)
 EXTRA_DIST = buildit makeit
@@ -341,6 +342,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/Project1-Controller.Po
+include ./$(DEPDIR)/Project1-HUD.Po
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
 include ./$(DEPDIR)/Project1-Physics.Po
@@ -368,6 +370,20 @@ include ./$(DEPDIR)/Project1-main.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-HUD.o: HUD.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.o -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
+	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
+#	source='HUD.cpp' object='Project1-HUD.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
+
+Project1-HUD.obj: HUD.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.obj -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
+#	source='HUD.cpp' object='Project1-HUD.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
 
 Project1-SoundWrapper.o: SoundWrapper.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.o -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp

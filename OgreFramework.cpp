@@ -35,6 +35,7 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	physics = new PhysicsWrapper();
 	controller = new MyController();
 	sounds = new SoundWrapper();
+	hud = new HUD();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
 	m_pLog->setDebugOutputEnabled(true);
