@@ -99,12 +99,16 @@ void DemoApp::runDemo()
 				OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 				//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
+				// Handles the event in which the player scores
 				bool scored = false;
+				if(ball->inGoal(goal))
+				{
+					scored = true;
+				}
 
-				//if(ball->inGoal(goal))
 
 
-				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, false);
+				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
 			}
 
 			////////////////////////////////////////////////

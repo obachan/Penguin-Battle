@@ -109,13 +109,13 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	m_pTimer->reset();
  
 	m_pTrayMgr = new OgreBites::SdkTrayManager("TrayMgr", m_pRenderWnd, m_pMouse, this);
-        m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-        //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
 	Ogre::StringVector items;
-	items.push_back("Time Left		");
-    items.push_back("Target Score 	");
-    items.push_back("Score 			");
+	items.push_back("Time Left      ");
+    items.push_back("Target Score ");
+    items.push_back("Score          ");
  
   	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
     mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value

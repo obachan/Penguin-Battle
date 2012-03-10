@@ -75,6 +75,35 @@ Ogre::Vector3 Ball::getBallPosition()
 	return Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 }
 
+// Checks whether the ball is contained
+// in the Goal Object which is passed in
+bool Ball::inGoal(Goal* goal)
+{
+	Ogre::Vector3 ball_pos = getBallPosition();
+
+	Ogre::Vector3 left_goal_pos = goal->goalLeftNode->getPosition();
+	Ogre::Vector3 right_goal_pos = goal->goalRightNode->getPosition();
+
+	Ogre::Vector3 back_goal_pos = goal->goalBackNode->getPosition();
+	Ogre::Vector3 front_goal_pos = goal->goalFrontNode->getPosition();
+
+	Ogre::Vector3 top_goal_pos = goal->goalTopNode->getPosition();
+
+	if(ball_pos[0] > left_goal_pos[0] + ball_radius &&
+		ball_pos[0] < right_goal_pos[0] - ball_radius &&
+		ball_pos[1] < top_goal_pos[1] - ball_radius &&
+		ball_pos[2] < front_goal_pos[2] - ball_radius &&
+		ball_pos[2] > back_goal_pos[2] + ball_radius)
+	{
+		return true;
+	}
+
+	//std::cout << ball_pos[0] << " " << ball_pos[1] << " " << ball_pos[2] << std::endl;
+	//std::cout << top_goal_pos[0] << " " << top_goal_pos[1] << " " << top_goal_pos[2] << std::endl;
+	
+	return false;
+}
+
 Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createRoom(m_pSceneMgr, room_width, room_length);
@@ -252,7 +281,7 @@ Room::~Room()
 
 Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-	float goal_to_edge_wall_offset = 30.0;
+	float goal_to_edge_wall_offset = 50.0;
 
 	createGoal(m_pSceneMgr, -room_length/2 + goal_to_edge_wall_offset);
 	attachToDynamicWorld(physics);
