@@ -16,8 +16,8 @@ public:
 private:
 	bool	is_music_playing;
 
-	Mix_Chunk *jump_sound;
-	Mix_Music *music;
+	Mix_Chunk*	jump_sound;
+	Mix_Music*	music;
 	void musicDone();
 		
 };

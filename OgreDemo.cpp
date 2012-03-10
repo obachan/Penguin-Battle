@@ -116,7 +116,6 @@ void DemoApp::runDemo()
 				if(ball->inGoal(goal))
 				{
 					scored = true;
-					//OgreFramework::getSingletonPtr()->physics->remove_object_from_dynamicWorld(ball->ballRigidBody);
 					ball->reset(OgreFramework::getSingletonPtr()->physics);
 				}
 

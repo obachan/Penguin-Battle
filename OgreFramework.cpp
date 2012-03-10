@@ -120,7 +120,7 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
  
   	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
     mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "3");	//Set Target Score Value
+    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
     mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
     mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
 	mDetailsPanel->show();	
@@ -251,7 +251,18 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 			//Change Score and Timer Value each Frame
        	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(hud->timer));
        	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(hud->score));
-    	}
+
+       	    std::string hud_status_message;
+       	    if(hud->hud_status == hud->HUD_STATUS_PLAYING)
+       	    	hud_status_message = "Playing";
+       	    else if(hud->hud_status == hud->HUD_STATUS_WIN)
+       	    	hud_status_message = "You Win";
+       	    else if(hud->hud_status == hud->HUD_STATUS_LOSE)
+       	    	hud_status_message = "You Lose";
+
+
+       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
+       	}
     }
 	
 }
