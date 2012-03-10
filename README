@@ -6,22 +6,21 @@ To Build: Type in "./buildit" in the main directory
 To Run: Type in "./Project1" in the main directory
 		Ogre should then ask for a renderer, which should be OpenGL
 
-The source files are Controller.cpp, Controller.hpp, OgreDemo.cpp, OgreDemo.hpp, OgreFramework.cpp, OgreFramework.hpp, Physics.cpp, Physics.hpp, WorldObjects.cpp, and WorldObjects.hpp.
-
 The project description file is called GameTechProgressReport1.pdf.
 
 Controls:
 
-up/down 	- forward/backward player
-left-right 	- rotate player
+up/down 		- forward/backward player
+left-right 		- rotate player
 z 			- boost
+p			- pause
 
 
 Debug:
 
-wasd 		- camera
-mouse 		- camera
-q			- toggle 3rd person on/off
+wasd 			- camera
+mouse 			- camera
+q			- toggle 3rd person camera on/off
 o			- toggle show logo
 m			- cycle point mode, wireframe mode, and solid mode
 

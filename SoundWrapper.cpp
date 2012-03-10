@@ -22,6 +22,7 @@ SoundWrapper::SoundWrapper(){
   jump_sound = Mix_LoadWAV("media/sounds/jump.ogg");
   if(jump_sound == NULL) {
     fprintf(stderr, "Unable to load WAV file: %s\n", Mix_GetError());
+    exit(1);
   }  
 
   // Music 
