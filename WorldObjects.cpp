@@ -1,16 +1,31 @@
 #include "WorldObjects.hpp"
 
+int Ball::scene_node_counter = 0;
+int Ball::test_counter = 0;
 
-Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double start_pos_x, double start_pos_y, double start_pos_z)
 {
 
-	const double start_pos_x = 0.0f;
-	const double start_pos_y = -(room_width/2) + ball_radius;
-	const double start_pos_z = 0.0f;
+	//const double start_pos_x = 0.0f;
+	//const double start_pos_y = -(room_width/2) + ball_radius;
+	//const double start_pos_z = 0.0f;
 	
 	float ball_radius_node_conversion = ball_radius / 100.0f;
 
-	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, "Awesome_Sphere");
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string scene_node_counter_string;
+ 	std::stringstream out;
+ 	out << scene_node_counter;
+ 	scene_node_counter_string = out.str();
+	std::string ball_name = "ball" + scene_node_counter_string;
+	scene_node_counter++;
+
+	//std::cout << "==================" << std::endl;
+	//std::cout << ball_name << std::endl;
+	//std::cout << "==================" << std::endl;
+
+	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, ball_name);
 	attachToDynamicWorld(physics);
 }
 
@@ -66,6 +81,9 @@ Ball::~Ball()
 
 void Ball::update(double timeSinceLastFrame){
 	objSphereNode->setPosition(getBallPosition());
+
+	Ogre::Vector3 pos = getBallPosition();
+	//std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
 }
 
 Ogre::Vector3 Ball::getBallPosition()
@@ -102,6 +120,39 @@ bool Ball::inGoal(Goal* goal)
 	//std::cout << top_goal_pos[0] << " " << top_goal_pos[1] << " " << top_goal_pos[2] << std::endl;
 	
 	return false;
+}
+
+// Physics is passin so the that ball can be removed and readded to the dynamics world
+void Ball::reset(PhysicsWrapper* physics)
+{
+	//physics->remove_object_from_dynamicWorld(ballRigidBody);
+
+	btTransform trans;
+    ballRigidBody->getMotionState()->getWorldTransform(trans);
+	btVector3 ball_pos = btVector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	
+	int rand_pos_x = rand() % 50 - 24;
+	int rand_pos_y = rand() % 50 - 24;
+	int rand_pos_z = rand() % 50 - 24;
+
+	int rand_vel_x = rand() % 10;
+	int rand_vel_y = rand() % 10;
+	int rand_vel_z = rand() % 10;
+
+
+	trans.setOrigin(btVector3(rand_pos_x, rand_pos_y, rand_pos_z));
+	//ballRigidBody->getMotionState()->setWorldTransform(trans);
+
+	//physics->add_object_to_dynamicWorld(ballRigidBody);
+	btMotionState *motionState = ballRigidBody->getMotionState();
+	motionState->setWorldTransform(trans);
+
+	ballRigidBody->setMotionState (motionState);
+	ballRigidBody->setLinearVelocity(btVector3(rand_vel_x,-rand_vel_y,rand_vel_z));
+
+	//std::cout << "==========RESET============" << test_counter << std::endl;	
+	//test_counter++;
+
 }
 
 Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)

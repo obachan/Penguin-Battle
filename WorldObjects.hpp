@@ -26,6 +26,11 @@
 #include <BulletCollision/CollisionShapes/btBox2dShape.h>
 
 #include <cmath>
+#include <string>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 const double world_grav = -0.98f;
 
@@ -83,7 +88,7 @@ private:
 class Ball
 {
 public:
-	Ball(Ogre::SceneManager*, PhysicsWrapper*);
+	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f);
 	~Ball();
 
 	btRigidBody* 		ballRigidBody;
@@ -92,7 +97,8 @@ public:
 	Ogre::Vector3 getBallPosition();
 
 	void update(double);
-	bool inGoal(Goal* goal);
+	bool inGoal(Goal*);
+	void reset(PhysicsWrapper*);
 
 private:
 
@@ -102,6 +108,10 @@ private:
 	Ogre::Entity* 			objSphereEntity;
 	btDefaultMotionState* 	ballMotionState;
 	btCollisionShape* 		ball_collision_shape;
+
+	static int 				scene_node_counter;
+
+	static int 				test_counter;
 };
 
 class Room

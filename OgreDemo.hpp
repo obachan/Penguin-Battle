@@ -26,6 +26,9 @@ public:
 	Paddle		*paddle;
 	Penguin		*penguin;
 	Goal		*goal;
+
+	//Ball 		*test_ball;
+
 	bool		pause_state;
 	
 private:
@@ -35,7 +38,7 @@ private:
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  
-	bool					m_bShutdown;
+	bool						m_bShutdown;
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

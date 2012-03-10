@@ -48,6 +48,8 @@ void DemoApp::setupDemoScene()
 
 	// Create Ball
 	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
+
 
 	// Create Room
 	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
@@ -94,18 +96,29 @@ void DemoApp::runDemo()
 			if (!pause_state)
 			{
  				// Our Team's main loop
+
 				ball->update(timeSinceLastFrame);
+				//test_ball->update(timeSinceLastFrame);
+				//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
+
+
+
+
 				penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 				OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 				//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 				// Handles the event in which the player scores
+
+
 				bool scored = false;
+
 				if(ball->inGoal(goal))
 				{
 					scored = true;
+					//OgreFramework::getSingletonPtr()->physics->remove_object_from_dynamicWorld(ball->ballRigidBody);
+					ball->reset(OgreFramework::getSingletonPtr()->physics);
 				}
-
 
 
 				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);

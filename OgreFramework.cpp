@@ -62,14 +62,14 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	m_pViewport->setCamera(m_pCamera);
  
 	size_t hWnd = 0;
-        OIS::ParamList paramList;
-        m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
+    OIS::ParamList paramList;
+    m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
  
 	paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
  
 	m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
  
-        m_pKeyboard = static_cast<OIS::Keyboard*>(m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
+    m_pKeyboard = static_cast<OIS::Keyboard*>(m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
 	m_pMouse = static_cast<OIS::Mouse*>(m_pInputMgr->createInputObject(OIS::OISMouse, true));
  
 	m_pMouse->getMouseState().height = m_pRenderWnd->getHeight();
@@ -114,13 +114,15 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 
 	Ogre::StringVector items;
 	items.push_back("Time Left      ");
-    items.push_back("Target Score ");
+    items.push_back("Target Score  ");
     items.push_back("Score          ");
+    items.push_back("Status         ");
  
   	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
     mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
+    mDetailsPanel->setParamValue(1, "3");	//Set Target Score Value
     mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
+    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
 	mDetailsPanel->show();	
 
     m_pTrayMgr->hideCursor();

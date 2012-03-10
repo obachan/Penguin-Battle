@@ -17,6 +17,7 @@ public:
 	void initializeWorld();
 
 	void add_object_to_dynamicWorld(btRigidBody*);
+	void remove_object_from_dynamicWorld(btRigidBody*);
 	void stepPhysics(int, int);
 
 	btDiscreteDynamicsWorld* dynamicsWorld;
