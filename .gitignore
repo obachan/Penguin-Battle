@@ -19,3 +19,5 @@ Project1
 #Exceptions
 !libSDL_mixer.a
 !libSDL_mixer.la
+!libSDL_net.a
+!libSDL_net.la
