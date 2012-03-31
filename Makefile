@@ -62,7 +62,8 @@ Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 Project1_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(Project1_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
@@ -95,12 +96,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11
-AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar
+ACLOCAL = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run aclocal-1.11
+AMTAR = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf
-AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader
-AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11
+AUTOCONF = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run autoconf
+AUTOHEADER = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run autoheader
+AUTOMAKE = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -138,7 +139,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo
+MAKEINFO = ${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -162,15 +163,17 @@ PKG_CONFIG = /usr/bin/pkg-config
 RANLIB = ranlib
 SDL_mixer_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I./usr/include/SDL -I/lusr/opt/libsdl-1.2.14/include/SDL  
 SDL_mixer_LIBS = ./usr/lib/libSDL_mixer.a -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL -lpthread  
+SDL_net_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I./usr/include/SDL_net -I/lusr/opt/libsdl-1.2.14/include/SDL  
+SDL_net_LIBS = ./usr/lib/libSDL_net.a -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL_net -lSDL -lpthread  
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_builddir = /u/ruoyi/GameTech/Assignment-2
+abs_srcdir = /u/ruoyi/GameTech/Assignment-2
+abs_top_builddir = /u/ruoyi/GameTech/Assignment-2
+abs_top_srcdir = /u/ruoyi/GameTech/Assignment-2
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -201,7 +204,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh
+install_sh = ${SHELL} /u/ruoyi/GameTech/Assignment-2/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -228,8 +231,8 @@ noinst_HEADERS = HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physic
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
 Project1_SOURCES = HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
-Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS)
-Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS)
+Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
+Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
 AUTOMAKE_OPTIONS = foreign
 all: config.h
