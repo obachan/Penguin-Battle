@@ -448,7 +448,7 @@ Copyright (C) 2009 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/u/ruoyi/GameTech/Assignment-2'
+ac_pwd='/v/filer4b/v38q001/xty56/Desktop/Assignment-2'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -929,7 +929,7 @@ S["CXXFLAGS"]="-g -O2"
 S["CXX"]="g++"
 S["am__untar"]="${AMTAR} xf -"
 S["am__tar"]="${AMTAR} chof - \"$$tardir\""
-S["AMTAR"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run tar"
+S["AMTAR"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="gawk"
@@ -937,12 +937,12 @@ S["mkdir_p"]="/bin/mkdir -p"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/install-sh"
-S["MAKEINFO"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /u/ruoyi/GameTech/Assignment-2/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh"
+S["MAKEINFO"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11"
 S["VERSION"]="0.1"
 S["PACKAGE"]="SampleApp"
 S["CYGPATH_W"]="echo"

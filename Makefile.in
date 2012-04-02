@@ -53,11 +53,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-HUD.$(OBJEXT) \
-	Project1-SoundWrapper.$(OBJEXT) Project1-Controller.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
-	Project1-OgreDemo.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
-	Project1-main.$(OBJEXT)
+am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
+	Project1-HUD.$(OBJEXT) Project1-SoundWrapper.$(OBJEXT) \
+	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
+	Project1-Physics.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
+	Project1-OgreFramework.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -227,10 +227,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_HEADERS = HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
+noinst_HEADERS = AppState.hpp AppStateManager.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 #Project1_SOURCES= HelloWorld.cpp
-Project1_SOURCES = HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreDemo.cpp OgreFramework.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -344,6 +344,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-AppStateManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-Controller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-HUD.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-OgreDemo.Po@am__quote@
@@ -373,6 +374,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+Project1-AppStateManager.o: AppStateManager.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-AppStateManager.o -MD -MP -MF $(DEPDIR)/Project1-AppStateManager.Tpo -c -o Project1-AppStateManager.o `test -f 'AppStateManager.cpp' || echo '$(srcdir)/'`AppStateManager.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-AppStateManager.Tpo $(DEPDIR)/Project1-AppStateManager.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='AppStateManager.cpp' object='Project1-AppStateManager.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-AppStateManager.o `test -f 'AppStateManager.cpp' || echo '$(srcdir)/'`AppStateManager.cpp
+
+Project1-AppStateManager.obj: AppStateManager.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-AppStateManager.obj -MD -MP -MF $(DEPDIR)/Project1-AppStateManager.Tpo -c -o Project1-AppStateManager.obj `if test -f 'AppStateManager.cpp'; then $(CYGPATH_W) 'AppStateManager.cpp'; else $(CYGPATH_W) '$(srcdir)/AppStateManager.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-AppStateManager.Tpo $(DEPDIR)/Project1-AppStateManager.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='AppStateManager.cpp' object='Project1-AppStateManager.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-AppStateManager.obj `if test -f 'AppStateManager.cpp'; then $(CYGPATH_W) 'AppStateManager.cpp'; else $(CYGPATH_W) '$(srcdir)/AppStateManager.cpp'; fi`
 
 Project1-HUD.o: HUD.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.o -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
