@@ -1,4 +1,4 @@
-Project1-main.o: main.cpp OgreDemo.hpp OgreFramework.hpp \
+Project1-main.o: main.cpp OgreApp.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -1118,12 +1118,9 @@ Project1-main.o: main.cpp OgreDemo.hpp OgreFramework.hpp \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIRenderer.h \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUISize.h \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIVector.h \
- WorldObjects.hpp \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
+ AppStateManager.hpp AppState.hpp
 
-OgreDemo.hpp:
+OgreApp.hpp:
 
 OgreFramework.hpp:
 
@@ -3597,10 +3594,6 @@ HUD.hpp:
 
 /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIVector.h:
 
-WorldObjects.hpp:
+AppStateManager.hpp:
 
-/usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
-
-/usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h:
-
-/usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
+AppState.hpp:

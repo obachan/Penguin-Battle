@@ -1,6 +1,6 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-#include "OgreDemo.hpp"
+#include "OgreApp.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -17,8 +17,11 @@ int main(int argc, char **argv)
 {
 	try
       {
-		DemoApp demo;
-		demo.startDemo();
+    		//DemoApp demo;
+    		//demo.startDemo();
+
+        OgreApp game; // Game
+        game.startDemo();
       }
 	catch(std::exception& e)
       {

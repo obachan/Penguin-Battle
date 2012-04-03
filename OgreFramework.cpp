@@ -229,6 +229,7 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	getCameraInput();
 	moveCamera();
 
+/*
 	if (timeSinceLastFrame!=0)
 	{
  		physics->stepPhysics(timeSinceLastFrame, 5);
@@ -264,7 +265,7 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
        	    mDetailsPanel->setParamValue(3, hud_status_message);    	
        	}
     }
-	
+*/
 }
 
 void OgreFramework::moveCamera()

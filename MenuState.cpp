@@ -1,7 +1,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 #include "MenuState.hpp"
- 
+
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 using namespace Ogre;
@@ -20,6 +20,7 @@ void MenuState::enter()
 {
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering MenuState...");
  
+
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "MenuSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
  
@@ -38,6 +39,8 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showCursor();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Enter GameState", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
@@ -123,6 +126,10 @@ void MenuState::buttonHit(OgreBites::Button *button)
 {
     if(button->getName() == "ExitBtn")
         m_bQuit = true;
+    else if(button->getName() == "EnterBtn"){
+    }
+    else if(button->getName() == "EnterBtn"){
+    }
     else if(button->getName() == "EnterBtn")
         changeAppState(findByName("GameState"));
 }
