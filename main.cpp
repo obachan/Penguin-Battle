@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 {
 	try
       {
+		std::cout << "\n\n\n\n\n\n\n\nTEST\n\n\n\n\n\n\n\n\n" << std::endl;
 		DemoApp demo;
 		demo.startDemo();
       }
