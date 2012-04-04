@@ -7,5 +7,5 @@ Name: SDL_net
 Description: net library for Simple DirectMedia Layer
 Version: 1.2.8
 Requires: sdl >= 1.2.14
-Libs: -L${libdir} ${libdir}/libSDL_net.a -lSDL_net
+Libs: -L${libdir} ${libdir}/libSDL_net.la -lSDL_net
 Cflags: -I${includedir}/SDL_net

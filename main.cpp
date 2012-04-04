@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 
         OgreApp game; // Game
         game.startDemo();
+
       }
 	catch(std::exception& e)
       {

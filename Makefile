@@ -166,7 +166,7 @@ RANLIB = ranlib
 SDL_mixer_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I./usr/include/SDL -I/lusr/opt/libsdl-1.2.14/include/SDL  
 SDL_mixer_LIBS = ./usr/lib/libSDL_mixer.a -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL -lpthread  
 SDL_net_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I./usr/include/SDL_net -I/lusr/opt/libsdl-1.2.14/include/SDL  
-SDL_net_LIBS = ./usr/lib/libSDL_net.a -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL_net -lSDL -lpthread  
+SDL_net_LIBS = ./usr/lib/libSDL_net.la -Wl,-rpath,/lusr/opt/libsdl-1.2.14/lib -L./usr/lib -L/lusr/opt/libsdl-1.2.14/lib -lSDL_net -lSDL -lpthread  
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
