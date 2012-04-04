@@ -119,7 +119,17 @@ void GameState::createScene()
 
 void GameState::exit()
 {
-	
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Leaving GameState...");
+
+	m_pSceneMgr->destroyCamera(m_pCamera);
+    if(m_pSceneMgr)
+        OgreFramework::getSingletonPtr()->m_pRoot->destroySceneManager(m_pSceneMgr);
+ 
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->clearAllTrays();
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
+
+    OgreFramework::getSingletonPtr()->is_gamestate = false;
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

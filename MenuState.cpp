@@ -2,6 +2,7 @@
  
 #include "MenuState.hpp"
 
+#include <iostream>
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 using namespace Ogre;
@@ -114,14 +115,16 @@ bool MenuState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 
 void MenuState::update(double timeSinceLastFrame)
 {
+
     m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
     OgreFramework::getSingletonPtr()->m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
- 
+
     if(m_bQuit == true)
     {
         shutdown();
         return;
     }
+
 }
 
 void MenuState::buttonHit(OgreBites::Button *button)
