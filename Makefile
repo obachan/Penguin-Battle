@@ -54,11 +54,12 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
-	Project1-MenuState.$(OBJEXT) Project1-HUD.$(OBJEXT) \
-	Project1-SoundWrapper.$(OBJEXT) Project1-Controller.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
-	Project1-OgreFramework.$(OBJEXT) Project1-OgreDemo.$(OBJEXT) \
-	Project1-OgreApp.$(OBJEXT) Project1-main.$(OBJEXT)
+	Project1-MenuState.$(OBJEXT) Project1-PauseState.$(OBJEXT) \
+	Project1-HUD.$(OBJEXT) Project1-SoundWrapper.$(OBJEXT) \
+	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
+	Project1-Physics.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
+	Project1-OgreDemo.$(OBJEXT) Project1-OgreApp.$(OBJEXT) \
+	Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -228,9 +229,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp OgreApp.hpp
+noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp OgreApp.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreDemo.cpp OgreApp.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreDemo.cpp OgreApp.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -351,6 +352,7 @@ include ./$(DEPDIR)/Project1-MenuState.Po
 include ./$(DEPDIR)/Project1-OgreApp.Po
 include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
+include ./$(DEPDIR)/Project1-PauseState.Po
 include ./$(DEPDIR)/Project1-Physics.Po
 include ./$(DEPDIR)/Project1-SoundWrapper.Po
 include ./$(DEPDIR)/Project1-WorldObjects.Po
@@ -404,6 +406,20 @@ Project1-MenuState.obj: MenuState.cpp
 #	source='MenuState.cpp' object='Project1-MenuState.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-MenuState.obj `if test -f 'MenuState.cpp'; then $(CYGPATH_W) 'MenuState.cpp'; else $(CYGPATH_W) '$(srcdir)/MenuState.cpp'; fi`
+
+Project1-PauseState.o: PauseState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.o -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
+	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
+#	source='PauseState.cpp' object='Project1-PauseState.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
+
+Project1-PauseState.obj: PauseState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.obj -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
+#	source='PauseState.cpp' object='Project1-PauseState.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
 
 Project1-HUD.o: HUD.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.o -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
