@@ -14,6 +14,48 @@ GameState::~GameState()
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
+
+void GameState::enter()
+{
+
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+void GameState::createScene()
+{
+	
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+void GameState::exit()
+{
+	
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+bool GameState::pause()
+{
+	
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+void GameState::resume()
+{
+	
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+void GameState::update(double timeSinceLastFrame)
+{
+	
+}
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
  
 void GameState::startDemo()
 {
@@ -232,3 +274,22 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
 }
 
 //||||||||||||||||||||||||||||||||||||||||||||||||
+
+bool GameState::mouseMoved(const OIS::MouseEvent &evt)
+{
+    return true;
+}
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+{
+	return true;
+}
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+bool GameState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+{
+    return true;
+}
