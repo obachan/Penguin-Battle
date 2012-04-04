@@ -59,7 +59,7 @@ am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
 	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
 	Project1-Physics.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
 	Project1-OgreDemo.$(OBJEXT) Project1-OgreApp.$(OBJEXT) \
-	Project1-main.$(OBJEXT)
+	Project1-GameState.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -229,9 +229,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp OgreApp.hpp
+noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp OgreApp.hpp GameState.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreDemo.cpp OgreApp.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreDemo.cpp OgreApp.cpp GameState.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -347,6 +347,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/Project1-AppStateManager.Po
 include ./$(DEPDIR)/Project1-Controller.Po
+include ./$(DEPDIR)/Project1-GameState.Po
 include ./$(DEPDIR)/Project1-HUD.Po
 include ./$(DEPDIR)/Project1-MenuState.Po
 include ./$(DEPDIR)/Project1-OgreApp.Po
@@ -532,6 +533,20 @@ Project1-OgreApp.obj: OgreApp.cpp
 #	source='OgreApp.cpp' object='Project1-OgreApp.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
+
+Project1-GameState.o: GameState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-GameState.o -MD -MP -MF $(DEPDIR)/Project1-GameState.Tpo -c -o Project1-GameState.o `test -f 'GameState.cpp' || echo '$(srcdir)/'`GameState.cpp
+	$(am__mv) $(DEPDIR)/Project1-GameState.Tpo $(DEPDIR)/Project1-GameState.Po
+#	source='GameState.cpp' object='Project1-GameState.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-GameState.o `test -f 'GameState.cpp' || echo '$(srcdir)/'`GameState.cpp
+
+Project1-GameState.obj: GameState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-GameState.obj -MD -MP -MF $(DEPDIR)/Project1-GameState.Tpo -c -o Project1-GameState.obj `if test -f 'GameState.cpp'; then $(CYGPATH_W) 'GameState.cpp'; else $(CYGPATH_W) '$(srcdir)/GameState.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-GameState.Tpo $(DEPDIR)/Project1-GameState.Po
+#	source='GameState.cpp' object='Project1-GameState.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-GameState.obj `if test -f 'GameState.cpp'; then $(CYGPATH_W) 'GameState.cpp'; else $(CYGPATH_W) '$(srcdir)/GameState.cpp'; fi`
 
 Project1-main.o: main.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-main.o -MD -MP -MF $(DEPDIR)/Project1-main.Tpo -c -o Project1-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
