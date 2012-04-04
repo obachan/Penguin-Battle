@@ -38,10 +38,11 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showCursor();
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Enter GameState", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "PauseBtn", "Pause", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Single Player", 250);
+    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "PauseBtn", "Pause", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "MultiplayerBtn", "Multiplayer", 250);
+    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
+    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
@@ -127,13 +128,16 @@ void MenuState::buttonHit(OgreBites::Button *button)
 {
     if(button->getName() == "ExitBtn")
         m_bQuit = true;
-    else if(button->getName() == "PauseBtn"){
+    /*else if(button->getName() == "PauseBtn"){
         changeAppState(findByName("PauseState"));        
+    }*/
+    else if(button->getName() == "MultiplayerBtn"){
+
     }
-    else if(button->getName() == "ServerBtn"){
+    /*else if(button->getName() == "ServerBtn"){
     }
     else if(button->getName() == "ClientBtn"){
-    }
+    }*/
     else if(button->getName() == "EnterBtn")
         changeAppState(findByName("GameState"));
 }

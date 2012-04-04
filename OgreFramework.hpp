@@ -72,17 +72,18 @@ public:
 	SoundWrapper*				sounds;
 	HUD*						hud;
 
-	OgreBites::SdkTrayManager*	        m_pTrayMgr;
+	OgreBites::SdkTrayManager*	m_pTrayMgr;
+
+	bool						is_gamestate;
+	bool						m_bShutDownOgre;
 	
 private:
 	OgreFramework(const OgreFramework&);
 	OgreFramework& operator= (const OgreFramework&);
  
-	OgreBites::ParamsPanel* mDetailsPanel;
+	OgreBites::ParamsPanel* 			mDetailsPanel;
     Ogre::FrameEvent                    m_FrameEvent;
 	int									m_iNumScreenShots;
- 
-	bool								m_bShutDownOgre;
  
 	Ogre::Vector3						m_TranslateVector;
 	Ogre::Real							m_MoveSpeed; 

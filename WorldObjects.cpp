@@ -653,7 +653,6 @@ void Penguin::toggleThirdPersonCamera()
 
 void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
-
 	// We cap the timeSinceLastFrame to avoid
 	// huge time steps
 	if(timeSinceLastFrame > 0.4f)
@@ -680,6 +679,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
 
+
 	// Sync Visuals	
 	trans.setOrigin(btVector3(pos[0], pos[1], pos[2]));
 	penguinMotionState->setWorldTransform(trans);
@@ -696,6 +696,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		cameraPosition.y += 7;
 		camera->setPosition(cameraPosition);
 	}
+
 
 	/*if(penguin_direction != previous_direction)
 	{

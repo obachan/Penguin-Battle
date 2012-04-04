@@ -37,7 +37,7 @@ void PauseState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showCursor();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "BackToGameBtn", "Return to GameState", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
+    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "PauseLbl", "Pause mode", 250);
  
@@ -134,8 +134,8 @@ void PauseState::buttonHit(OgreBites::Button *button)
     }
     else if(button->getName() == "BackToGameBtn")
         m_bQuit = true;
-    else if(button->getName() == "BackToMenuBtn")
-        popAllAndPushAppState(findByName("MenuState"));
+//    else if(button->getName() == "BackToMenuBtn")
+//        popAllAndPushAppState(findByName("MenuState"));
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

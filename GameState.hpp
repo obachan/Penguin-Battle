@@ -45,6 +45,8 @@ public:
 	//Ball 		*test_ball;
 
 	bool		pause_state;
+
+	OgreBites::ParamsPanel* mDetailsPanel;
 	
 private:
     void setupDemoScene();

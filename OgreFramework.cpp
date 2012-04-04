@@ -1,5 +1,7 @@
 #include "OgreFramework.hpp"
  
+#include <iostream>
+
 using namespace Ogre; 
  
 template<> OgreFramework* Ogre::Singleton<OgreFramework>::ms_Singleton = 0;
@@ -26,6 +28,8 @@ OgreFramework::OgreFramework()
  
     m_pTrayMgr              = 0;
     m_FrameEvent            = Ogre::FrameEvent();
+
+    is_gamestate 			= false;
 }
 
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
@@ -46,6 +50,8 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 		return false;
 	m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
  
+
+ /*
 	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
  
@@ -60,6 +66,10 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	m_pCamera->setAspectRatio(Real(m_pViewport->getActualWidth()) / Real(m_pViewport->getActualHeight()));
  
 	m_pViewport->setCamera(m_pCamera);
+*/
+	m_pViewport = m_pRenderWnd->addViewport(0);
+	m_pViewport->setBackgroundColour(ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
+
  
 	size_t hWnd = 0;
     OIS::ParamList paramList;
@@ -144,11 +154,13 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	// This code was initially here
 
+	/*
 	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
 	{
 			m_bShutDownOgre = true;
 			return true;
 	}
+	*/
  
 	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
 	{
@@ -224,48 +236,53 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	m_RotScale  = 15 * m_RotateSpeed * (float)timeSinceLastFrame;
  
 	m_TranslateVector = Vector3::ZERO;
- 
- 	// Get input for Camera
-	getCameraInput();
-	moveCamera();
+	if(is_gamestate){
 
-/*
-	if (timeSinceLastFrame!=0)
-	{
- 		physics->stepPhysics(timeSinceLastFrame, 5);
-	
+ 		// Get input for Camera
+		getCameraInput();
+		moveCamera();
+
+
+		if (timeSinceLastFrame!=0)
+		{
+	 		physics->stepPhysics(timeSinceLastFrame, 5);
+		
+		}
+		m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
+	    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+		m_pTrayMgr->adjustTrays();
+
+
+
+		/*
+		if (!m_pTrayMgr->isDialogVisible())
+	    {
+	       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
+	    	
+	    	// if dialog isn't up, then update the camera
+	    	// if details panel is visible, then update its contents
+
+	    	if (mDetailsPanel->isVisible())
+	       	{
+				//Change Score and Timer Value each Frame
+	       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(hud->timer));
+	       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(hud->score));
+
+
+	       	    std::string hud_status_message;
+	       	    if(hud->hud_status == hud->HUD_STATUS_PLAYING)
+	       	    	hud_status_message = "Playing";
+	       	    else if(hud->hud_status == hud->HUD_STATUS_WIN)
+	       	    	hud_status_message = "You Win";
+	       	    else if(hud->hud_status == hud->HUD_STATUS_LOSE)
+	       	    	hud_status_message = "You Lose";
+
+
+	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
+	       	}
+	    }
+	    */
 	}
-
-	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
-	m_pTrayMgr->adjustTrays();
-
-	if (!m_pTrayMgr->isDialogVisible())
-    {
-       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
-    	
-    	// if dialog isn't up, then update the camera
-    	// if details panel is visible, then update its contents
-
-    	if (mDetailsPanel->isVisible())
-       	{
-			//Change Score and Timer Value each Frame
-       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(hud->timer));
-       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(hud->score));
-
-       	    std::string hud_status_message;
-       	    if(hud->hud_status == hud->HUD_STATUS_PLAYING)
-       	    	hud_status_message = "Playing";
-       	    else if(hud->hud_status == hud->HUD_STATUS_WIN)
-       	    	hud_status_message = "You Win";
-       	    else if(hud->hud_status == hud->HUD_STATUS_LOSE)
-       	    	hud_status_message = "You Lose";
-
-
-       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-       	}
-    }
-*/
 }
 
 void OgreFramework::moveCamera()

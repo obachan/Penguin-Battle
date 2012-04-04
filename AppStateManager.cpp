@@ -63,8 +63,6 @@ AppState* AppStateManager::findByName(Ogre::String stateName)
 
 void AppStateManager::start(AppState* state)
 {
-
-
 	changeAppState(state);
 
 	int timeSinceLastFrame = 1;
@@ -87,9 +85,11 @@ void AppStateManager::start(AppState* state)
 			m_ActiveStateStack.back()->update(timeSinceLastFrame);
 
 			OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+		
 			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
 
 			timeSinceLastFrame = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
+
 		}
 		else
 		{
