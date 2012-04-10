@@ -59,7 +59,8 @@ am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
 	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
 	Project1-Physics.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
 	Project1-OgreApp.$(OBJEXT) Project1-ServerState.$(OBJEXT) \
-	Project1-GameState.$(OBJEXT) Project1-main.$(OBJEXT)
+	Project1-ClientState.$(OBJEXT) Project1-GameState.$(OBJEXT) \
+	Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -229,9 +230,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp GameState.hpp
+noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp ClientState.hpp GameState.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp GameState.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp ClientState.cpp GameState.cpp main.cpp
 #Project1_SOURCES= Network.cpp test.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
@@ -347,6 +348,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-AppStateManager.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-ClientState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-Controller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-GameState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-HUD.Po@am__quote@
@@ -534,6 +536,20 @@ Project1-ServerState.obj: ServerState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ServerState.cpp' object='Project1-ServerState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ServerState.obj `if test -f 'ServerState.cpp'; then $(CYGPATH_W) 'ServerState.cpp'; else $(CYGPATH_W) '$(srcdir)/ServerState.cpp'; fi`
+
+Project1-ClientState.o: ClientState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-ClientState.o -MD -MP -MF $(DEPDIR)/Project1-ClientState.Tpo -c -o Project1-ClientState.o `test -f 'ClientState.cpp' || echo '$(srcdir)/'`ClientState.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-ClientState.Tpo $(DEPDIR)/Project1-ClientState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ClientState.cpp' object='Project1-ClientState.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ClientState.o `test -f 'ClientState.cpp' || echo '$(srcdir)/'`ClientState.cpp
+
+Project1-ClientState.obj: ClientState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-ClientState.obj -MD -MP -MF $(DEPDIR)/Project1-ClientState.Tpo -c -o Project1-ClientState.obj `if test -f 'ClientState.cpp'; then $(CYGPATH_W) 'ClientState.cpp'; else $(CYGPATH_W) '$(srcdir)/ClientState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-ClientState.Tpo $(DEPDIR)/Project1-ClientState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ClientState.cpp' object='Project1-ClientState.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ClientState.obj `if test -f 'ClientState.cpp'; then $(CYGPATH_W) 'ClientState.cpp'; else $(CYGPATH_W) '$(srcdir)/ClientState.cpp'; fi`
 
 Project1-GameState.o: GameState.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-GameState.o -MD -MP -MF $(DEPDIR)/Project1-GameState.Tpo -c -o Project1-GameState.o `test -f 'GameState.cpp' || echo '$(srcdir)/'`GameState.cpp

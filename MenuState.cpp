@@ -138,10 +138,10 @@ void MenuState::buttonHit(OgreBites::Button *button)
 
     }
     else if(button->getName() == "ServerBtn"){
-
         changeAppState(findByName("ServerState"));
     }
     else if(button->getName() == "ClientBtn"){
+        changeAppState(findByName("ClientState"));
     }
     else if(button->getName() == "EnterBtn")
         changeAppState(findByName("GameState"));
