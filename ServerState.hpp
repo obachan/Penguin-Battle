@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjects.hpp"
+#include "GameState.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -40,6 +40,7 @@ public:
 	Room 		*room;
 	Paddle		*paddle;
 	Penguin		*penguin;
+	Penguin		*penguin_two;
 	Goal		*goal;
 
 	//Ball 		*test_ball;
@@ -47,6 +48,7 @@ public:
 	bool		pause_state;
 
 	OgreBites::ParamsPanel* mDetailsPanel;
+	MyController* controller_two;
 	
 private:
     void setupDemoScene();

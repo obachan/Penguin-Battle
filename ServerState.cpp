@@ -25,6 +25,9 @@ ServerState::~ServerState()
 
 void ServerState::enter()
 {
+
+	controller_two = new MyController();
+
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
 
@@ -68,8 +71,16 @@ void ServerState::enter()
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
-	// Create Penguin
+
+	std::cout << "Creating New Penguin Player 1" << std::endl;
+
+	// Create Player 1's Penguin
 	penguin = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+
+	std::cout << "Creating New Penguin Player 2" << std::endl;
+
+	// Create Player 2's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
 
 	// Create Goal
 	goal = new Goal(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
@@ -106,7 +117,7 @@ void ServerState::enter()
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
     OgreFramework::getSingletonPtr()->sounds->playMusic();
 
-    //OgreFramework::getSingletonPtr()->hud->reset();
+    OgreFramework::getSingletonPtr()->hud->reset();
  
 }
 
@@ -191,6 +202,7 @@ void ServerState::update(double timeSinceLastFrame)
 		//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
 
 		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+		penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 

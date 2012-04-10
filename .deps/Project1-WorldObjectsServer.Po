@@ -1,4 +1,4 @@
-Project1-ServerState.o: ServerState.cpp ServerState.hpp AppState.hpp \
+Project1-WorldObjectsServer.o: WorldObjectsServer.cpp WorldObjects.hpp \
  OgreFramework.hpp /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -1118,14 +1118,11 @@ Project1-ServerState.o: ServerState.cpp ServerState.hpp AppState.hpp \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIRenderer.h \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUISize.h \
  /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIVector.h \
- GameState.hpp WorldObjects.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
 
-ServerState.hpp:
-
-AppState.hpp:
+WorldObjects.hpp:
 
 OgreFramework.hpp:
 
@@ -3598,10 +3595,6 @@ HUD.hpp:
 /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUISize.h:
 
 /lusr/opt/cegui-0.7.6/include/CEGUI/RendererModules/Ogre/../../CEGUIVector.h:
-
-GameState.hpp:
-
-WorldObjects.hpp:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
 

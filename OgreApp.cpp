@@ -5,6 +5,7 @@
 #include "MenuState.hpp"
 #include "GameState.hpp"
 #include "PauseState.hpp"
+#include "ServerState.hpp"
  
  #include <iostream>
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -37,6 +38,7 @@ void OgreApp::startDemo()
 	MenuState::create(m_pAppStateManager, "MenuState");
 	GameState::create(m_pAppStateManager, "GameState");
     PauseState::create(m_pAppStateManager, "PauseState");
+    ServerState::create(m_pAppStateManager, "ServerState");
 
 //std::cout << "SEG FAULT" << std::endl;
 	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));

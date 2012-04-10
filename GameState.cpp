@@ -105,6 +105,9 @@ void GameState::enter()
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
     OgreFramework::getSingletonPtr()->sounds->playMusic();
+
+
+    OgreFramework::getSingletonPtr()->hud->reset();
  
 }
 

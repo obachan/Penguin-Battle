@@ -1123,7 +1123,7 @@ Project1-OgreApp.o: OgreApp.cpp OgreApp.hpp OgreFramework.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
- PauseState.hpp
+ PauseState.hpp ServerState.hpp
 
 OgreApp.hpp:
 
@@ -3616,3 +3616,5 @@ WorldObjects.hpp:
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
 
 PauseState.hpp:
+
+ServerState.hpp:

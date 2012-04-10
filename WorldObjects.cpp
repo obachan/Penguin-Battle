@@ -1,7 +1,10 @@
 #include "WorldObjects.hpp"
 
+#include <iostream>
+
 int Ball::scene_node_counter = 0;
-int Ball::test_counter = 0;
+
+int Penguin::scene_node_counter = 0;
 
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double start_pos_x, double start_pos_y, double start_pos_z)
 {
@@ -624,8 +627,19 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
-	penguinEntity = m_pSceneMgr->createEntity("penguin", "penguin.mesh");
-	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("penguin");
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string scene_node_counter_string;
+ 	std::stringstream out;
+ 	out << scene_node_counter;
+ 	scene_node_counter_string = out.str();
+	std::string penguin_name = "penguin" + scene_node_counter_string;
+	scene_node_counter++;
+
+	std::cout << penguin_name << std::endl;
+
+	penguinEntity = m_pSceneMgr->createEntity(penguin_name, "penguin.mesh");
+	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(penguin_name);
 	penguinNode->attachObject(penguinEntity);
 	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
@@ -637,6 +651,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	/*Ogre::Camera* camera = m_pSceneMgr->getCamera("Camera");
 	camera->setPosition(penguinNode->getPosition());
 	camera->setDirection(penguin_direction);*/
+
 }
 
 
@@ -672,9 +687,9 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// new penguin position is put in pos
 	handleCollisions(&pos);
 
-	// Process User Input to move player/camera
+	// Process User Input to move player
 	// new penguin position is put in pos
-	processController(timeSinceLastFrame, controller, camera, &pos);
+	processController(timeSinceLastFrame, controller, &pos);
 
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
@@ -686,7 +701,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	penguinNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	if(third_person_camera){
+	if(third_person_camera && camera != NULL){
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 
@@ -737,7 +752,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	camera->rotate(quat);*/
 }
 
-void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera, Ogre::Vector3* pos)
+void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)
 {
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
 
