@@ -10,9 +10,7 @@ int HUD::HUD_STATUS_LOSE = 2;
 
 HUD::HUD()
 {
-	timer = start_timer;
-	score = 0;
-	hud_status = HUD_STATUS_PLAYING;
+	reset();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -40,4 +38,11 @@ void HUD::update(double timeSinceLastFrame, bool scored)
 	}
 	//std::cout << "Timer:\t" << timer << "\tScore:\t" << score << std::endl;
 	//std::cout << "======" << timeSinceLastFrame* 1000 << "======" << std::endl;
+}
+
+void HUD::reset()
+{
+	timer = start_timer;
+	score = 0;
+	hud_status = HUD_STATUS_PLAYING;
 }

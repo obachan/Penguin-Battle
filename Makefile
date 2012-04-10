@@ -58,7 +58,7 @@ am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
 	Project1-HUD.$(OBJEXT) Project1-SoundWrapper.$(OBJEXT) \
 	Project1-Controller.$(OBJEXT) Project1-WorldObjects.$(OBJEXT) \
 	Project1-Physics.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
-	Project1-OgreDemo.$(OBJEXT) Project1-OgreApp.$(OBJEXT) \
+	Project1-OgreApp.$(OBJEXT) Project1-ServerState.$(OBJEXT) \
 	Project1-GameState.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -98,12 +98,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11
-AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run aclocal-1.11
+AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf
-AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader
-AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -141,7 +141,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -172,10 +172,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_builddir = /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2
+abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2
+abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2
+abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -206,7 +206,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh
+install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/sandbox/Assignment-2/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -229,9 +229,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreDemo.hpp OgreApp.hpp GameState.hpp
+noinst_HEADERS = AppState.hpp AppStateManager.hpp MenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp GameState.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreDemo.cpp OgreApp.cpp GameState.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp PauseState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp GameState.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -351,10 +351,10 @@ include ./$(DEPDIR)/Project1-GameState.Po
 include ./$(DEPDIR)/Project1-HUD.Po
 include ./$(DEPDIR)/Project1-MenuState.Po
 include ./$(DEPDIR)/Project1-OgreApp.Po
-include ./$(DEPDIR)/Project1-OgreDemo.Po
 include ./$(DEPDIR)/Project1-OgreFramework.Po
 include ./$(DEPDIR)/Project1-PauseState.Po
 include ./$(DEPDIR)/Project1-Physics.Po
+include ./$(DEPDIR)/Project1-ServerState.Po
 include ./$(DEPDIR)/Project1-SoundWrapper.Po
 include ./$(DEPDIR)/Project1-WorldObjects.Po
 include ./$(DEPDIR)/Project1-main.Po
@@ -506,20 +506,6 @@ Project1-OgreFramework.obj: OgreFramework.cpp
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreFramework.obj `if test -f 'OgreFramework.cpp'; then $(CYGPATH_W) 'OgreFramework.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreFramework.cpp'; fi`
 
-Project1-OgreDemo.o: OgreDemo.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreDemo.o -MD -MP -MF $(DEPDIR)/Project1-OgreDemo.Tpo -c -o Project1-OgreDemo.o `test -f 'OgreDemo.cpp' || echo '$(srcdir)/'`OgreDemo.cpp
-	$(am__mv) $(DEPDIR)/Project1-OgreDemo.Tpo $(DEPDIR)/Project1-OgreDemo.Po
-#	source='OgreDemo.cpp' object='Project1-OgreDemo.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreDemo.o `test -f 'OgreDemo.cpp' || echo '$(srcdir)/'`OgreDemo.cpp
-
-Project1-OgreDemo.obj: OgreDemo.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreDemo.obj -MD -MP -MF $(DEPDIR)/Project1-OgreDemo.Tpo -c -o Project1-OgreDemo.obj `if test -f 'OgreDemo.cpp'; then $(CYGPATH_W) 'OgreDemo.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreDemo.cpp'; fi`
-	$(am__mv) $(DEPDIR)/Project1-OgreDemo.Tpo $(DEPDIR)/Project1-OgreDemo.Po
-#	source='OgreDemo.cpp' object='Project1-OgreDemo.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreDemo.obj `if test -f 'OgreDemo.cpp'; then $(CYGPATH_W) 'OgreDemo.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreDemo.cpp'; fi`
-
 Project1-OgreApp.o: OgreApp.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.o -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp
 	$(am__mv) $(DEPDIR)/Project1-OgreApp.Tpo $(DEPDIR)/Project1-OgreApp.Po
@@ -533,6 +519,20 @@ Project1-OgreApp.obj: OgreApp.cpp
 #	source='OgreApp.cpp' object='Project1-OgreApp.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
+
+Project1-ServerState.o: ServerState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-ServerState.o -MD -MP -MF $(DEPDIR)/Project1-ServerState.Tpo -c -o Project1-ServerState.o `test -f 'ServerState.cpp' || echo '$(srcdir)/'`ServerState.cpp
+	$(am__mv) $(DEPDIR)/Project1-ServerState.Tpo $(DEPDIR)/Project1-ServerState.Po
+#	source='ServerState.cpp' object='Project1-ServerState.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ServerState.o `test -f 'ServerState.cpp' || echo '$(srcdir)/'`ServerState.cpp
+
+Project1-ServerState.obj: ServerState.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-ServerState.obj -MD -MP -MF $(DEPDIR)/Project1-ServerState.Tpo -c -o Project1-ServerState.obj `if test -f 'ServerState.cpp'; then $(CYGPATH_W) 'ServerState.cpp'; else $(CYGPATH_W) '$(srcdir)/ServerState.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-ServerState.Tpo $(DEPDIR)/Project1-ServerState.Po
+#	source='ServerState.cpp' object='Project1-ServerState.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ServerState.obj `if test -f 'ServerState.cpp'; then $(CYGPATH_W) 'ServerState.cpp'; else $(CYGPATH_W) '$(srcdir)/ServerState.cpp'; fi`
 
 Project1-GameState.o: GameState.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-GameState.o -MD -MP -MF $(DEPDIR)/Project1-GameState.Tpo -c -o Project1-GameState.o `test -f 'GameState.cpp' || echo '$(srcdir)/'`GameState.cpp
