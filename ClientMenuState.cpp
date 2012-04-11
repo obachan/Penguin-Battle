@@ -232,6 +232,7 @@ void ClientMenuState::buttonHit(OgreBites::Button *button)
     }
     else if(button->getName() == "ConnectBtn")
     {
-	ClientNet *client = new ClientNet(strtol(portNumber_text, NULL, 0), ip_text);	
+	OgreFramework::getSingletonPtr()->client = new ClientNet(strtol(portNumber_text, NULL, 0), ip_text);	
+	changeAppState(findByName("ClientState"));
     }
 }

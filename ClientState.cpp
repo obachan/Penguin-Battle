@@ -239,9 +239,22 @@ void ClientState::update(double timeSinceLastFrame)
 	       	}
 	    }
 
+		
 
 		// TODO - SEND!!!!!!
 		// Player 2's controller
+
+	buffer[0] = (OgreFramework::getSingletonPtr()->controller->left_control_down) ? '1' : '0';
+	buffer[1] = (OgreFramework::getSingletonPtr()->controller->right_control_down) ? '1' : '0';
+	buffer[2] = (OgreFramework::getSingletonPtr()->controller->up_control_down) ? '1' : '0';
+	buffer[3] = (OgreFramework::getSingletonPtr()->controller->bottom_control_down) ? '1' : '0';
+	buffer[4] = (OgreFramework::getSingletonPtr()->controller->forward_control_down) ? '1' : '0';
+	buffer[5] = (OgreFramework::getSingletonPtr()->controller->backward_control_down) ? '1' : '0';
+	buffer[6] = (OgreFramework::getSingletonPtr()->controller->jump_control_down) ? '1' : '0';
+	buffer[7] = (OgreFramework::getSingletonPtr()->controller->boost_control_down) ? '1' : '0';
+	buffer[8] = '\0';
+
+	OgreFramework::getSingletonPtr()->client->SendMessage(buffer, 8);
 
 	////////////////////////////////////////////////
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	

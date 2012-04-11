@@ -59,6 +59,7 @@ private:
 	Ogre::Entity*				m_pOgreHeadEntity;
  
 	bool						m_bShutdown;
+	char buffer[1024];
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

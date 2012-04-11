@@ -27,6 +27,7 @@
 #include "Controller.hpp"
 #include "SoundWrapper.hpp"
 #include "HUD.hpp"
+#include "Network.hpp"
 
 //#include <CEGUI.h>
 //#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
@@ -76,6 +77,9 @@ public:
 
 	bool						is_gamestate;
 	bool						m_bShutDownOgre;
+
+	ServerNet *server;
+	ClientNet *client;
 	
 private:
 	OgreFramework(const OgreFramework&);
