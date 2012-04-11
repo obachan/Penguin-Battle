@@ -298,7 +298,7 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+76, &newPenguinClientQuaternion[2], 4);	
 		memcpy(buffer+80, &newPenguinClientQuaternion[3], 4);
 */
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 56);
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 28);
 //		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 84);
 
 
