@@ -883,7 +883,8 @@ Project1-OgreFramework.o: OgreFramework.cpp OgreFramework.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
- /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp
+ /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
+ usr/include/SDL_net/SDL_net.h
 
 OgreFramework.hpp:
 
@@ -2888,3 +2889,7 @@ usr/include/SDL/SDL_mixer.h:
 /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h:
 
 HUD.hpp:
+
+Network.hpp:
+
+usr/include/SDL_net/SDL_net.h:

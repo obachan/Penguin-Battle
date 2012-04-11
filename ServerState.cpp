@@ -191,7 +191,19 @@ void ServerState::update(double timeSinceLastFrame)
 		// Retrieve the input over the network and
 		// update player two's controller
 
+		
+		OgreFramework::getSingletonPtr()->server->ReceiveMessage(buffer);
 
+		controller_two->left_control_down = (buffer[0] == '1') ? true : false;
+		controller_two->right_control_down = (buffer[1] == '1') ? true : false;
+		controller_two->up_control_down = (buffer[2] == '1') ? true : false;
+		controller_two->bottom_control_down = (buffer[3] == '1') ? true : false;
+		controller_two->forward_control_down = (buffer[4] == '1') ? true : false;
+		controller_two->backward_control_down = (buffer[5] == '1') ? true : false;
+		controller_two->jump_control_down = (buffer[6] == '1') ? true : false;
+		controller_two->boost_control_down = (buffer[7] == '1') ? true : false;
+
+		
 
  		// Our Team's main loop
 		ball->update(timeSinceLastFrame);

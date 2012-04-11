@@ -193,9 +193,10 @@ void ServerMenuState::update(double timeSinceLastFrame)
     }
     else
     {
-	if(server->WaitConnection())
+	if(OgreFramework::getSingletonPtr()->server->WaitConnection())
 	{
 		std::cout << "Connected\n\n" << std::endl;
+		changeAppState(findByName("ServerState"));
 	}
     }
 }
@@ -220,7 +221,7 @@ void ServerMenuState::buttonHit(OgreBites::Button *button)
         m_bQuit = true;
     else if(button->getName() == "ConnectBtn")
     {
-	server = new ServerNet(strtol(portNumber_text, NULL, 0));
+	OgreFramework::getSingletonPtr()->server = new ServerNet(strtol(portNumber_text, NULL, 0));
 	connectMenu();
 	isPort = false;
     }

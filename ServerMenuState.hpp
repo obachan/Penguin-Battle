@@ -41,7 +41,6 @@ private:
 	void deleteLetter();
 	void connectMenu();
 	OgreBites::TextBox *portNumberTextBox;
-	ServerNet *server;
 	OgreBites::Label *ip;
 };
  
