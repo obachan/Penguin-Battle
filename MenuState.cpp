@@ -42,8 +42,6 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Single Player", 250);
     //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "PauseBtn", "Pause", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "MultiplayerBtn", "Multiplayer", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
@@ -135,16 +133,6 @@ void MenuState::buttonHit(OgreBites::Button *button)
 
 	changeAppState(findByName("MultiplayerMenuState"));
     }
-
-
- 
-    else if(button->getName() == "ServerBtn"){
-        changeAppState(findByName("ServerState"));
-    }
-    else if(button->getName() == "ClientBtn"){
-        changeAppState(findByName("ClientState"));
-    }
-
     else if(button->getName() == "EnterBtn")
         changeAppState(findByName("GameState"));
 }

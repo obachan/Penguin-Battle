@@ -97,6 +97,7 @@ public:
 	Ogre::SceneNode* 	objSphereNode;
 
 	Ogre::Vector3 getBallPosition();
+	Ogre::Quaternion getBallOrientation();
 
 	void update(double);
 	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
@@ -164,6 +165,9 @@ public:
 
 	void update(double, MyController*, Ogre::Camera*);
 	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
+	Ogre::Vector3 getPenguinPosition();
+	Ogre::Quaternion getPenguinOrientation();
+	void updateCamera(Ogre::Camera*);
 	void toggleThirdPersonCamera();
 private:
 	bool 					third_person_camera;

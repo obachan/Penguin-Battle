@@ -96,7 +96,8 @@ void Ball::update(double timeSinceLastFrame)
 
 void Ball::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
 {
-
+	objSphereNode->setPosition(pos[0], pos[1], pos[2]);
+	objSphereNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
 
 }
 
@@ -105,6 +106,11 @@ Ogre::Vector3 Ball::getBallPosition()
 	btTransform trans;
     ballRigidBody->getMotionState()->getWorldTransform(trans);
 	return Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+}
+
+Ogre::Quaternion Ball::getBallOrientation()
+{
+	return objSphereNode->getOrientation();
 }
 
 // Checks whether the ball is contained
@@ -770,7 +776,32 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 void Penguin::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
 {
 	penguinNode->setPosition(pos[0], pos[1], pos[2]);
+	penguinNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+}
 
+void Penguin::updateCamera(Ogre::Camera* camera)
+{
+	// Modify Camera
+	if(third_person_camera && camera != NULL){
+		Ogre::Vector3 cameraPosition;
+		Ogre::Vector3 cameraDirection;
+
+		cameraDirection = penguin_direction;
+		camera->setDirection(cameraDirection);
+		cameraPosition = getPenguinPosition() - (20*penguin_direction);
+		cameraPosition.y += 7;
+		camera->setPosition(cameraPosition);
+	}
+}
+
+Ogre::Vector3 Penguin::getPenguinPosition()
+{
+	return penguinNode->getPosition();
+}
+
+Ogre::Quaternion Penguin::getPenguinOrientation()
+{
+	return penguinNode->getOrientation();
 }
 
 void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)

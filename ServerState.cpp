@@ -269,10 +269,36 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer, &newballVector[0], 4);
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
-		buffer[12] = '\0';
-		
 
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 12);
+		Ogre::Quaternion newballQuaternion = ball->getBallOrientation();
+		memcpy(buffer+12, &newballQuaternion[0], 4);	
+		memcpy(buffer+16, &newballQuaternion[1], 4);	
+		memcpy(buffer+20, &newballQuaternion[2], 4);	
+		memcpy(buffer+24, &newballQuaternion[3], 4);
+
+		Ogre::Vector3 newPenguinServerVector = penguin->getPenguinPosition();
+		memcpy(buffer+28, &newPenguinServerVector[0], 4);
+		memcpy(buffer+32, &newPenguinServerVector[1], 4);
+		memcpy(buffer+36, &newPenguinServerVector[2], 4);
+
+		Ogre::Quaternion newPenguinServerQuaternion = penguin->getPenguinOrientation();
+		memcpy(buffer+40, &newPenguinServerQuaternion[0], 4);	
+		memcpy(buffer+44, &newPenguinServerQuaternion[1], 4);	
+		memcpy(buffer+48, &newPenguinServerQuaternion[2], 4);	
+		memcpy(buffer+52, &newPenguinServerQuaternion[3], 4);
+
+		Ogre::Vector3 newPenguinClientVector = penguin_two->getPenguinPosition();
+		memcpy(buffer+56, &newPenguinClientVector[0], 4);
+		memcpy(buffer+60, &newPenguinClientVector[1], 4);
+		memcpy(buffer+64, &newPenguinClientVector[2], 4);
+
+		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getPenguinOrientation();
+		memcpy(buffer+68, &newPenguinClientQuaternion[0], 4);	
+		memcpy(buffer+72, &newPenguinClientQuaternion[1], 4);	
+		memcpy(buffer+76, &newPenguinClientQuaternion[2], 4);	
+		memcpy(buffer+80, &newPenguinClientQuaternion[3], 4);
+
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 84);
 
 
 		// TODO - SEND!!!!!!
