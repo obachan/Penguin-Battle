@@ -131,7 +131,7 @@ void ClientState::enter()
 	buffer[7] = '0';
 	buffer[8] = '\0';
 
-	OgreFramework::getSingletonPtr()->client->SendMessage(
+	OgreFramework::getSingletonPtr()->client->SendMessage(buffer, 8);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
