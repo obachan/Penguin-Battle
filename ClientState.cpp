@@ -200,6 +200,8 @@ void ClientState::update(double timeSinceLastFrame)
 							 Ogre::Quaternion(1.0f, 0, 0, 0));
 
 		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+		penguin_two->updateAsClient(Ogre::Vector3(0, 0, 0),
+							 Ogre::Quaternion(1.0f, 0, 0, 0));
 		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);

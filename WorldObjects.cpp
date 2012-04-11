@@ -767,6 +767,12 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	camera->rotate(quat);*/
 }
 
+void Penguin::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+	penguinNode->setPosition(pos[0], pos[1], pos[2]);
+
+}
+
 void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)
 {
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);

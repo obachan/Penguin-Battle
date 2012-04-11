@@ -163,6 +163,7 @@ public:
 	bool 					in_air;
 
 	void update(double, MyController*, Ogre::Camera*);
+	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
 	void toggleThirdPersonCamera();
 private:
 	bool 					third_person_camera;
