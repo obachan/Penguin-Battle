@@ -120,6 +120,18 @@ void ClientState::enter()
  	penguin->update(0.1f, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 	penguin_two->update(0.1f, controller_two, NULL);
 	ball->update(0.1f);
+	
+	buffer[0] = '0';
+	buffer[1] = '0';
+	buffer[2] = '0';
+	buffer[3] = '0';
+	buffer[4] = '0';
+	buffer[5] = '0';
+	buffer[6] = '0';
+	buffer[7] = '0';
+	buffer[8] = '\0';
+
+	OgreFramework::getSingletonPtr()->client->SendMessage(
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
