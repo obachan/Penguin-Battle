@@ -781,6 +781,7 @@ void Penguin::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
 
 void Penguin::updateCamera(Ogre::Camera* camera)
 {
+/*
 	// Modify Camera
 	if(third_person_camera && camera != NULL){
 		Ogre::Vector3 cameraPosition;
@@ -792,6 +793,7 @@ void Penguin::updateCamera(Ogre::Camera* camera)
 		cameraPosition.y += 7;
 		camera->setPosition(cameraPosition);
 	}
+*/
 }
 
 Ogre::Vector3 Penguin::getPenguinPosition()

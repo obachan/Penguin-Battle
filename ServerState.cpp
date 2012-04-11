@@ -275,7 +275,7 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
 		memcpy(buffer+20, &newballQuaternion[2], 4);	
 		memcpy(buffer+24, &newballQuaternion[3], 4);
-
+/*
 		Ogre::Vector3 newPenguinServerVector = penguin->getPenguinPosition();
 		memcpy(buffer+28, &newPenguinServerVector[0], 4);
 		memcpy(buffer+32, &newPenguinServerVector[1], 4);
@@ -297,8 +297,9 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+72, &newPenguinClientQuaternion[1], 4);	
 		memcpy(buffer+76, &newPenguinClientQuaternion[2], 4);	
 		memcpy(buffer+80, &newPenguinClientQuaternion[3], 4);
-
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 84);
+*/
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 28);
+//		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 84);
 
 
 		// TODO - SEND!!!!!!
