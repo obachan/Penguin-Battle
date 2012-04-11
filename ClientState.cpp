@@ -194,10 +194,17 @@ void ClientState::update(double timeSinceLastFrame)
 		// TODO - RECEIVE!!!!!!
 		// ball position and penguin's position
 
+		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+		
+		Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
+
+		memcpy(&newballPosition[0], buffer, 4);
+		memcpy(&newballPosition[1], buffer+4, 4);
+		memcpy(&newballPosition[2], buffer+8, 4);
+
  		// Our Team's main loop
 		//ball->update(timeSinceLastFrame);
-		ball->updateAsClient(Ogre::Vector3(0, 0, 0),
-							 Ogre::Quaternion(1.0f, 0, 0, 0));
+		ball->updateAsClient(newballPosition, Ogre::Quaternion(1.0f, 0, 0, 0));
 
 		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin_two->updateAsClient(Ogre::Vector3(0, 0, 0),

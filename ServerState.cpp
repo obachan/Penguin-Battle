@@ -265,6 +265,14 @@ void ServerState::update(double timeSinceLastFrame)
 	       	}
 	    }
 
+		Ogre::Vector3 newballVector = ball->getBallPosition();
+		memcpy(buffer, &newballVector[0], 4);
+		memcpy(buffer+4, &newballVector[1], 4);
+		memcpy(buffer+8, &newballVector[2], 4);
+		buffer[12] = '\0';
+		
+
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 12);
 
 
 		// TODO - SEND!!!!!!
