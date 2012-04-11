@@ -47,6 +47,7 @@ public:
 	bool		pause_state;
 
 	OgreBites::ParamsPanel* mDetailsPanel;
+	PhysicsWrapper*	physics;
 	
 private:
     void setupDemoScene();

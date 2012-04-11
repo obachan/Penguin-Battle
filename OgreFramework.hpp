@@ -67,7 +67,7 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*					m_pMouse;
 
-	PhysicsWrapper*				physics;
+	//PhysicsWrapper*				physics;
 	MyController*				controller;
 	SoundWrapper*				sounds;
 	HUD*						hud;

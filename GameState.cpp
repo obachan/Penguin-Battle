@@ -19,12 +19,16 @@ GameState::GameState()
 GameState::~GameState()
 {
        delete OgreFramework::getSingletonPtr();
+       delete physics;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 void GameState::enter()
 {
+
+	physics = new PhysicsWrapper();
+
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
 
@@ -57,22 +61,22 @@ void GameState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
-	ball = new Ball(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	ball = new Ball(m_pSceneMgr, physics);
 	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
 	// Create Room
-	room = new Room(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	room = new Room(m_pSceneMgr, physics);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
 	// Create Penguin
-	penguin = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	penguin = new Penguin(m_pSceneMgr, physics);
 
 	// Create Goal
-	goal = new Goal(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	goal = new Goal(m_pSceneMgr, physics);
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -179,8 +183,6 @@ void GameState::resume()
 
 void GameState::update(double timeSinceLastFrame)
 {
-	if (!pause_state)
-	{
 
 
  		// Our Team's main loop
@@ -193,6 +195,12 @@ void GameState::update(double timeSinceLastFrame)
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
+		if (timeSinceLastFrame!=0)
+		{
+	 		physics->stepPhysics(timeSinceLastFrame, 5);
+		
+		}
+
 		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
@@ -202,7 +210,7 @@ void GameState::update(double timeSinceLastFrame)
 		if(ball->inGoal(goal))
 		{
 			scored = true;
-			ball->reset(OgreFramework::getSingletonPtr()->physics);
+			ball->reset(physics);
 		}
 
 
@@ -235,7 +243,6 @@ void GameState::update(double timeSinceLastFrame)
 	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
 	       	}
 	    }
-	}
 
 	////////////////////////////////////////////////
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
@@ -346,7 +353,7 @@ void GameState::runDemo()
 				if(ball->inGoal(goal))
 				{
 					scored = true;
-					ball->reset(OgreFramework::getSingletonPtr()->physics);
+					ball->reset(physics);
 				}
 
 
@@ -415,13 +422,12 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	if(keyEventRef.key == OIS::KC_P)
 	{
-		pause_state = !pause_state;
+        pushAppState(findByName("PauseState"));
 	}
 
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         pushAppState(findByName("PauseState"));
-        return true;
     }
 
 	return true;

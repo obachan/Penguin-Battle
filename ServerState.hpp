@@ -49,6 +49,7 @@ public:
 
 	OgreBites::ParamsPanel* mDetailsPanel;
 	MyController* controller_two;
+	PhysicsWrapper*	physics;
 	
 private:
     void setupDemoScene();

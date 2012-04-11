@@ -60,30 +60,27 @@ void ClientState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
-	ball = new Ball(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0, false);
 	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
 	// Create Room
-	room = new Room(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	room = new Room(m_pSceneMgr, NULL, false);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
 
-	std::cout << "Creating New Penguin Player 1" << std::endl;
-
 	// Create Player 1's Penguin
-	penguin = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	std::cout << "Creating New Penguin Player 2" << std::endl;
+	penguin = new Penguin(m_pSceneMgr, NULL, false);
 
 	// Create Player 2's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	penguin_two = new Penguin(m_pSceneMgr, NULL, false);
 
 	// Create Goal
-	goal = new Goal(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	goal = new Goal(m_pSceneMgr, NULL, false);
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -119,6 +116,9 @@ void ClientState::enter()
 
     OgreFramework::getSingletonPtr()->hud->reset();
  
+ 	penguin->update(0.1f, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+	penguin_two->update(0.1f, controller_two, NULL);
+	ball->update(0.1f);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -191,33 +191,23 @@ void ClientState::resume()
 
 void ClientState::update(double timeSinceLastFrame)
 {
-	if (!pause_state)
-	{
-
+		// TODO - RECEIVE!!!!!!
+		// ball position and penguin's position
 
  		// Our Team's main loop
-		ball->update(timeSinceLastFrame);
-
-		//test_ball->update(timeSinceLastFrame);
-		//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
+		//ball->update(timeSinceLastFrame);
+		ball->updateAsClient(Ogre::Vector3(0, 0, 0),
+							 Ogre::Quaternion(1.0f, 0, 0, 0));
 
 		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-		penguin_two->update(timeSinceLastFrame, controller_two, NULL);
+		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
 		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
-
 		bool scored = false;
-
-		if(ball->inGoal(goal))
-		{
-			scored = true;
-			ball->reset(OgreFramework::getSingletonPtr()->physics);
-		}
-
 
 		OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
 
@@ -248,7 +238,10 @@ void ClientState::update(double timeSinceLastFrame)
 	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
 	       	}
 	    }
-	}
+
+
+		// TODO - SEND!!!!!!
+		// Player 2's controller
 
 	////////////////////////////////////////////////
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
@@ -353,17 +346,18 @@ void ClientState::runDemo()
 	
 				// Handles the event in which the player scores
 
-
+				/*
 				bool scored = false;
 
 				if(ball->inGoal(goal))
 				{
 					scored = true;
-					ball->reset(OgreFramework::getSingletonPtr()->physics);
+					ball->reset(physics);
 				}
-
+				
 
 				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
+				*/
 			}
 
 			////////////////////////////////////////////////
@@ -425,12 +419,12 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	{
 		penguin->toggleThirdPersonCamera();
 	}
-
+/*
 	if(keyEventRef.key == OIS::KC_P)
 	{
 		pause_state = !pause_state;
 	}
-
+*/
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         pushAppState(findByName("PauseState"));

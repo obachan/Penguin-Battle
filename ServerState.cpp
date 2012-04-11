@@ -27,6 +27,7 @@ void ServerState::enter()
 {
 
 	controller_two = new MyController();
+	physics = new PhysicsWrapper();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
@@ -60,30 +61,25 @@ void ServerState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
-	ball = new Ball(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	ball = new Ball(m_pSceneMgr, physics);
 	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
 	// Create Room
-	room = new Room(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	room = new Room(m_pSceneMgr, physics);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
-
-	std::cout << "Creating New Penguin Player 1" << std::endl;
-
 	// Create Player 1's Penguin
-	penguin = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	std::cout << "Creating New Penguin Player 2" << std::endl;
+	penguin = new Penguin(m_pSceneMgr, physics);
 
 	// Create Player 2's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	penguin_two = new Penguin(m_pSceneMgr, physics);
 
 	// Create Goal
-	goal = new Goal(m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
+	goal = new Goal(m_pSceneMgr, physics);
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -191,8 +187,10 @@ void ServerState::resume()
 
 void ServerState::update(double timeSinceLastFrame)
 {
-	if (!pause_state)
-	{
+		// TODO - RECEIVE!!!!!!
+		// Retrieve the input over the network and
+		// update player two's controller
+
 
 
  		// Our Team's main loop
@@ -206,6 +204,12 @@ void ServerState::update(double timeSinceLastFrame)
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
+		if (timeSinceLastFrame!=0)
+		{
+	 		physics->stepPhysics(timeSinceLastFrame, 5);
+		
+		}
+
 		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
@@ -215,7 +219,7 @@ void ServerState::update(double timeSinceLastFrame)
 		if(ball->inGoal(goal))
 		{
 			scored = true;
-			ball->reset(OgreFramework::getSingletonPtr()->physics);
+			ball->reset(physics);
 		}
 
 
@@ -248,10 +252,14 @@ void ServerState::update(double timeSinceLastFrame)
 	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
 	       	}
 	    }
-	}
 
-	////////////////////////////////////////////////
-	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
+
+
+		// TODO - SEND!!!!!!
+		// Send penguins' and ball's position
+
+
+
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -359,7 +367,7 @@ void ServerState::runDemo()
 				if(ball->inGoal(goal))
 				{
 					scored = true;
-					ball->reset(OgreFramework::getSingletonPtr()->physics);
+					ball->reset(physics);
 				}
 
 
@@ -425,12 +433,12 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	{
 		penguin->toggleThirdPersonCamera();
 	}
-
+/*
 	if(keyEventRef.key == OIS::KC_P)
 	{
 		pause_state = !pause_state;
 	}
-
+*/
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         pushAppState(findByName("PauseState"));

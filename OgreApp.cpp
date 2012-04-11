@@ -40,7 +40,7 @@ void OgreApp::startDemo()
 	GameState::create(m_pAppStateManager, "GameState");
     PauseState::create(m_pAppStateManager, "PauseState");
     ServerState::create(m_pAppStateManager, "ServerState");
-    ServerState::create(m_pAppStateManager, "ClientState");
+    ClientState::create(m_pAppStateManager, "ClientState");
 
 //std::cout << "SEG FAULT" << std::endl;
 	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));

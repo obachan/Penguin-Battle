@@ -36,7 +36,7 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 {
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
 	
-	physics = new PhysicsWrapper();
+	//physics = new PhysicsWrapper();
 	controller = new MyController();
 	sounds = new SoundWrapper();
 	hud = new HUD();
@@ -243,11 +243,13 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 		moveCamera();
 
 
+/*
 		if (timeSinceLastFrame!=0)
 		{
 	 		physics->stepPhysics(timeSinceLastFrame, 5);
 		
 		}
+*/		
 		m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
 		m_pTrayMgr->adjustTrays();
