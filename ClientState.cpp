@@ -25,6 +25,7 @@ ClientState::~ClientState()
 
 void ClientState::enter()
 {
+	std::cout << "enter\n\n" << std::endl;
 
 	controller_two = new MyController();
 
@@ -193,6 +194,7 @@ void ClientState::update(double timeSinceLastFrame)
 {
 		// TODO - RECEIVE!!!!!!
 		// ball position and penguin's position
+		std::cout << "update\n\n" << std::endl;
 
 		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 		

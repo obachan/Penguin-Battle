@@ -1,4 +1,5 @@
 #include "Network.hpp"
+#include <iostream>
 
 ServerNet::ServerNet(Uint16 port)
 {	
@@ -148,7 +149,9 @@ bool ClientNet::SendMessage(char* message, int length)
 
 int ClientNet::ReceiveMessage(char message[])
 {
+	std::cout << "before receive\n\n" << std::endl;
 	int length = SDLNet_TCP_Recv(sd, message, len);
+	std::cout << "after receive\n\n" << std::endl;
 	if (length > 0)
 	{
 		if(strcmp(message, "exit") == 0)	/* Terminate this connection */
