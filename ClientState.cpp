@@ -1,6 +1,6 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-#include "GameState.hpp"
+#include "ClientState.hpp"
 
 #include <iostream>
 
@@ -8,7 +8,7 @@
  
 using namespace Ogre;
 
-GameState::GameState()
+ClientState::ClientState()
 {
 	m_pOgreHeadNode			= 0;
 	m_pOgreHeadEntity		= 0;
@@ -16,26 +16,25 @@ GameState::GameState()
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-GameState::~GameState()
+ClientState::~ClientState()
 {
        delete OgreFramework::getSingletonPtr();
-       delete physics;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-void GameState::enter()
+void ClientState::enter()
 {
 
-	physics = new PhysicsWrapper();
+	controller_two = new MyController();
 
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ClientState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
 
-    m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "GameSceneMgr");
+    m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ClientSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
-    m_pCamera = m_pSceneMgr->createCamera("GameCam");
+    m_pCamera = m_pSceneMgr->createCamera("ClientCam");
 	m_pCamera->setPosition(Vector3(0, -40, 125));
     m_pCamera->lookAt(Vector3(0, 0, 0));
     m_pCamera->setNearClipDistance(1);
@@ -61,22 +60,27 @@ void GameState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
 	// Create Ball
-	ball = new Ball(m_pSceneMgr, physics);
+
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0, false);
 	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
 	// Create Room
-	room = new Room(m_pSceneMgr, physics);
+	room = new Room(m_pSceneMgr, NULL, false);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
-	// Create Penguin
-	penguin = new Penguin(m_pSceneMgr, physics);
+
+	// Create Player 1's Penguin
+	penguin = new Penguin(m_pSceneMgr, NULL, false);
+
+	// Create Player 2's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, NULL, false);
 
 	// Create Goal
-	goal = new Goal(m_pSceneMgr, physics);
+	goal = new Goal(m_pSceneMgr, NULL, false);
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -110,23 +114,25 @@ void GameState::enter()
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
     OgreFramework::getSingletonPtr()->sounds->playMusic();
 
-
     OgreFramework::getSingletonPtr()->hud->reset();
  
+ 	penguin->update(0.1f, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+	penguin_two->update(0.1f, controller_two, NULL);
+	ball->update(0.1f);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-void GameState::createScene()
+void ClientState::createScene()
 {
 	
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-void GameState::exit()
+void ClientState::exit()
 {
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Leaving GameState...");
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Leaving ClientState...");
 
 	m_pSceneMgr->destroyCamera(m_pCamera);
     if(m_pSceneMgr)
@@ -137,22 +143,24 @@ void GameState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
 
     OgreFramework::getSingletonPtr()->is_gamestate = false;
+
+    OgreFramework::getSingletonPtr()->sounds->musicDone();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-bool GameState::pause()
+bool ClientState::pause()
 {
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Pausing GameState...");
+	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Pausing ClientState...");
  
     return true;	
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-void GameState::resume()
+void ClientState::resume()
 {
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Resuming GameState...");
+	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Resuming ClientState...");
  
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
 
@@ -181,38 +189,25 @@ void GameState::resume()
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-void GameState::update(double timeSinceLastFrame)
+void ClientState::update(double timeSinceLastFrame)
 {
-
+		// TODO - RECEIVE!!!!!!
+		// ball position and penguin's position
 
  		// Our Team's main loop
-		ball->update(timeSinceLastFrame);
-
-		//test_ball->update(timeSinceLastFrame);
-		//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
+		//ball->update(timeSinceLastFrame);
+		ball->updateAsClient(Ogre::Vector3(0, 0, 0),
+							 Ogre::Quaternion(1.0f, 0, 0, 0));
 
 		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
-		if (timeSinceLastFrame!=0)
-		{
-	 		physics->stepPhysics(timeSinceLastFrame, 5);
-		
-		}
 
 		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
-
 		bool scored = false;
-
-		if(ball->inGoal(goal))
-		{
-			scored = true;
-			ball->reset(physics);
-		}
-
 
 		OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
 
@@ -244,16 +239,20 @@ void GameState::update(double timeSinceLastFrame)
 	       	}
 	    }
 
+
+		// TODO - SEND!!!!!!
+		// Player 2's controller
+
 	////////////////////////////////////////////////
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-void GameState::startDemo()
+void ClientState::startDemo()
 {
 	new OgreFramework();
-	if(!OgreFramework::getSingletonPtr()->initOgre("GameState v1.0", this, 0))
+	if(!OgreFramework::getSingletonPtr()->initOgre("ClientState v1.0", this, 0))
 		return;
  
 	m_bShutdown = false;
@@ -266,7 +265,7 @@ void GameState::startDemo()
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-void GameState::setupDemoScene()
+void ClientState::setupDemoScene()
 {
 /*
 
@@ -306,7 +305,7 @@ void GameState::setupDemoScene()
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-void GameState::runDemo()
+void ClientState::runDemo()
 {
 	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Start main loop...");
  
@@ -347,7 +346,7 @@ void GameState::runDemo()
 	
 				// Handles the event in which the player scores
 
-
+				/*
 				bool scored = false;
 
 				if(ball->inGoal(goal))
@@ -355,9 +354,10 @@ void GameState::runDemo()
 					scored = true;
 					ball->reset(physics);
 				}
-
+				
 
 				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
+				*/
 			}
 
 			////////////////////////////////////////////////
@@ -382,7 +382,7 @@ void GameState::runDemo()
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
+bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
  
@@ -419,15 +419,16 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	{
 		penguin->toggleThirdPersonCamera();
 	}
-
+/*
 	if(keyEventRef.key == OIS::KC_P)
 	{
-        pushAppState(findByName("PauseState"));
+		pause_state = !pause_state;
 	}
-
+*/
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         pushAppState(findByName("PauseState"));
+        return true;
     }
 
 	return true;
@@ -435,7 +436,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
+bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
 	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
  
@@ -475,15 +476,19 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::mouseMoved(const OIS::MouseEvent &evt)
+bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
 {
+	OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+	OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+
+	
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(evt)) return true;
     return true;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool ClientState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(evt, id)) return true;
     return true;
@@ -491,7 +496,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool ClientState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseUp(evt, id)) return true;
     return true;

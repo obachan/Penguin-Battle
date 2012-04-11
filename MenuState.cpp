@@ -2,6 +2,7 @@
  
 #include "MenuState.hpp"
 
+#include <iostream>
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 using namespace Ogre;
@@ -41,8 +42,8 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Single Player", 250);
     //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "PauseBtn", "Pause", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "MultiplayerBtn", "Multiplayer", 250);
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
@@ -114,14 +115,16 @@ bool MenuState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 
 void MenuState::update(double timeSinceLastFrame)
 {
+
     m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
     OgreFramework::getSingletonPtr()->m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
- 
+
     if(m_bQuit == true)
     {
         shutdown();
         return;
     }
+
 }
 
 void MenuState::buttonHit(OgreBites::Button *button)
@@ -129,8 +132,19 @@ void MenuState::buttonHit(OgreBites::Button *button)
     if(button->getName() == "ExitBtn")
         m_bQuit = true;
     else if(button->getName() == "MultiplayerBtn"){
+
 	changeAppState(findByName("MultiplayerMenuState"));
     }
+
+
+ 
+    else if(button->getName() == "ServerBtn"){
+        changeAppState(findByName("ServerState"));
+    }
+    else if(button->getName() == "ClientBtn"){
+        changeAppState(findByName("ClientState"));
+    }
+
     else if(button->getName() == "EnterBtn")
         changeAppState(findByName("GameState"));
 }

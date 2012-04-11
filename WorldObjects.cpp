@@ -1,9 +1,12 @@
 #include "WorldObjects.hpp"
 
-int Ball::scene_node_counter = 0;
-int Ball::test_counter = 0;
+#include <iostream>
 
-Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double start_pos_x, double start_pos_y, double start_pos_z)
+int Ball::scene_node_counter = 0;
+
+int Penguin::scene_node_counter = 0;
+
+Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double start_pos_x, double start_pos_y, double start_pos_z, bool do_physics)
 {
 
 	//const double start_pos_x = 0.0f;
@@ -18,6 +21,7 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double star
  	std::stringstream out;
  	out << scene_node_counter;
  	scene_node_counter_string = out.str();
+
 	std::string ball_name = "ball" + scene_node_counter_string;
 	scene_node_counter++;
 
@@ -26,7 +30,10 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double star
 	//std::cout << "==================" << std::endl;
 
 	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, ball_name);
-	attachToDynamicWorld(physics);
+	
+	if(do_physics)
+		attachToDynamicWorld(physics);
+	
 }
 
 void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x, Ogre::Real start_pos_y, Ogre::Real start_pos_z, Ogre::Real rScaleFactor, Ogre::String strObjName)
@@ -79,11 +86,18 @@ Ball::~Ball()
     delete ball_collision_shape;
 }
 
-void Ball::update(double timeSinceLastFrame){
+void Ball::update(double timeSinceLastFrame)
+{
 	objSphereNode->setPosition(getBallPosition());
 
 	Ogre::Vector3 pos = getBallPosition();
 	//std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
+}
+
+void Ball::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+
+
 }
 
 Ogre::Vector3 Ball::getBallPosition()
@@ -155,10 +169,11 @@ void Ball::reset(PhysicsWrapper* physics)
 
 }
 
-Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
 {
 	createRoom(m_pSceneMgr, room_width, room_length);
-	attachToDynamicWorld(physics);
+	if(do_physics)
+		attachToDynamicWorld(physics);
 }
 
 void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_length)
@@ -330,12 +345,14 @@ Room::~Room()
 	delete front;
 }
 
-Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
 {
 	float goal_to_edge_wall_offset = 50.0;
 
 	createGoal(m_pSceneMgr, -room_length/2 + goal_to_edge_wall_offset);
-	attachToDynamicWorld(physics);
+
+	if(do_physics)
+		attachToDynamicWorld(physics);
 }
 
 void Goal::createGoal(Ogre::SceneManager* m_pSceneMgr, double translate_z)
@@ -568,10 +585,11 @@ Goal::~Goal()
 	delete goalTopShape;
 }
 
-Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
 {
 	createPenguin(m_pSceneMgr);
-	attachToDynamicWorld(physics);
+	if(do_physics)
+		attachToDynamicWorld(physics);
 	third_person_camera = true;
 }
 
@@ -624,8 +642,19 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
     penguinRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
-	penguinEntity = m_pSceneMgr->createEntity("penguin", "penguin.mesh");
-	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("penguin");
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string scene_node_counter_string;
+ 	std::stringstream out;
+ 	out << scene_node_counter;
+ 	scene_node_counter_string = out.str();
+	std::string penguin_name = "penguin" + scene_node_counter_string;
+	scene_node_counter++;
+
+	//std::cout << penguin_name << std::endl;
+
+	penguinEntity = m_pSceneMgr->createEntity(penguin_name, "penguin.mesh");
+	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(penguin_name);
 	penguinNode->attachObject(penguinEntity);
 	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
 	penguinNode->setPosition(vec[0], vec[1], vec[2]);
@@ -637,6 +666,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	/*Ogre::Camera* camera = m_pSceneMgr->getCamera("Camera");
 	camera->setPosition(penguinNode->getPosition());
 	camera->setDirection(penguin_direction);*/
+
 }
 
 
@@ -672,9 +702,9 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// new penguin position is put in pos
 	handleCollisions(&pos);
 
-	// Process User Input to move player/camera
+	// Process User Input to move player
 	// new penguin position is put in pos
-	processController(timeSinceLastFrame, controller, camera, &pos);
+	processController(timeSinceLastFrame, controller, &pos);
 
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
@@ -686,7 +716,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	penguinNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	if(third_person_camera){
+	if(third_person_camera && camera != NULL){
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 
@@ -737,7 +767,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	camera->rotate(quat);*/
 }
 
-void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera, Ogre::Vector3* pos)
+void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)
 {
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
 

@@ -47,12 +47,12 @@ const float penguin_length = 10.0f;
 const float paddle_length = 10.0f;
 
 const float ball_radius = 9.0f;
-const float ball_mass = 10.0f;
+const float ball_mass = 40.0f;
 
 class Goal
 {
 public:
-	Goal(Ogre::SceneManager*, PhysicsWrapper*);
+	Goal(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
 	~Goal();
 
 	Ogre::SceneNode* 	goalLeftNode;
@@ -83,12 +83,14 @@ private:
 	btCollisionShape* goalRightShape;
 	btCollisionShape* goalBackShape;
 	btCollisionShape* goalTopShape;
+
+	static int 				scene_node_counter;
 };
 
 class Ball
 {
 public:
-	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f);
+	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f, bool do_physics = true);
 	~Ball();
 
 	btRigidBody* 		ballRigidBody;
@@ -97,6 +99,7 @@ public:
 	Ogre::Vector3 getBallPosition();
 
 	void update(double);
+	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
 	bool inGoal(Goal*);
 	void reset(PhysicsWrapper*);
 
@@ -110,14 +113,12 @@ private:
 	btCollisionShape* 		ball_collision_shape;
 
 	static int 				scene_node_counter;
-
-	static int 				test_counter;
 };
 
 class Room
 {
 public:
-	Room(Ogre::SceneManager*, PhysicsWrapper*);
+	Room(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
 	~Room();
 
 	btRigidBody* frontRigidBody;
@@ -145,7 +146,7 @@ class Penguin
 public:
 
 
-	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
 	~Penguin();
 
 	Ogre::SceneNode*		penguinNode;
@@ -170,10 +171,12 @@ private:
 	void createPenguin(Ogre::SceneManager*);
 	void attachToDynamicWorld(PhysicsWrapper*);
 
-	void processController(double, MyController*, Ogre::Camera*, Ogre::Vector3*);
+	void processController(double, MyController*, Ogre::Vector3*);
 	void handleGravity(double, Ogre::Vector3*);
 	void handleCollisions(Ogre::Vector3*);
 	void animate(double, MyController*);
+
+	static int 				scene_node_counter;
 };
 
 

@@ -5,6 +5,7 @@ public:
 	~HUD();
 
 	void update(double, bool);
+	void reset();
 
 	int				score;
 	float			timer;

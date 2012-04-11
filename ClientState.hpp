@@ -1,24 +1,24 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-#ifndef GAME_STATE_HPP
-#define GAME_STATE_HPP
+#ifndef CLIENT_STATE_HPP
+#define CLIENT_STATE_HPP
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjects.hpp"
+#include "GameState.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-class GameState : public AppState
+class ClientState : public AppState
 {
 public:
-	GameState();
-	~GameState();
+	ClientState();
+	~ClientState();
  
-	DECLARE_APPSTATE_CLASS(GameState)
+	DECLARE_APPSTATE_CLASS(ClientState)
  
 	void enter();
 	void createScene();
@@ -40,14 +40,13 @@ public:
 	Room 		*room;
 	Paddle		*paddle;
 	Penguin		*penguin;
+	Penguin		*penguin_two;
 	Goal		*goal;
-
-	//Ball 		*test_ball;
-
+	
 	bool		pause_state;
 
 	OgreBites::ParamsPanel* mDetailsPanel;
-	PhysicsWrapper*	physics;
+	MyController* controller_two;
 	
 private:
     void setupDemoScene();

@@ -60,7 +60,8 @@ void SoundWrapper::playMusic(){
 }
 
 void SoundWrapper::musicDone(){
-  
+  is_music_playing = false;
+  Mix_HaltMusic();
 }
 
 void SoundWrapper::playJumpSoundEffect(){
