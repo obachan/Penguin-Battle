@@ -100,7 +100,7 @@ public:
 	Ogre::Quaternion getBallOrientation();
 
 	void update(double);
-	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
+	void updateAsClient(Ogre::Vector3);
 	bool inGoal(Goal*);
 	void reset(PhysicsWrapper*);
 

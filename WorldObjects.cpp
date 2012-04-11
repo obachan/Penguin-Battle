@@ -94,10 +94,9 @@ void Ball::update(double timeSinceLastFrame)
 	//std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
 }
 
-void Ball::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+void Ball::updateAsClient(Ogre::Vector3 pos)
 {
 	objSphereNode->setPosition(pos[0], pos[1], pos[2]);
-	objSphereNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
 
 }
 
