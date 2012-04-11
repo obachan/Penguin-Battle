@@ -1,4 +1,5 @@
-Project1-main.o: main.cpp OgreApp.hpp OgreFramework.hpp \
+Project1-ServerMenuState.o: ServerMenuState.cpp ServerMenuState.hpp \
+ AppState.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -883,11 +884,20 @@ Project1-main.o: main.cpp OgreApp.hpp OgreFramework.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
- /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp \
- AppStateManager.hpp AppState.hpp Network.hpp \
- usr/include/SDL_net/SDL_net.h
+ /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
+ usr/include/SDL_net/SDL_net.h /usr/include/netdb.h \
+ /usr/include/netinet/in.h /usr/include/sys/socket.h \
+ /usr/include/sys/uio.h /usr/include/bits/uio.h \
+ /usr/include/bits/socket.h /usr/include/bits/sockaddr.h \
+ /usr/include/asm/socket.h /usr/include/asm-generic/socket.h \
+ /usr/include/asm/sockios.h /usr/include/asm-generic/sockios.h \
+ /usr/include/bits/socket2.h /usr/include/bits/in.h \
+ /usr/include/rpc/netdb.h /usr/include/bits/netdb.h \
+ /usr/include/arpa/inet.h
 
-OgreApp.hpp:
+ServerMenuState.hpp:
+
+AppState.hpp:
 
 OgreFramework.hpp:
 
@@ -2893,10 +2903,38 @@ usr/include/SDL/SDL_mixer.h:
 
 HUD.hpp:
 
-AppStateManager.hpp:
-
-AppState.hpp:
-
 Network.hpp:
 
 usr/include/SDL_net/SDL_net.h:
+
+/usr/include/netdb.h:
+
+/usr/include/netinet/in.h:
+
+/usr/include/sys/socket.h:
+
+/usr/include/sys/uio.h:
+
+/usr/include/bits/uio.h:
+
+/usr/include/bits/socket.h:
+
+/usr/include/bits/sockaddr.h:
+
+/usr/include/asm/socket.h:
+
+/usr/include/asm-generic/socket.h:
+
+/usr/include/asm/sockios.h:
+
+/usr/include/asm-generic/sockios.h:
+
+/usr/include/bits/socket2.h:
+
+/usr/include/bits/in.h:
+
+/usr/include/rpc/netdb.h:
+
+/usr/include/bits/netdb.h:
+
+/usr/include/arpa/inet.h:

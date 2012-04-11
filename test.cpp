@@ -6,7 +6,7 @@
 void serverCode()
 {
 	char portNumber[1024];
-	printf("Port number: ");
+	printf("Input port number: ");
 	fgets(portNumber,1024,stdin);
 	ServerNet *server = new ServerNet((Uint16)strtol(portNumber,NULL,0));
 
@@ -40,11 +40,11 @@ void serverCode()
 void clientCode()
 {
 	char portNumber[1024];
-	printf("Port number: ");
+	printf("Input port number: ");
 	fgets(portNumber,1024,stdin);
 
 	char hostName[1024];
-	printf("hostName: ");
+	printf("Input hostname or IPAddress (Example: totoro.cs.utexas.edu): ");
 	fgets(hostName,1024,stdin);
 
 	hostName[strlen(hostName)-1] = '\0';
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 	int done = 0;
 	while (!done)
 	{
-		printf("Are you server or client: ");
+		printf("Enter server or client: ");
 		fgets(buffer,1024,stdin);
 
 		if (strcmp(buffer, "server\n") == 0)

@@ -43,12 +43,12 @@ ServerNet::~ServerNet()
 
 bool ServerNet::WaitConnection()
 {
-	int quit = 0;
-	while(!quit)
-	{
+	//int quit = 0;
+	//while(!quit)
+	//{
 		if ((client = SDLNet_TCP_Accept(server)))
 		{
-			quit = 1;
+			//quit = 1;
 			/* Now we can communicate with the client using csd socket
 			* sd will remain opened waiting other connections */
  
@@ -58,8 +58,10 @@ bool ServerNet::WaitConnection()
 				printf("Host connected: %x %d\n", SDLNet_Read32(&remoteIP->host), SDLNet_Read16(&remoteIP->port));
 			else
 				fprintf(stderr, "SDLNet_TCP_GetPeerAddress: %s\n", SDLNet_GetError());
+			return true;
 		}
-	}
+		return false;
+	//}
 }
 
 bool ServerNet::SendMessage(char* message, int length)
@@ -88,6 +90,11 @@ int ServerNet::ReceiveMessage(char message[])
 		return length;
 	}
 	return -1;
+}
+
+int ServerNet::getIP()
+{
+	return ip.host;
 }
 
 ClientNet::ClientNet(Uint16 port, char hostname[])

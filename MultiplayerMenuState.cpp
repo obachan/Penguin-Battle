@@ -1,6 +1,6 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-#include "MenuState.hpp"
+#include "MultiplayerMenuState.hpp"
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -8,7 +8,7 @@ using namespace Ogre;
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-MenuState::MenuState()
+MultiplayerMenuState::MultiplayerMenuState()
 {
     m_bQuit         = false;
     m_FrameEvent    = Ogre::FrameEvent();
@@ -16,12 +16,13 @@ MenuState::MenuState()
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-void MenuState::enter()
+void MultiplayerMenuState::enter()
 {
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering MenuState...");
+
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering MultiplayerMenuState...");
  
 
-    m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "MenuSceneMgr");
+    m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "MultiplayerMenuSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
  
     m_pCamera = m_pSceneMgr->createCamera("MenuCam");
@@ -38,26 +39,24 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showCursor();
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Single Player", 250);
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "PauseBtn", "Pause", 250);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "MultiplayerBtn", "Multiplayer", 250);
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ServerBtn", "Server", 250);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ClientBtn", "Client", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
     createScene();
+
 }
 
-void MenuState::createScene()
+void MultiplayerMenuState::createScene()
 {
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-void MenuState::exit()
+void MultiplayerMenuState::exit()
 {
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Leaving MenuState...");
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Leaving MultiplayerMenuState...");
  
     m_pSceneMgr->destroyCamera(m_pCamera);
     if(m_pSceneMgr)
@@ -68,7 +67,7 @@ void MenuState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
 }
 
-bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
+bool MultiplayerMenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
@@ -82,7 +81,7 @@ bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool MenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
+bool MultiplayerMenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
     OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
     return true;
@@ -90,7 +89,7 @@ bool MenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool MenuState::mouseMoved(const OIS::MouseEvent &evt)
+bool MultiplayerMenuState::mouseMoved(const OIS::MouseEvent &evt)
 {
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(evt)) return true;
     return true;
@@ -98,7 +97,7 @@ bool MenuState::mouseMoved(const OIS::MouseEvent &evt)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool MenuState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool MultiplayerMenuState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(evt, id)) return true;
     return true;
@@ -106,13 +105,13 @@ bool MenuState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool MenuState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+bool MultiplayerMenuState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseUp(evt, id)) return true;
     return true;
 }
 
-void MenuState::update(double timeSinceLastFrame)
+void MultiplayerMenuState::update(double timeSinceLastFrame)
 {
     m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
     OgreFramework::getSingletonPtr()->m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
@@ -124,13 +123,14 @@ void MenuState::update(double timeSinceLastFrame)
     }
 }
 
-void MenuState::buttonHit(OgreBites::Button *button)
+void MultiplayerMenuState::buttonHit(OgreBites::Button *button)
 {
     if(button->getName() == "ExitBtn")
         m_bQuit = true;
-    else if(button->getName() == "MultiplayerBtn"){
-	changeAppState(findByName("MultiplayerMenuState"));
+    else if(button->getName() == "ServerBtn"){
+	changeAppState(findByName("ServerMenuState"));
     }
-    else if(button->getName() == "EnterBtn")
-        changeAppState(findByName("GameState"));
+    else if(button->getName() == "ClientBtn"){
+	changeAppState(findByName("ClientMenuState"));
+    }
 }

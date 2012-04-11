@@ -28,8 +28,8 @@
 #include "SoundWrapper.hpp"
 #include "HUD.hpp"
 
-#include <CEGUI.h>
-#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
+//#include <CEGUI.h>
+//#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
 
 #include <iostream>
  

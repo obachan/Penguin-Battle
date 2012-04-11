@@ -9,6 +9,7 @@ class ServerNet
 		bool WaitConnection();
 		bool SendMessage(char[], int);
 		int ReceiveMessage(char[]);
+		int getIP(); 
 	private:
 		IPaddress ip,*remoteIP;
 		TCPsocket server,client; //server and client socket descriptor

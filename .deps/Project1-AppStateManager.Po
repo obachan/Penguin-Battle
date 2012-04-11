@@ -1,4 +1,5 @@
-Project1-main.o: main.cpp OgreApp.hpp OgreFramework.hpp \
+Project1-AppStateManager.o: AppStateManager.cpp AppStateManager.hpp \
+ AppState.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -883,11 +884,13 @@ Project1-main.o: main.cpp OgreApp.hpp OgreFramework.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_endian.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
- /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp \
- AppStateManager.hpp AppState.hpp Network.hpp \
- usr/include/SDL_net/SDL_net.h
+ /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
+ usr/include/SDL_net/SDL_net.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreWindowEventUtilities.h
 
-OgreApp.hpp:
+AppStateManager.hpp:
+
+AppState.hpp:
 
 OgreFramework.hpp:
 
@@ -2893,10 +2896,8 @@ usr/include/SDL/SDL_mixer.h:
 
 HUD.hpp:
 
-AppStateManager.hpp:
-
-AppState.hpp:
-
 Network.hpp:
 
 usr/include/SDL_net/SDL_net.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreWindowEventUtilities.h:

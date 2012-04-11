@@ -6,6 +6,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 #include "OgreFramework.hpp"
+#include "Network.hpp"
  
 class AppState;
  
