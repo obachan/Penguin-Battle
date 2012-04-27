@@ -546,6 +546,9 @@ bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
 {
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
+	std::cerr << "mouse moved" << std::endl;
+	controller->mouse_x_movement = evt.state.X.rel;
 	OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
 	OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
 

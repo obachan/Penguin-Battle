@@ -10,7 +10,7 @@
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
-class DemoApp : public OIS::KeyListener
+class DemoApp : public OIS::KeyListener, public OIS::MouseListener
 {
 public:
 	DemoApp();
@@ -20,6 +20,7 @@ public:
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
+	bool mouseMoved(const OIS::MouseEvent &arg );
 
 	Ball 		*ball;
 	Room 		*room;

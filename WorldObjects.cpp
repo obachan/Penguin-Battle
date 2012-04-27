@@ -1,10 +1,29 @@
 #include "WorldObjects.hpp"
 
 #include <iostream>
+//#include <cmath>
 
 int Ball::scene_node_counter = 0;
 
 int Penguin::scene_node_counter = 0;
+
+
+Terrain::Terrain(Ogre::SceneManager* m_pSceneMgr) 
+{
+	//Ogre::Vector3 tPosition = Ogre::Vector3(start_pos_x, start_pos_y, start_pos_z);
+	//Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
+
+	terrainEntity = m_pSceneMgr->createEntity("terrain", "quickterrain.mesh");
+	terrainNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("terrain");
+	terrainNode->attachObject(terrainEntity);
+
+	terrainNode->setPosition(Ogre::Vector3(0,-140,0));
+	terrainNode->setScale(Ogre::Vector3(20,20,20));
+	terrainEntity->setMaterialName("lambert3");
+	//scene_node_counter++;
+}
+
+
 
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double start_pos_x, double start_pos_y, double start_pos_z, bool do_physics)
 {
@@ -36,10 +55,11 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double star
 	
 }
 
+
 void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x, Ogre::Real start_pos_y, Ogre::Real start_pos_z, Ogre::Real rScaleFactor, Ogre::String strObjName)
 {
 
-	//--------------------
+	//-------------------- I switched it to a cube so textures would work correctly. The original sphere has bad UV mapping
 	// Physics - Ball
 	//--------------------
 
@@ -69,7 +89,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 
 	objSphereNode->setPosition(v3SpherePosition);
 	objSphereNode->setScale(v3SphereScaleFactor);
-	objSphereEntity->setMaterialName("Examples/PinkBall");
+	objSphereEntity->setMaterialName("Ball/Ice");
 
 }
 
@@ -88,11 +108,24 @@ Ball::~Ball()
 
 void Ball::update(double timeSinceLastFrame)
 {
+
+	btTransform trans;
+	ballRigidBody->getMotionState()->getWorldTransform(trans);
+	btQuaternion rotation = trans.getRotation();
+	objSphereNode->setOrientation(float(rotation.w()),float(rotation.x()),float(rotation.y()),float(rotation.z()));
+
 	objSphereNode->setPosition(getBallPosition());
 
 	Ogre::Vector3 pos = getBallPosition();
 	//std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
+
+
+	//std::cout << (float) rotation.getW() << "\t" << (float)rotation[1] << "\t" << (float)rotation[2] << "\t" << (float)rotation[3] << std::endl;
+
+	
 }
+
+
 
 void Ball::updateAsClient(Ogre::Vector3 pos)
 {
@@ -856,6 +889,32 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 			penguin_velocity[1] = jump_vel;
 		}
 	}
+
+
+	// Mouse controls
+	
+	if(controller->mouse_x_movement != 0.0000 ) {
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
+		penguinNode->rotate(quat);
+		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		penguin_direction.y = 0;
+		penguin_direction.normalise();
+		previous_direction = penguin_direction;
+		controller->mouse_x_movement = 0.0;
+	
+	}
+
+/*	if(controller->mouse_y_movement != 0.0000 ) {
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_y_movement)), Ogre::Vector3::UNIT_X);
+		penguinNode->rotate(quat);
+		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		penguin_direction.x = 0;
+		penguin_direction.normalise();
+		previous_direction = penguin_direction;
+		controller->mouse_y_movement = 0.0;
+	
+	}*/
+
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
@@ -1078,4 +1137,6 @@ void Paddle::update(double timeSinceLastFrame, MyController* controller)
 	paddleMotionState->setWorldTransform(trans);
 	paddleNode->setPosition(vec[0], vec[1], vec[2]);
 }
+
+
 

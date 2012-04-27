@@ -231,4 +231,16 @@ bool DemoApp::keyReleased(const OIS::KeyEvent &keyEventRef)
 	return true;
 }
 
+//|||||||||||||||||||||||||||||||||||||||||||||||
+
+bool mouseMoved(const OIS::MouseEvent &arg )
+{
+
+  controller->mouse_x_movement = e.state.X.rel;
+  std::cerr << "x: " << e.state.X.rel << std::endl;
+
+}
+
+
+
 //||||||||||||||||||||||||||||||||||||||||||||||||

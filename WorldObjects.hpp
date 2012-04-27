@@ -49,6 +49,7 @@ const float paddle_length = 10.0f;
 const float ball_radius = 9.0f;
 const float ball_mass = 40.0f;
 
+
 class Goal
 {
 public:
@@ -210,3 +211,17 @@ private:
 
 	btCollisionShape* paddle_collision_shape;
 };
+
+
+
+class Terrain 
+{
+public:
+
+	Terrain(Ogre::SceneManager*);
+	~Terrain();
+	
+	Ogre::SceneNode* 	terrainNode;
+	Ogre::Entity* 		terrainEntity;
+};
+

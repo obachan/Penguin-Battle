@@ -42,6 +42,10 @@ public:
 	Penguin		*penguin;
 	Goal		*goal;
 
+	Terrain		*terrain;
+
+	std::vector<Ball*> ballList;
+
 	//Ball 		*test_ball;
 
 	bool		pause_state;
