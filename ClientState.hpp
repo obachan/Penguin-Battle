@@ -57,6 +57,7 @@ private:
  
 	bool						m_bShutdown;
 	char buffer[1024];
+	char sendbuffer[1024];
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

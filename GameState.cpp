@@ -72,11 +72,18 @@ void GameState::enter()
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
 	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
 
+
+
 	// Create Penguin
 	penguin = new Penguin(m_pSceneMgr, physics);
 
 	// Create Goal
 	goal = new Goal(m_pSceneMgr, physics);
+
+	
+	// Create Terrain placeholder
+	terrain = new Terrain(m_pSceneMgr);
+
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -338,7 +345,10 @@ void GameState::runDemo()
 				//test_ball->update(timeSinceLastFrame);
 				//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
 
-
+				for( std::vector<Ball*>::iterator it = ballList.begin(); it != ballList.end(); ++it )
+				{
+					(*it)->update(timeSinceLastFrame);
+				}
 
 
 				penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
@@ -477,6 +487,10 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 bool GameState::mouseMoved(const OIS::MouseEvent &evt)
 {
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
+	//std::cerr << "mouse moved " << evt.state.X.rel << std::endl;
+	controller->mouse_x_movement = -evt.state.X.rel;
+	controller->mouse_y_movement = -evt.state.Y.rel;
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(evt)) return true;
     return true;
 }
@@ -485,6 +499,21 @@ bool GameState::mouseMoved(const OIS::MouseEvent &evt)
  
 bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+	switch (id)
+	{
+	case OIS::MB_Left:
+	//	fireSnowBall();
+	   break;
+
+	case OIS::MB_Right:
+		
+	   break;
+
+	default:
+	   break;
+	}
+
+
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(evt, id)) return true;
     return true;
 }

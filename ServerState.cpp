@@ -192,16 +192,16 @@ void ServerState::update(double timeSinceLastFrame)
 		// update player two's controller
 
 		
-		OgreFramework::getSingletonPtr()->server->ReceiveMessage(buffer);
+		OgreFramework::getSingletonPtr()->server->ReceiveMessage(recvbuffer);
 
-		controller_two->left_control_down = (buffer[0] == '1') ? true : false;
-		controller_two->right_control_down = (buffer[1] == '1') ? true : false;
-		controller_two->up_control_down = (buffer[2] == '1') ? true : false;
-		controller_two->bottom_control_down = (buffer[3] == '1') ? true : false;
-		controller_two->forward_control_down = (buffer[4] == '1') ? true : false;
-		controller_two->backward_control_down = (buffer[5] == '1') ? true : false;
-		controller_two->jump_control_down = (buffer[6] == '1') ? true : false;
-		controller_two->boost_control_down = (buffer[7] == '1') ? true : false;
+		controller_two->left_control_down = (recvbuffer[0] == '1') ? true : false;
+		controller_two->right_control_down = (recvbuffer[1] == '1') ? true : false;
+		controller_two->up_control_down = (recvbuffer[2] == '1') ? true : false;
+		controller_two->bottom_control_down = (recvbuffer[3] == '1') ? true : false;
+		controller_two->forward_control_down = (recvbuffer[4] == '1') ? true : false;
+		controller_two->backward_control_down = (recvbuffer[5] == '1') ? true : false;
+		controller_two->jump_control_down = (recvbuffer[6] == '1') ? true : false;
+		controller_two->boost_control_down = (recvbuffer[7] == '1') ? true : false;
 
 		
 
@@ -270,6 +270,11 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
 
+		printf("BallPosition\n");
+		printf("%f\n", newballVector[0]);
+		printf("%f\n", newballVector[1]);
+		printf("%f\n", newballVector[2]);
+
 		Ogre::Quaternion newballQuaternion = ball->getBallOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
@@ -278,28 +283,50 @@ void ServerState::update(double timeSinceLastFrame)
 
 		Ogre::Vector3 newPenguinServerVector = penguin->getPenguinPosition();
 		memcpy(buffer+28, &newPenguinServerVector[0], 4);
-		memcpy(buffer+32, &newPenguinServerVector[1], 4);
-		memcpy(buffer+36, &newPenguinServerVector[2], 4);
 
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
+
+		memcpy(buffer, &newPenguinServerVector[1], 4);
+		memcpy(buffer+4, &newPenguinServerVector[2], 4);
+
+		printf("ServerPosition\n");
+		printf("%f\n", newPenguinServerVector[0]);
+		printf("%f\n", newPenguinServerVector[1]);
+		printf("%f\n", newPenguinServerVector[2]);
+
+		//printf("Before Quaternion");
+		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
+		
 		Ogre::Quaternion newPenguinServerQuaternion = penguin->getPenguinOrientation();
-		memcpy(buffer+40, &newPenguinServerQuaternion[0], 4);	
-		memcpy(buffer+44, &newPenguinServerQuaternion[1], 4);	
-		memcpy(buffer+48, &newPenguinServerQuaternion[2], 4);	
-		memcpy(buffer+52, &newPenguinServerQuaternion[3], 4);
-/*
+		memcpy(buffer+8, &newPenguinServerQuaternion[0], 4);	
+		memcpy(buffer+12, &newPenguinServerQuaternion[1], 4);	
+		memcpy(buffer+16, &newPenguinServerQuaternion[2], 4);	
+		memcpy(buffer+20, &newPenguinServerQuaternion[3], 4);
+
+		//printf("After Quaternion");
+		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
+
 		Ogre::Vector3 newPenguinClientVector = penguin_two->getPenguinPosition();
-		memcpy(buffer+56, &newPenguinClientVector[0], 4);
-		memcpy(buffer+60, &newPenguinClientVector[1], 4);
-		memcpy(buffer+64, &newPenguinClientVector[2], 4);
+		memcpy(buffer+24, &newPenguinClientVector[0], 4);
+		memcpy(buffer+28, &newPenguinClientVector[1], 4);
+
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
+
+		memcpy(buffer, &newPenguinClientVector[2], 4);
+		
+		printf("ClientPosition\n");
+		printf("%f\n", newPenguinServerVector[0]);
+		printf("%f\n", newPenguinServerVector[1]);
+		printf("%f\n", newPenguinServerVector[2]);
 
 		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getPenguinOrientation();
-		memcpy(buffer+68, &newPenguinClientQuaternion[0], 4);	
-		memcpy(buffer+72, &newPenguinClientQuaternion[1], 4);	
-		memcpy(buffer+76, &newPenguinClientQuaternion[2], 4);	
-		memcpy(buffer+80, &newPenguinClientQuaternion[3], 4);
-*/
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 40);
-//		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 84);
+		memcpy(buffer+4, &newPenguinClientQuaternion[0], 4);	
+		memcpy(buffer+8, &newPenguinClientQuaternion[1], 4);	
+		memcpy(buffer+12, &newPenguinClientQuaternion[2], 4);	
+		memcpy(buffer+16, &newPenguinClientQuaternion[3], 4);
+
+		
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
 
 
 		// TODO - SEND!!!!!!

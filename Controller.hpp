@@ -20,4 +20,7 @@ public:
 	bool 		jump_control_down;
 
 	bool 		boost_control_down;
+
+	float		mouse_x_movement;
+	float		mouse_y_movement;
 };

@@ -119,17 +119,17 @@ void ClientState::enter()
 	penguin_two->update(0.1f, controller_two, NULL);
 	ball->update(0.1f);
 	
-	buffer[0] = '0';
-	buffer[1] = '0';
-	buffer[2] = '0';
-	buffer[3] = '0';
-	buffer[4] = '0';
-	buffer[5] = '0';
-	buffer[6] = '0';
-	buffer[7] = '0';
-	buffer[8] = '\0';
+	sendbuffer[0] = '0';
+	sendbuffer[1] = '0';
+	sendbuffer[2] = '0';
+	sendbuffer[3] = '0';
+	sendbuffer[4] = '0';
+	sendbuffer[5] = '0';
+	sendbuffer[6] = '0';
+	sendbuffer[7] = '0';
+	sendbuffer[8] = '\0';
 
-	OgreFramework::getSingletonPtr()->client->SendMessage(buffer, 8);
+	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 8);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -211,6 +211,11 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newballPosition[0], buffer, 4);
 		memcpy(&newballPosition[1], buffer+4, 4);
 		memcpy(&newballPosition[2], buffer+8, 4);
+		
+		printf("BallPosition\n");
+		printf("%f\n", newballPosition[0]);
+		printf("%f\n", newballPosition[1]);
+		printf("%f\n", newballPosition[2]);
 
 		Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
 		memcpy(&newballQuaternion[0], buffer+12, 4);
@@ -222,29 +227,41 @@ void ClientState::update(double timeSinceLastFrame)
 
 		Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
 		memcpy(&newPenguinServerPosition[0], buffer+28, 4);
-		memcpy(&newPenguinServerPosition[1], buffer+32, 4);
-		memcpy(&newPenguinServerPosition[2], buffer+36, 4);
 
+		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+
+		memcpy(&newPenguinServerPosition[1], buffer, 4);
+		memcpy(&newPenguinServerPosition[2], buffer+4, 4);
+
+		printf("ServerPosition\n");
 		printf("%f\n", newPenguinServerPosition[0]);
 		printf("%f\n", newPenguinServerPosition[1]);
 		printf("%f\n", newPenguinServerPosition[2]);
 
 		Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
-//		memcpy(&newPenguinServerQuaternion[0], buffer+40, 4);
-//		memcpy(&newPenguinServerQuaternion[1], buffer+44, 4);
-//		memcpy(&newPenguinServerQuaternion[2], buffer+48, 4);
-//		memcpy(&newPenguinServerQuaternion[3], buffer+52, 4);
+		memcpy(&newPenguinServerQuaternion[0], buffer+8, 4);
+		memcpy(&newPenguinServerQuaternion[1], buffer+12, 4);
+		memcpy(&newPenguinServerQuaternion[2], buffer+16, 4);
+		memcpy(&newPenguinServerQuaternion[3], buffer+20, 4);
 
 		Ogre::Vector3 newPenguinClientPosition = Ogre::Vector3(0,0,0);
-//		memcpy(&newPenguinClientPosition[0], buffer+56, 4);
-//		memcpy(&newPenguinClientPosition[1], buffer+60, 4);
-//		memcpy(&newPenguinClientPosition[2], buffer+64, 4);
+		memcpy(&newPenguinClientPosition[0], buffer+24, 4);
+		memcpy(&newPenguinClientPosition[1], buffer+28, 4);
+
+		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+
+		memcpy(&newPenguinClientPosition[2], buffer, 4);
+
+		printf("ClientPosition\n");
+		printf("%f\n", newPenguinClientPosition[0]);
+		printf("%f\n", newPenguinClientPosition[1]);
+		printf("%f\n", newPenguinClientPosition[2]);
 
 		Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1,0,0,0);
-//		memcpy(&newPenguinClientQuaternion[0], buffer+68, 4);
-//		memcpy(&newPenguinClientQuaternion[1], buffer+72, 4);
-//		memcpy(&newPenguinClientQuaternion[2], buffer+76, 4);
-//		memcpy(&newPenguinClientQuaternion[3], buffer+80, 4);
+		memcpy(&newPenguinClientQuaternion[0], buffer+4, 4);
+		memcpy(&newPenguinClientQuaternion[1], buffer+8, 4);
+		memcpy(&newPenguinClientQuaternion[2], buffer+12, 4);
+		memcpy(&newPenguinClientQuaternion[3], buffer+16, 4);
 
  		// Our Team's main loop
 		//ball->update(timeSinceLastFrame);
@@ -252,8 +269,8 @@ void ClientState::update(double timeSinceLastFrame)
 
 
 
-		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-		//penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
+		//penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+		penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
 		//penguin->updateCamera(OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
 		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
@@ -300,17 +317,17 @@ void ClientState::update(double timeSinceLastFrame)
 		// TODO - SEND!!!!!!
 		// Player 2's controller
 
-	buffer[0] = (OgreFramework::getSingletonPtr()->controller->left_control_down) ? '1' : '0';
-	buffer[1] = (OgreFramework::getSingletonPtr()->controller->right_control_down) ? '1' : '0';
-	buffer[2] = (OgreFramework::getSingletonPtr()->controller->up_control_down) ? '1' : '0';
-	buffer[3] = (OgreFramework::getSingletonPtr()->controller->bottom_control_down) ? '1' : '0';
-	buffer[4] = (OgreFramework::getSingletonPtr()->controller->forward_control_down) ? '1' : '0';
-	buffer[5] = (OgreFramework::getSingletonPtr()->controller->backward_control_down) ? '1' : '0';
-	buffer[6] = (OgreFramework::getSingletonPtr()->controller->jump_control_down) ? '1' : '0';
-	buffer[7] = (OgreFramework::getSingletonPtr()->controller->boost_control_down) ? '1' : '0';
-	buffer[8] = '\0';
+	sendbuffer[0] = (OgreFramework::getSingletonPtr()->controller->left_control_down) ? '1' : '0';
+	sendbuffer[1] = (OgreFramework::getSingletonPtr()->controller->right_control_down) ? '1' : '0';
+	sendbuffer[2] = (OgreFramework::getSingletonPtr()->controller->up_control_down) ? '1' : '0';
+	sendbuffer[3] = (OgreFramework::getSingletonPtr()->controller->bottom_control_down) ? '1' : '0';
+	sendbuffer[4] = (OgreFramework::getSingletonPtr()->controller->forward_control_down) ? '1' : '0';
+	sendbuffer[5] = (OgreFramework::getSingletonPtr()->controller->backward_control_down) ? '1' : '0';
+	sendbuffer[6] = (OgreFramework::getSingletonPtr()->controller->jump_control_down) ? '1' : '0';
+	sendbuffer[7] = (OgreFramework::getSingletonPtr()->controller->boost_control_down) ? '1' : '0';
+	sendbuffer[8] = '\0';
 
-	OgreFramework::getSingletonPtr()->client->SendMessage(buffer, 8);
+	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 8);
 
 	////////////////////////////////////////////////
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
@@ -547,6 +564,9 @@ bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
 {
+	MyController* controller = OgreFramework::getSingletonPtr()->controller;
+	std::cerr << "mouse moved" << std::endl;
+	controller->mouse_x_movement = evt.state.X.rel;
 	OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
 	OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
 

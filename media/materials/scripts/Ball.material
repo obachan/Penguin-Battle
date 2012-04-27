@@ -1,0 +1,202 @@
+
+
+material Ball/Checkerboard
+ {
+    technique
+    {
+       pass
+        {
+	  //diffuse 0.5 0.5 0.0
+          scene_blend alpha_blend
+          //depth_write off
+ 
+          texture_unit
+          {
+            texture MRAMOR6X6.jpg
+            scale 0.1 0.1
+            alpha_op_ex source1 src_manual src_current 0.4
+            // this means that the texture will be tiled 10 times (1/10 = 0.1)
+          }
+       }   
+    }
+ }
+
+material Ball/Ice
+ {
+    technique
+    {
+       pass
+        {
+	  //diffuse 0.5 0.5 0.0
+          scene_blend alpha_blend
+          depth_write off
+ 
+          texture_unit
+          {
+            texture Ice0051_2_S.jpg
+            scale 1.0 1.0
+            alpha_op_ex source1 src_manual src_current 0.9
+            // this means that the texture will be tiled 10 times (1/10 = 0.1)
+          }
+       }   
+    }
+ }
+
+material Ball/Metal
+ {
+    technique
+    {
+       pass
+        {
+	  //diffuse 0.5 0.5 0.0
+ 
+ 
+          texture_unit
+          {
+            texture BumpyMetal.jpg
+            scale 0.25 0.25
+
+            // this means that the texture will be tiled 10 times (1/10 = 0.1)
+          }
+       }   
+    }
+ }
+
+material Ball/Rust
+ {
+    technique
+    {
+       pass
+        {
+	  //diffuse 0.5 0.5 0.0
+ 
+ 
+          texture_unit
+          {
+            texture RustySteel.jpg
+            scale 0.25 0.25
+
+            // this means that the texture will be tiled 10 times (1/10 = 0.1)
+          }
+       }   
+    }
+ }
+
+
+material Ball/Red
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 1.0 0.1 0.1
+
+       }   
+    }
+ }
+
+material Ball/Green
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 0.196 0.8039 0.196
+	  ambient 0.0392 0.16078 0.0392
+       }   
+    }
+ }
+
+
+material Ball/Blue
+ {
+    technique
+    {
+       pass
+        {
+          scene_blend alpha_blend
+	  diffuse 0.0 0.749 1.0
+	  ambient 0.0 0.0749 0.1
+          alpha_op_ex source1 src_manual src_current 0.4
+
+       }   
+    }
+ }
+
+
+material Ball/Orange
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 1.0 0.549 0.0
+	  ambient 0.2 0.1098 0.0
+	  specular 1.0 1.0 1.0
+       }   
+    }
+ }
+
+material Ball/Purple
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 0.58 0.0 0.8275
+
+       }   
+    }
+ }
+
+material Ball/AustraliumGold 
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 0.906 0.7098 0.2314
+
+       }   
+    }
+ }
+
+material Ball/PinkAsHell 
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 1.0 0.4118 0.7059
+
+       }   
+    }
+ }
+
+material Ball/White 
+ {
+    technique
+    {
+       pass
+        {
+	  diffuse 1.0 1.0 1.0
+
+       }   
+    }
+ }
+
+material Ball/RadioactiveGreen
+{
+   technique
+   {
+      pass
+      {
+         lighting on
+ 
+         ambient 0.1 0.3 0.1 1
+         diffuse 0.2 0.2 0.2 1
+         emissive 0.05 0.8 0.05 1
+      }
+   }
+}
+
