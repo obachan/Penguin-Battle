@@ -218,15 +218,16 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newballQuaternion[2], buffer+20, 4);
 		memcpy(&newballQuaternion[3], buffer+24, 4);
 
-		printf("%f\n", newballQuaternion[0]);
-		printf("%f\n", newballQuaternion[1]);
-		printf("%f\n", newballQuaternion[2]);
-		printf("%f\n", newballQuaternion[3]);
+		
 
 		Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
-//		memcpy(&newPenguinServerPosition[0], buffer+28, 4);
-//		memcpy(&newPenguinServerPosition[1], buffer+32, 4);
-//		memcpy(&newPenguinServerPosition[2], buffer+36, 4);
+		memcpy(&newPenguinServerPosition[0], buffer+28, 4);
+		memcpy(&newPenguinServerPosition[1], buffer+32, 4);
+		memcpy(&newPenguinServerPosition[2], buffer+36, 4);
+
+		printf("%f\n", newPenguinServerPosition[0]);
+		printf("%f\n", newPenguinServerPosition[1]);
+		printf("%f\n", newPenguinServerPosition[2]);
 
 		Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
 //		memcpy(&newPenguinServerQuaternion[0], buffer+40, 4);
