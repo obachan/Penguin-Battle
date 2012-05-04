@@ -21,21 +21,21 @@ material Ball/Checkerboard
     }
  }
 
-material Ball/Ice
+material Ball/Snow
  {
     technique
     {
        pass
         {
 	  //diffuse 0.5 0.5 0.0
-          scene_blend alpha_blend
-          depth_write off
+//          scene_blend alpha_blend
+//          depth_write off
  
           texture_unit
           {
-            texture Ice0051_2_S.jpg
+            texture Snow0101_9_M.jpg
             scale 1.0 1.0
-            alpha_op_ex source1 src_manual src_current 0.9
+           // alpha_op_ex source1 src_manual src_current 0.95
             // this means that the texture will be tiled 10 times (1/10 = 0.1)
           }
        }   

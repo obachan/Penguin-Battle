@@ -32,7 +32,7 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, double star
 	//const double start_pos_y = -(room_width/2) + ball_radius;
 	//const double start_pos_z = 0.0f;
 	
-	float ball_radius_node_conversion = ball_radius / 100.0f;
+	float ball_radius_node_conversion = ball_radius / 1.0f;
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
@@ -83,13 +83,13 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(start_pos_x, start_pos_y, start_pos_z);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
-	objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphere.mesh");
+	objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphereCheck.mesh");
 	objSphereNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(strObjName);
 	objSphereNode->attachObject(objSphereEntity);
 
 	objSphereNode->setPosition(v3SpherePosition);
 	objSphereNode->setScale(v3SphereScaleFactor);
-	objSphereEntity->setMaterialName("Ball/Ice");
+	objSphereEntity->setMaterialName("Ball/Snow");
 
 }
 
