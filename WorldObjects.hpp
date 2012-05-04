@@ -46,7 +46,7 @@ const float penguin_length = 10.0f;
 
 const float paddle_length = 10.0f;
 
-const float ball_radius = 9.0f;
+const float ball_radius = 10.0f;
 const float ball_mass = 40.0f;
 
 
