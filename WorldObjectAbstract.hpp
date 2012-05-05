@@ -83,6 +83,8 @@ public:
    	Ogre::Vector3 getVisualPosition(); 			// Client Safe		
 	Ogre::Quaternion getVisualOrientation(); 	// Client Safe
 
+	int getUniqueId();
+
 protected:
 	void updateWorldObjectVisual();				// Syncs visuals with Physics
 	Ogre::Vector3 getPosition(); 				// Only server objects can call this method
@@ -90,6 +92,11 @@ protected:
 
 	btRigidBody* 		worldObjectRigidBody;
 	Ogre::SceneNode* 	worldObjectSceneNode;
+
+	int 				worldObject_id; 		// World Object unique ID
+
+private:
+	static int 			worldObject_id_counter;
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

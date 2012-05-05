@@ -1,8 +1,14 @@
 #include "WorldObjectAbstract.hpp"
 
+#include <iostream>
+
+int WorldObjectAbstract::worldObject_id_counter = 0;
+
 WorldObjectAbstract::WorldObjectAbstract()
 {
-
+	worldObject_id = worldObject_id_counter;
+	worldObject_id_counter++;
+	std::cout << worldObject_id << std::endl;
 }
 
 WorldObjectAbstract::~WorldObjectAbstract()
