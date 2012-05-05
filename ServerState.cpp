@@ -265,7 +265,7 @@ void ServerState::update(double timeSinceLastFrame)
 	       	}
 	    }
 
-		Ogre::Vector3 newballVector = ball->getBallPosition();
+		Ogre::Vector3 newballVector = ball->getPosition();
 		memcpy(buffer, &newballVector[0], 4);
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
@@ -275,7 +275,7 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newballVector[1]);
 		printf("%f\n", newballVector[2]);
 
-		Ogre::Quaternion newballQuaternion = ball->getBallOrientation();
+		Ogre::Quaternion newballQuaternion = ball->getOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
 		memcpy(buffer+20, &newballQuaternion[2], 4);	

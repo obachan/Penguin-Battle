@@ -36,7 +36,7 @@ Ball::~Ball()
 {
 	delete objSphereEntity;
     delete ballMotionState;
-    delete ballRigidBody;
+    delete worldObjectRigidBody;
     delete ball_collision_shape;
 }
 
@@ -68,10 +68,10 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	ball_collision_shape = new btSphereShape(ball_radius);
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
-    btRigidBody::btRigidBodyConstructionInfo ballRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
-	ballRigidBodyCI.m_restitution = 0.765f;
-    ballRigidBody = new btRigidBody(ballRigidBodyCI);
-	ballRigidBody->setLinearVelocity(btVector3(0,0,0));
+    btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
+	worldObjectRigidBodyCI.m_restitution = 0.765f;
+    worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
+	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
 
 	//--------------------
 	// Visual - Ball
@@ -81,63 +81,41 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
 	objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphereCheck.mesh");
-	objSphereNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(strObjName);
-	objSphereNode->attachObject(objSphereEntity);
+	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(strObjName);
+	worldObjectSceneNode->attachObject(objSphereEntity);
 
-	objSphereNode->setPosition(v3SpherePosition);
-	objSphereNode->setScale(v3SphereScaleFactor);
+	worldObjectSceneNode->setPosition(v3SpherePosition);
+	worldObjectSceneNode->setScale(v3SphereScaleFactor);
 	objSphereEntity->setMaterialName("Ball/Snow");
 
 }
 
 void Ball::attachToDynamicWorld(PhysicsWrapper* physics)
 {
-	physics->add_object_to_dynamicWorld(ballRigidBody);
+	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
 }
 
 void Ball::update(double timeSinceLastFrame)
 {
 
 	btTransform trans;
-	ballRigidBody->getMotionState()->getWorldTransform(trans);
+	worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
 	btQuaternion rotation = trans.getRotation();
-	objSphereNode->setOrientation(float(rotation.w()),float(rotation.x()),float(rotation.y()),float(rotation.z()));
+	worldObjectSceneNode->setOrientation(float(rotation.w()),float(rotation.x()),float(rotation.y()),float(rotation.z()));
 
-	objSphereNode->setPosition(getBallPosition());
-
-	Ogre::Vector3 pos = getBallPosition();
-	//std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
-
-
-	//std::cout << (float) rotation.getW() << "\t" << (float)rotation[1] << "\t" << (float)rotation[2] << "\t" << (float)rotation[3] << std::endl;
-
-	
+	worldObjectSceneNode->setPosition(getPosition());
 }
-
-
 
 void Ball::updateAsClient(Ogre::Vector3 pos)
 {
-	objSphereNode->setPosition(pos[0], pos[1], pos[2]);
-}
-
-Ogre::Vector3 Ball::getBallPosition()
-{
-	btTransform trans;
-    ballRigidBody->getMotionState()->getWorldTransform(trans);
-	return Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
-}
-
-Ogre::Quaternion Ball::getBallOrientation()
-{
-	return objSphereNode->getOrientation();
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 }
 
 // Checks whether the ball is contained
 // in the Goal Object which is passed in
 bool Ball::inGoal(Goal* goal)
 {
-	Ogre::Vector3 ball_pos = getBallPosition();
+	Ogre::Vector3 ball_pos = getPosition();
 
 	Ogre::Vector3 left_goal_pos = goal->goalLeftNode->getPosition();
 	Ogre::Vector3 right_goal_pos = goal->goalRightNode->getPosition();
@@ -162,11 +140,10 @@ bool Ball::inGoal(Goal* goal)
 // Physics is passin so the that ball can be removed and readded to the dynamics world
 void Ball::reset(PhysicsWrapper* physics)
 {
-	//physics->remove_object_from_dynamicWorld(ballRigidBody);
 
-	btTransform trans;
-    ballRigidBody->getMotionState()->getWorldTransform(trans);
-	btVector3 ball_pos = btVector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+	//----------------------------------
+	// Define new position and velocity
+	//----------------------------------
 	
 	int rand_pos_x = rand() % 50 - 24;
 	int rand_pos_y = rand() % 50 - 24;
@@ -176,19 +153,16 @@ void Ball::reset(PhysicsWrapper* physics)
 	int rand_vel_y = rand() % 10;
 	int rand_vel_z = rand() % 10;
 
-
+	btTransform trans;
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
 	trans.setOrigin(btVector3(rand_pos_x, rand_pos_y, rand_pos_z));
-	//ballRigidBody->getMotionState()->setWorldTransform(trans);
+	worldObjectRigidBody->setLinearVelocity(btVector3(rand_vel_x,-rand_vel_y,rand_vel_z));
 
-	//physics->add_object_to_dynamicWorld(ballRigidBody);
-	btMotionState *motionState = ballRigidBody->getMotionState();
+	//----------------------------------
+	// Set new position and velocity
+	//----------------------------------
+
+	btMotionState *motionState = worldObjectRigidBody->getMotionState();
 	motionState->setWorldTransform(trans);
-
-	ballRigidBody->setMotionState (motionState);
-	ballRigidBody->setLinearVelocity(btVector3(rand_vel_x,-rand_vel_y,rand_vel_z));
-
-	//std::cout << "==========RESET============" << test_counter << std::endl;	
-	//test_counter++;
-
+	worldObjectRigidBody->setMotionState (motionState);
 }
-

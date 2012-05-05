@@ -49,7 +49,7 @@ const float room_length = 400.0f; // represents the length of the prism
 // Parameters for WorldObjectBall
 // ==========================
 
-const float ball_radius = 10.0f;
+const float ball_radius = 7.0f;
 const float ball_mass = 40.0f;
 
 // ==========================
@@ -76,11 +76,13 @@ public:
 
 	WorldObjectAbstract();
 	~WorldObjectAbstract();
+
    	virtual void update() = 0;
 
-protected:
-	void updateWorldObjectVisual(); // Called in the main loop to sync
-									// Visuals with the Physics
+	Ogre::Vector3 getPosition();
+	Ogre::Quaternion getOrientation();
+	void updateWorldObjectVisual();	// Syncs visuals with Physics
+
 
 	btRigidBody* 		worldObjectRigidBody;
 	Ogre::SceneNode* 	worldObjectSceneNode;
