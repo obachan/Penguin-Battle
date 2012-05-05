@@ -30,6 +30,7 @@ Ogre::Quaternion WorldObjectAbstract::getOrientation()
 
 void WorldObjectAbstract::updateWorldObjectVisual()
 {
-
+	worldObjectSceneNode->setOrientation(getOrientation());
+	worldObjectSceneNode->setPosition(getPosition());
 }
 

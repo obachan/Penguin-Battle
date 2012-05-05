@@ -60,12 +60,12 @@ void ClientState::enter()
 
 	// Create Ball
 
-	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0, false);
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);
 	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
 	// Create Room
-	room = new Room(m_pSceneMgr, NULL, false);
+	room = new Room(m_pSceneMgr, NULL);
 
 	// Create Paddle
 	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
@@ -73,13 +73,13 @@ void ClientState::enter()
 
 
 	// Create Player 1's Penguin
-	penguin = new Penguin(m_pSceneMgr, NULL, false);
+	penguin = new Penguin(m_pSceneMgr, NULL);
 
 	// Create Player 2's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, NULL, false);
+	penguin_two = new Penguin(m_pSceneMgr, NULL);
 
 	// Create Goal
-	goal = new Goal(m_pSceneMgr, NULL, false);
+	goal = new Goal(m_pSceneMgr, NULL);
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;

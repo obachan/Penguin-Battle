@@ -3,7 +3,7 @@
 int Ball::scene_node_counter = 0;
 
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
-	double start_pos_x, double start_pos_y, double start_pos_z, bool do_physics) : WorldObjectAbstract()
+	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
 {
 	//const double start_pos_x = 0.0f;
 	//const double start_pos_y = -(room_width/2) + ball_radius;
@@ -27,7 +27,7 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics,
 
 	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, ball_name);
 	
-	if(do_physics)
+	if(physics != NULL)
 		attachToDynamicWorld(physics);
 	
 }
@@ -97,13 +97,7 @@ void Ball::attachToDynamicWorld(PhysicsWrapper* physics)
 
 void Ball::update(double timeSinceLastFrame)
 {
-
-	btTransform trans;
-	worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
-	btQuaternion rotation = trans.getRotation();
-	worldObjectSceneNode->setOrientation(float(rotation.w()),float(rotation.x()),float(rotation.y()),float(rotation.z()));
-
-	worldObjectSceneNode->setPosition(getPosition());
+	updateWorldObjectVisual();
 }
 
 void Ball::updateAsClient(Ogre::Vector3 pos)
@@ -144,7 +138,7 @@ void Ball::reset(PhysicsWrapper* physics)
 	//----------------------------------
 	// Define new position and velocity
 	//----------------------------------
-	
+
 	int rand_pos_x = rand() % 50 - 24;
 	int rand_pos_y = rand() % 50 - 24;
 	int rand_pos_z = rand() % 50 - 24;

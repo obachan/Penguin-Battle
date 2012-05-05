@@ -1,9 +1,9 @@
 #include "WorldObjectRoom.hpp"
 
-Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
+Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createRoom(m_pSceneMgr, room_width, room_length);
-	if(do_physics)
+	if(physics != NULL)
 		attachToDynamicWorld(physics);
 }
 

@@ -1,12 +1,12 @@
 #include "WorldObjectGoal.hpp"
 
-Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
+Goal::Goal(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	float goal_to_edge_wall_offset = 50.0;
 
 	createGoal(m_pSceneMgr, -room_length/2 + goal_to_edge_wall_offset);
 
-	if(do_physics)
+	if(physics != NULL)
 		attachToDynamicWorld(physics);
 }
 

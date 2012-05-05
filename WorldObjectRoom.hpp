@@ -10,7 +10,7 @@
 class Room
 {
 public:
-	Room(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
+	Room(Ogre::SceneManager*, PhysicsWrapper*);
 	~Room();
 
 	btRigidBody* frontRigidBody;

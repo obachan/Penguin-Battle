@@ -13,7 +13,7 @@ class Penguin
 public:
 
 
-	Penguin(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
 	~Penguin();
 
 	Ogre::SceneNode*		penguinNode;

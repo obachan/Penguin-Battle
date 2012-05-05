@@ -3,12 +3,13 @@
 int Penguin::scene_node_counter = 0;
 
 
-Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, bool do_physics)
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createPenguin(m_pSceneMgr);
-	if(do_physics)
-		attachToDynamicWorld(physics);
 	third_person_camera = true;
+	
+	if(physics != NULL)
+		attachToDynamicWorld(physics);
 }
 
 Penguin::~Penguin()

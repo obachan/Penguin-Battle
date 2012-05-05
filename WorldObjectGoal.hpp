@@ -11,7 +11,7 @@
 class Goal
 {
 public:
-	Goal(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
+	Goal(Ogre::SceneManager*, PhysicsWrapper*);
 	~Goal();
 
 	Ogre::SceneNode* 	goalLeftNode;

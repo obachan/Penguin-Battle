@@ -79,8 +79,9 @@ public:
 
    	virtual void update() = 0;
 
-	Ogre::Vector3 getPosition();
+	Ogre::Vector3 getPosition();		
 	Ogre::Quaternion getOrientation();
+
 	void updateWorldObjectVisual();	// Syncs visuals with Physics
 
 
