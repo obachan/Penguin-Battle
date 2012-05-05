@@ -1,29 +1,4 @@
-#include "OgreFramework.hpp"
-
-
-#include <OgreCamera.h>
-#include <OgreEntity.h>
-#include <OgreLogManager.h>
-#include <OgreOverlay.h>
-#include <OgreOverlayElement.h>
-#include <OgreOverlayManager.h>
-#include <OgreRoot.h>
-#include <OgreViewport.h>
-#include <OgreSceneManager.h>
-#include <OgreRenderWindow.h>
-#include <OgreConfigFile.h>
-
-#include <OISEvents.h>
-#include <OISInputManager.h>
-#include <OISKeyboard.h>
-#include <OISMouse.h>
- 
-#include <SdkTrays.h>
-
-#include <btBulletDynamicsCommon.h>
-#include <OgreVector3.h>
-
-#include <BulletCollision/CollisionShapes/btBox2dShape.h>
+#include "WorldObjectAbstract.hpp"
 
 #include <cmath>
 #include <string>
@@ -48,7 +23,6 @@ const float paddle_length = 10.0f;
 
 const float ball_radius = 10.0f;
 const float ball_mass = 40.0f;
-
 
 class Goal
 {
@@ -88,7 +62,7 @@ private:
 	static int 				scene_node_counter;
 };
 
-class Ball
+class Ball : public WorldObjectAbstract
 {
 public:
 	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f, bool do_physics = true);
@@ -104,6 +78,11 @@ public:
 	void updateAsClient(Ogre::Vector3);
 	bool inGoal(Goal*);
 	void reset(PhysicsWrapper*);
+
+	// ==========================
+	// From Parent Class, WorldObjectAbstract
+	// ==========================
+	void update(); // From abstract class AbstractWorldObject
 
 private:
 
@@ -186,7 +165,7 @@ private:
 };
 
 
-class Paddle
+class Paddle : public WorldObjectAbstract
 {
 public:
 

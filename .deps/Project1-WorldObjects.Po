@@ -1,5 +1,6 @@
 Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
- OgreFramework.hpp /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
+ WorldObjectAbstract.hpp OgreFramework.hpp \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreConfig.h \
@@ -890,6 +891,8 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
 
 WorldObjects.hpp:
+
+WorldObjectAbstract.hpp:
 
 OgreFramework.hpp:
 

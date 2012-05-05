@@ -885,6 +885,7 @@ Project1-ServerState.o: ServerState.cpp ServerState.hpp AppState.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
  usr/include/SDL_net/SDL_net.h GameState.hpp WorldObjects.hpp \
+ WorldObjectAbstract.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
@@ -2904,6 +2905,8 @@ usr/include/SDL_net/SDL_net.h:
 GameState.hpp:
 
 WorldObjects.hpp:
+
+WorldObjectAbstract.hpp:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h:
 

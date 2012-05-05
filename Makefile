@@ -60,6 +60,7 @@ am_Project1_OBJECTS = Project1-Network.$(OBJEXT) \
 	Project1-ClientMenuState.$(OBJEXT) \
 	Project1-ServerMenuState.$(OBJEXT) Project1-HUD.$(OBJEXT) \
 	Project1-SoundWrapper.$(OBJEXT) Project1-Controller.$(OBJEXT) \
+	Project1-WorldObjectAbstract.$(OBJEXT) \
 	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
 	Project1-OgreFramework.$(OBJEXT) Project1-OgreApp.$(OBJEXT) \
 	Project1-ServerState.$(OBJEXT) Project1-ClientState.$(OBJEXT) \
@@ -101,12 +102,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run aclocal-1.11
-AMTAR = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run tar
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11
+AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run autoconf
-AUTOHEADER = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run autoheader
-AUTOMAKE = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run automake-1.11
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -144,7 +145,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/missing --run makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -175,10 +176,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /v/filer4b/v38q001/apharo/gametech/Assignment-2
-abs_srcdir = /v/filer4b/v38q001/apharo/gametech/Assignment-2
-abs_top_builddir = /v/filer4b/v38q001/apharo/gametech/Assignment-2
-abs_top_srcdir = /v/filer4b/v38q001/apharo/gametech/Assignment-2
+abs_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
+abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -209,7 +210,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /v/filer4b/v38q001/apharo/gametech/Assignment-2/install-sh
+install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -232,10 +233,10 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Network.hpp AppState.hpp AppStateManager.hpp MenuState.hpp MultiplayerMenuState.hpp ClientMenuState.hpp ServerMenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp ClientState.hpp GameState.hpp
+noinst_HEADERS = Network.hpp AppState.hpp AppStateManager.hpp MenuState.hpp MultiplayerMenuState.hpp ClientMenuState.hpp ServerMenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjectAbstract.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp ClientState.hpp GameState.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = Network.cpp AppStateManager.cpp MenuState.cpp PauseState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp ClientState.cpp GameState.cpp main.cpp
-#Project1_SOURCES= Network.cpp test.cpp
+Project1_SOURCES = Network.cpp AppStateManager.cpp MenuState.cpp PauseState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjectAbstract.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp ClientState.cpp GameState.cpp main.cpp
+#Project1_SOURCES= Network.cpp test.cpp WorldObjectAbstract.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -365,6 +366,7 @@ include ./$(DEPDIR)/Project1-Physics.Po
 include ./$(DEPDIR)/Project1-ServerMenuState.Po
 include ./$(DEPDIR)/Project1-ServerState.Po
 include ./$(DEPDIR)/Project1-SoundWrapper.Po
+include ./$(DEPDIR)/Project1-WorldObjectAbstract.Po
 include ./$(DEPDIR)/Project1-WorldObjects.Po
 include ./$(DEPDIR)/Project1-main.Po
 
@@ -528,6 +530,20 @@ Project1-Controller.obj: Controller.cpp
 #	source='Controller.cpp' object='Project1-Controller.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
+
+Project1-WorldObjectAbstract.o: WorldObjectAbstract.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectAbstract.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectAbstract.Tpo -c -o Project1-WorldObjectAbstract.o `test -f 'WorldObjectAbstract.cpp' || echo '$(srcdir)/'`WorldObjectAbstract.cpp
+	$(am__mv) $(DEPDIR)/Project1-WorldObjectAbstract.Tpo $(DEPDIR)/Project1-WorldObjectAbstract.Po
+#	source='WorldObjectAbstract.cpp' object='Project1-WorldObjectAbstract.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectAbstract.o `test -f 'WorldObjectAbstract.cpp' || echo '$(srcdir)/'`WorldObjectAbstract.cpp
+
+Project1-WorldObjectAbstract.obj: WorldObjectAbstract.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectAbstract.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectAbstract.Tpo -c -o Project1-WorldObjectAbstract.obj `if test -f 'WorldObjectAbstract.cpp'; then $(CYGPATH_W) 'WorldObjectAbstract.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectAbstract.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-WorldObjectAbstract.Tpo $(DEPDIR)/Project1-WorldObjectAbstract.Po
+#	source='WorldObjectAbstract.cpp' object='Project1-WorldObjectAbstract.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectAbstract.obj `if test -f 'WorldObjectAbstract.cpp'; then $(CYGPATH_W) 'WorldObjectAbstract.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectAbstract.cpp'; fi`
 
 Project1-WorldObjects.o: WorldObjects.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp
