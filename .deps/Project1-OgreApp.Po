@@ -890,8 +890,9 @@ Project1-OgreApp.o: OgreApp.cpp OgreApp.hpp OgreFramework.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
- WorldObjectGoal.hpp PauseState.hpp MultiplayerMenuState.hpp \
- ClientMenuState.hpp ServerMenuState.hpp ServerState.hpp ClientState.hpp
+ WorldObjectGoal.hpp WorldObjectPenguin.hpp PauseState.hpp \
+ MultiplayerMenuState.hpp ClientMenuState.hpp ServerMenuState.hpp \
+ ServerState.hpp ClientState.hpp
 
 OgreApp.hpp:
 
@@ -2924,6 +2925,8 @@ WorldObjectAbstract.hpp:
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
 
 WorldObjectGoal.hpp:
+
+WorldObjectPenguin.hpp:
 
 PauseState.hpp:
 

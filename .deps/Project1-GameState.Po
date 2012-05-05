@@ -889,7 +889,7 @@ Project1-GameState.o: GameState.cpp GameState.hpp AppState.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
- WorldObjectGoal.hpp
+ WorldObjectGoal.hpp WorldObjectPenguin.hpp
 
 GameState.hpp:
 
@@ -2916,3 +2916,5 @@ WorldObjectAbstract.hpp:
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
 
 WorldObjectGoal.hpp:
+
+WorldObjectPenguin.hpp:
