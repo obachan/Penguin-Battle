@@ -65,7 +65,11 @@ const double jump_vel = 7.0f;
 const double rotation_speed = 5.0f;
 const float penguin_length = 10.0f;
 
+// ==========================
+// Parameters for WorldObjectPaddle
+// ==========================
 
+const float paddle_length = 10.0f;
 
 class WorldObjectAbstract {
 public:
