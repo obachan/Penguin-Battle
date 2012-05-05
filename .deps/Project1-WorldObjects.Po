@@ -1,5 +1,5 @@
 Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
- WorldObjectAbstract.hpp OgreFramework.hpp \
+ WorldObjectBall.hpp WorldObjectAbstract.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -888,9 +888,12 @@ Project1-WorldObjects.o: WorldObjects.cpp WorldObjects.hpp \
  usr/include/SDL_net/SDL_net.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
+ WorldObjectGoal.hpp
 
 WorldObjects.hpp:
+
+WorldObjectBall.hpp:
 
 WorldObjectAbstract.hpp:
 
@@ -2907,3 +2910,5 @@ usr/include/SDL_net/SDL_net.h:
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
+
+WorldObjectGoal.hpp:

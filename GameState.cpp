@@ -1,6 +1,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 #include "GameState.hpp"
+#include "WorldObjectBall.hpp"
 
 #include <iostream>
 

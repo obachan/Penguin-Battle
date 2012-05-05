@@ -1,16 +1,17 @@
-#include "WorldObjectAbstract.hpp"
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+#ifndef WORLD_OBJECTS_HPP
+#define WORLD_OBJECTS_HPP
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||
 
-#include <cmath>
-#include <string>
-#include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "WorldObjectBall.hpp"
+#include "WorldObjectGoal.hpp"
 
 const double world_grav = -0.98f;
 
-const float room_width = 200.0f; // represents width/height or room
-const float room_length = 400.0f; // represents the length of the prism
+const float remove_room_width = 200.0f; // represents width/height or room
+const float remove_room_length = 400.0f; // represents the length of the prism
 
 const double max_fall_vel = -0.5f;
 const double move_vel = 1.5f;
@@ -21,106 +22,8 @@ const float penguin_length = 10.0f;
 
 const float paddle_length = 10.0f;
 
-const float ball_radius = 10.0f;
-const float ball_mass = 40.0f;
-
-class Goal
-{
-public:
-	Goal(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
-	~Goal();
-
-	Ogre::SceneNode* 	goalLeftNode;
-	Ogre::Entity* 		goalLeftEntity;
-	btRigidBody* 		goalLeftBody;
-
-	Ogre::SceneNode* 	goalRightNode;
-	Ogre::Entity* 		goalRightEntity;
-	btRigidBody* 		goalRightBody;
-
-	Ogre::SceneNode* 	goalBackNode;
-	Ogre::Entity* 		goalBackEntity;
-	btRigidBody* 		goalBackBody;
-
-	Ogre::SceneNode* 	goalTopNode;
-	Ogre::Entity* 		goalTopEntity;
-	btRigidBody* 		goalTopBody;
-
-	// The front panel should be open
-	Ogre::SceneNode* 	goalFrontNode;
-	Ogre::Entity* 		goalFrontEntity;
-
-private:
-	void createGoal(Ogre::SceneManager*, double);
-	void attachToDynamicWorld(PhysicsWrapper*);
-
-	btCollisionShape* goalLeftShape;
-	btCollisionShape* goalRightShape;
-	btCollisionShape* goalBackShape;
-	btCollisionShape* goalTopShape;
-
-	static int 				scene_node_counter;
-};
-
-class Ball : public WorldObjectAbstract
-{
-public:
-	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f, bool do_physics = true);
-	~Ball();
-
-	btRigidBody* 		ballRigidBody;
-	Ogre::SceneNode* 	objSphereNode;
-
-	Ogre::Vector3 getBallPosition();
-	Ogre::Quaternion getBallOrientation();
-
-	void update(double);
-	void updateAsClient(Ogre::Vector3);
-	bool inGoal(Goal*);
-	void reset(PhysicsWrapper*);
-
-	// ==========================
-	// From Parent Class, WorldObjectAbstract
-	// ==========================
-	void update(); // From abstract class AbstractWorldObject
-
-private:
-
-	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::String);
-	void attachToDynamicWorld(PhysicsWrapper*);
-
-	Ogre::Entity* 			objSphereEntity;
-	btDefaultMotionState* 	ballMotionState;
-	btCollisionShape* 		ball_collision_shape;
-
-	static int 				scene_node_counter;
-};
-
-class Room
-{
-public:
-	Room(Ogre::SceneManager*, PhysicsWrapper*, bool do_physics = true);
-	~Room();
-
-	btRigidBody* frontRigidBody;
-	btRigidBody* backRigidBody;
-	btRigidBody* rightRigidBody;
-	btRigidBody* leftRigidBody;
-	btRigidBody* topRigidBody;
-	btRigidBody* bottomRigidBody;
-
-private:
-
-	void createRoom(Ogre::SceneManager*, int, int);
-	void attachToDynamicWorld(PhysicsWrapper*);
-
-	btCollisionShape* bottom;
-	btCollisionShape* top;
-	btCollisionShape* left;
-	btCollisionShape* right;
-	btCollisionShape* back;
-	btCollisionShape* front;
-};
+const float remove_ball_radius = 10.0f;
+const float remove_ball_mass = 40.0f;
 
 class Penguin
 {
@@ -204,3 +107,8 @@ public:
 	Ogre::Entity* 		terrainEntity;
 };
 
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+#endif
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||
