@@ -6,6 +6,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 using namespace Ogre;
+using namespace std;
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
@@ -71,7 +72,12 @@ bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
+
+
+		cout << "before" << endl;
         m_bQuit = true;
+
+		cout << "after" << endl;
         return true;
     }
  
@@ -119,7 +125,12 @@ void MenuState::update(double timeSinceLastFrame)
 
     if(m_bQuit == true)
     {
+		cout << "before" << endl;
+
         shutdown();
+
+		cout << "after" << endl;
+
         return;
     }
 

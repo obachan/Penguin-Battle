@@ -79,11 +79,14 @@ public:
 
    	virtual void update() = 0;
 
-	Ogre::Vector3 getPosition();		
-	Ogre::Quaternion getOrientation();
+	void updateAsClient(Ogre::Vector3);			// Called before below methods
+   	Ogre::Vector3 getVisualPosition(); 			// Client Safe		
+	Ogre::Quaternion getVisualOrientation(); 	// Client Safe
 
-	void updateWorldObjectVisual();	// Syncs visuals with Physics
-
+protected:
+	void updateWorldObjectVisual();				// Syncs visuals with Physics
+	Ogre::Vector3 getPosition(); 				// Only server objects can call this method
+	Ogre::Quaternion getOrientation(); 			// Only server objects can call this method
 
 	btRigidBody* 		worldObjectRigidBody;
 	Ogre::SceneNode* 	worldObjectSceneNode;

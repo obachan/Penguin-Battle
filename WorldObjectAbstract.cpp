@@ -7,7 +7,21 @@ WorldObjectAbstract::WorldObjectAbstract()
 
 WorldObjectAbstract::~WorldObjectAbstract()
 {
+}
 
+void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos)
+{
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+}
+
+Ogre::Vector3 WorldObjectAbstract::getVisualPosition()
+{
+	return worldObjectSceneNode->getPosition();
+}
+
+Ogre::Quaternion WorldObjectAbstract::getVisualOrientation()
+{
+	return worldObjectSceneNode->getOrientation();
 }
 
 Ogre::Vector3 WorldObjectAbstract::getPosition()

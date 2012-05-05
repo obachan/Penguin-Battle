@@ -17,7 +17,6 @@ public:
 	~Ball();
 
 	void update(double);
-	void updateAsClient(Ogre::Vector3);
 	bool inGoal(Goal*);
 	void reset(PhysicsWrapper*);
 
@@ -30,10 +29,6 @@ private:
 
 	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::String);
 	void attachToDynamicWorld(PhysicsWrapper*);
-
-	Ogre::Entity* 			objSphereEntity;
-	btDefaultMotionState* 	ballMotionState;
-	btCollisionShape* 		ball_collision_shape;
 
 	static int 				scene_node_counter;
 };

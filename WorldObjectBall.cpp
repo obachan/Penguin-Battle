@@ -34,10 +34,6 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics,
 
 Ball::~Ball()
 {
-	delete objSphereEntity;
-    delete ballMotionState;
-    delete worldObjectRigidBody;
-    delete ball_collision_shape;
 }
 
 // ==========================
@@ -65,7 +61,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
     btScalar mass = ball_mass;
     btVector3 ballInertia(0,0,0);
 
-	ball_collision_shape = new btSphereShape(ball_radius);
+	btCollisionShape* ball_collision_shape = new btSphereShape(ball_radius);
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
     btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
@@ -80,7 +76,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(start_pos_x, start_pos_y, start_pos_z);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
-	objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphereCheck.mesh");
+	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphereCheck.mesh");
 	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(strObjName);
 	worldObjectSceneNode->attachObject(objSphereEntity);
 
@@ -98,11 +94,6 @@ void Ball::attachToDynamicWorld(PhysicsWrapper* physics)
 void Ball::update(double timeSinceLastFrame)
 {
 	updateWorldObjectVisual();
-}
-
-void Ball::updateAsClient(Ogre::Vector3 pos)
-{
-	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 }
 
 // Checks whether the ball is contained
