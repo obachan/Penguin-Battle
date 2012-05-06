@@ -4,16 +4,28 @@
 
 int WorldObjectAbstract::worldObject_id_counter = 0;
 
-WorldObjectAbstract::WorldObjectAbstract()
+WorldObjectAbstract::WorldObjectAbstract(PhysicsWrapper* physics)
 {
+	// This gives every new WorldObjectAbstract a new ID
 	worldObject_id = worldObject_id_counter;
 	worldObject_id_counter++;
 	std::cout << worldObject_id << std::endl;
+
+	void createSceneNode();
+	void createRigidBody();	
+
+	//if(physics != NULL)
+	//	attachToDynamicWorld(physics);
 }
 
 WorldObjectAbstract::~WorldObjectAbstract()
 {
+
 }
+
+// ======================
+// Public Methods
+// ======================
 
 void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos)
 {
@@ -37,6 +49,21 @@ Ogre::Quaternion WorldObjectAbstract::getVisualOrientation()
 	return worldObjectSceneNode->getOrientation();
 }
 
+int WorldObjectAbstract::getUniqueId()
+{
+	return worldObject_id_counter;
+}
+
+// ======================
+// Protect Methods
+// ======================
+
+void WorldObjectAbstract::updateWorldObjectVisual()
+{
+	worldObjectSceneNode->setOrientation(getOrientation());
+	worldObjectSceneNode->setPosition(getPosition());
+}
+
 Ogre::Vector3 WorldObjectAbstract::getPosition()
 {
 	btTransform trans;
@@ -55,9 +82,11 @@ Ogre::Quaternion WorldObjectAbstract::getOrientation()
 							float(rotation.z()));
 }
 
-void WorldObjectAbstract::updateWorldObjectVisual()
-{
-	worldObjectSceneNode->setOrientation(getOrientation());
-	worldObjectSceneNode->setPosition(getPosition());
-}
+// ======================
+// Private Methods
+// ======================
 
+void WorldObjectAbstract::attachToDynamicWorld(PhysicsWrapper* physics)
+{
+	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
+}

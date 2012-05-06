@@ -7,7 +7,7 @@
 
 #include "WorldObjectAbstract.hpp"
 
-class Paddle : public WorldObjectAbstract
+class Paddle
 {
 public:
 

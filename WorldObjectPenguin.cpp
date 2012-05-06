@@ -3,7 +3,7 @@
 int Penguin::scene_node_counter = 0;
 
 
-Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract(physics)
 {
 	createPenguin(m_pSceneMgr);
 
@@ -349,4 +349,14 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
 void Penguin::update()
 {
 
+}
+
+void Penguin::createSceneNode()
+{
+
+}
+
+void Penguin::createRigidBody()
+{
+	
 }

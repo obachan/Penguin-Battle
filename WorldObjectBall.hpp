@@ -25,6 +25,13 @@ public:
 	// ==========================
 	void update(); // From abstract class AbstractWorldObject
 
+protected:
+	// ==========================
+	// From Parent Class, WorldObjectAbstract
+	// ==========================
+	void createSceneNode();
+	void createRigidBody();	
+
 private:
 
 	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::String);

@@ -74,10 +74,12 @@ const float paddle_length = 10.0f;
 class WorldObjectAbstract {
 public:
 
-	WorldObjectAbstract();
-	~WorldObjectAbstract();
+	WorldObjectAbstract(PhysicsWrapper* physics);	// This constructor will soon be filled with
+							// calls to virtual methods so all children
+							// follow the same protocol
 
-   	virtual void update() = 0;
+
+	~WorldObjectAbstract();
 
 	void updateAsClient(Ogre::Vector3);
 	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);			
@@ -86,10 +88,15 @@ public:
 
 	int getUniqueId();
 
+	virtual void update() = 0;
+
 protected:
 	void updateWorldObjectVisual();				// Syncs visuals with Physics
 	Ogre::Vector3 getPosition(); 				// Only server objects can call this method
 	Ogre::Quaternion getOrientation(); 			// Only server objects can call this method
+
+	virtual void createSceneNode() = 0;			// These calls are made in the WorldObjectAbstract
+	virtual void createRigidBody() = 0;			// Following protocol will simply our lives.
 
 	Ogre::SceneNode* 	worldObjectSceneNode;
 	btRigidBody* 		worldObjectRigidBody;
@@ -97,6 +104,8 @@ protected:
 	int 				worldObject_id; 		// World Object unique ID
 
 private:
+	void attachToDynamicWorld(PhysicsWrapper* physics);
+
 	static int 			worldObject_id_counter;
 };
 

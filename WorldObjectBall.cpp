@@ -3,7 +3,7 @@
 int Ball::scene_node_counter = 0;
 
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
-	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
+	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract(physics)
 {
 	//const double start_pos_x = 0.0f;
 	//const double start_pos_y = -(room_width/2) + ball_radius;
@@ -148,6 +148,16 @@ void Ball::reset(PhysicsWrapper* physics)
 // ========================================
 
 void Ball::update()
+{
+
+}
+
+void Ball::createSceneNode()
+{
+
+}
+
+void Ball::createRigidBody()
 {
 
 }

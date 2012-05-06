@@ -34,6 +34,14 @@ public:
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
 	void update();
+
+protected:
+	// ==========================
+	// From Parent Class, WorldObjectAbstract
+	// ==========================
+	void createSceneNode();
+	void createRigidBody();	
+
 private:
 	btCollisionShape* 		penguin_collision_shape;
 
