@@ -503,7 +503,7 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	if(keyEventRef.key == OIS::KC_Q)
 	{
-		penguin->toggleThirdPersonCamera();
+		controller->toggleThirdPersonCamera();
 	}
 /*
 	if(keyEventRef.key == OIS::KC_P)

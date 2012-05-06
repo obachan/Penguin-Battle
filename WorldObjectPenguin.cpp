@@ -6,7 +6,6 @@ int Penguin::scene_node_counter = 0;
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createPenguin(m_pSceneMgr);
-	third_person_camera = true;
 
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
@@ -83,17 +82,10 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 }
 
-
 void Penguin::attachToDynamicWorld(PhysicsWrapper* physics)
 {
 	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
 }
-
-void Penguin::toggleThirdPersonCamera()
-{
-	third_person_camera = !third_person_camera;
-}
-
 
 void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
@@ -123,13 +115,14 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
 
-	// Sync Visuals	
+	// Sync Visuals: We don't use the parent's updateWorldObjectVisual
+	// to sync because that method is for objects not under user control
 	trans.setOrigin(btVector3(pos[0], pos[1], pos[2]));
 	penguinMotionState->setWorldTransform(trans);
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	if(third_person_camera && camera != NULL){
+	if(controller->ThirdPersonCameraOn() && camera != NULL){
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 

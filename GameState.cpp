@@ -428,7 +428,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	if(keyEventRef.key == OIS::KC_Q)
 	{
-		penguin->toggleThirdPersonCamera();
+		controller->toggleThirdPersonCamera();
 	}
 
 	if(keyEventRef.key == OIS::KC_P)
@@ -492,7 +492,10 @@ bool GameState::mouseMoved(const OIS::MouseEvent &evt)
 	//std::cerr << "mouse moved " << evt.state.X.rel << std::endl;
 	controller->mouse_x_movement = -evt.state.X.rel;
 	controller->mouse_y_movement = -evt.state.Y.rel;
-    if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(evt)) return true;
+
+	//if()
+	//m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+	//m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
     return true;
 }
  

@@ -29,14 +29,12 @@ public:
 
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
-	void toggleThirdPersonCamera();
 
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
 	void update();
 private:
-	bool 					third_person_camera;
 	btCollisionShape* 		penguin_collision_shape;
 
 	void createPenguin(Ogre::SceneManager*);

@@ -36,7 +36,6 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 {
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
 	
-	//physics = new PhysicsWrapper();
 	controller = new MyController();
 	sounds = new SoundWrapper();
 	hud = new HUD();
@@ -50,27 +49,10 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 		return false;
 	m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
  
-
- /*
-	m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
-	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
- 
-	m_pCamera = m_pSceneMgr->createCamera("Camera");
-	m_pCamera->setPosition(Vector3(0, -40, 125));
-	m_pCamera->lookAt(Vector3(0, 0, 0));
-	m_pCamera->setNearClipDistance(1);
- 
-	m_pViewport = m_pRenderWnd->addViewport(m_pCamera);
-	m_pViewport->setBackgroundColour(ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
- 
-	m_pCamera->setAspectRatio(Real(m_pViewport->getActualWidth()) / Real(m_pViewport->getActualHeight()));
- 
-	m_pViewport->setCamera(m_pCamera);
-*/
 	m_pViewport = m_pRenderWnd->addViewport(0);
 	m_pViewport->setBackgroundColour(ColourValue(0.8f, 0.7f, 0.6f, 1.0f));
 
- 
+
 	size_t hWnd = 0;
     OIS::ParamList paramList;
     m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
@@ -150,18 +132,7 @@ OgreFramework::~OgreFramework()
 }
 
 bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
-{
-
-	// This code was initially here
-
-	/*
-	if(m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
-	{
-			m_bShutDownOgre = true;
-			return true;
-	}
-	*/
- 
+{ 
 	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
 	{
 		m_pRenderWnd->writeContentsToTimestampedFile("BOF_Screenshot_", ".png");
