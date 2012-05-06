@@ -122,7 +122,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	if(controller->ThirdPersonCameraOn() && camera != NULL){
+	if(controller->thirdPersonCameraOn() && camera != NULL){
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 

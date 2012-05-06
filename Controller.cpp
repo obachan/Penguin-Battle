@@ -32,7 +32,7 @@ void MyController::toggleThirdPersonCamera()
 	third_person_camera = !third_person_camera;
 }
 
-bool MyController::ThirdPersonCameraOn()
+bool MyController::thirdPersonCameraOn()
 {
 	return third_person_camera;
 }

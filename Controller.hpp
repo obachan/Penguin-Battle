@@ -25,7 +25,7 @@ public:
 	float		mouse_y_movement;
 
 	void toggleThirdPersonCamera();
-	bool ThirdPersonCameraOn();
+	bool thirdPersonCameraOn();
 
 private:
 	bool 		third_person_camera;

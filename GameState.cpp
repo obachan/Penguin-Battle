@@ -493,9 +493,10 @@ bool GameState::mouseMoved(const OIS::MouseEvent &evt)
 	controller->mouse_x_movement = -evt.state.X.rel;
 	controller->mouse_y_movement = -evt.state.Y.rel;
 
-	//if()
-	//m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-	//m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	if(!controller->thirdPersonCameraOn()){
+		OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	}
     return true;
 }
  
