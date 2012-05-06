@@ -37,15 +37,6 @@ Ball::~Ball()
 }
 
 // ==========================
-// From Parent Class, WorldObjectAbstract
-// ==========================
-
-void Ball::update()
-{
-
-}
-
-// ==========================
 // Class Methods
 // ==========================
 
@@ -150,4 +141,13 @@ void Ball::reset(PhysicsWrapper* physics)
 	btMotionState *motionState = worldObjectRigidBody->getMotionState();
 	motionState->setWorldTransform(trans);
 	worldObjectRigidBody->setMotionState (motionState);
+}
+
+// =========================================
+// From Parent Class, WorldObjectAbstract
+// ========================================
+
+void Ball::update()
+{
+
 }

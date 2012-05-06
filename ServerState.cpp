@@ -281,7 +281,7 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+20, &newballQuaternion[2], 4);	
 		memcpy(buffer+24, &newballQuaternion[3], 4);
 
-		Ogre::Vector3 newPenguinServerVector = penguin->getPenguinPosition();
+		Ogre::Vector3 newPenguinServerVector = penguin->getVisualPosition();
 		memcpy(buffer+28, &newPenguinServerVector[0], 4);
 
 		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
@@ -297,7 +297,7 @@ void ServerState::update(double timeSinceLastFrame)
 		//printf("Before Quaternion");
 		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
 		
-		Ogre::Quaternion newPenguinServerQuaternion = penguin->getPenguinOrientation();
+		Ogre::Quaternion newPenguinServerQuaternion = penguin->getVisualOrientation();
 		memcpy(buffer+8, &newPenguinServerQuaternion[0], 4);	
 		memcpy(buffer+12, &newPenguinServerQuaternion[1], 4);	
 		memcpy(buffer+16, &newPenguinServerQuaternion[2], 4);	
@@ -306,7 +306,7 @@ void ServerState::update(double timeSinceLastFrame)
 		//printf("After Quaternion");
 		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
 
-		Ogre::Vector3 newPenguinClientVector = penguin_two->getPenguinPosition();
+		Ogre::Vector3 newPenguinClientVector = penguin_two->getVisualPosition();
 		memcpy(buffer+24, &newPenguinClientVector[0], 4);
 		memcpy(buffer+28, &newPenguinClientVector[1], 4);
 
@@ -319,7 +319,7 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newPenguinServerVector[1]);
 		printf("%f\n", newPenguinServerVector[2]);
 
-		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getPenguinOrientation();
+		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getVisualOrientation();
 		memcpy(buffer+4, &newPenguinClientQuaternion[0], 4);	
 		memcpy(buffer+8, &newPenguinClientQuaternion[1], 4);	
 		memcpy(buffer+12, &newPenguinClientQuaternion[2], 4);	

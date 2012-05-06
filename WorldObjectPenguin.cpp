@@ -7,19 +7,13 @@ Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createPenguin(m_pSceneMgr);
 	third_person_camera = true;
-	
+
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
 }
 
 Penguin::~Penguin()
 {
-	delete penguinNode;
-
-	delete penguinRigidBody->getMotionState();
-	delete penguinRigidBody;
-
-	delete penguin_collision_shape;
 }
 
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
@@ -35,6 +29,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	penguin_velocity = Ogre::Vector3(0, 0, 0);
 	in_air = false;
 
+	
 	penguinMotionState = new btDefaultMotionState(*penguin_position);
 
     btScalar mass = 0;
@@ -44,12 +39,12 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
     btRigidBody::btRigidBodyConstructionInfo penguinRigidBodyCI(mass,penguinMotionState,penguin_collision_shape,penguinInertia);
 	penguinRigidBodyCI.m_restitution = 1;
-    penguinRigidBody = new btRigidBody(penguinRigidBodyCI);
+    worldObjectRigidBody = new btRigidBody(penguinRigidBodyCI);
 
     // Disable Gravity because this object will be controlled by the player
-    penguinRigidBody->setGravity(btVector3(0,0,0));
-	penguinRigidBody->setCollisionFlags( penguinRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-	penguinRigidBody->setActivationState(DISABLE_DEACTIVATION);
+    worldObjectRigidBody->setGravity(btVector3(0,0,0));
+	worldObjectRigidBody->setCollisionFlags( worldObjectRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	worldObjectRigidBody->setActivationState(DISABLE_DEACTIVATION);
 
 
 	//--------------------
@@ -58,7 +53,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 	float penguin_scale = penguin_length / 50.0;
 	btTransform trans;
-    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 	// Convert static scene_node_counter to string
@@ -73,17 +68,17 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 	//std::cout << penguin_name << std::endl;
 
 	penguinEntity = m_pSceneMgr->createEntity(penguin_name, "penguin.mesh");
-	penguinNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(penguin_name);
-	penguinNode->attachObject(penguinEntity);
-	penguinNode->setScale(penguin_scale, penguin_scale, penguin_scale);
-	penguinNode->setPosition(vec[0], vec[1], vec[2]);
+	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(penguin_name);
+	worldObjectSceneNode->attachObject(penguinEntity);
+	worldObjectSceneNode->setScale(penguin_scale, penguin_scale, penguin_scale);
+	worldObjectSceneNode->setPosition(vec[0], vec[1], vec[2]);
 	penguinEntity->setMaterialName("Penguin");
-	penguinNode->yaw( Ogre::Degree( -180 ) );
+	worldObjectSceneNode->yaw( Ogre::Degree( -180 ) );
 	penguin_direction = Ogre::Vector3(0,0,-1);
 	previous_direction = Ogre::Vector3(0,0,-1);
 
 	/*Ogre::Camera* camera = m_pSceneMgr->getCamera("Camera");
-	camera->setPosition(penguinNode->getPosition());
+	camera->setPosition(worldObjectSceneNode->getPosition());
 	camera->setDirection(penguin_direction);*/
 
 }
@@ -91,7 +86,7 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 void Penguin::attachToDynamicWorld(PhysicsWrapper* physics)
 {
-	physics->add_object_to_dynamicWorld(penguinRigidBody);
+	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
 }
 
 void Penguin::toggleThirdPersonCamera()
@@ -110,7 +105,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// 'vec' is passed around to different functions to be modified
 	// At the end of update, 'pos' is put back into the btTransform
 	btTransform trans;
-    penguinRigidBody->getMotionState()->getWorldTransform(trans);
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
 	Ogre::Vector3 pos = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 
 	// Factor in Gravity
@@ -128,11 +123,10 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	// Animate Penguin
 	animate(timeSinceLastFrame, controller);	
 
-
 	// Sync Visuals	
 	trans.setOrigin(btVector3(pos[0], pos[1], pos[2]));
 	penguinMotionState->setWorldTransform(trans);
-	penguinNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
 	if(third_person_camera && camera != NULL){
@@ -155,13 +149,13 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	
         if ((1.0f + previous_direction.dotProduct(penguin_direction)) < 0.0001f) 
         {
-            penguinNode->yaw(Ogre::Degree(180));
+            worldObjectSceneNode->yaw(Ogre::Degree(180));
         }
         else
         {
             //quat = previous_direction.getRotationTo(penguin_direction);
 		//std::cout << quat << std::endl;
-            penguinNode->rotate(quat);
+            worldObjectSceneNode->rotate(quat);
         }
 
 	if (penguin_direction != Ogre::Vector3::ZERO)
@@ -176,7 +170,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 	/*
 	penguin_direction.normalise();
-	Ogre::Vector3 src = penguinNode->getOrientation()*penguin_direction;
+	Ogre::Vector3 src = worldObjectSceneNode->getOrientation()*penguin_direction;
 
 	
 	
@@ -184,16 +178,6 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
         Ogre::Quaternion quat = src.getRotationTo(penguin_direction);
         camera->setPosition(vec[0], vec[1], vec[2]);
 	camera->rotate(quat);*/
-}
-
-void Penguin::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
-{
-	penguinNode->setPosition(pos[0], pos[1], pos[2]);
-	//Ogre::Vector3 dest = rot*Ogre::Vector3(0,0,1);
-	//Ogre::Vector3 src = penguinNode->getOrientation()*Ogre::Vector3(0,0,1);
-	//Ogre::Quaternion quat = src.getRotationTo(dest);
-	penguinNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
-	//penguinNode->rotate(quat);
 }
 
 void Penguin::updateCamera(Ogre::Camera* camera)
@@ -211,16 +195,6 @@ void Penguin::updateCamera(Ogre::Camera* camera)
 		camera->setPosition(cameraPosition);
 	}
 */
-}
-
-Ogre::Vector3 Penguin::getPenguinPosition()
-{
-	return penguinNode->getPosition();
-}
-
-Ogre::Quaternion Penguin::getPenguinOrientation()
-{
-	return penguinNode->getOrientation();
 }
 
 void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)
@@ -241,8 +215,8 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	// Left and Right on the keyboard will rotate the Penguin
 	if(controller->left_control_down == true){
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		worldObjectSceneNode->rotate(quat);
+		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
@@ -250,8 +224,8 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 
 	if(controller->right_control_down == true){
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		worldObjectSceneNode->rotate(quat);
+		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
@@ -280,8 +254,8 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	
 	if(controller->mouse_x_movement != 0.0000 ) {
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		worldObjectSceneNode->rotate(quat);
+		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
@@ -291,8 +265,8 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 
 /*	if(controller->mouse_y_movement != 0.0000 ) {
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_y_movement)), Ogre::Vector3::UNIT_X);
-		penguinNode->rotate(quat);
-		penguin_direction = penguinNode->getOrientation() * Ogre::Vector3(0,0,1);
+		worldObjectSceneNode->rotate(quat);
+		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.x = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
@@ -372,4 +346,14 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
         float time_scale = timeSinceLastFrame / 4.0f; // Scale the time back so it doesn't animate as fast
 		mAnimationState->addTime(time_scale);
 	}
+}
+
+
+// =========================================
+// From Parent Class, WorldObjectAbstract
+// ========================================
+
+void Penguin::update()
+{
+
 }

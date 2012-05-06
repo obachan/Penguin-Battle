@@ -64,7 +64,6 @@ am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
 	Project1-HUD.$(OBJEXT) Project1-SoundWrapper.$(OBJEXT) \
 	Project1-Controller.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
 	Project1-WorldObjectAbstract.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) \
 	Project1-WorldObjectGoal.$(OBJEXT) \
 	Project1-WorldObjectBall.$(OBJEXT) \
 	Project1-WorldObjectPenguin.$(OBJEXT) \
@@ -249,7 +248,7 @@ Project1_CPPFLAGS = -I$(top_srcdir)
 #-------------------------------------------
 # Project1_SOURCES: .cpp
 #-------------------------------------------
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp PauseState.cpp ServerState.cpp ClientState.cpp GameState.cpp Network.cpp Physics.cpp HUD.cpp SoundWrapper.cpp Controller.cpp OgreFramework.cpp WorldObjectAbstract.cpp WorldObjects.cpp WorldObjectGoal.cpp WorldObjectBall.cpp WorldObjectPenguin.cpp WorldObjectRoom.cpp WorldObjectTerrain.cpp WorldObjectPaddle.cpp OgreApp.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp PauseState.cpp ServerState.cpp ClientState.cpp GameState.cpp Network.cpp Physics.cpp HUD.cpp SoundWrapper.cpp Controller.cpp OgreFramework.cpp WorldObjectAbstract.cpp WorldObjectGoal.cpp WorldObjectBall.cpp WorldObjectPenguin.cpp WorldObjectRoom.cpp WorldObjectTerrain.cpp WorldObjectPaddle.cpp OgreApp.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -386,7 +385,6 @@ include ./$(DEPDIR)/Project1-WorldObjectPaddle.Po
 include ./$(DEPDIR)/Project1-WorldObjectPenguin.Po
 include ./$(DEPDIR)/Project1-WorldObjectRoom.Po
 include ./$(DEPDIR)/Project1-WorldObjectTerrain.Po
-include ./$(DEPDIR)/Project1-WorldObjects.Po
 include ./$(DEPDIR)/Project1-main.Po
 
 .cpp.o:
@@ -633,20 +631,6 @@ Project1-WorldObjectAbstract.obj: WorldObjectAbstract.cpp
 #	source='WorldObjectAbstract.cpp' object='Project1-WorldObjectAbstract.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectAbstract.obj `if test -f 'WorldObjectAbstract.cpp'; then $(CYGPATH_W) 'WorldObjectAbstract.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectAbstract.cpp'; fi`
-
-Project1-WorldObjects.o: WorldObjects.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp
-	$(am__mv) $(DEPDIR)/Project1-WorldObjects.Tpo $(DEPDIR)/Project1-WorldObjects.Po
-#	source='WorldObjects.cpp' object='Project1-WorldObjects.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp
-
-Project1-WorldObjects.obj: WorldObjects.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.obj `if test -f 'WorldObjects.cpp'; then $(CYGPATH_W) 'WorldObjects.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjects.cpp'; fi`
-	$(am__mv) $(DEPDIR)/Project1-WorldObjects.Tpo $(DEPDIR)/Project1-WorldObjects.Po
-#	source='WorldObjects.cpp' object='Project1-WorldObjects.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjects.obj `if test -f 'WorldObjects.cpp'; then $(CYGPATH_W) 'WorldObjects.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjects.cpp'; fi`
 
 Project1-WorldObjectGoal.o: WorldObjectGoal.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectGoal.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectGoal.Tpo -c -o Project1-WorldObjectGoal.o `test -f 'WorldObjectGoal.cpp' || echo '$(srcdir)/'`WorldObjectGoal.cpp

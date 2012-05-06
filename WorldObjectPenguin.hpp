@@ -8,7 +8,7 @@
 
 #include "WorldObjectAbstract.hpp"
 
-class Penguin
+class Penguin : public WorldObjectAbstract
 {
 public:
 
@@ -16,9 +16,7 @@ public:
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
 	~Penguin();
 
-	Ogre::SceneNode*		penguinNode;
 	btDefaultMotionState* 	penguinMotionState;
-	btRigidBody* 			penguinRigidBody;
 	Ogre::Entity* 			penguinEntity;
 	Ogre::AnimationState*	mAnimationState;
 
@@ -30,11 +28,13 @@ public:
 	bool 					in_air;
 
 	void update(double, MyController*, Ogre::Camera*);
-	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
-	Ogre::Vector3 getPenguinPosition();
-	Ogre::Quaternion getPenguinOrientation();
 	void updateCamera(Ogre::Camera*);
 	void toggleThirdPersonCamera();
+
+	// ==========================
+	// From Parent Class, WorldObjectAbstract
+	// ==========================
+	void update();
 private:
 	bool 					third_person_camera;
 	btCollisionShape* 		penguin_collision_shape;

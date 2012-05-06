@@ -20,6 +20,13 @@ void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos)
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 }
 
+void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+}
+
+
 Ogre::Vector3 WorldObjectAbstract::getVisualPosition()
 {
 	return worldObjectSceneNode->getPosition();
