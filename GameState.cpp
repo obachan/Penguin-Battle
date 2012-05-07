@@ -27,6 +27,7 @@ void GameState::enter()
 {
 	physics = new PhysicsWrapper();
 	controller = new MyController();
+	soundFactory = new SoundWrapper();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
@@ -94,8 +95,8 @@ void GameState::enter()
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
-    OgreFramework::getSingletonPtr()->sounds->playMusic();
 
+    soundFactory->playMusic();
 
     OgreFramework::getSingletonPtr()->hud->reset();
  
@@ -258,7 +259,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	// Key Presses to Activate Sound Effect
     if(keyEventRef.key == OIS::KC_SPACE){
 		if(!penguin->in_air)
-			OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
+			soundFactory->playJumpSoundEffect();
 	}
 
 	// Key Presses to Debug

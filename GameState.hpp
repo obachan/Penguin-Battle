@@ -50,6 +50,7 @@ public:
 
 	PhysicsWrapper*			physics;
 	MyController* 			controller;
+	SoundWrapper*			soundFactory;
 	
 private:
 	Ogre::SceneNode*		m_pOgreHeadNode;
