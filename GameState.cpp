@@ -61,31 +61,12 @@ void GameState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
-	// Create Ball
-	ball = new Ball(m_pSceneMgr, physics);
-	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
-
-
-	// Create Room
-	room = new Room(m_pSceneMgr, physics);
-
-	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
-
-
-
-	// Create Penguin
-	penguin = new Penguin(m_pSceneMgr, physics);
-
-	// Create Goal
-	goal = new Goal(m_pSceneMgr, physics);
-
-	
-	// Create Terrain placeholder
-	terrain = new Terrain(m_pSceneMgr);
-
-
+  	worldObjectFactory = new WorldObjectFactory();
+	ball = new Ball(m_pSceneMgr, physics); 			// Create Ball
+	room = new Room(m_pSceneMgr, physics); 			// Create Room
+	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
+	goal = new Goal(m_pSceneMgr, physics);			// Create Goal
+	terrain = new Terrain(m_pSceneMgr);				// Create Terrain
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
@@ -256,141 +237,6 @@ void GameState::update(double timeSinceLastFrame)
 	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
 }
 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void GameState::startDemo()
-{
-	new OgreFramework();
-	if(!OgreFramework::getSingletonPtr()->initOgre("GameState v1.0", this, 0))
-		return;
- 
-	m_bShutdown = false;
- 
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Demo initialized!");
-
-	setupDemoScene();
-	runDemo();
-}
- 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void GameState::setupDemoScene()
-{
-/*
-
-	// Sets global world conditions
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
-
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
- 
-    	// Create a light
-  	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
-
-	// Create Ball
-	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
-
-
-	// Create Room
-	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
-
-	// Create Penguin
-	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	// Create Goal
-	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	pause_state = false;
-*/
-}
- 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void GameState::runDemo()
-{
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Start main loop...");
- 
-	double timeSinceLastFrame = 0;
-	double startTime = 0;
- 
-    OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
- 
-    OgreFramework::getSingletonPtr()->sounds->playMusic();
-
-	while(!m_bShutdown && !OgreFramework::getSingletonPtr()->isOgreToBeShutDown()) 
-	{
-		if(OgreFramework::getSingletonPtr()->m_pRenderWnd->isClosed())m_bShutdown = true;
- 
-		Ogre::WindowEventUtilities::messagePump();
- 
-		if(OgreFramework::getSingletonPtr()->m_pRenderWnd->isActive())
-		{
-			startTime = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU();
- 
-			OgreFramework::getSingletonPtr()->m_pKeyboard->capture();
-			OgreFramework::getSingletonPtr()->m_pMouse->capture();
- 			
-			if (!pause_state)
-			{
- 				// Our Team's main loop
-
-				ball->update(timeSinceLastFrame);
-				//test_ball->update(timeSinceLastFrame);
-				//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
-
-				for( std::vector<Ball*>::iterator it = ballList.begin(); it != ballList.end(); ++it )
-				{
-					(*it)->update(timeSinceLastFrame);
-				}
-
-
-				penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-				OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-				//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
-	
-				// Handles the event in which the player scores
-
-
-				bool scored = false;
-
-				if(ball->inGoal(goal))
-				{
-					scored = true;
-					ball->reset(physics);
-				}
-
-
-				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-			}
-
-			////////////////////////////////////////////////
-
-			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
- 
-			timeSinceLastFrame = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
-		}
-		else
-		{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-            Sleep(1000);
-#else
-            sleep(1);
-#endif
-		}
-	}
- 
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Main loop quit");
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Shutdown OGRE...");
-}
- 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)

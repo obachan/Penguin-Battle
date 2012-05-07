@@ -10,12 +10,6 @@ WorldObjectAbstract::WorldObjectAbstract(PhysicsWrapper* physics)
 	worldObject_id = worldObject_id_counter;
 	worldObject_id_counter++;
 	std::cout << worldObject_id << std::endl;
-
-	void createSceneNode();
-	void createRigidBody();	
-
-	//if(physics != NULL)
-	//	attachToDynamicWorld(physics);
 }
 
 WorldObjectAbstract::~WorldObjectAbstract()
@@ -60,18 +54,18 @@ int WorldObjectAbstract::getUniqueId()
 
 void WorldObjectAbstract::updateWorldObjectVisual()
 {
-	worldObjectSceneNode->setOrientation(getOrientation());
-	worldObjectSceneNode->setPosition(getPosition());
+	worldObjectSceneNode->setOrientation(getRigidBodyOrientation());
+	worldObjectSceneNode->setPosition(getRigidBodyPosition());
 }
 
-Ogre::Vector3 WorldObjectAbstract::getPosition()
+Ogre::Vector3 WorldObjectAbstract::getRigidBodyPosition()
 {
 	btTransform trans;
     worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
 	return Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
 }
 
-Ogre::Quaternion WorldObjectAbstract::getOrientation()
+Ogre::Quaternion WorldObjectAbstract::getRigidBodyOrientation()
 {
 	btTransform trans;
 	worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
@@ -89,4 +83,32 @@ Ogre::Quaternion WorldObjectAbstract::getOrientation()
 void WorldObjectAbstract::attachToDynamicWorld(PhysicsWrapper* physics)
 {
 	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
+}
+
+// ========================================
+// Abstract methods
+// ========================================
+
+void WorldObjectAbstract::update()
+{
+	std::cout << "WorldObjectAbstract::update()" << std::endl;
+}
+
+void WorldObjectAbstract::initWorldObject(PhysicsWrapper* physics)
+{
+	createSceneNode();
+	createRigidBody();	
+
+	//if(physics != NULL)
+	//	attachToDynamicWorld(physics);
+}
+
+void WorldObjectAbstract::createRigidBody()
+{
+	std::cout << "WorldObjectAbstract::createRigidBody()" << std::endl;
+}
+
+void WorldObjectAbstract::createSceneNode()
+{
+	std::cout << "WorldObjectAbstract::createSceneNode()" << std::endl;
 }

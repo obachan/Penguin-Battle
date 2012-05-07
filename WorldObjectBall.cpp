@@ -8,24 +8,8 @@ Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics,
 	//const double start_pos_x = 0.0f;
 	//const double start_pos_y = -(room_width/2) + ball_radius;
 	//const double start_pos_z = 0.0f;
-	
-	float ball_radius_node_conversion = ball_radius / 1.0f;
 
-	// Convert static scene_node_counter to string
-	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
- 	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
-
-	std::string ball_name = "ball" + scene_node_counter_string;
-	scene_node_counter++;
-
-	//std::cout << "==================" << std::endl;
-	//std::cout << ball_name << std::endl;
-	//std::cout << "==================" << std::endl;
-
-	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius_node_conversion, ball_name);
+	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius);
 	
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
@@ -40,14 +24,14 @@ Ball::~Ball()
 // Class Methods
 // ==========================
 
-void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x, Ogre::Real start_pos_y, Ogre::Real start_pos_z, Ogre::Real rScaleFactor, Ogre::String strObjName)
+void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x, Ogre::Real start_pos_y, Ogre::Real start_pos_z, Ogre::Real rScaleFactor)
 {
 
 	//-------------------- I switched it to a cube so textures would work correctly. The original sphere has bad UV mapping
 	// Physics - Ball
 	//--------------------
 
-	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(start_pos_x, start_pos_y, start_pos_z)));
+	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0)));
 
     btScalar mass = ball_mass;
     btVector3 ballInertia(0,0,0);
@@ -60,26 +44,34 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
     worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
 	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
 
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string scene_node_counter_string;
+ 	std::stringstream out;
+ 	out << scene_node_counter;
+ 	scene_node_counter_string = out.str();
+
+	std::string ball_name = "ball" + scene_node_counter_string;
+	scene_node_counter++;
+
+
 	//--------------------
 	// Visual - Ball
 	//--------------------
 
-	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(start_pos_x, start_pos_y, start_pos_z);
+	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
-	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(strObjName, "sphereCheck.mesh");
-	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(strObjName);
+	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphereCheck.mesh");
+	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(ball_name);
 	worldObjectSceneNode->attachObject(objSphereEntity);
 
 	worldObjectSceneNode->setPosition(v3SpherePosition);
 	worldObjectSceneNode->setScale(v3SphereScaleFactor);
 	objSphereEntity->setMaterialName("Ball/Snow");
 
-}
+	createRigidBody();
 
-void Ball::attachToDynamicWorld(PhysicsWrapper* physics)
-{
-	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
 }
 
 void Ball::update(double timeSinceLastFrame)
@@ -91,7 +83,7 @@ void Ball::update(double timeSinceLastFrame)
 // in the Goal Object which is passed in
 bool Ball::inGoal(Goal* goal)
 {
-	Ogre::Vector3 ball_pos = getPosition();
+	Ogre::Vector3 ball_pos = getRigidBodyPosition();
 
 	Ogre::Vector3 left_goal_pos = goal->goalLeftNode->getPosition();
 	Ogre::Vector3 right_goal_pos = goal->goalRightNode->getPosition();
@@ -143,7 +135,7 @@ void Ball::reset(PhysicsWrapper* physics)
 	worldObjectRigidBody->setMotionState (motionState);
 }
 
-// =========================================
+// ========================================
 // From Parent Class, WorldObjectAbstract
 // ========================================
 
@@ -154,10 +146,10 @@ void Ball::update()
 
 void Ball::createSceneNode()
 {
-
+	std::cout << "Ball::createSceneNode()" << std::endl;
 }
 
 void Ball::createRigidBody()
 {
-
+	std::cout << "Ball::createRigidBody()" << std::endl;
 }

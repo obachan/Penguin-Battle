@@ -82,11 +82,6 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 }
 
-void Penguin::attachToDynamicWorld(PhysicsWrapper* physics)
-{
-	physics->add_object_to_dynamicWorld(worldObjectRigidBody);
-}
-
 void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
 	// We cap the timeSinceLastFrame to avoid
@@ -358,5 +353,5 @@ void Penguin::createSceneNode()
 
 void Penguin::createRigidBody()
 {
-	
+	std::cout << "Penguin::createRigidBody()" << std::endl;
 }

@@ -23,7 +23,8 @@ public:
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
-	void update(); // From abstract class AbstractWorldObject
+	void update(); 			// From abstract class AbstractWorldObject
+	void initWorldObject(); // From abstract class AbstractWorldObject
 
 protected:
 	// ==========================
@@ -34,8 +35,7 @@ protected:
 
 private:
 
-	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::String);
-	void attachToDynamicWorld(PhysicsWrapper*);
+	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real);
 
 	static int 				scene_node_counter;
 };

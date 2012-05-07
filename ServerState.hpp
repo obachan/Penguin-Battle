@@ -8,8 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjects.hpp"
-#include "WorldObjectBall.hpp"
+#include "WorldObjectFactory.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 

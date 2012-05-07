@@ -46,7 +46,6 @@ private:
 	btCollisionShape* 		penguin_collision_shape;
 
 	void createPenguin(Ogre::SceneManager*);
-	void attachToDynamicWorld(PhysicsWrapper*);
 
 	void processController(double, MyController*, Ogre::Vector3*);
 	void handleGravity(double, Ogre::Vector3*);
