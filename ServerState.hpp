@@ -26,8 +26,6 @@ public:
 	bool pause();
 	void resume();
 	void update(double timeSinceLastFrame);
-
-	void startDemo();
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
@@ -52,9 +50,6 @@ public:
 	PhysicsWrapper*	physics;
 	
 private:
-    void setupDemoScene();
-	void runDemo();
-
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  

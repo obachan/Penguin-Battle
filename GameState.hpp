@@ -36,26 +36,26 @@ public:
 
 	WorldObjectFactory* worldObjectFactory;
 
-	Ball*				ball;
-	Room*				room;
-	Paddle*				paddle;
-	Penguin*			penguin;
-	Goal*				goal;
+	Ball*					ball;
+	Room*					room;
+	Paddle*					paddle;
+	Penguin*				penguin;
+	Goal*					goal;
 
-	Terrain*			terrain;
+	Terrain*				terrain;
 
-	std::vector<Ball*> 	ballList;
-
-	bool		pause_state;
+	std::vector<Ball*> 		ballList;
 
 	OgreBites::ParamsPanel* mDetailsPanel;
-	PhysicsWrapper*	physics;
+
+	PhysicsWrapper*			physics;
+	MyController* 			controller;
 	
 private:
-	Ogre::SceneNode*			m_pOgreHeadNode;
-	Ogre::Entity*				m_pOgreHeadEntity;
+	Ogre::SceneNode*		m_pOgreHeadNode;
+	Ogre::Entity*			m_pOgreHeadEntity;
  
-	bool						m_bShutdown;
+	bool					m_bShutdown;
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

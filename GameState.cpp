@@ -19,16 +19,14 @@ GameState::GameState()
  
 GameState::~GameState()
 {
-       delete OgreFramework::getSingletonPtr();
-       delete physics;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 void GameState::enter()
 {
-
 	physics = new PhysicsWrapper();
+	controller = new MyController();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
     OgreFramework::getSingletonPtr()->is_gamestate = true;
@@ -62,6 +60,8 @@ void GameState::enter()
 	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
   	worldObjectFactory = new WorldObjectFactory();
+  	worldObjectFactory->createNewBall();
+
 	ball = new Ball(m_pSceneMgr, physics); 			// Create Ball
 	room = new Room(m_pSceneMgr, physics); 			// Create Room
 	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
@@ -70,9 +70,6 @@ void GameState::enter()
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
-
-	pause_state = false;
-
 
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
@@ -180,7 +177,7 @@ void GameState::update(double timeSinceLastFrame)
 		//test_ball->update(timeSinceLastFrame);
 		//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
 
-		penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
+		penguin->update(timeSinceLastFrame, controller, OgreFramework::getSingletonPtr()->m_pCamera);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
@@ -242,90 +239,66 @@ void GameState::update(double timeSinceLastFrame)
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
- 
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
 
-	//std::cout << controller->left_control_down << std::endl;
+	// Key Presses to Modify Controller
+	if(keyEventRef.key == OIS::KC_LEFT)			controller->left_control_down = true;
+	if(keyEventRef.key == OIS::KC_RIGHT)		controller->right_control_down = true;
+	if(keyEventRef.key == OIS::KC_UP)			controller->forward_control_down = true;
+	if(keyEventRef.key == OIS::KC_DOWN)			controller->backward_control_down = true;
+	if(keyEventRef.key == OIS::KC_P)			controller->up_control_down = true;
+	if(keyEventRef.key == OIS::KC_SEMICOLON)	controller->bottom_control_down = true;
+	if(keyEventRef.key == OIS::KC_SPACE)		controller->jump_control_down = true;
+	if(keyEventRef.key == OIS::KC_Z)			controller->boost_control_down = true;
+	if(keyEventRef.key == OIS::KC_Q)			controller->toggleThirdPersonCamera();
 
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-		controller->left_control_down = true;	
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-		controller->right_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_UP))
-		controller->forward_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-		controller->backward_control_down = true;
+	// Key Presses to Change State
+	if(keyEventRef.key == OIS::KC_P)	        pushAppState(findByName("PauseState"));
+	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
 
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_P))
-		controller->up_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
-		controller->bottom_control_down = true;
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE)){
-		controller->jump_control_down = true;
+	// Key Presses to Activate Sound Effect
+    if(keyEventRef.key == OIS::KC_SPACE){
 		if(!penguin->in_air)
 			OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
 	}
 
-
-	if(keyEventRef.key == OIS::KC_Z){
-		controller->boost_control_down = true;
-	}
-
-	if(keyEventRef.key == OIS::KC_Q)
-	{
-		controller->toggleThirdPersonCamera();
-	}
-
-	if(keyEventRef.key == OIS::KC_P)
-	{
-        pushAppState(findByName("PauseState"));
-	}
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
-    {
-        pushAppState(findByName("PauseState"));
-    }
+	// Key Presses to Debug
+	// if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
+	// 	m_pRenderWnd->writeContentsToTimestampedFile("BOF_Screenshot_", ".png");
+	// if(m_pKeyboard->isKeyDown(OIS::KC_M)) {
+	// 	static int mode = 0;
+	// 	if(mode == 2) {
+	// 		m_pCamera->setPolygonMode(PM_SOLID);
+	// 		mode = 0;
+	// 	} else if(mode == 0) {
+	// 		 m_pCamera->setPolygonMode(PM_WIREFRAME);
+	// 		 mode = 1;
+	// 	} else if(mode == 1) {
+	// 		m_pCamera->setPolygonMode(PM_POINTS);
+	// 		mode = 2;
+	// 	}
+	// }
+	// if(m_pKeyboard->isKeyDown(OIS::KC_O)) {
+	// 	if(m_pTrayMgr->isLogoVisible())	{
+	// 		m_pTrayMgr->hideFrameStats();
+	// 	} else {
+	// 		m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	// 	}
+	// }
 
 	return true;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
-{
-	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
- 
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-
-	if(keyEventRef.key == OIS::KC_LEFT){
-		//std::cout << controller->left_control_down << std::endl;		
-		controller->left_control_down = false;
-	}	
-
-	if(keyEventRef.key == OIS::KC_RIGHT){
-		controller->right_control_down = false;	
-	}	
-
-	if(keyEventRef.key == OIS::KC_UP){
-		controller->forward_control_down = false;	
-	}
-
-	if(keyEventRef.key == OIS::KC_DOWN){
-		controller->backward_control_down = false;	
-	}
-
-	if(keyEventRef.key == OIS::KC_P){
-		controller->up_control_down = false;
-	}
-
-	if(keyEventRef.key == OIS::KC_SEMICOLON){
-		controller->bottom_control_down = false;
-	}
-
-	if(keyEventRef.key == OIS::KC_Z){
-		controller->boost_control_down = false;
-	}
+bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef){
+	// Key Presses to Modify Controller
+	if(keyEventRef.key == OIS::KC_LEFT)			controller->left_control_down = false;
+	if(keyEventRef.key == OIS::KC_RIGHT)		controller->right_control_down = false;	
+	if(keyEventRef.key == OIS::KC_UP)			controller->forward_control_down = false;	
+	if(keyEventRef.key == OIS::KC_DOWN)			controller->backward_control_down = false;	
+	if(keyEventRef.key == OIS::KC_P)			controller->up_control_down = false;
+	if(keyEventRef.key == OIS::KC_SEMICOLON)	controller->bottom_control_down = false;
+	if(keyEventRef.key == OIS::KC_Z)			controller->boost_control_down = false;
 
 	return true;
 }
@@ -334,11 +307,11 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 bool GameState::mouseMoved(const OIS::MouseEvent &evt)
 {
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-	//std::cerr << "mouse moved " << evt.state.X.rel << std::endl;
+	// Controller holds the last mouse position
 	controller->mouse_x_movement = -evt.state.X.rel;
 	controller->mouse_y_movement = -evt.state.Y.rel;
 
+	// If it's in debug mode, allow the mouse to navigate the scene
 	if(!controller->thirdPersonCameraOn()){
 		OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
 		OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));

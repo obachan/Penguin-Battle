@@ -164,8 +164,7 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 	{
 		if(m_pTrayMgr->isLogoVisible())
        		{
-        	    	//m_pTrayMgr->hideLogo();
-        	    	m_pTrayMgr->hideFrameStats();
+        	    m_pTrayMgr->hideFrameStats();
         	}
         	else
         	{
@@ -213,14 +212,6 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 		getCameraInput();
 		moveCamera();
 
-
-/*
-		if (timeSinceLastFrame!=0)
-		{
-	 		physics->stepPhysics(timeSinceLastFrame, 5);
-		
-		}
-*/		
 		m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
 		m_pTrayMgr->adjustTrays();
