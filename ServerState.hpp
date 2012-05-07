@@ -41,10 +41,6 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	//Ball 		*test_ball;
-
-	bool		pause_state;
-
 	OgreBites::ParamsPanel* mDetailsPanel;
 	MyController* controller_two;
 	PhysicsWrapper*	physics;

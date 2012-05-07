@@ -85,8 +85,6 @@ void ServerState::enter()
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
 
-	pause_state = false;
-
 
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);

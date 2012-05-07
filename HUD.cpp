@@ -11,6 +11,12 @@ int HUD::HUD_STATUS_LOSE = 2;
 HUD::HUD()
 {
 	reset();
+	
+	Ogre::StringVector items;
+	items.push_back("Time Left      ");
+    items.push_back("Target Score  ");
+    items.push_back("Score          ");
+    items.push_back("Status         ");
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

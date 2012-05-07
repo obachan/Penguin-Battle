@@ -104,6 +104,8 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
     m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
+
+    // Stuff for the HUD
 	Ogre::StringVector items;
 	items.push_back("Time Left      ");
     items.push_back("Target Score  ");
