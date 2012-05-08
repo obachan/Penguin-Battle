@@ -17,6 +17,8 @@ MyController::MyController()
 
 	mouse_x_movement = 0.0;
 	mouse_y_movement = 0.0;
+
+	third_person_camera = true;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -25,4 +27,12 @@ MyController::~MyController()
 { 
 
 }
- 
+void MyController::toggleThirdPersonCamera()
+{
+	third_person_camera = !third_person_camera;
+}
+
+bool MyController::thirdPersonCameraOn()
+{
+	return third_person_camera;
+}

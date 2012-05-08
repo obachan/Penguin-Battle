@@ -53,17 +53,25 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_Project1_OBJECTS = Project1-Network.$(OBJEXT) \
-	Project1-AppStateManager.$(OBJEXT) \
-	Project1-MenuState.$(OBJEXT) Project1-PauseState.$(OBJEXT) \
+am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
+	Project1-MenuState.$(OBJEXT) \
 	Project1-MultiplayerMenuState.$(OBJEXT) \
 	Project1-ClientMenuState.$(OBJEXT) \
-	Project1-ServerMenuState.$(OBJEXT) Project1-HUD.$(OBJEXT) \
-	Project1-SoundWrapper.$(OBJEXT) Project1-Controller.$(OBJEXT) \
-	Project1-WorldObjects.$(OBJEXT) Project1-Physics.$(OBJEXT) \
-	Project1-OgreFramework.$(OBJEXT) Project1-OgreApp.$(OBJEXT) \
-	Project1-ServerState.$(OBJEXT) Project1-ClientState.$(OBJEXT) \
-	Project1-GameState.$(OBJEXT) Project1-main.$(OBJEXT)
+	Project1-ServerMenuState.$(OBJEXT) \
+	Project1-PauseState.$(OBJEXT) Project1-ServerState.$(OBJEXT) \
+	Project1-ClientState.$(OBJEXT) Project1-GameState.$(OBJEXT) \
+	Project1-Network.$(OBJEXT) Project1-Physics.$(OBJEXT) \
+	Project1-HUD.$(OBJEXT) Project1-SoundWrapper.$(OBJEXT) \
+	Project1-Controller.$(OBJEXT) Project1-OgreFramework.$(OBJEXT) \
+	Project1-WorldObjectAbstract.$(OBJEXT) \
+	Project1-WorldObjectFactory.$(OBJEXT) \
+	Project1-WorldObjectGoal.$(OBJEXT) \
+	Project1-WorldObjectBall.$(OBJEXT) \
+	Project1-WorldObjectPenguin.$(OBJEXT) \
+	Project1-WorldObjectRoom.$(OBJEXT) \
+	Project1-WorldObjectTerrain.$(OBJEXT) \
+	Project1-WorldObjectPaddle.$(OBJEXT) \
+	Project1-OgreApp.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
 Project1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -232,10 +240,16 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_HEADERS = Network.hpp AppState.hpp AppStateManager.hpp MenuState.hpp MultiplayerMenuState.hpp ClientMenuState.hpp ServerMenuState.hpp PauseState.hpp HUD.hpp SoundWrapper.hpp Controller.hpp WorldObjects.hpp Physics.hpp OgreFramework.hpp OgreApp.hpp ServerState.hpp ClientState.hpp GameState.hpp
+#-------------------------------------------
+# noinst_HEADERS: WorldObject classes .hpp
+#-------------------------------------------
+noinst_HEADERS = WorldObjectAbstract.hpp WorldObjectFactory.hpp WorldObjectGoal.hpp WorldObjectBall.hpp WorldObjectPenguin.hpp WorldObjectRoom.hpp WorldObjectTerrain.hpp  WorldObjectPaddle.hpp OgreApp.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
-Project1_SOURCES = Network.cpp AppStateManager.cpp MenuState.cpp PauseState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp HUD.cpp SoundWrapper.cpp Controller.cpp WorldObjects.cpp Physics.cpp OgreFramework.cpp OgreApp.cpp ServerState.cpp ClientState.cpp GameState.cpp main.cpp
-#Project1_SOURCES= Network.cpp test.cpp
+
+#-------------------------------------------
+# Project1_SOURCES: .cpp
+#-------------------------------------------
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp PauseState.cpp ServerState.cpp ClientState.cpp GameState.cpp Network.cpp Physics.cpp HUD.cpp SoundWrapper.cpp Controller.cpp OgreFramework.cpp WorldObjectAbstract.cpp WorldObjectFactory.cpp WorldObjectGoal.cpp WorldObjectBall.cpp WorldObjectPenguin.cpp WorldObjectRoom.cpp WorldObjectTerrain.cpp WorldObjectPaddle.cpp OgreApp.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -365,7 +379,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-ServerMenuState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-ServerState.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-SoundWrapper.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjects.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectAbstract.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectBall.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectFactory.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectGoal.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectPaddle.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectPenguin.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectRoom.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-WorldObjectTerrain.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Project1-main.Po@am__quote@
 
 .cpp.o:
@@ -388,20 +409,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
-
-Project1-Network.o: Network.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Network.o -MD -MP -MF $(DEPDIR)/Project1-Network.Tpo -c -o Project1-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Network.Tpo $(DEPDIR)/Project1-Network.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='Project1-Network.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp
-
-Project1-Network.obj: Network.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Network.obj -MD -MP -MF $(DEPDIR)/Project1-Network.Tpo -c -o Project1-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Network.Tpo $(DEPDIR)/Project1-Network.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='Project1-Network.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`
 
 Project1-AppStateManager.o: AppStateManager.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-AppStateManager.o -MD -MP -MF $(DEPDIR)/Project1-AppStateManager.Tpo -c -o Project1-AppStateManager.o `test -f 'AppStateManager.cpp' || echo '$(srcdir)/'`AppStateManager.cpp
@@ -430,20 +437,6 @@ Project1-MenuState.obj: MenuState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MenuState.cpp' object='Project1-MenuState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-MenuState.obj `if test -f 'MenuState.cpp'; then $(CYGPATH_W) 'MenuState.cpp'; else $(CYGPATH_W) '$(srcdir)/MenuState.cpp'; fi`
-
-Project1-PauseState.o: PauseState.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.o -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PauseState.cpp' object='Project1-PauseState.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
-
-Project1-PauseState.obj: PauseState.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.obj -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PauseState.cpp' object='Project1-PauseState.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
 
 Project1-MultiplayerMenuState.o: MultiplayerMenuState.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-MultiplayerMenuState.o -MD -MP -MF $(DEPDIR)/Project1-MultiplayerMenuState.Tpo -c -o Project1-MultiplayerMenuState.o `test -f 'MultiplayerMenuState.cpp' || echo '$(srcdir)/'`MultiplayerMenuState.cpp
@@ -487,103 +480,19 @@ Project1-ServerMenuState.obj: ServerMenuState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-ServerMenuState.obj `if test -f 'ServerMenuState.cpp'; then $(CYGPATH_W) 'ServerMenuState.cpp'; else $(CYGPATH_W) '$(srcdir)/ServerMenuState.cpp'; fi`
 
-Project1-HUD.o: HUD.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.o -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HUD.cpp' object='Project1-HUD.o' libtool=no @AMDEPBACKSLASH@
+Project1-PauseState.o: PauseState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.o -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PauseState.cpp' object='Project1-PauseState.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.o `test -f 'PauseState.cpp' || echo '$(srcdir)/'`PauseState.cpp
 
-Project1-HUD.obj: HUD.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.obj -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HUD.cpp' object='Project1-HUD.obj' libtool=no @AMDEPBACKSLASH@
+Project1-PauseState.obj: PauseState.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-PauseState.obj -MD -MP -MF $(DEPDIR)/Project1-PauseState.Tpo -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-PauseState.Tpo $(DEPDIR)/Project1-PauseState.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PauseState.cpp' object='Project1-PauseState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
-
-Project1-SoundWrapper.o: SoundWrapper.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.o -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundWrapper.cpp' object='Project1-SoundWrapper.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
-
-Project1-SoundWrapper.obj: SoundWrapper.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.obj -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundWrapper.cpp' object='Project1-SoundWrapper.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
-
-Project1-Controller.o: Controller.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.o -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Controller.cpp' object='Project1-Controller.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
-
-Project1-Controller.obj: Controller.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.obj -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Controller.cpp' object='Project1-Controller.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
-
-Project1-WorldObjects.o: WorldObjects.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjects.Tpo $(DEPDIR)/Project1-WorldObjects.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjects.cpp' object='Project1-WorldObjects.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjects.o `test -f 'WorldObjects.cpp' || echo '$(srcdir)/'`WorldObjects.cpp
-
-Project1-WorldObjects.obj: WorldObjects.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjects.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjects.Tpo -c -o Project1-WorldObjects.obj `if test -f 'WorldObjects.cpp'; then $(CYGPATH_W) 'WorldObjects.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjects.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjects.Tpo $(DEPDIR)/Project1-WorldObjects.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjects.cpp' object='Project1-WorldObjects.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjects.obj `if test -f 'WorldObjects.cpp'; then $(CYGPATH_W) 'WorldObjects.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjects.cpp'; fi`
-
-Project1-Physics.o: Physics.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.o -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Physics.cpp' object='Project1-Physics.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
-
-Project1-Physics.obj: Physics.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.obj -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Physics.cpp' object='Project1-Physics.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
-
-Project1-OgreFramework.o: OgreFramework.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreFramework.o -MD -MP -MF $(DEPDIR)/Project1-OgreFramework.Tpo -c -o Project1-OgreFramework.o `test -f 'OgreFramework.cpp' || echo '$(srcdir)/'`OgreFramework.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreFramework.Tpo $(DEPDIR)/Project1-OgreFramework.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreFramework.cpp' object='Project1-OgreFramework.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreFramework.o `test -f 'OgreFramework.cpp' || echo '$(srcdir)/'`OgreFramework.cpp
-
-Project1-OgreFramework.obj: OgreFramework.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreFramework.obj -MD -MP -MF $(DEPDIR)/Project1-OgreFramework.Tpo -c -o Project1-OgreFramework.obj `if test -f 'OgreFramework.cpp'; then $(CYGPATH_W) 'OgreFramework.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreFramework.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreFramework.Tpo $(DEPDIR)/Project1-OgreFramework.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreFramework.cpp' object='Project1-OgreFramework.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreFramework.obj `if test -f 'OgreFramework.cpp'; then $(CYGPATH_W) 'OgreFramework.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreFramework.cpp'; fi`
-
-Project1-OgreApp.o: OgreApp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.o -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreApp.Tpo $(DEPDIR)/Project1-OgreApp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreApp.cpp' object='Project1-OgreApp.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp
-
-Project1-OgreApp.obj: OgreApp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.obj -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreApp.Tpo $(DEPDIR)/Project1-OgreApp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreApp.cpp' object='Project1-OgreApp.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-PauseState.obj `if test -f 'PauseState.cpp'; then $(CYGPATH_W) 'PauseState.cpp'; else $(CYGPATH_W) '$(srcdir)/PauseState.cpp'; fi`
 
 Project1-ServerState.o: ServerState.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-ServerState.o -MD -MP -MF $(DEPDIR)/Project1-ServerState.Tpo -c -o Project1-ServerState.o `test -f 'ServerState.cpp' || echo '$(srcdir)/'`ServerState.cpp
@@ -626,6 +535,216 @@ Project1-GameState.obj: GameState.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='GameState.cpp' object='Project1-GameState.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-GameState.obj `if test -f 'GameState.cpp'; then $(CYGPATH_W) 'GameState.cpp'; else $(CYGPATH_W) '$(srcdir)/GameState.cpp'; fi`
+
+Project1-Network.o: Network.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Network.o -MD -MP -MF $(DEPDIR)/Project1-Network.Tpo -c -o Project1-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Network.Tpo $(DEPDIR)/Project1-Network.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='Project1-Network.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp
+
+Project1-Network.obj: Network.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Network.obj -MD -MP -MF $(DEPDIR)/Project1-Network.Tpo -c -o Project1-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Network.Tpo $(DEPDIR)/Project1-Network.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='Project1-Network.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`
+
+Project1-Physics.o: Physics.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.o -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Physics.cpp' object='Project1-Physics.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.o `test -f 'Physics.cpp' || echo '$(srcdir)/'`Physics.cpp
+
+Project1-Physics.obj: Physics.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Physics.obj -MD -MP -MF $(DEPDIR)/Project1-Physics.Tpo -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Physics.Tpo $(DEPDIR)/Project1-Physics.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Physics.cpp' object='Project1-Physics.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Physics.obj `if test -f 'Physics.cpp'; then $(CYGPATH_W) 'Physics.cpp'; else $(CYGPATH_W) '$(srcdir)/Physics.cpp'; fi`
+
+Project1-HUD.o: HUD.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.o -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HUD.cpp' object='Project1-HUD.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.o `test -f 'HUD.cpp' || echo '$(srcdir)/'`HUD.cpp
+
+Project1-HUD.obj: HUD.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-HUD.obj -MD -MP -MF $(DEPDIR)/Project1-HUD.Tpo -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-HUD.Tpo $(DEPDIR)/Project1-HUD.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HUD.cpp' object='Project1-HUD.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-HUD.obj `if test -f 'HUD.cpp'; then $(CYGPATH_W) 'HUD.cpp'; else $(CYGPATH_W) '$(srcdir)/HUD.cpp'; fi`
+
+Project1-SoundWrapper.o: SoundWrapper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.o -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundWrapper.cpp' object='Project1-SoundWrapper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.o `test -f 'SoundWrapper.cpp' || echo '$(srcdir)/'`SoundWrapper.cpp
+
+Project1-SoundWrapper.obj: SoundWrapper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-SoundWrapper.obj -MD -MP -MF $(DEPDIR)/Project1-SoundWrapper.Tpo -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-SoundWrapper.Tpo $(DEPDIR)/Project1-SoundWrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundWrapper.cpp' object='Project1-SoundWrapper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-SoundWrapper.obj `if test -f 'SoundWrapper.cpp'; then $(CYGPATH_W) 'SoundWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundWrapper.cpp'; fi`
+
+Project1-Controller.o: Controller.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.o -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Controller.cpp' object='Project1-Controller.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.o `test -f 'Controller.cpp' || echo '$(srcdir)/'`Controller.cpp
+
+Project1-Controller.obj: Controller.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-Controller.obj -MD -MP -MF $(DEPDIR)/Project1-Controller.Tpo -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-Controller.Tpo $(DEPDIR)/Project1-Controller.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Controller.cpp' object='Project1-Controller.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-Controller.obj `if test -f 'Controller.cpp'; then $(CYGPATH_W) 'Controller.cpp'; else $(CYGPATH_W) '$(srcdir)/Controller.cpp'; fi`
+
+Project1-OgreFramework.o: OgreFramework.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreFramework.o -MD -MP -MF $(DEPDIR)/Project1-OgreFramework.Tpo -c -o Project1-OgreFramework.o `test -f 'OgreFramework.cpp' || echo '$(srcdir)/'`OgreFramework.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreFramework.Tpo $(DEPDIR)/Project1-OgreFramework.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreFramework.cpp' object='Project1-OgreFramework.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreFramework.o `test -f 'OgreFramework.cpp' || echo '$(srcdir)/'`OgreFramework.cpp
+
+Project1-OgreFramework.obj: OgreFramework.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreFramework.obj -MD -MP -MF $(DEPDIR)/Project1-OgreFramework.Tpo -c -o Project1-OgreFramework.obj `if test -f 'OgreFramework.cpp'; then $(CYGPATH_W) 'OgreFramework.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreFramework.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreFramework.Tpo $(DEPDIR)/Project1-OgreFramework.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreFramework.cpp' object='Project1-OgreFramework.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreFramework.obj `if test -f 'OgreFramework.cpp'; then $(CYGPATH_W) 'OgreFramework.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreFramework.cpp'; fi`
+
+Project1-WorldObjectAbstract.o: WorldObjectAbstract.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectAbstract.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectAbstract.Tpo -c -o Project1-WorldObjectAbstract.o `test -f 'WorldObjectAbstract.cpp' || echo '$(srcdir)/'`WorldObjectAbstract.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectAbstract.Tpo $(DEPDIR)/Project1-WorldObjectAbstract.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectAbstract.cpp' object='Project1-WorldObjectAbstract.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectAbstract.o `test -f 'WorldObjectAbstract.cpp' || echo '$(srcdir)/'`WorldObjectAbstract.cpp
+
+Project1-WorldObjectAbstract.obj: WorldObjectAbstract.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectAbstract.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectAbstract.Tpo -c -o Project1-WorldObjectAbstract.obj `if test -f 'WorldObjectAbstract.cpp'; then $(CYGPATH_W) 'WorldObjectAbstract.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectAbstract.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectAbstract.Tpo $(DEPDIR)/Project1-WorldObjectAbstract.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectAbstract.cpp' object='Project1-WorldObjectAbstract.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectAbstract.obj `if test -f 'WorldObjectAbstract.cpp'; then $(CYGPATH_W) 'WorldObjectAbstract.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectAbstract.cpp'; fi`
+
+Project1-WorldObjectFactory.o: WorldObjectFactory.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectFactory.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectFactory.Tpo -c -o Project1-WorldObjectFactory.o `test -f 'WorldObjectFactory.cpp' || echo '$(srcdir)/'`WorldObjectFactory.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectFactory.Tpo $(DEPDIR)/Project1-WorldObjectFactory.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectFactory.cpp' object='Project1-WorldObjectFactory.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectFactory.o `test -f 'WorldObjectFactory.cpp' || echo '$(srcdir)/'`WorldObjectFactory.cpp
+
+Project1-WorldObjectFactory.obj: WorldObjectFactory.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectFactory.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectFactory.Tpo -c -o Project1-WorldObjectFactory.obj `if test -f 'WorldObjectFactory.cpp'; then $(CYGPATH_W) 'WorldObjectFactory.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectFactory.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectFactory.Tpo $(DEPDIR)/Project1-WorldObjectFactory.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectFactory.cpp' object='Project1-WorldObjectFactory.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectFactory.obj `if test -f 'WorldObjectFactory.cpp'; then $(CYGPATH_W) 'WorldObjectFactory.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectFactory.cpp'; fi`
+
+Project1-WorldObjectGoal.o: WorldObjectGoal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectGoal.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectGoal.Tpo -c -o Project1-WorldObjectGoal.o `test -f 'WorldObjectGoal.cpp' || echo '$(srcdir)/'`WorldObjectGoal.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectGoal.Tpo $(DEPDIR)/Project1-WorldObjectGoal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectGoal.cpp' object='Project1-WorldObjectGoal.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectGoal.o `test -f 'WorldObjectGoal.cpp' || echo '$(srcdir)/'`WorldObjectGoal.cpp
+
+Project1-WorldObjectGoal.obj: WorldObjectGoal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectGoal.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectGoal.Tpo -c -o Project1-WorldObjectGoal.obj `if test -f 'WorldObjectGoal.cpp'; then $(CYGPATH_W) 'WorldObjectGoal.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectGoal.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectGoal.Tpo $(DEPDIR)/Project1-WorldObjectGoal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectGoal.cpp' object='Project1-WorldObjectGoal.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectGoal.obj `if test -f 'WorldObjectGoal.cpp'; then $(CYGPATH_W) 'WorldObjectGoal.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectGoal.cpp'; fi`
+
+Project1-WorldObjectBall.o: WorldObjectBall.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectBall.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectBall.Tpo -c -o Project1-WorldObjectBall.o `test -f 'WorldObjectBall.cpp' || echo '$(srcdir)/'`WorldObjectBall.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectBall.Tpo $(DEPDIR)/Project1-WorldObjectBall.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectBall.cpp' object='Project1-WorldObjectBall.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectBall.o `test -f 'WorldObjectBall.cpp' || echo '$(srcdir)/'`WorldObjectBall.cpp
+
+Project1-WorldObjectBall.obj: WorldObjectBall.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectBall.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectBall.Tpo -c -o Project1-WorldObjectBall.obj `if test -f 'WorldObjectBall.cpp'; then $(CYGPATH_W) 'WorldObjectBall.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectBall.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectBall.Tpo $(DEPDIR)/Project1-WorldObjectBall.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectBall.cpp' object='Project1-WorldObjectBall.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectBall.obj `if test -f 'WorldObjectBall.cpp'; then $(CYGPATH_W) 'WorldObjectBall.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectBall.cpp'; fi`
+
+Project1-WorldObjectPenguin.o: WorldObjectPenguin.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectPenguin.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectPenguin.Tpo -c -o Project1-WorldObjectPenguin.o `test -f 'WorldObjectPenguin.cpp' || echo '$(srcdir)/'`WorldObjectPenguin.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectPenguin.Tpo $(DEPDIR)/Project1-WorldObjectPenguin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectPenguin.cpp' object='Project1-WorldObjectPenguin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectPenguin.o `test -f 'WorldObjectPenguin.cpp' || echo '$(srcdir)/'`WorldObjectPenguin.cpp
+
+Project1-WorldObjectPenguin.obj: WorldObjectPenguin.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectPenguin.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectPenguin.Tpo -c -o Project1-WorldObjectPenguin.obj `if test -f 'WorldObjectPenguin.cpp'; then $(CYGPATH_W) 'WorldObjectPenguin.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectPenguin.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectPenguin.Tpo $(DEPDIR)/Project1-WorldObjectPenguin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectPenguin.cpp' object='Project1-WorldObjectPenguin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectPenguin.obj `if test -f 'WorldObjectPenguin.cpp'; then $(CYGPATH_W) 'WorldObjectPenguin.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectPenguin.cpp'; fi`
+
+Project1-WorldObjectRoom.o: WorldObjectRoom.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectRoom.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectRoom.Tpo -c -o Project1-WorldObjectRoom.o `test -f 'WorldObjectRoom.cpp' || echo '$(srcdir)/'`WorldObjectRoom.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectRoom.Tpo $(DEPDIR)/Project1-WorldObjectRoom.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectRoom.cpp' object='Project1-WorldObjectRoom.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectRoom.o `test -f 'WorldObjectRoom.cpp' || echo '$(srcdir)/'`WorldObjectRoom.cpp
+
+Project1-WorldObjectRoom.obj: WorldObjectRoom.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectRoom.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectRoom.Tpo -c -o Project1-WorldObjectRoom.obj `if test -f 'WorldObjectRoom.cpp'; then $(CYGPATH_W) 'WorldObjectRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectRoom.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectRoom.Tpo $(DEPDIR)/Project1-WorldObjectRoom.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectRoom.cpp' object='Project1-WorldObjectRoom.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectRoom.obj `if test -f 'WorldObjectRoom.cpp'; then $(CYGPATH_W) 'WorldObjectRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectRoom.cpp'; fi`
+
+Project1-WorldObjectTerrain.o: WorldObjectTerrain.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectTerrain.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectTerrain.Tpo -c -o Project1-WorldObjectTerrain.o `test -f 'WorldObjectTerrain.cpp' || echo '$(srcdir)/'`WorldObjectTerrain.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectTerrain.Tpo $(DEPDIR)/Project1-WorldObjectTerrain.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectTerrain.cpp' object='Project1-WorldObjectTerrain.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectTerrain.o `test -f 'WorldObjectTerrain.cpp' || echo '$(srcdir)/'`WorldObjectTerrain.cpp
+
+Project1-WorldObjectTerrain.obj: WorldObjectTerrain.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectTerrain.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectTerrain.Tpo -c -o Project1-WorldObjectTerrain.obj `if test -f 'WorldObjectTerrain.cpp'; then $(CYGPATH_W) 'WorldObjectTerrain.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectTerrain.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectTerrain.Tpo $(DEPDIR)/Project1-WorldObjectTerrain.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectTerrain.cpp' object='Project1-WorldObjectTerrain.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectTerrain.obj `if test -f 'WorldObjectTerrain.cpp'; then $(CYGPATH_W) 'WorldObjectTerrain.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectTerrain.cpp'; fi`
+
+Project1-WorldObjectPaddle.o: WorldObjectPaddle.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectPaddle.o -MD -MP -MF $(DEPDIR)/Project1-WorldObjectPaddle.Tpo -c -o Project1-WorldObjectPaddle.o `test -f 'WorldObjectPaddle.cpp' || echo '$(srcdir)/'`WorldObjectPaddle.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectPaddle.Tpo $(DEPDIR)/Project1-WorldObjectPaddle.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectPaddle.cpp' object='Project1-WorldObjectPaddle.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectPaddle.o `test -f 'WorldObjectPaddle.cpp' || echo '$(srcdir)/'`WorldObjectPaddle.cpp
+
+Project1-WorldObjectPaddle.obj: WorldObjectPaddle.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-WorldObjectPaddle.obj -MD -MP -MF $(DEPDIR)/Project1-WorldObjectPaddle.Tpo -c -o Project1-WorldObjectPaddle.obj `if test -f 'WorldObjectPaddle.cpp'; then $(CYGPATH_W) 'WorldObjectPaddle.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectPaddle.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-WorldObjectPaddle.Tpo $(DEPDIR)/Project1-WorldObjectPaddle.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='WorldObjectPaddle.cpp' object='Project1-WorldObjectPaddle.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectPaddle.obj `if test -f 'WorldObjectPaddle.cpp'; then $(CYGPATH_W) 'WorldObjectPaddle.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectPaddle.cpp'; fi`
+
+Project1-OgreApp.o: OgreApp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.o -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreApp.Tpo $(DEPDIR)/Project1-OgreApp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreApp.cpp' object='Project1-OgreApp.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp
+
+Project1-OgreApp.obj: OgreApp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.obj -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Project1-OgreApp.Tpo $(DEPDIR)/Project1-OgreApp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OgreApp.cpp' object='Project1-OgreApp.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-OgreApp.obj `if test -f 'OgreApp.cpp'; then $(CYGPATH_W) 'OgreApp.cpp'; else $(CYGPATH_W) '$(srcdir)/OgreApp.cpp'; fi`
 
 Project1-main.o: main.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-main.o -MD -MP -MF $(DEPDIR)/Project1-main.Tpo -c -o Project1-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp

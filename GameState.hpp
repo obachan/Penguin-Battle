@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjects.hpp"
+#include "WorldObjectFactory.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -26,8 +26,6 @@ public:
 	bool pause();
 	void resume();
 	void update(double timeSinceLastFrame);
-
-	void startDemo();
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
@@ -36,31 +34,29 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	Ball 		*ball;
-	Room 		*room;
-	Paddle		*paddle;
-	Penguin		*penguin;
-	Goal		*goal;
+	WorldObjectFactory* worldObjectFactory;
 
-	Terrain		*terrain;
+	Ball*					ball;
+	Room*					room;
+	Paddle*					paddle;
+	Penguin*				penguin;
+	Goal*					goal;
 
-	std::vector<Ball*> ballList;
+	Terrain*				terrain;
 
-	//Ball 		*test_ball;
-
-	bool		pause_state;
+	std::vector<Ball*> 		ballList;
 
 	OgreBites::ParamsPanel* mDetailsPanel;
-	PhysicsWrapper*	physics;
+
+	PhysicsWrapper*			physics;
+	MyController* 			controller;
+	SoundWrapper*			soundFactory;
 	
 private:
-    void setupDemoScene();
-	void runDemo();
-
-	Ogre::SceneNode*			m_pOgreHeadNode;
-	Ogre::Entity*				m_pOgreHeadEntity;
+	Ogre::SceneNode*		m_pOgreHeadNode;
+	Ogre::Entity*			m_pOgreHeadEntity;
  
-	bool						m_bShutdown;
+	bool					m_bShutdown;
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

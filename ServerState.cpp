@@ -85,8 +85,6 @@ void ServerState::enter()
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
 
-	pause_state = false;
-
 
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
@@ -265,7 +263,7 @@ void ServerState::update(double timeSinceLastFrame)
 	       	}
 	    }
 
-		Ogre::Vector3 newballVector = ball->getBallPosition();
+		Ogre::Vector3 newballVector = ball->getVisualPosition();
 		memcpy(buffer, &newballVector[0], 4);
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
@@ -275,13 +273,13 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newballVector[1]);
 		printf("%f\n", newballVector[2]);
 
-		Ogre::Quaternion newballQuaternion = ball->getBallOrientation();
+		Ogre::Quaternion newballQuaternion = ball->getVisualOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
 		memcpy(buffer+20, &newballQuaternion[2], 4);	
 		memcpy(buffer+24, &newballQuaternion[3], 4);
 
-		Ogre::Vector3 newPenguinServerVector = penguin->getPenguinPosition();
+		Ogre::Vector3 newPenguinServerVector = penguin->getVisualPosition();
 		memcpy(buffer+28, &newPenguinServerVector[0], 4);
 
 		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
@@ -297,7 +295,7 @@ void ServerState::update(double timeSinceLastFrame)
 		//printf("Before Quaternion");
 		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
 		
-		Ogre::Quaternion newPenguinServerQuaternion = penguin->getPenguinOrientation();
+		Ogre::Quaternion newPenguinServerQuaternion = penguin->getVisualOrientation();
 		memcpy(buffer+8, &newPenguinServerQuaternion[0], 4);	
 		memcpy(buffer+12, &newPenguinServerQuaternion[1], 4);	
 		memcpy(buffer+16, &newPenguinServerQuaternion[2], 4);	
@@ -306,7 +304,7 @@ void ServerState::update(double timeSinceLastFrame)
 		//printf("After Quaternion");
 		//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
 
-		Ogre::Vector3 newPenguinClientVector = penguin_two->getPenguinPosition();
+		Ogre::Vector3 newPenguinClientVector = penguin_two->getVisualPosition();
 		memcpy(buffer+24, &newPenguinClientVector[0], 4);
 		memcpy(buffer+28, &newPenguinClientVector[1], 4);
 
@@ -319,7 +317,7 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newPenguinServerVector[1]);
 		printf("%f\n", newPenguinServerVector[2]);
 
-		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getPenguinOrientation();
+		Ogre::Quaternion newPenguinClientQuaternion = penguin_two->getVisualOrientation();
 		memcpy(buffer+4, &newPenguinClientQuaternion[0], 4);	
 		memcpy(buffer+8, &newPenguinClientQuaternion[1], 4);	
 		memcpy(buffer+12, &newPenguinClientQuaternion[2], 4);	
@@ -331,143 +329,8 @@ void ServerState::update(double timeSinceLastFrame)
 
 		// TODO - SEND!!!!!!
 		// Send penguins' and ball's position
-
-
-
 }
 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void ServerState::startDemo()
-{
-	new OgreFramework();
-	if(!OgreFramework::getSingletonPtr()->initOgre("ServerState v1.0", this, 0))
-		return;
- 
-	m_bShutdown = false;
- 
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Demo initialized!");
-
-	setupDemoScene();
-	runDemo();
-}
- 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void ServerState::setupDemoScene()
-{
-/*
-
-	// Sets global world conditions
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
-
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
-	OgreFramework::getSingletonPtr()->m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
- 
-    	// Create a light
-  	OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
-
-	// Create Ball
-	ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
-
-
-	// Create Room
-	room = new Room(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
-
-	// Create Penguin
-	penguin = new Penguin(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	// Create Goal
-	goal = new Goal(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics);
-
-	pause_state = false;
-*/
-}
- 
-//|||||||||||||||||||||||||||||||||||||||||||||||
- 
-void ServerState::runDemo()
-{
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Start main loop...");
- 
-	double timeSinceLastFrame = 0;
-	double startTime = 0;
- 
-    OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
- 
-    OgreFramework::getSingletonPtr()->sounds->playMusic();
-
-	while(!m_bShutdown && !OgreFramework::getSingletonPtr()->isOgreToBeShutDown()) 
-	{
-		if(OgreFramework::getSingletonPtr()->m_pRenderWnd->isClosed())m_bShutdown = true;
- 
-		Ogre::WindowEventUtilities::messagePump();
- 
-		if(OgreFramework::getSingletonPtr()->m_pRenderWnd->isActive())
-		{
-			startTime = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU();
- 
-			OgreFramework::getSingletonPtr()->m_pKeyboard->capture();
-			OgreFramework::getSingletonPtr()->m_pMouse->capture();
- 			
-			if (!pause_state)
-			{
- 				// Our Team's main loop
-
-				ball->update(timeSinceLastFrame);
-				//test_ball->update(timeSinceLastFrame);
-				//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
-
-
-
-
-				penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-				OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-				//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
-	
-				// Handles the event in which the player scores
-
-
-				bool scored = false;
-
-				if(ball->inGoal(goal))
-				{
-					scored = true;
-					ball->reset(physics);
-				}
-
-
-				OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-			}
-
-			////////////////////////////////////////////////
-
-			OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();
- 
-			timeSinceLastFrame = OgreFramework::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
-		}
-		else
-		{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-            Sleep(1000);
-#else
-            sleep(1);
-#endif
-		}
-	}
- 
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Main loop quit");
-	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Shutdown OGRE...");
-}
- 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
@@ -478,15 +341,10 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	//std::cout << controller->left_control_down << std::endl;
 
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-		controller->left_control_down = true;	
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-		controller->right_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_UP))
-		controller->forward_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-		controller->backward_control_down = true;
-
+	if(keyEventRef.key == OIS::KC_LEFT)		controller->left_control_down = true;	
+	if(keyEventRef.key == OIS::KC_RIGHT)		controller->right_control_down = true;
+	if(keyEventRef.key == OIS::KC_UP)		controller->forward_control_down = true;
+	if(keyEventRef.key == OIS::KC_DOWN)		controller->backward_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_P))
 		controller->up_control_down = true;
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
@@ -505,14 +363,9 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 	if(keyEventRef.key == OIS::KC_Q)
 	{
-		penguin->toggleThirdPersonCamera();
+		controller->toggleThirdPersonCamera();
 	}
-/*
-	if(keyEventRef.key == OIS::KC_P)
-	{
-		pause_state = !pause_state;
-	}
-*/
+
 	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         pushAppState(findByName("PauseState"));

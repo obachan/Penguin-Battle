@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "GameState.hpp"
+#include "WorldObjectFactory.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -26,8 +26,6 @@ public:
 	bool pause();
 	void resume();
 	void update(double timeSinceLastFrame);
-
-	void startDemo();
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
@@ -43,18 +41,11 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	//Ball 		*test_ball;
-
-	bool		pause_state;
-
 	OgreBites::ParamsPanel* mDetailsPanel;
 	MyController* controller_two;
 	PhysicsWrapper*	physics;
 	
 private:
-    void setupDemoScene();
-	void runDemo();
-
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  

@@ -68,7 +68,6 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*					m_pMouse;
 
-	//PhysicsWrapper*				physics;
 	MyController*				controller;
 	SoundWrapper*				sounds;
 	HUD*						hud;
@@ -78,8 +77,8 @@ public:
 	bool						is_gamestate;
 	bool						m_bShutDownOgre;
 
-	ServerNet *server;
-	ClientNet *client;
+	ServerNet 					*server;
+	ClientNet 					*client;
 	
 private:
 	OgreFramework(const OgreFramework&);
