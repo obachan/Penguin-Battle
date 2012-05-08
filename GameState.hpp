@@ -34,6 +34,10 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
+
+	// ===============================
+	// World Object
+	// ===============================
 	WorldObjectFactory* worldObjectFactory;
 
 	Ball*					ball;
@@ -51,11 +55,9 @@ public:
 	PhysicsWrapper*			physics;
 	MyController* 			controller;
 	SoundWrapper*			soundFactory;
+	HUD*					hud;
 	
-private:
-	Ogre::SceneNode*		m_pOgreHeadNode;
-	Ogre::Entity*			m_pOgreHeadEntity;
- 
+private: 
 	bool					m_bShutdown;
 };
  

@@ -11,8 +11,6 @@ using namespace Ogre;
 
 GameState::GameState()
 {
-	m_pOgreHeadNode			= 0;
-	m_pOgreHeadEntity		= 0;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -25,12 +23,13 @@ GameState::~GameState()
 
 void GameState::enter()
 {
+
 	physics = new PhysicsWrapper();
 	controller = new MyController();
 	soundFactory = new SoundWrapper();
+	hud = new HUD();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
-    OgreFramework::getSingletonPtr()->is_gamestate = true;
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "GameSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
@@ -46,9 +45,8 @@ void GameState::enter()
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
  
 
-	// Sets global world conditions
+	// Sets global world 
 	m_pSceneMgr->setSkyBox(true, "CustomSkyBox");
-
 
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
@@ -56,18 +54,6 @@ void GameState::enter()
 
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
-
-  	worldObjectFactory = new WorldObjectFactory();
-  	worldObjectFactory->createNewBall();
-
-	ball = new Ball(m_pSceneMgr, physics); 			// Create Ball
-	room = new Room(m_pSceneMgr, physics); 			// Create Room
-	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
-	goal = new Goal(m_pSceneMgr, physics);			// Create Goal
-	terrain = new Terrain(m_pSceneMgr, physics);				// Create Terrain
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
@@ -91,14 +77,19 @@ void GameState::enter()
 	mDetailsPanel->show();
 
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
- 
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
-
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
 
     soundFactory->playMusic();
+    
 
-    OgreFramework::getSingletonPtr()->hud->reset();
+    worldObjectFactory = new WorldObjectFactory();	// World Object Factory
+
+    ball = worldObjectFactory->createNewBall(m_pSceneMgr, physics); 			// Create Ball
+	room = new Room(m_pSceneMgr, physics); 			// Create Room
+	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
+	goal = new Goal(m_pSceneMgr, physics);			// Create Goal
+	terrain = new Terrain(m_pSceneMgr, physics);	// Create Terrain
  
 }
 
@@ -122,8 +113,6 @@ void GameState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->clearAllTrays();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
-
-    OgreFramework::getSingletonPtr()->is_gamestate = false;
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -131,7 +120,6 @@ void GameState::exit()
 bool GameState::pause()
 {
 	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Pausing GameState...");
- 
     return true;	
 }
 
@@ -174,9 +162,6 @@ void GameState::update(double timeSinceLastFrame)
 
  		// Our Team's main loop
 		ball->update(timeSinceLastFrame);
-
-		//test_ball->update(timeSinceLastFrame);
-		//test_ball->reset(OgreFramework::getSingletonPtr()->physics);
 
 		penguin->update(timeSinceLastFrame, controller, OgreFramework::getSingletonPtr()->m_pCamera);
 

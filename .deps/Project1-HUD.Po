@@ -600,11 +600,7 @@ Project1-HUD.o: HUD.cpp HUD.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreUTFString.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayElementCommands.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRectangle.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayManager.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlay.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreScriptLoader.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreRoot.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManagerEnumerator.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneQuery.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreAutoParamDataSource.h \
@@ -635,6 +631,7 @@ Project1-HUD.o: HUD.cpp HUD.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderTarget.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreTextureManager.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreResourceManager.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreScriptLoader.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreTimer.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/GLX/OgreTimerImp.h \
@@ -642,11 +639,6 @@ Project1-HUD.o: HUD.cpp HUD.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderTexture.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreFrameListener.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreConfigOptionMap.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategyManager.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategy.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreWorkQueue.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderWindow.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreConfigFile.h \
  /usr/include/OIS/OISEvents.h /usr/include/OIS/OISPrereqs.h \
@@ -677,6 +669,7 @@ Project1-HUD.o: HUD.cpp HUD.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreMeshSerializer.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreMeshSerializerImpl.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreEdgeListBuilder.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlay.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayContainer.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayElement.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayManager.h \
@@ -695,8 +688,13 @@ Project1-HUD.o: HUD.cpp HUD.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderTargetListener.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderWindow.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreResourceBackgroundQueue.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreWorkQueue.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRibbonTrail.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreRoot.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManagerEnumerator.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategyManager.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategy.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreSkeletonManager.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreSkeletonSerializer.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreStaticGeometry.h \
@@ -2134,15 +2132,7 @@ HUD.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreRectangle.h:
 
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayManager.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlay.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreScriptLoader.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreRoot.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManagerEnumerator.h:
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h:
 
@@ -2204,6 +2194,8 @@ HUD.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreResourceManager.h:
 
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreScriptLoader.h:
+
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreTimer.h:
@@ -2217,16 +2209,6 @@ HUD.hpp:
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreFrameListener.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreConfigOptionMap.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategyManager.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategy.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreWorkQueue.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreViewport.h:
-
-/lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreRenderWindow.h:
 
@@ -2298,6 +2280,8 @@ HUD.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreEdgeListBuilder.h:
 
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlay.h:
+
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayContainer.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreOverlayElement.h:
@@ -2334,9 +2318,19 @@ HUD.hpp:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreResourceBackgroundQueue.h:
 
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreWorkQueue.h:
+
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreRibbonTrail.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreRoot.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManagerEnumerator.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreSceneManager.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategyManager.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreLodStrategy.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreSkeletonManager.h:
 
