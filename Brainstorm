@@ -1,0 +1,46 @@
+ServerSide
+enter
+{
+	//Assign each client an ID  ALREADY DONE
+	//Send ID to each client  ALREADY DONE
+	Send total number of players to client
+}
+update
+{
+	For (number of clients)
+		Receive each client's controller
+	//CODE
+	Broadcast how many messages follow
+	For (number of messages)
+		Send ID, pos, quat of each entity
+}
+
+
+
+ClientSide
+enter
+{
+	Receive ID from Server ALREADY DONE
+	Assign that ID to Player ALREADY DONE
+	Receive total number of players
+	For (number of players)
+		Create penguin
+}
+update
+{
+	Receive Number of Messages
+	For (number of messages)
+	{
+		Receive
+		Check ID
+		Update accordingly
+	}
+	//CODE
+	Send Controller information
+}
+
+
+
+Types of Objects
+Penguins
+Balls

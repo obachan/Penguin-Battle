@@ -45,8 +45,9 @@ void GameState::enter()
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
  
 
-	// Sets global world conditions
-	m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
+	// Sets global world 
+	m_pSceneMgr->setSkyBox(true, "CustomSkyBox");
+
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
@@ -311,7 +312,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 	switch (id)
 	{
 	case OIS::MB_Left:
-	//	fireSnowBall();
+		//ball->reset(physics);
 	   break;
 
 	case OIS::MB_Right:
