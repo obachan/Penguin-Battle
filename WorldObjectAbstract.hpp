@@ -74,9 +74,9 @@ const float paddle_length = 10.0f;
 class WorldObjectAbstract {
 public:
 
-	WorldObjectAbstract(PhysicsWrapper* physics);
+	WorldObjectAbstract();
 	~WorldObjectAbstract();
-	void initWorldObject(PhysicsWrapper* physics);
+	void initWorldObject(Ogre::SceneManager*, PhysicsWrapper*);
 
 
 	void updateAsClient(Ogre::Vector3);
@@ -84,19 +84,19 @@ public:
    	Ogre::Vector3 getVisualPosition(); 			// Client Safe		
 	Ogre::Quaternion getVisualOrientation(); 	// Client Safe
 
-
 	int getUniqueId();
-
 
 	virtual void update() = 0;
 
 protected:
+	void resetPosition(Ogre::Vector3);			// Resets the location to the passed in parameter, and velocity is 0
+
 	void updateWorldObjectVisual();				// Syncs visuals with Physics
 	Ogre::Vector3 getRigidBodyPosition(); 		// Only server objects can call this method
 	Ogre::Quaternion getRigidBodyOrientation();	// Only server objects can call this method
 
-	virtual void createSceneNode() = 0;			// These calls are made in the WorldObjectAbstract
-	virtual void createRigidBody() = 0;			// Following protocol will simply our lives.
+	virtual void createRigidBody(PhysicsWrapper*) = 0;			// Following protocol will simply our lives.
+	virtual void createSceneNode(Ogre::SceneManager*) = 0;		// These calls are made in the WorldObjectAbstract
 
 	Ogre::SceneNode* 	worldObjectSceneNode;
 	btRigidBody* 		worldObjectRigidBody;

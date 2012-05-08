@@ -39,8 +39,8 @@ protected:
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
-	void createSceneNode();
-	void createRigidBody();	
+	void createSceneNode(Ogre::SceneManager*);
+	void createRigidBody(PhysicsWrapper*);	
 
 private:
 	btCollisionShape* 		penguin_collision_shape;

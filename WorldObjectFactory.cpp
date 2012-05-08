@@ -2,9 +2,40 @@
 
 #include <iostream>
 
-
-
-Ball* WorldObjectFactory::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+WorldObjectFactory::WorldObjectFactory(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics)
 {
-	return new Ball(m_pSceneMgr, physics);
+	mSceneMgr = sceneMgr;
+	mPhysics = physics;
+}
+
+WorldObjectFactory::~WorldObjectFactory()
+{
+
+}
+
+Ball* WorldObjectFactory::createNewBall()
+{
+	Ball::createNewBall(mSceneMgr, mPhysics);
+	return new Ball(mSceneMgr, mPhysics);
+}
+
+Room* WorldObjectFactory::createNewRoom()
+{
+	return new Room(mSceneMgr, mPhysics);
+}
+
+Penguin* WorldObjectFactory::createNewPenguin()
+{
+	return new Penguin(mSceneMgr, mPhysics);
+}
+
+
+Goal* WorldObjectFactory::createNewGoal()
+{
+	return new Goal(mSceneMgr, mPhysics);
+}
+
+Terrain* WorldObjectFactory::createNewTerrain()
+{
+	return new Terrain(mSceneMgr, mPhysics);
 }

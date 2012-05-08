@@ -58,6 +58,7 @@ public:
  
 	Ogre::Root*					m_pRoot;
 	Ogre::SceneManager*			m_pSceneMgr;
+	
 	Ogre::RenderWindow*			m_pRenderWnd;
 	Ogre::Camera*				m_pCamera;
 	Ogre::Viewport*				m_pViewport;

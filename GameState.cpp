@@ -82,13 +82,13 @@ void GameState::enter()
     soundFactory->playMusic();
     
 
-    worldObjectFactory = new WorldObjectFactory();	// World Object Factory
+    worldObjectFactory = new WorldObjectFactory(m_pSceneMgr, physics);	// World Object Factory
 
-    ball = worldObjectFactory->createNewBall(m_pSceneMgr, physics); 			// Create Ball
-	room = new Room(m_pSceneMgr, physics); 			// Create Room
-	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
-	goal = new Goal(m_pSceneMgr, physics);			// Create Goal
-	terrain = new Terrain(m_pSceneMgr, physics);	// Create Terrain
+    ball = worldObjectFactory->createNewBall(); 		// Create Ball
+	room = worldObjectFactory->createNewRoom(); 		// Create Room
+	penguin =  worldObjectFactory->createNewPenguin(); 	// Create Penguin
+	goal = worldObjectFactory->createNewGoal(); 		// Create Goal
+	terrain = worldObjectFactory->createNewTerrain(); 	// Create Terrain
  
 }
 
