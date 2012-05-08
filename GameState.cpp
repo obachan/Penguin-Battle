@@ -67,7 +67,7 @@ void GameState::enter()
 	room = new Room(m_pSceneMgr, physics); 			// Create Room
 	penguin = new Penguin(m_pSceneMgr, physics); 	// Create Penguin
 	goal = new Goal(m_pSceneMgr, physics);			// Create Goal
-	terrain = new Terrain(m_pSceneMgr);				// Create Terrain
+	terrain = new Terrain(m_pSceneMgr, physics);				// Create Terrain
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;

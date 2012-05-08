@@ -888,7 +888,8 @@ Project1-WorldObjectTerrain.o: WorldObjectTerrain.cpp \
  usr/include/SDL_net/SDL_net.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
 
 WorldObjectTerrain.hpp:
 
@@ -2907,3 +2908,5 @@ usr/include/SDL_net/SDL_net.h:
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
+
+/usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:
