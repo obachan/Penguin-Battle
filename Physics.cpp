@@ -43,6 +43,7 @@ void PhysicsWrapper::remove_object_from_dynamicWorld(btRigidBody* rigid_body){
 void PhysicsWrapper::stepPhysics(int timestep, int maxsubsteps)
 {
 	dynamicsWorld->stepSimulation(timestep, maxsubsteps);
+	
 }
 
 

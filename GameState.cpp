@@ -47,7 +47,7 @@ void GameState::enter()
  
 
 	// Sets global world conditions
-	m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
+	m_pSceneMgr->setSkyBox(true, "CustomSkyBox");
 
 
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
@@ -327,7 +327,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 	switch (id)
 	{
 	case OIS::MB_Left:
-	//	fireSnowBall();
+		//ball->reset(physics);
 	   break;
 
 	case OIS::MB_Right:

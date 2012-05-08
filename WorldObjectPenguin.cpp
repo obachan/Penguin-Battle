@@ -231,10 +231,10 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	// Space on the keyboard will cause the penguin to jump
 	if(controller->jump_control_down == true){
 		controller->jump_control_down = false;
-		if(!in_air){
+		//if(!in_air){
 			in_air = true;
 			penguin_velocity[1] = jump_vel;
-		}
+		//}
 	}
 
 
