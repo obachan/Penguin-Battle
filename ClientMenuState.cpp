@@ -19,6 +19,7 @@ ClientMenuState::ClientMenuState()
     ip_text[0] = '\0';
     isPort = false;
     isIP = false;
+    isWaiting = false;
     m_FrameEvent    = Ogre::FrameEvent();
 }
  
@@ -208,12 +209,34 @@ void ClientMenuState::update(double timeSinceLastFrame)
         shutdown();
         return;
     }
-    else
+    else if(!isWaiting)
     {
 	portNumberTextBox->setText(portNumber_text);
 	ipAddressTextBox->setText(ip_text);
     }
+    else
+    {
+	char buffer[1024];
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	char start[] = "start";
+	if(strcmp(buffer, start) == 0)
+	{
+		changeAppState(findByName("ClientState"));
+	}
+    }
+}
 
+void ClientMenuState::connectMenu()
+{
+	OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyWidget("PortBtn");
+	OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyWidget("ConnectBtn");
+	OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyWidget("ServerIPBtn");
+	message = OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_CENTER, "IPLbl", "Waiting for Server to Start Game", 350);
+	char buffer[1024];
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	int clientID;
+	memcpy(&clientID, buffer, sizeof(int));
+	OgreFramework::getSingletonPtr()->client->SetID(clientID);
 }
 
 void ClientMenuState::buttonHit(OgreBites::Button *button)
@@ -232,7 +255,8 @@ void ClientMenuState::buttonHit(OgreBites::Button *button)
     }
     else if(button->getName() == "ConnectBtn")
     {
-	OgreFramework::getSingletonPtr()->client = new ClientNet(strtol(portNumber_text, NULL, 0), ip_text);	
-	changeAppState(findByName("ClientState"));
+	isWaiting = true;
+	OgreFramework::getSingletonPtr()->client = new ClientNet(strtol(portNumber_text, NULL, 0), ip_text);
+	connectMenu();
     }
 }

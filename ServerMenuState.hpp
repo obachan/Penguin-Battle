@@ -40,6 +40,7 @@ private:
 	void appendLetter(char);
 	void deleteLetter();
 	void connectMenu();
+	int totalNumberOfPlayers;
 	OgreBites::TextBox *portNumberTextBox;
 	OgreBites::Label *ip;
 };

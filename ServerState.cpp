@@ -190,7 +190,7 @@ void ServerState::update(double timeSinceLastFrame)
 		// update player two's controller
 
 		
-		OgreFramework::getSingletonPtr()->server->ReceiveMessage(recvbuffer);
+		OgreFramework::getSingletonPtr()->server->ReceiveMessage(recvbuffer, 0);
 
 		controller_two->left_control_down = (recvbuffer[0] == '1') ? true : false;
 		controller_two->right_control_down = (recvbuffer[1] == '1') ? true : false;
@@ -282,7 +282,7 @@ void ServerState::update(double timeSinceLastFrame)
 		Ogre::Vector3 newPenguinServerVector = penguin->getVisualPosition();
 		memcpy(buffer+28, &newPenguinServerVector[0], 4);
 
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
 		memcpy(buffer, &newPenguinServerVector[1], 4);
 		memcpy(buffer+4, &newPenguinServerVector[2], 4);
@@ -308,7 +308,7 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+24, &newPenguinClientVector[0], 4);
 		memcpy(buffer+28, &newPenguinClientVector[1], 4);
 
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
 		memcpy(buffer, &newPenguinClientVector[2], 4);
 		
@@ -324,7 +324,7 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+16, &newPenguinClientQuaternion[3], 4);
 
 		
-		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32);
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
 
 		// TODO - SEND!!!!!!

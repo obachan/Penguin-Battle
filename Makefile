@@ -109,21 +109,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-<<<<<<< HEAD
 ACLOCAL = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run aclocal-1.11
 AMTAR = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run tar
 AR = ar
 AUTOCONF = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run autoconf
 AUTOHEADER = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run autoheader
 AUTOMAKE = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run automake-1.11
-=======
-ACLOCAL = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run aclocal-1.11
-AMTAR = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run tar
-AR = ar
-AUTOCONF = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoconf
-AUTOHEADER = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run autoheader
-AUTOMAKE = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run automake-1.11
->>>>>>> 67cf175f15b3fd94b81d41b0bb66f8d2090b7d1e
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -161,11 +152,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-<<<<<<< HEAD
 MAKEINFO = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/missing --run makeinfo
-=======
-MAKEINFO = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/missing --run makeinfo
->>>>>>> 67cf175f15b3fd94b81d41b0bb66f8d2090b7d1e
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -196,17 +183,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-<<<<<<< HEAD
 abs_builddir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
 abs_srcdir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
 abs_top_builddir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
 abs_top_srcdir = /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2
-=======
-abs_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_builddir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
-abs_top_srcdir = /v/filer4b/v38q001/xty56/Desktop/Assignment-2
->>>>>>> 67cf175f15b3fd94b81d41b0bb66f8d2090b7d1e
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -237,11 +217,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-<<<<<<< HEAD
 install_sh = ${SHELL} /v/filer4b/v38q001/ruoyi/GameTech/Assignment-2/install-sh
-=======
-install_sh = ${SHELL} /v/filer4b/v38q001/xty56/Desktop/Assignment-2/install-sh
->>>>>>> 67cf175f15b3fd94b81d41b0bb66f8d2090b7d1e
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
