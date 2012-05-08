@@ -26,6 +26,8 @@ public:
 	void update(); 			// From abstract class AbstractWorldObject
 	void initWorldObject(); // From abstract class AbstractWorldObject
 
+	//static createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
+
 protected:
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
