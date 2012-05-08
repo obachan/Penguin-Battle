@@ -12,6 +12,7 @@
 *.a
 
 # Extra Files
+Project1
 libtool
 *.log
 

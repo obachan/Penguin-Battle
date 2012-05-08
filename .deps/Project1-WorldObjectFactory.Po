@@ -890,7 +890,8 @@ Project1-WorldObjectFactory.o: WorldObjectFactory.cpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
  WorldObjectGoal.hpp WorldObjectPenguin.hpp WorldObjectRoom.hpp \
- WorldObjectPaddle.hpp WorldObjectTerrain.hpp
+ WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
 
 WorldObjectFactory.hpp:
 
@@ -2921,3 +2922,5 @@ WorldObjectRoom.hpp:
 WorldObjectPaddle.hpp:
 
 WorldObjectTerrain.hpp:
+
+/usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:
