@@ -50,17 +50,11 @@ Project1-Network.o: Network.cpp Network.hpp usr/include/SDL_net/SDL_net.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h \
- /usr/include/c++/4.4/iostream \
+ /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/ostream /usr/include/c++/4.4/ios \
- /usr/include/c++/4.4/iosfwd /usr/include/c++/4.4/bits/stringfwd.h \
- /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
- /usr/include/c++/4.4/cstddef /usr/include/bits/wchar2.h \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/char_traits.h \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/bits/functexcept.h \
+ /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
  /usr/include/c++/4.4/exception_defines.h \
  /usr/include/c++/4.4/bits/cpp_type_traits.h \
  /usr/include/c++/4.4/ext/type_traits.h \
@@ -70,7 +64,20 @@ Project1-Network.o: Network.cpp Network.hpp usr/include/SDL_net/SDL_net.h \
  /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
  /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/localefwd.h \
+ /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
+ /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
+ /usr/include/c++/4.4/bits/stl_uninitialized.h \
+ /usr/include/c++/4.4/bits/stl_vector.h \
+ /usr/include/c++/4.4/initializer_list \
+ /usr/include/c++/4.4/bits/stl_bvector.h \
+ /usr/include/c++/4.4/bits/vector.tcc /usr/include/c++/4.4/iostream \
+ /usr/include/c++/4.4/ostream /usr/include/c++/4.4/ios \
+ /usr/include/c++/4.4/iosfwd /usr/include/c++/4.4/bits/stringfwd.h \
+ /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
+ /usr/include/bits/wchar2.h /usr/include/c++/4.4/bits/char_traits.h \
+ /usr/include/c++/4.4/bits/localefwd.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++locale.h \
  /usr/include/c++/4.4/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/4.4/cctype \
@@ -85,15 +92,11 @@ Project1-Network.o: Network.cpp Network.hpp usr/include/SDL_net/SDL_net.h \
  /usr/include/bits/unistd.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/atomic_word.h \
  /usr/include/c++/4.4/bits/locale_classes.h /usr/include/c++/4.4/string \
- /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
  /usr/include/c++/4.4/bits/ostream_insert.h \
  /usr/include/c++/4.4/cxxabi-forced.h \
  /usr/include/c++/4.4/bits/stl_function.h \
  /usr/include/c++/4.4/backward/binders.h \
  /usr/include/c++/4.4/bits/basic_string.h \
- /usr/include/c++/4.4/initializer_list \
  /usr/include/c++/4.4/bits/basic_string.tcc \
  /usr/include/c++/4.4/bits/locale_classes.tcc \
  /usr/include/c++/4.4/streambuf /usr/include/c++/4.4/bits/streambuf.tcc \
@@ -258,7 +261,9 @@ usr/include/SDL_net/SDL_net.h:
 
 /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h:
 
-/usr/include/c++/4.4/iostream:
+/usr/include/c++/4.4/vector:
+
+/usr/include/c++/4.4/bits/stl_algobase.h:
 
 /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h:
 
@@ -266,27 +271,7 @@ usr/include/SDL_net/SDL_net.h:
 
 /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h:
 
-/usr/include/c++/4.4/ostream:
-
-/usr/include/c++/4.4/ios:
-
-/usr/include/c++/4.4/iosfwd:
-
-/usr/include/c++/4.4/bits/stringfwd.h:
-
-/usr/include/c++/4.4/bits/postypes.h:
-
-/usr/include/c++/4.4/cwchar:
-
 /usr/include/c++/4.4/cstddef:
-
-/usr/include/bits/wchar2.h:
-
-/usr/include/c++/4.4/exception:
-
-/usr/include/c++/4.4/bits/char_traits.h:
-
-/usr/include/c++/4.4/bits/stl_algobase.h:
 
 /usr/include/c++/4.4/bits/functexcept.h:
 
@@ -311,6 +296,46 @@ usr/include/SDL_net/SDL_net.h:
 /usr/include/c++/4.4/bits/stl_iterator.h:
 
 /usr/include/c++/4.4/debug/debug.h:
+
+/usr/include/c++/4.4/bits/allocator.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h:
+
+/usr/include/c++/4.4/ext/new_allocator.h:
+
+/usr/include/c++/4.4/new:
+
+/usr/include/c++/4.4/exception:
+
+/usr/include/c++/4.4/bits/stl_construct.h:
+
+/usr/include/c++/4.4/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.4/bits/stl_vector.h:
+
+/usr/include/c++/4.4/initializer_list:
+
+/usr/include/c++/4.4/bits/stl_bvector.h:
+
+/usr/include/c++/4.4/bits/vector.tcc:
+
+/usr/include/c++/4.4/iostream:
+
+/usr/include/c++/4.4/ostream:
+
+/usr/include/c++/4.4/ios:
+
+/usr/include/c++/4.4/iosfwd:
+
+/usr/include/c++/4.4/bits/stringfwd.h:
+
+/usr/include/c++/4.4/bits/postypes.h:
+
+/usr/include/c++/4.4/cwchar:
+
+/usr/include/bits/wchar2.h:
+
+/usr/include/c++/4.4/bits/char_traits.h:
 
 /usr/include/c++/4.4/bits/localefwd.h:
 
@@ -360,14 +385,6 @@ usr/include/SDL_net/SDL_net.h:
 
 /usr/include/c++/4.4/string:
 
-/usr/include/c++/4.4/bits/allocator.h:
-
-/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h:
-
-/usr/include/c++/4.4/ext/new_allocator.h:
-
-/usr/include/c++/4.4/new:
-
 /usr/include/c++/4.4/bits/ostream_insert.h:
 
 /usr/include/c++/4.4/cxxabi-forced.h:
@@ -377,8 +394,6 @@ usr/include/SDL_net/SDL_net.h:
 /usr/include/c++/4.4/backward/binders.h:
 
 /usr/include/c++/4.4/bits/basic_string.h:
-
-/usr/include/c++/4.4/initializer_list:
 
 /usr/include/c++/4.4/bits/basic_string.tcc:
 

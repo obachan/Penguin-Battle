@@ -13,6 +13,7 @@
 class Ball : public WorldObjectAbstract
 {
 public:
+	Ball();
 	Ball(Ogre::SceneManager*, PhysicsWrapper*, double start_pos_x = 0.0f, double start_pos_y = -(room_width/2) + ball_radius, double start_pos_z = 0.0f);
 	~Ball();
 
@@ -24,16 +25,15 @@ public:
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
 	void update(); 			// From abstract class AbstractWorldObject
-	void initWorldObject(); // From abstract class AbstractWorldObject
 
-	//static createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
+	static void createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
 
 protected:
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
-	void createSceneNode();
-	void createRigidBody();	
+	void createSceneNode(Ogre::SceneManager*);
+	void createRigidBody(PhysicsWrapper*);	
 
 private:
 

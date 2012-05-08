@@ -2,8 +2,12 @@
 
 int Ball::scene_node_counter = 0;
 
+Ball::Ball() : WorldObjectAbstract()
+{
+}
+
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
-	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract(physics)
+	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
 {
 	//const double start_pos_x = 0.0f;
 	//const double start_pos_y = -(room_width/2) + ball_radius;
@@ -69,8 +73,6 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	worldObjectSceneNode->setPosition(v3SpherePosition);
 	worldObjectSceneNode->setScale(v3SphereScaleFactor);
 	objSphereEntity->setMaterialName("Ball/Snow");
-
-	createRigidBody();
 
 }
 
@@ -144,12 +146,71 @@ void Ball::update()
 
 }
 
-void Ball::createSceneNode()
-{
-	std::cout << "Ball::createSceneNode()" << std::endl;
-}
-
-void Ball::createRigidBody()
+void Ball::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "Ball::createRigidBody()" << std::endl;
+
+	//-------------------- I switched it to a cube so textures would work correctly. The original sphere has bad UV mapping
+	// Physics - Ball
+	//--------------------
+
+	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0)));
+
+    btScalar mass = ball_mass;
+    btVector3 ballInertia(0,0,0);
+
+	btCollisionShape* ball_collision_shape = new btSphereShape(ball_radius);
+    ball_collision_shape->calculateLocalInertia(mass,ballInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
+	worldObjectRigidBodyCI.m_restitution = 0.765f;
+    worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
+	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
+}
+
+void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
+{
+	std::cout << "Ball::createSceneNode()" << std::endl;
+
+
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string scene_node_counter_string;
+ 	std::stringstream out;
+ 	out << scene_node_counter;
+ 	scene_node_counter_string = out.str();
+
+	std::string ball_name = "ball" + scene_node_counter_string;
+	scene_node_counter++;
+
+	//--------------------
+	// Visual - Ball
+	//--------------------
+
+	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
+	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(ball_radius, ball_radius, ball_radius);
+
+	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphereCheck.mesh");
+	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(ball_name);
+	worldObjectSceneNode->attachObject(objSphereEntity);
+
+	worldObjectSceneNode->setPosition(v3SpherePosition);
+	worldObjectSceneNode->setScale(v3SphereScaleFactor);
+	objSphereEntity->setMaterialName("Ball/Snow");
+
+}
+
+
+// ========================================
+// Static Classes
+// ========================================
+
+void Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+{
+
+	Ball* ball = new Ball();
+	ball->initWorldObject(m_pSceneMgr, physics);
+	ball->resetPosition(Ogre::Vector3(0, 0, 0));
+
+	std::cout << "WorldObjectBall::createNewBall()" << std::endl;
 }

@@ -21,6 +21,7 @@ ServerMenuState::ServerMenuState()
     portstringLength    = 0;
     portNumber_text[0] = '\0';
     isPort = true;
+    totalNumberOfPlayers = 0;
     m_FrameEvent    = Ogre::FrameEvent();
 }
  
@@ -195,9 +196,14 @@ void ServerMenuState::update(double timeSinceLastFrame)
     {
 	if(OgreFramework::getSingletonPtr()->server->WaitConnection())
 	{
-		std::cout << "Connected\n\n" << std::endl;
-		changeAppState(findByName("ServerState"));
+		std::cout << "Connected to Client Number " << totalNumberOfPlayers << "\n\n" << std::endl;
+		char buffer[sizeof(int)];
+		memcpy(buffer, &totalNumberOfPlayers, sizeof(int));
+		OgreFramework::getSingletonPtr()->server->SendMessage(buffer, sizeof(int), totalNumberOfPlayers);
+		totalNumberOfPlayers++;
 	}
+	char blankMessage[2] = "0";
+	OgreFramework::getSingletonPtr()->server->Broadcast(blankMessage, 2);
     }
 }
 
@@ -208,7 +214,8 @@ void ServerMenuState::connectMenu()
 	char buff[1024];
 	if(gethostname(buff, 1024)==0)
 	{
-		ip = OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_CENTER, "IPLbl", "Server IP Address is: " + std::string(inet_ntoa(*((struct in_addr *)( struct hostent * )gethostbyname(buff)->h_addr))) + "\n Waiting for Client to connect", 350);
+		ip = OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_CENTER, "IPLbl", "Server IP Address is: " + std::string(inet_ntoa(*((struct in_addr *)( struct hostent * )gethostbyname(buff)->h_addr))), 350);
+		OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "StartBtn", "Start Game", 250);
 
 	}
 	else
@@ -224,5 +231,11 @@ void ServerMenuState::buttonHit(OgreBites::Button *button)
 	OgreFramework::getSingletonPtr()->server = new ServerNet(strtol(portNumber_text, NULL, 0));
 	connectMenu();
 	isPort = false;
+    }
+    else if(button->getName() == "StartBtn")
+    {
+	char buffer[] = "start";
+	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 6);
+	changeAppState(findByName("ServerState"));
     }
 }

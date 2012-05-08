@@ -268,7 +268,7 @@ void ClientState::update(double timeSinceLastFrame)
 
 		//penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
-		//penguin->updateCamera(OgreFramework::getSingletonPtr()->m_pCamera);
+		penguin->updateCamera(OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
 		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 

@@ -4,7 +4,7 @@
 
 int WorldObjectAbstract::worldObject_id_counter = 0;
 
-WorldObjectAbstract::WorldObjectAbstract(PhysicsWrapper* physics)
+WorldObjectAbstract::WorldObjectAbstract()
 {
 	// This gives every new WorldObjectAbstract a new ID
 	worldObject_id = worldObject_id_counter;
@@ -49,8 +49,13 @@ int WorldObjectAbstract::getUniqueId()
 }
 
 // ======================
-// Protect Methods
+// Protected Methods
 // ======================
+
+void WorldObjectAbstract::resetPosition(Ogre::Vector3 new_pos)
+{
+	std::cout << "WorldObjectAbstract::resetPosition()" << std::cout;
+}
 
 void WorldObjectAbstract::updateWorldObjectVisual()
 {
@@ -94,21 +99,21 @@ void WorldObjectAbstract::update()
 	std::cout << "WorldObjectAbstract::update()" << std::endl;
 }
 
-void WorldObjectAbstract::initWorldObject(PhysicsWrapper* physics)
+void WorldObjectAbstract::initWorldObject(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-	createSceneNode();
-	createRigidBody();	
+	createRigidBody(physics);	
+	createSceneNode(m_pSceneMgr);
 
-	//if(physics != NULL)
-	//	attachToDynamicWorld(physics);
+	if(physics != NULL)
+		attachToDynamicWorld(physics);
 }
 
-void WorldObjectAbstract::createRigidBody()
+void WorldObjectAbstract::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "WorldObjectAbstract::createRigidBody()" << std::endl;
 }
 
-void WorldObjectAbstract::createSceneNode()
+void WorldObjectAbstract::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
 	std::cout << "WorldObjectAbstract::createSceneNode()" << std::endl;
 }

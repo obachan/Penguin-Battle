@@ -37,7 +37,10 @@ ServerNet::ServerNet(Uint16 port)
 
 ServerNet::~ServerNet()
 {
-	SDLNet_TCP_Close(client);
+	for (int i = 0; i < clients.size(); i++)
+	{
+		SDLNet_TCP_Close(clients[i]);
+	}
 	SDLNet_TCP_Close(server);
 	SDLNet_Quit();
 }
@@ -47,16 +50,20 @@ bool ServerNet::WaitConnection()
 	//int quit = 0;
 	//while(!quit)
 	//{
-		if ((client = SDLNet_TCP_Accept(server)))
+		TCPsocket temp;
+		if ((temp = SDLNet_TCP_Accept(server)))
 		{
 			//quit = 1;
 			/* Now we can communicate with the client using csd socket
 			* sd will remain opened waiting other connections */
  
 			/* Get the remote address */
-			if ((remoteIP = SDLNet_TCP_GetPeerAddress(client)))
+			if ((remoteIP = SDLNet_TCP_GetPeerAddress(temp)))
+			{
 				/* Print the address, converting in the host format */
 				printf("Host connected: %x %d\n", SDLNet_Read32(&remoteIP->host), SDLNet_Read16(&remoteIP->port));
+				clients.push_back(temp);
+			}
 			else
 				fprintf(stderr, "SDLNet_TCP_GetPeerAddress: %s\n", SDLNet_GetError());
 			return true;
@@ -65,28 +72,44 @@ bool ServerNet::WaitConnection()
 	//}
 }
 
-bool ServerNet::SendMessage(char* message, int length)
+bool ServerNet::SendMessage(char* message, int length, int clientID)
 {
-	if (SDLNet_TCP_Send(client, message, length) < length)
+	if (SDLNet_TCP_Send(clients[clientID], message, length) < length)
 	{
 		fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
 		return false;
 	}
 
 	if(strcmp(message, "exit") == 0)
-		SDLNet_TCP_Close(client);
+		SDLNet_TCP_Close(clients[clientID]);
 	return true;
 }
 
-int ServerNet::ReceiveMessage(char message[])
+bool ServerNet::Broadcast(char* message, int length)
 {
-	int length = SDLNet_TCP_Recv(client, message, len);
+	for(int i = 0; i<clients.size(); i++)
+	{
+		if (SDLNet_TCP_Send(clients[i], message, length) < length)
+		{
+			fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+			return false;
+		}
+
+		if(strcmp(message, "exit") == 0)
+			SDLNet_TCP_Close(clients[i]);
+	}
+	return true;
+}
+
+int ServerNet::ReceiveMessage(char message[], int clientID)
+{
+	int length = SDLNet_TCP_Recv(clients[clientID], message, len);
 	if (length > 0)
 	{
 		if(strcmp(message, "exit") == 0)	/* Terminate this connection */
 		{
 			printf("Terminate connection\n");
-			SDLNet_TCP_Close(client);
+			SDLNet_TCP_Close(clients[clientID]);
 		}
 		return length;
 	}
@@ -145,6 +168,11 @@ bool ClientNet::SendMessage(char* message, int length)
 	if(strcmp(message, "exit") == 0)
 		SDLNet_TCP_Close(sd);
 	return true;
+}
+
+void ClientNet::SetID(int id)
+{
+	clientID = id;
 }
 
 int ClientNet::ReceiveMessage(char message[])

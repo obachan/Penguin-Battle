@@ -14,7 +14,18 @@
 
 class WorldObjectFactory {
 public:
-	Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
+	WorldObjectFactory(Ogre::SceneManager*, PhysicsWrapper*);
+	~WorldObjectFactory();
+
+	Ball* createNewBall();
+	Room* createNewRoom();
+	Penguin* createNewPenguin();
+	Goal* createNewGoal();
+	Terrain* createNewTerrain();
+
+private:
+	Ogre::SceneManager*		mSceneMgr;
+	PhysicsWrapper*			mPhysics;
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

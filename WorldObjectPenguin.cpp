@@ -3,7 +3,7 @@
 int Penguin::scene_node_counter = 0;
 
 
-Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract(physics)
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract()
 {
 	createPenguin(m_pSceneMgr);
 
@@ -346,12 +346,12 @@ void Penguin::update()
 
 }
 
-void Penguin::createSceneNode()
+void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
 
 }
 
-void Penguin::createRigidBody()
+void Penguin::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "Penguin::createRigidBody()" << std::endl;
 }

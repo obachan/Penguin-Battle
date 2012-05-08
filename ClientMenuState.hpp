@@ -44,6 +44,9 @@ private:
 	void deleteLetter();
 	OgreBites::TextBox *portNumberTextBox;
 	OgreBites::TextBox *ipAddressTextBox;
+	void connectMenu();
+	OgreBites::Label *message;
+	bool isWaiting;
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
