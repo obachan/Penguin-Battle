@@ -14,7 +14,7 @@
 
 class WorldObjectFactory {
 public:
-	void createNewBall();
+	Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

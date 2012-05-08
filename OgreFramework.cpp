@@ -102,7 +102,6 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
  
 	m_pTrayMgr = new OgreBites::SdkTrayManager("TrayMgr", m_pRenderWnd, m_pMouse, this);
     m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-    //m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
 
     // Stuff for the HUD
@@ -165,14 +164,14 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(m_pKeyboard->isKeyDown(OIS::KC_O))
 	{
 		if(m_pTrayMgr->isLogoVisible())
-       		{
-        	    m_pTrayMgr->hideFrameStats();
-        	}
-        	else
-        	{
-        		//m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-        		m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-        	}
+       	{
+            m_pTrayMgr->hideFrameStats();
+        }
+        else
+        {
+        	//m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        	m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+        }
 	}
 
 	return true;

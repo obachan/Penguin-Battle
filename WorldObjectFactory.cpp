@@ -4,7 +4,7 @@
 
 
 
-void WorldObjectFactory::createNewBall()
+Ball* WorldObjectFactory::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-	std::cout << "WorldObjectFactory::createNewBall()" << std::endl;
+	return new Ball(m_pSceneMgr, physics);
 }

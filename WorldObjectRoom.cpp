@@ -3,8 +3,8 @@
 Room::Room(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
 	createRoom(m_pSceneMgr, room_width, room_length);
-	if(physics != NULL)
-		attachToDynamicWorld(physics);
+//	if(physics != NULL)
+//		attachToDynamicWorld(physics);
 }
 
 Room::~Room()
