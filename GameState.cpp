@@ -3,6 +3,8 @@
 #include "GameState.hpp"
 #include "WorldObjectBall.hpp"
 
+#include "OgreBillboardParticleRenderer.h"
+
 #include <iostream>
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -51,6 +53,18 @@ void GameState::enter()
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
+
+
+	//create particle effects
+	ParticleSystem* pSys4 = m_pSceneMgr->createParticleSystem("rain", "Examples/Rain");
+	SceneNode* rNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+	rNode->translate(0,1000,0);
+	rNode->attachObject(pSys4);
+
+
+
+
+
 
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);

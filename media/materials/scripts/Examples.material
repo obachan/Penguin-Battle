@@ -713,13 +713,14 @@ material Examples/Droplet
 		pass
 		{
 			emissive 0.3 0.3 0.3
-			scene_blend colour_blend
+			scene_blend alpha_blend
 			depth_write off
 			diffuse vertexcolour
+			fog_override true
 
 			texture_unit
 			{
-				texture basic_droplet.png
+				texture snowflake.jpg
 			}
 		}
 	}

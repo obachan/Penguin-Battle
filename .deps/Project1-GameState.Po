@@ -891,7 +891,9 @@ Project1-GameState.o: GameState.cpp GameState.hpp AppState.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
  WorldObjectGoal.hpp WorldObjectPenguin.hpp WorldObjectRoom.hpp \
  WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h
 
 GameState.hpp:
 
@@ -2928,3 +2930,7 @@ WorldObjectPaddle.hpp:
 WorldObjectTerrain.hpp:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h:
