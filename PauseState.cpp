@@ -73,17 +73,13 @@ bool PauseState::keyPressed(const OIS::KeyEvent &keyEventRef)
         return true;
     }
  
-    OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
- 
     return true;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 bool PauseState::keyReleased(const OIS::KeyEvent &keyEventRef)
-{
-    OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
- 
+{ 
     return true;
 }
  

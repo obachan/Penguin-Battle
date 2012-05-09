@@ -9,9 +9,6 @@ Ball::Ball() : WorldObjectAbstract()
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
 	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
 {
-	//const double start_pos_x = 0.0f;
-	//const double start_pos_y = -(room_width/2) + ball_radius;
-	//const double start_pos_z = 0.0f;
 
 	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius);
 	
@@ -78,7 +75,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 
 void Ball::update(double timeSinceLastFrame)
 {
-	updateWorldObjectVisual();
+	updateWorldObjectVisual();	// Parent method
 }
 
 // Checks whether the ball is contained
@@ -205,12 +202,10 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 // Static Classes
 // ========================================
 
-void Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 {
-
 	Ball* ball = new Ball();
 	ball->initWorldObject(m_pSceneMgr, physics);
-	ball->resetPosition(Ogre::Vector3(0, 0, 0));
-
-	std::cout << "WorldObjectBall::createNewBall()" << std::endl;
+	ball->resetPosition(Ogre::Vector3(0, 300, 0));
+	return ball;
 }

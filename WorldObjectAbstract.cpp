@@ -54,7 +54,18 @@ int WorldObjectAbstract::getUniqueId()
 
 void WorldObjectAbstract::resetPosition(Ogre::Vector3 new_pos)
 {
-	std::cout << "WorldObjectAbstract::resetPosition()" << std::cout;
+	btTransform trans;
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
+	trans.setOrigin(btVector3(new_pos[0], new_pos[1], new_pos[2]));
+	worldObjectRigidBody->setLinearVelocity(btVector3(0, 0, 0));
+
+	//----------------------------------
+	// Set new position and velocity
+	//----------------------------------
+
+	btMotionState *motionState = worldObjectRigidBody->getMotionState();
+	motionState->setWorldTransform(trans);
+	worldObjectRigidBody->setMotionState (motionState);
 }
 
 void WorldObjectAbstract::updateWorldObjectVisual()

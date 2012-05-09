@@ -15,8 +15,7 @@ WorldObjectFactory::~WorldObjectFactory()
 
 Ball* WorldObjectFactory::createNewBall()
 {
-	Ball::createNewBall(mSceneMgr, mPhysics);
-	return new Ball(mSceneMgr, mPhysics);
+	return Ball::createNewBall(mSceneMgr, mPhysics);;
 }
 
 Room* WorldObjectFactory::createNewRoom()
