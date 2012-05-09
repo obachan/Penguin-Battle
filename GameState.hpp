@@ -34,22 +34,14 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	OgreBites::ParamsPanel* mDetailsPanel;
-
 	PhysicsWrapper*			physics;
 	MyController* 			controller;
 	SoundWrapper*			soundFactory;
 	HUD*					hud;
-
 	World* 					world;
 	
 private: 
 	bool					m_bShutdown;
-
-	// ========================
-	// Parameters to control debug camera
-	// ========================
-
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

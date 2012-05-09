@@ -36,7 +36,6 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 	
 	controller = new MyController();
 	sounds = new SoundWrapper();
-	hud = new HUD();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
 	m_pLog->setDebugOutputEnabled(true);
@@ -100,22 +99,7 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
  
 	m_pTrayMgr = new OgreBites::SdkTrayManager("TrayMgr", m_pRenderWnd, m_pMouse, this);
     m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-
-
-    // Stuff for the HUD
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
- 
-  	mDetailsPanel = m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();	
-
+	
     m_pTrayMgr->hideCursor();
  
 	m_pRenderWnd->setActive(true);

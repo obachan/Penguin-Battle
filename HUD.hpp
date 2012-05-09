@@ -18,7 +18,7 @@
 class HUD 
 {
 public:
-	HUD();
+	HUD(OgreBites::SdkTrayManager*);
 	~HUD();
 
 	void update(double, bool);
@@ -35,7 +35,7 @@ public:
 	static int		HUD_STATUS_WIN;
 	static int		HUD_STATUS_LOSE;
 
-
-	OgreBites::SdkTrayManager*	m_pTrayMgr;
+private:
+	OgreBites::SdkTrayManager*	mTrayMgr;
 	OgreBites::ParamsPanel* 	mDetailsPanel;
 };

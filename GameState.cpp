@@ -25,12 +25,6 @@ GameState::~GameState()
 
 void GameState::enter()
 {
-
-	physics = new PhysicsWrapper();
-	controller = new MyController();
-	soundFactory = new SoundWrapper();
-	hud = new HUD();
-
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering GameState...");
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "GameSceneMgr");
@@ -70,28 +64,17 @@ void GameState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
-
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
 
-    soundFactory->playMusic();
-    
-
+	physics = new PhysicsWrapper();
+	controller = new MyController();
+	soundFactory = new SoundWrapper();
+	hud = new HUD(OgreFramework::getSingletonPtr()->m_pTrayMgr);
     world = new World(m_pSceneMgr, physics); 
+
+    soundFactory->playMusic();  
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -136,19 +119,6 @@ void GameState::resume()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
@@ -162,34 +132,7 @@ void GameState::update(double timeSinceLastFrame)
 	world->update(timeSinceLastFrame, controller, m_pCamera);
 
 	// Update HUD
-	// OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-	OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, false);
-
-	if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
-	{
-	   	//mCameraMan->frameRenderingQueued(m_FrameEvent);
-	    	
-	  	// if dialog isn't up, then update the camera
-	   	// if details panel is visible, then update its contents
-
-	   	if (mDetailsPanel->isVisible())
-	   	{
-			//Change Score and Timer Value each Frame
-	   	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->timer));
-	   	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->score));
-
-
-	   	    std::string hud_status_message;
-	   	    if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_PLAYING)
-	   	    	hud_status_message = "Playing";
-	  	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_WIN)
-	  	    	hud_status_message = "You Win";
-	   	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_LOSE)
-	   	    	hud_status_message = "You Lose";
-
-       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-       	}
-    }
+	hud->update(timeSinceLastFrame, false);
 
     // Update Debug Camera
     if(controller->debugCameraOn())
@@ -205,7 +148,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
 
 
 	controller->keyPressed(keyEventRef);
-	
+
 	// Key Presses to Change State
 	if(keyEventRef.key == OIS::KC_P)	        pushAppState(findByName("PauseState"));
 	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
