@@ -46,8 +46,6 @@ public:
 	void updateOgre(double timeSinceLastFrame);
 	void updateDebugCamera(double timeSinceLastFrame);
  
-	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
- 
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
  
@@ -68,11 +66,7 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*					m_pMouse;
 
-	SoundWrapper*				sounds;		// Will Remove
-
 	OgreBites::SdkTrayManager*	m_pTrayMgr;
-
-	bool						m_bShutDownOgre;
 
 	ServerNet 					*server;
 	ClientNet 					*client;

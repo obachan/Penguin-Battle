@@ -70,11 +70,11 @@ void GameState::enter()
 
 	physics = new PhysicsWrapper();
 	controller = new MyController();
-	soundFactory = new SoundWrapper();
+	sound_factory = new SoundWrapper();
 	hud = new HUD(OgreFramework::getSingletonPtr()->m_pTrayMgr);
     world = new World(m_pSceneMgr, physics); 
 
-    soundFactory->playMusic();  
+    sound_factory->playMusic();  
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -153,7 +153,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
 	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
 
 	// Key Presses to Activate Sound Effect
-    if(keyEventRef.key == OIS::KC_SPACE)		soundFactory->playJumpSoundEffect();
+    if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
 

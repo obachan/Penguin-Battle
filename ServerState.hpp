@@ -34,22 +34,24 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	Ball 		*ball;
-	Room 		*room;
-	Paddle		*paddle;
-	Penguin		*penguin;
-	Penguin		*penguin_two;
-	Goal		*goal;
+	Ball*			ball;
+	Room*			room;
+	Paddle*			paddle;
+	Penguin*		penguin;
+	Penguin*		penguin_two;
+	Goal*			goal;
 
-	MyController* server_controller;
-	MyController* client_controller;
+	MyController* 	server_controller;
+	MyController* 	client_controller;
 	PhysicsWrapper*	physics;
+	SoundWrapper* 	sound_factory;
 	
 private:
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  
 	bool						m_bShutdown;
+	
 	char buffer[1024];
 	char recvbuffer[1024];
 };

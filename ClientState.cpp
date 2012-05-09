@@ -22,8 +22,6 @@ ClientState::~ClientState()
 
 void ClientState::enter()
 {
-	client_controller = new MyController();
-
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ClientState...");
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ClientSceneMgr");
@@ -49,12 +47,16 @@ void ClientState::enter()
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
 
+	client_controller = new MyController();
+
 	penguin = new Penguin(m_pSceneMgr, NULL);									// Create Player 1's Penguin
 	penguin_two = new Penguin(m_pSceneMgr, NULL);								// Create Player 2's Penguin
 	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
 	room = new Room(m_pSceneMgr, NULL);											// Create Room
 	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
 
+	sound_factory = new SoundWrapper();
+    sound_factory->playMusic();
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
 	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
@@ -69,7 +71,7 @@ void ClientState::enter()
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
-    OgreFramework::getSingletonPtr()->sounds->playMusic();
+
  
  	penguin->update(0.1f, client_controller, OgreFramework::getSingletonPtr()->m_pCamera);
 	penguin_two->update(0.1f, client_controller, NULL);
@@ -109,7 +111,7 @@ void ClientState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
 
-    OgreFramework::getSingletonPtr()->sounds->musicDone();
+    sound_factory->musicDone();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -244,7 +246,7 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
 
 	// Key Presses to Activate Sound Effect
-    if(keyEventRef.key == OIS::KC_SPACE)		OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
+    if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
 

@@ -36,7 +36,7 @@ public:
 
 	PhysicsWrapper*			physics;
 	MyController* 			controller;
-	SoundWrapper*			soundFactory;
+	SoundWrapper*			sound_factory;
 	HUD*					hud;
 	World* 					world;
 	

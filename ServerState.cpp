@@ -18,7 +18,6 @@ ServerState::ServerState()
  
 ServerState::~ServerState()
 {
-       delete OgreFramework::getSingletonPtr();
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -29,6 +28,7 @@ void ServerState::enter()
 	server_controller = new MyController();
 	client_controller = new MyController();
 	physics = new PhysicsWrapper();
+	sound_factory = new SoundWrapper();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
 
@@ -80,7 +80,7 @@ void ServerState::enter()
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
-    OgreFramework::getSingletonPtr()->sounds->playMusic(); 
+    sound_factory->playMusic(); 
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -104,7 +104,7 @@ void ServerState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
 
-    OgreFramework::getSingletonPtr()->sounds->musicDone();
+    sound_factory->musicDone();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -259,7 +259,7 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
 
 	// Key Presses to Activate Sound Effect
-    if(keyEventRef.key == OIS::KC_SPACE)		OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
+    if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
 

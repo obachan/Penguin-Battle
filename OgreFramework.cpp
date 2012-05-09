@@ -32,8 +32,6 @@ OgreFramework::OgreFramework()
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
 {
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
-	
-	sounds = new SoundWrapper();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
 	m_pLog->setDebugOutputEnabled(true);
