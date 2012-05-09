@@ -56,10 +56,10 @@ public:
 	bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
  
 	Ogre::Root*					m_pRoot;
-	Ogre::SceneManager*			m_pSceneMgr;
+	Ogre::SceneManager*			m_pSceneMgr; // Will Remove
 	
 	Ogre::RenderWindow*			m_pRenderWnd;
-	Ogre::Camera*				m_pCamera;
+	Ogre::Camera*				m_pCamera;	// Will Remove
 	Ogre::Viewport*				m_pViewport;
 	Ogre::Log*					m_pLog;
 	Ogre::Timer*				m_pTimer;
@@ -68,7 +68,6 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*					m_pMouse;
 
-	MyController*				controller; // Will Remove
 	SoundWrapper*				sounds;		// Will Remove
 
 	OgreBites::SdkTrayManager*	m_pTrayMgr;

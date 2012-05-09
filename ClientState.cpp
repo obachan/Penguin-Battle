@@ -22,7 +22,7 @@ ClientState::~ClientState()
 
 void ClientState::enter()
 {
-	controller_two = new MyController();
+	client_controller = new MyController();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ClientState...");
 
@@ -71,8 +71,8 @@ void ClientState::enter()
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
     OgreFramework::getSingletonPtr()->sounds->playMusic();
  
- 	penguin->update(0.1f, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
-	penguin_two->update(0.1f, controller_two, NULL);
+ 	penguin->update(0.1f, client_controller, OgreFramework::getSingletonPtr()->m_pCamera);
+	penguin_two->update(0.1f, client_controller, NULL);
 	ball->update(0.1f);
 	
 	sendbuffer[0] = '0';
@@ -207,74 +207,46 @@ void ClientState::update(double timeSinceLastFrame)
 
 	penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
 	penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
-
-	OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 	
+  	// Update Debug Camera
+    if(client_controller->debugCameraOn())
+    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
 
-	// TODO - SEND!!!!!!
+    // Update Base Framework
+    OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+
+
+	// TODO - SEND Client Message (just the controller)!!!!!!
 	// Player 2's controller
 
-	sendbuffer[0] = (OgreFramework::getSingletonPtr()->controller->left_control_down) ? '1' : '0';
-	sendbuffer[1] = (OgreFramework::getSingletonPtr()->controller->right_control_down) ? '1' : '0';
-	sendbuffer[2] = (OgreFramework::getSingletonPtr()->controller->up_control_down) ? '1' : '0';
-	sendbuffer[3] = (OgreFramework::getSingletonPtr()->controller->bottom_control_down) ? '1' : '0';
-	sendbuffer[4] = (OgreFramework::getSingletonPtr()->controller->forward_control_down) ? '1' : '0';
-	sendbuffer[5] = (OgreFramework::getSingletonPtr()->controller->backward_control_down) ? '1' : '0';
-	sendbuffer[6] = (OgreFramework::getSingletonPtr()->controller->jump_control_down) ? '1' : '0';
-	sendbuffer[7] = (OgreFramework::getSingletonPtr()->controller->boost_control_down) ? '1' : '0';
+	sendbuffer[0] = (client_controller->left_control_down) ? '1' : '0';
+	sendbuffer[1] = (client_controller->right_control_down) ? '1' : '0';
+	sendbuffer[2] = (client_controller->up_control_down) ? '1' : '0';
+	sendbuffer[3] = (client_controller->bottom_control_down) ? '1' : '0';
+	sendbuffer[4] = (client_controller->forward_control_down) ? '1' : '0';
+	sendbuffer[5] = (client_controller->backward_control_down) ? '1' : '0';
+	sendbuffer[6] = (client_controller->jump_control_down) ? '1' : '0';
+	sendbuffer[7] = (client_controller->boost_control_down) ? '1' : '0';
 	sendbuffer[8] = '\0';
 
 	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 8);
-
-	////////////////////////////////////////////////
-	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
+	// Update Controller data members to pass into World later on
+	client_controller->keyPressed(keyEventRef);
+
+	// Key Presses to Change State
+	if(keyEventRef.key == OIS::KC_P)	        pushAppState(findByName("PauseState"));
+	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
+
+	// Key Presses to Activate Sound Effect
+    if(keyEventRef.key == OIS::KC_SPACE)		OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
+
 	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
- 
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-
-	//std::cout << controller->left_control_down << std::endl;
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-		controller->left_control_down = true;	
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-		controller->right_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_UP))
-		controller->forward_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-		controller->backward_control_down = true;
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_P))
-		controller->up_control_down = true;
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SEMICOLON))
-		controller->bottom_control_down = true;
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_SPACE)){
-		controller->jump_control_down = true;
-		if(!penguin->in_air)
-			OgreFramework::getSingletonPtr()->sounds->playJumpSoundEffect();
-	}
-
-
-	if(keyEventRef.key == OIS::KC_Z){
-		controller->boost_control_down = true;
-	}
-
-	if(keyEventRef.key == OIS::KC_Q)
-	{
-		controller->toggleThirdPersonCamera();
-	}
-
-	if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
-    {
-        pushAppState(findByName("PauseState"));
-        return true;
-    }
 
 	return true;
 }
@@ -283,18 +255,8 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
+	client_controller->keyReleased(keyEventRef);
 	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
- 
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-
-	if(keyEventRef.key == OIS::KC_LEFT)			controller->left_control_down = false;
-	if(keyEventRef.key == OIS::KC_RIGHT)		controller->right_control_down = false;	
-	if(keyEventRef.key == OIS::KC_UP)			controller->forward_control_down = false;	
-	if(keyEventRef.key == OIS::KC_DOWN)			controller->backward_control_down = false;	
-	if(keyEventRef.key == OIS::KC_P)			controller->up_control_down = false;
-	if(keyEventRef.key == OIS::KC_SEMICOLON)	controller->bottom_control_down = false;
-	if(keyEventRef.key == OIS::KC_Z)			controller->boost_control_down = false;
-
 	return true;
 }
 
@@ -302,14 +264,9 @@ bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
  
 bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
 {
-	MyController* controller = OgreFramework::getSingletonPtr()->controller;
-	std::cerr << "mouse moved" << std::endl;
-	controller->mouse_x_movement = evt.state.X.rel;
-	OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-	OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
-
-	
-    if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(evt)) return true;
+	client_controller->mouseMoved(evt);
+	// If it's in debug mode, allow the mouse to navigate the scene
+	if(!client_controller->thirdPersonCameraOn())		OgreFramework::getSingletonPtr()->mouseMoved(evt);
     return true;
 }
  
@@ -317,6 +274,7 @@ bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
  
 bool ClientState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+	client_controller->mouseReleased(evt, id);
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(evt, id)) return true;
     return true;
 }
@@ -325,6 +283,7 @@ bool ClientState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id
  
 bool ClientState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+	client_controller->mouseReleased(evt, id);
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseUp(evt, id)) return true;
     return true;
 }

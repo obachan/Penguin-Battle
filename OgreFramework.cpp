@@ -11,7 +11,6 @@ OgreFramework::OgreFramework()
 	m_MoveSpeed				= 0.1f;
 	m_RotateSpeed		    = 0.3f;
  
-	m_bShutDownOgre		    = false;
 	m_iNumScreenShots	    = 0;
  
 	m_pRoot					= 0;
@@ -34,7 +33,6 @@ bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListen
 {
 	Ogre::LogManager* logMgr = new Ogre::LogManager();
 	
-	controller = new MyController();
 	sounds = new SoundWrapper();
  
 	m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
@@ -152,7 +150,6 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 
 bool OgreFramework::keyReleased(const OIS::KeyEvent &keyEventRef)
 {	
-
 	return true;
 }
 

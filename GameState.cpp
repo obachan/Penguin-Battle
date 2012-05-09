@@ -145,8 +145,7 @@ void GameState::update(double timeSinceLastFrame)
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
-
-
+	// Update Controller data members to pass into World later on
 	controller->keyPressed(keyEventRef);
 
 	// Key Presses to Change State
@@ -165,6 +164,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
  
 bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef){
 	controller->keyReleased(keyEventRef);
+	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
 	return true;
 }
 

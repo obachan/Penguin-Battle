@@ -41,7 +41,7 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	MyController* controller_two;
+	MyController* client_controller;
 	
 private:
 	bool						m_bShutdown;

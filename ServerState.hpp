@@ -41,7 +41,8 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	MyController* controller_two;
+	MyController* server_controller;
+	MyController* client_controller;
 	PhysicsWrapper*	physics;
 	
 private:
