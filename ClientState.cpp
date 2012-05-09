@@ -10,15 +10,12 @@ using namespace Ogre;
 
 ClientState::ClientState()
 {
-	m_pOgreHeadNode			= 0;
-	m_pOgreHeadEntity		= 0;
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
 ClientState::~ClientState()
 {
-       delete OgreFramework::getSingletonPtr();
 }
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -67,27 +64,12 @@ void ClientState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
 
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
     OgreFramework::getSingletonPtr()->sounds->playMusic();
-
-    OgreFramework::getSingletonPtr()->hud->reset();
  
  	penguin->update(0.1f, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 	penguin_two->update(0.1f, controller_two, NULL);
@@ -151,20 +133,6 @@ void ClientState::resume()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
-
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
@@ -174,113 +142,77 @@ void ClientState::resume()
 
 void ClientState::update(double timeSinceLastFrame)
 {
-		// TODO - RECEIVE!!!!!!
-		// ball position and penguin's positions
+	// TODO - RECEIVE!!!!!!
+	// ball position and penguin's positions
 
-		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 		
-		Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
-		memcpy(&newballPosition[0], buffer, 4);
-		memcpy(&newballPosition[1], buffer+4, 4);
-		memcpy(&newballPosition[2], buffer+8, 4);
+	Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
+	memcpy(&newballPosition[0], buffer, 4);
+	memcpy(&newballPosition[1], buffer+4, 4);
+	memcpy(&newballPosition[2], buffer+8, 4);
 		
-		printf("BallPosition\n");
-		printf("%f\n", newballPosition[0]);
-		printf("%f\n", newballPosition[1]);
-		printf("%f\n", newballPosition[2]);
+	printf("BallPosition\n");
+	printf("%f\n", newballPosition[0]);
+	printf("%f\n", newballPosition[1]);
+	printf("%f\n", newballPosition[2]);
 
-		Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
-		memcpy(&newballQuaternion[0], buffer+12, 4);
-		memcpy(&newballQuaternion[1], buffer+16, 4);
-		memcpy(&newballQuaternion[2], buffer+20, 4);
-		memcpy(&newballQuaternion[3], buffer+24, 4);
+	Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
+	memcpy(&newballQuaternion[0], buffer+12, 4);
+	memcpy(&newballQuaternion[1], buffer+16, 4);
+	memcpy(&newballQuaternion[2], buffer+20, 4);
+	memcpy(&newballQuaternion[3], buffer+24, 4);	
 
-		
+	Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
+	memcpy(&newPenguinServerPosition[0], buffer+28, 4);
 
-		Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
-		memcpy(&newPenguinServerPosition[0], buffer+28, 4);
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 
-		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	memcpy(&newPenguinServerPosition[1], buffer, 4);
+	memcpy(&newPenguinServerPosition[2], buffer+4, 4);
 
-		memcpy(&newPenguinServerPosition[1], buffer, 4);
-		memcpy(&newPenguinServerPosition[2], buffer+4, 4);
+	printf("ServerPosition\n");
+	printf("%f\n", newPenguinServerPosition[0]);
+	printf("%f\n", newPenguinServerPosition[1]);
+	printf("%f\n", newPenguinServerPosition[2]);
 
-		printf("ServerPosition\n");
-		printf("%f\n", newPenguinServerPosition[0]);
-		printf("%f\n", newPenguinServerPosition[1]);
-		printf("%f\n", newPenguinServerPosition[2]);
+	Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
+	memcpy(&newPenguinServerQuaternion[0], buffer+8, 4);
+	memcpy(&newPenguinServerQuaternion[1], buffer+12, 4);
+	memcpy(&newPenguinServerQuaternion[2], buffer+16, 4);
+	memcpy(&newPenguinServerQuaternion[3], buffer+20, 4);
 
-		Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
-		memcpy(&newPenguinServerQuaternion[0], buffer+8, 4);
-		memcpy(&newPenguinServerQuaternion[1], buffer+12, 4);
-		memcpy(&newPenguinServerQuaternion[2], buffer+16, 4);
-		memcpy(&newPenguinServerQuaternion[3], buffer+20, 4);
+	Ogre::Vector3 newPenguinClientPosition = Ogre::Vector3(0,0,0);
+	memcpy(&newPenguinClientPosition[0], buffer+24, 4);
+	memcpy(&newPenguinClientPosition[1], buffer+28, 4);
 
-		Ogre::Vector3 newPenguinClientPosition = Ogre::Vector3(0,0,0);
-		memcpy(&newPenguinClientPosition[0], buffer+24, 4);
-		memcpy(&newPenguinClientPosition[1], buffer+28, 4);
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 
-		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	memcpy(&newPenguinClientPosition[2], buffer, 4);
 
-		memcpy(&newPenguinClientPosition[2], buffer, 4);
+	printf("ClientPosition\n");
+	printf("%f\n", newPenguinClientPosition[0]);
+	printf("%f\n", newPenguinClientPosition[1]);
+	printf("%f\n", newPenguinClientPosition[2]);
 
-		printf("ClientPosition\n");
-		printf("%f\n", newPenguinClientPosition[0]);
-		printf("%f\n", newPenguinClientPosition[1]);
-		printf("%f\n", newPenguinClientPosition[2]);
+	Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1,0,0,0);
+	memcpy(&newPenguinClientQuaternion[0], buffer+4, 4);
+	memcpy(&newPenguinClientQuaternion[1], buffer+8, 4);
+	memcpy(&newPenguinClientQuaternion[2], buffer+12, 4);
+	memcpy(&newPenguinClientQuaternion[3], buffer+16, 4);
 
-		Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1,0,0,0);
-		memcpy(&newPenguinClientQuaternion[0], buffer+4, 4);
-		memcpy(&newPenguinClientQuaternion[1], buffer+8, 4);
-		memcpy(&newPenguinClientQuaternion[2], buffer+12, 4);
-		memcpy(&newPenguinClientQuaternion[3], buffer+16, 4);
+ 	// Our Team's main loop
+	//ball->update(timeSinceLastFrame);
+	ball->updateAsClient(newballPosition);
 
- 		// Our Team's main loop
-		//ball->update(timeSinceLastFrame);
-		ball->updateAsClient(newballPosition);
+	penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
+	penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
 
-		penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
-		penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
-
-		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+	OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 	
-		// Handles the event in which the player scores
-		bool scored = false;
 
-		OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-
-
-		if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
-	    {
-	       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
-	    	
-	    	// if dialog isn't up, then update the camera
-	    	// if details panel is visible, then update its contents
-
-	    	if (mDetailsPanel->isVisible())
-	       	{
-				//Change Score and Timer Value each Frame
-	       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->timer));
-	       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->score));
-
-
-	       	    std::string hud_status_message;
-	       	    if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_PLAYING)
-	       	    	hud_status_message = "Playing";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_WIN)
-	       	    	hud_status_message = "You Win";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_LOSE)
-	       	    	hud_status_message = "You Lose";
-
-
-	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-	       	}
-	    }
-
-		
-
-		// TODO - SEND!!!!!!
-		// Player 2's controller
+	// TODO - SEND!!!!!!
+	// Player 2's controller
 
 	sendbuffer[0] = (OgreFramework::getSingletonPtr()->controller->left_control_down) ? '1' : '0';
 	sendbuffer[1] = (OgreFramework::getSingletonPtr()->controller->right_control_down) ? '1' : '0';

@@ -41,13 +41,9 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	OgreBites::ParamsPanel* mDetailsPanel;
 	MyController* controller_two;
 	
 private:
-	Ogre::SceneNode*			m_pOgreHeadNode;
-	Ogre::Entity*				m_pOgreHeadEntity;
- 
 	bool						m_bShutdown;
 	char buffer[1024];
 	char sendbuffer[1024];

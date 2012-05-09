@@ -26,7 +26,7 @@ public:
 	// ==========================
 	void update(); 			// From abstract class AbstractWorldObject
 
-	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*);
+	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*, Ogre::Vector3 pos);
 
 protected:
 	// ==========================

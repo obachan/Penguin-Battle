@@ -74,28 +74,12 @@ void ServerState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
 
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
 
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
-    OgreFramework::getSingletonPtr()->sounds->playMusic();
-
-    OgreFramework::getSingletonPtr()->hud->reset();
- 
+    OgreFramework::getSingletonPtr()->sounds->playMusic(); 
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -143,20 +127,6 @@ void ServerState::resume()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
-
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         ");
-
-  	mDetailsPanel = OgreFramework::getSingletonPtr()->m_pTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
@@ -181,7 +151,6 @@ void ServerState::update(double timeSinceLastFrame)
 		controller_two->backward_control_down = (recvbuffer[5] == '1') ? true : false;
 		controller_two->jump_control_down = (recvbuffer[6] == '1') ? true : false;
 		controller_two->boost_control_down = (recvbuffer[7] == '1') ? true : false;
-
 		
 
  		// Our Team's main loop
@@ -196,53 +165,17 @@ void ServerState::update(double timeSinceLastFrame)
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
 		if (timeSinceLastFrame!=0)
-		{
 	 		physics->stepPhysics(timeSinceLastFrame, 5);
-		
-		}
 
-		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
-
 		bool scored = false;
-
-		if(ball->inGoal(goal))
-		{
+		if(ball->inGoal(goal)){
 			scored = true;
 			ball->reset(physics);
 		}
 
 
-		OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-
-
-		if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
-	    {
-	       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
-	    	
-	    	// if dialog isn't up, then update the camera
-	    	// if details panel is visible, then update its contents
-
-	    	if (mDetailsPanel->isVisible())
-	       	{
-				//Change Score and Timer Value each Frame
-	       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->timer));
-	       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->score));
-
-
-	       	    std::string hud_status_message;
-	       	    if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_PLAYING)
-	       	    	hud_status_message = "Playing";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_WIN)
-	       	    	hud_status_message = "You Win";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_LOSE)
-	       	    	hud_status_message = "You Lose";
-
-
-	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-	       	}
-	    }
 
 		Ogre::Vector3 newballVector = ball->getVisualPosition();
 		memcpy(buffer, &newballVector[0], 4);

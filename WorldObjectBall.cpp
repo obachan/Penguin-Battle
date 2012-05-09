@@ -202,10 +202,10 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 // Static Classes
 // ========================================
 
-Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
+Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, Ogre::Vector3 pos)
 {
 	Ball* ball = new Ball();
 	ball->initWorldObject(m_pSceneMgr, physics);
-	ball->resetPosition(Ogre::Vector3(0, 300, 0));
+	ball->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
 	return ball;
 }

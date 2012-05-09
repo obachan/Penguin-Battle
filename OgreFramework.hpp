@@ -70,7 +70,6 @@ public:
 
 	MyController*				controller; // Will Remove
 	SoundWrapper*				sounds;		// Will Remove
-	HUD*						hud;		// Will Remove
 
 	OgreBites::SdkTrayManager*	m_pTrayMgr;
 

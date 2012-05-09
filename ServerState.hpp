@@ -41,7 +41,6 @@ public:
 	Penguin		*penguin_two;
 	Goal		*goal;
 
-	OgreBites::ParamsPanel* mDetailsPanel;
 	MyController* controller_two;
 	PhysicsWrapper*	physics;
 	
