@@ -559,7 +559,12 @@ Project1-Controller.o: Controller.cpp Controller.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreHeaderSuffix.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreMemoryNedPooling.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreMath.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreQuaternion.h
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreQuaternion.h \
+ /usr/include/OIS/OISEvents.h /usr/include/OIS/OISPrereqs.h \
+ /usr/include/OIS/OISConfig.h /usr/include/OIS/OISInputManager.h \
+ /usr/include/OIS/OISKeyboard.h /usr/include/OIS/OISObject.h \
+ /usr/include/OIS/OISInterface.h /usr/include/OIS/OISEvents.h \
+ /usr/include/OIS/OISMouse.h
 
 Controller.hpp:
 
@@ -1870,3 +1875,21 @@ Controller.hpp:
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreMath.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreQuaternion.h:
+
+/usr/include/OIS/OISEvents.h:
+
+/usr/include/OIS/OISPrereqs.h:
+
+/usr/include/OIS/OISConfig.h:
+
+/usr/include/OIS/OISInputManager.h:
+
+/usr/include/OIS/OISKeyboard.h:
+
+/usr/include/OIS/OISObject.h:
+
+/usr/include/OIS/OISInterface.h:
+
+/usr/include/OIS/OISEvents.h:
+
+/usr/include/OIS/OISMouse.h:

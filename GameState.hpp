@@ -34,28 +34,14 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	World* 					world;
-
-	// ===============================
-	// World Object
-	// ===============================
-	WorldObjectFactory* 	worldObjectFactory;
-
-	//Ball*					ball;
-	//Room*					room;
-	//Paddle*					paddle;
-	//Penguin*				penguin;
-	//Goal*					goal;
-	//Terrain*				terrain;
-
-	std::vector<Ball*> 		ballList;
-
 	OgreBites::ParamsPanel* mDetailsPanel;
 
 	PhysicsWrapper*			physics;
 	MyController* 			controller;
 	SoundWrapper*			soundFactory;
 	HUD*					hud;
+
+	World* 					world;
 	
 private: 
 	bool					m_bShutdown;

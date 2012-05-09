@@ -1,6 +1,11 @@
 
 #include <btBulletDynamicsCommon.h>
 #include <OgreVector3.h>
+
+#include <OISEvents.h>
+#include <OISInputManager.h>
+#include <OISKeyboard.h>
+#include <OISMouse.h>
  
 class MyController 
 {
@@ -31,6 +36,13 @@ public:
 	void 	toggleThirdPersonCamera();
 	bool 	thirdPersonCameraOn();
 	bool 	debugCameraOn();
+
+	bool keyPressed(const OIS::KeyEvent &keyEventRef);
+	bool keyReleased(const OIS::KeyEvent &keyEventRef); 
+ 
+	bool mouseMoved(const OIS::MouseEvent &arg);
+	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 private:
 	bool 		third_person_camera;

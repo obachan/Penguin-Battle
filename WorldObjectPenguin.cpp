@@ -195,18 +195,6 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		controller->mouse_x_movement = 0.0;
 	
 	}
-
-/*	if(controller->mouse_y_movement != 0.0000 ) {
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_y_movement)), Ogre::Vector3::UNIT_X);
-		worldObjectSceneNode->rotate(quat);
-		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
-		penguin_direction.x = 0;
-		penguin_direction.normalise();
-		previous_direction = penguin_direction;
-		controller->mouse_y_movement = 0.0;
-	
-	}*/
-
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
