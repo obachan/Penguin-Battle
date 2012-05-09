@@ -53,17 +53,11 @@ void GameState::enter()
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
-
-
 	//create particle effects
 	ParticleSystem* pSys4 = m_pSceneMgr->createParticleSystem("rain", "Examples/Rain");
 	SceneNode* rNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
 	rNode->translate(0,1000,0);
 	rNode->attachObject(pSys4);
-
-
-
-
 
 
     // Create a light
@@ -97,13 +91,14 @@ void GameState::enter()
     soundFactory->playMusic();
     
 
+    world = new World(m_pSceneMgr, physics);
     worldObjectFactory = new WorldObjectFactory(m_pSceneMgr, physics);	// World Object Factory
 
-    ball = worldObjectFactory->createNewBall(); 		// Create Ball
-	room = worldObjectFactory->createNewRoom(); 		// Create Room
-	penguin =  worldObjectFactory->createNewPenguin(); 	// Create Penguin
-	goal = worldObjectFactory->createNewGoal(); 		// Create Goal
-	terrain = worldObjectFactory->createNewTerrain(); 	// Create Terrain
+    //ball = worldObjectFactory->createNewBall(); 		// Create Ball
+	//room = worldObjectFactory->createNewRoom(); 		// Create Room
+	//penguin =  worldObjectFactory->createNewPenguin(); 	// Create Penguin
+	//goal = worldObjectFactory->createNewGoal(); 		// Create Goal
+	//terrain = worldObjectFactory->createNewTerrain(); 	// Create Terrain
  
 }
 
@@ -172,27 +167,13 @@ void GameState::resume()
 
 void GameState::update(double timeSinceLastFrame)
 {
-
-
-	// Our Team's main loop
-	ball->update(timeSinceLastFrame);
-	penguin->update(timeSinceLastFrame, controller, m_pCamera);
-
-	OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
-	if (timeSinceLastFrame!=0){
-		physics->stepPhysics(timeSinceLastFrame, 5);
-	}
-	
-	// Handles the event in which the player scores
-	bool scored = false;
-	if(ball->inGoal(goal)){
-		scored = true;
-		ball->reset(physics);
-	}
+	// Update World
+	world->update(timeSinceLastFrame, controller, m_pCamera);
 
 	// Update HUD
-	OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
+	// OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
+	OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, false);
+
 	if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
 	{
 	   	//mCameraMan->frameRenderingQueued(m_FrameEvent);
@@ -222,6 +203,9 @@ void GameState::update(double timeSinceLastFrame)
     // Update Debug Camera
     if(controller->debugCameraOn())
     	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
+
+    // Update Base Framework
+    OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -246,10 +230,8 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	if(keyEventRef.key == OIS::KC_ESCAPE)     	pushAppState(findByName("PauseState"));
 
 	// Key Presses to Activate Sound Effect
-    if(keyEventRef.key == OIS::KC_SPACE){
-		if(!penguin->in_air)
-			soundFactory->playJumpSoundEffect();
-	}
+    if(keyEventRef.key == OIS::KC_SPACE)		soundFactory->playJumpSoundEffect();
+
 	return true;
 }
  

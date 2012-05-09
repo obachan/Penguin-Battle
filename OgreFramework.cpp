@@ -201,14 +201,6 @@ bool OgreFramework::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID
 
 void OgreFramework::updateOgre(double timeSinceLastFrame)
 {
-	m_MoveScale = 15 * m_MoveSpeed   * (float)timeSinceLastFrame;
-	m_RotScale  = 15 * m_RotateSpeed * (float)timeSinceLastFrame;
- 
-	m_TranslateVector = Vector3::ZERO;
- 	// Get input for Camera
-	// getCameraInput();
-	// moveCamera();
-
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
 	m_pTrayMgr->adjustTrays();

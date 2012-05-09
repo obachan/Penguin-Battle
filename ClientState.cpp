@@ -239,17 +239,10 @@ void ClientState::update(double timeSinceLastFrame)
 		//ball->update(timeSinceLastFrame);
 		ball->updateAsClient(newballPosition);
 
-
-
-		//penguin->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller, OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
-		penguin->updateCamera(OgreFramework::getSingletonPtr()->m_pCamera);
 		penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
-		//penguin_two->update(timeSinceLastFrame, controller_two, NULL);
 
 		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
-		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
 	
 		// Handles the event in which the player scores
 		bool scored = false;

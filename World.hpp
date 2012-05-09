@@ -12,10 +12,25 @@
 class World
 {
 public:
-	World();
+	World(Ogre::SceneManager*, PhysicsWrapper*);
 	~World();
 
-	void update();
+	void update(double, MyController*, Ogre::Camera*);
+
+	Ogre::SceneManager*		mSceneMgr;
+	PhysicsWrapper*			mPhysics;
+
+	// ===============================
+	// World Object
+	// ===============================
+	WorldObjectFactory* 	worldObjectFactory;
+
+	Ball*					ball;
+	Room*					room;
+	Paddle*					paddle;
+	Penguin*				penguin;
+	Goal*					goal;
+	Terrain*				terrain;
 
 };
 

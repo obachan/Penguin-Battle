@@ -884,8 +884,8 @@ Project1-GameState.o: GameState.cpp GameState.hpp AppState.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/SDL_version.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
- usr/include/SDL_net/SDL_net.h WorldObjectFactory.hpp WorldObjectBall.hpp \
- WorldObjectAbstract.hpp \
+ usr/include/SDL_net/SDL_net.h World.hpp WorldObjectFactory.hpp \
+ WorldObjectBall.hpp WorldObjectAbstract.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
@@ -893,7 +893,7 @@ Project1-GameState.o: GameState.cpp GameState.hpp AppState.hpp \
  WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h \
- /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h World.hpp
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h
 
 GameState.hpp:
 
@@ -2907,6 +2907,8 @@ Network.hpp:
 
 usr/include/SDL_net/SDL_net.h:
 
+World.hpp:
+
 WorldObjectFactory.hpp:
 
 WorldObjectBall.hpp:
@@ -2934,5 +2936,3 @@ WorldObjectTerrain.hpp:
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h:
 
 /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h:
-
-World.hpp:

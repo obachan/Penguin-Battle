@@ -128,61 +128,6 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 		camera->setPosition(cameraPosition);
 	}
 
-
-	/*if(penguin_direction != previous_direction)
-	{
-	std::cout << penguin_direction << std::endl;
-	std::cout << previous_direction << std::endl;
-	}
-	
-        if ((1.0f + previous_direction.dotProduct(penguin_direction)) < 0.0001f) 
-        {
-            worldObjectSceneNode->yaw(Ogre::Degree(180));
-        }
-        else
-        {
-            //quat = previous_direction.getRotationTo(penguin_direction);
-		//std::cout << quat << std::endl;
-            worldObjectSceneNode->rotate(quat);
-        }
-
-	if (penguin_direction != Ogre::Vector3::ZERO)
-	{
-		previous_direction = Ogre::Vector3(penguin_direction.x, 0, penguin_direction.z);
-	}*/
-
-	/*Ogre::Vector3 cameraPosition = vec-(15*penguin_direction);
-	cameraPosition.y += 10;
-	camera->setPosition(cameraPosition);
-	camera->setDirection(penguin_direction);*/
-
-	/*
-	penguin_direction.normalise();
-	Ogre::Vector3 src = worldObjectSceneNode->getOrientation()*penguin_direction;
-
-	
-	
-	penguin_direction.normalise();
-        Ogre::Quaternion quat = src.getRotationTo(penguin_direction);
-        camera->setPosition(vec[0], vec[1], vec[2]);
-	camera->rotate(quat);*/
-}
-
-void Penguin::updateCamera(Ogre::Camera* camera)
-{
-/*
-	// Modify Camera
-	if(third_person_camera && camera != NULL){
-		Ogre::Vector3 cameraPosition;
-		Ogre::Vector3 cameraDirection;
-
-		cameraDirection = penguin_direction;
-		camera->setDirection(cameraDirection);
-		cameraPosition = getPenguinPosition() - (20*penguin_direction);
-		cameraPosition.y += 7;
-		camera->setPosition(cameraPosition);
-	}
-*/
 }
 
 void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)

@@ -885,8 +885,8 @@ Project1-OgreApp.o: OgreApp.cpp OgreApp.hpp OgreFramework.hpp \
  /lusr/opt/libsdl-1.2.14/include/SDL/begin_code.h \
  /lusr/opt/libsdl-1.2.14/include/SDL/close_code.h HUD.hpp Network.hpp \
  usr/include/SDL_net/SDL_net.h AppStateManager.hpp AppState.hpp \
- MenuState.hpp GameState.hpp WorldObjectFactory.hpp WorldObjectBall.hpp \
- WorldObjectAbstract.hpp \
+ MenuState.hpp GameState.hpp World.hpp WorldObjectFactory.hpp \
+ WorldObjectBall.hpp WorldObjectAbstract.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
@@ -2913,6 +2913,8 @@ AppState.hpp:
 MenuState.hpp:
 
 GameState.hpp:
+
+World.hpp:
 
 WorldObjectFactory.hpp:
 

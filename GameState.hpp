@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjectFactory.hpp"
+#include "World.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -34,19 +34,19 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
+	World* 					world;
 
 	// ===============================
 	// World Object
 	// ===============================
 	WorldObjectFactory* 	worldObjectFactory;
 
-	Ball*					ball;
-	Room*					room;
-	Paddle*					paddle;
-	Penguin*				penguin;
-	Goal*					goal;
-
-	Terrain*				terrain;
+	//Ball*					ball;
+	//Room*					room;
+	//Paddle*					paddle;
+	//Penguin*				penguin;
+	//Goal*					goal;
+	//Terrain*				terrain;
 
 	std::vector<Ball*> 		ballList;
 
