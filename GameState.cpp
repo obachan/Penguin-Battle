@@ -270,20 +270,9 @@ bool GameState::mouseMoved(const OIS::MouseEvent &evt)
  
 bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
-	switch (id)
-	{
-	case OIS::MB_Left:
-		//ball->reset(physics);
-	   break;
 
-	case OIS::MB_Right:
-		
-	   break;
-
-	default:
-	   break;
-	}
-
+	if(id == OIS::MB_Left) controller->left_mouse_button_down = true;
+	if(id == OIS::MB_Right) controller->right_mouse_button_down = true;
 
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(evt, id)) return true;
     return true;
@@ -293,6 +282,9 @@ bool GameState::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
  
 bool GameState::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
 {
+	if(id == OIS::MB_Left) controller->left_mouse_button_down = false;
+	if(id == OIS::MB_Right) controller->right_mouse_button_down = false;
+
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseUp(evt, id)) return true;
     return true;
 }

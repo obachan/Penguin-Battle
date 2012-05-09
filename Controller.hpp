@@ -8,6 +8,10 @@ public:
 	MyController();
 	~MyController();
 
+
+	bool	left_mouse_button_down;
+	bool 	right_mouse_button_down;
+
 	bool	left_control_down;
 	bool	right_control_down;
 

@@ -141,8 +141,6 @@ bool ServerMenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	    	default:
 	    	    break;
 	}
- 
-    OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
     return true;
 }
  
@@ -150,7 +148,6 @@ bool ServerMenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 bool ServerMenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
-    OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
     return true;
 }
  

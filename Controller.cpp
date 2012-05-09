@@ -2,6 +2,9 @@
 
 MyController::MyController()
 {
+	left_mouse_button_down = false;
+	right_mouse_button_down = false;
+
 	left_control_down = false;
 	right_control_down = false;
 

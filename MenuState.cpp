@@ -75,8 +75,6 @@ bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
-
-
 		cout << "before" << endl;
         m_bQuit = true;
 
@@ -84,7 +82,6 @@ bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
         return true;
     }
  
-    OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
     return true;
 }
  
@@ -92,7 +89,6 @@ bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 bool MenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
-    OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
     return true;
 }
  

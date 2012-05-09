@@ -132,42 +132,33 @@ OgreFramework::~OgreFramework()
 
 bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 { 
-	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
-	{
+	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ)){
 		m_pRenderWnd->writeContentsToTimestampedFile("BOF_Screenshot_", ".png");
 		return true;
 	}
  
-	if(m_pKeyboard->isKeyDown(OIS::KC_M))
-	{
+	if(m_pKeyboard->isKeyDown(OIS::KC_M)){
 		static int mode = 0;
  
-		if(mode == 2)
-		{
+		if(mode == 2){
 			m_pCamera->setPolygonMode(PM_SOLID);
 			mode = 0;
 		}
-		else if(mode == 0)
-		{
+		else if(mode == 0){
 			 m_pCamera->setPolygonMode(PM_WIREFRAME);
 			 mode = 1;
 		}
-		else if(mode == 1)
-		{
+		else if(mode == 1){
 			m_pCamera->setPolygonMode(PM_POINTS);
 			mode = 2;
 		}
 	}
  
-	if(m_pKeyboard->isKeyDown(OIS::KC_O))
-	{
-		if(m_pTrayMgr->isLogoVisible())
-       	{
+	if(m_pKeyboard->isKeyDown(OIS::KC_O)){
+		if(m_pTrayMgr->isLogoVisible())	{
             m_pTrayMgr->hideFrameStats();
         }
-        else
-        {
-        	//m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        else {
         	m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
         }
 	}

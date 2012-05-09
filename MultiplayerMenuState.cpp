@@ -74,8 +74,7 @@ bool MultiplayerMenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
         m_bQuit = true;
         return true;
     }
- 
-    OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
+
     return true;
 }
  
@@ -83,7 +82,6 @@ bool MultiplayerMenuState::keyPressed(const OIS::KeyEvent &keyEventRef)
  
 bool MultiplayerMenuState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
-    OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
     return true;
 }
  
