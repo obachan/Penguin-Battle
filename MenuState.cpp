@@ -46,7 +46,10 @@ void MenuState::enter()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
  
+
+
     createScene();
+
 }
 
 void MenuState::createScene()

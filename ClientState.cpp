@@ -28,7 +28,6 @@ void ClientState::enter()
 	controller_two = new MyController();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ClientState...");
-    OgreFramework::getSingletonPtr()->is_gamestate = true;
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ClientSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
@@ -46,40 +45,18 @@ void ClientState::enter()
 
 	// Sets global world conditions
 	m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
-
-
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
  
 
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
 
-	// Create Ball
-
-	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);
-	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
-
-
-	// Create Room
-	room = new Room(m_pSceneMgr, NULL);
-
-	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
-
-
-	// Create Player 1's Penguin
-	penguin = new Penguin(m_pSceneMgr, NULL);
-
-	// Create Player 2's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, NULL);
-
-	// Create Goal
-	goal = new Goal(m_pSceneMgr, NULL);
+	penguin = new Penguin(m_pSceneMgr, NULL);									// Create Player 1's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, NULL);								// Create Player 2's Penguin
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
+	room = new Room(m_pSceneMgr, NULL);											// Create Room
+	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -149,8 +126,6 @@ void ClientState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->clearAllTrays();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
-
-    OgreFramework::getSingletonPtr()->is_gamestate = false;
 
     OgreFramework::getSingletonPtr()->sounds->musicDone();
 }

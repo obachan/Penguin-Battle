@@ -28,8 +28,6 @@ OgreFramework::OgreFramework()
  
     m_pTrayMgr              = 0;
     m_FrameEvent            = Ogre::FrameEvent();
-
-    is_gamestate 			= false;
 }
 
 bool OgreFramework::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
@@ -207,48 +205,29 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	m_RotScale  = 15 * m_RotateSpeed * (float)timeSinceLastFrame;
  
 	m_TranslateVector = Vector3::ZERO;
-	if(is_gamestate){
+ 	// Get input for Camera
+	// getCameraInput();
+	// moveCamera();
 
- 		// Get input for Camera
-		getCameraInput();
-		moveCamera();
-
-		m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-	    m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
-		m_pTrayMgr->adjustTrays();
-
-
-
-		/*
-		if (!m_pTrayMgr->isDialogVisible())
-	    {
-	       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
-	    	
-	    	// if dialog isn't up, then update the camera
-	    	// if details panel is visible, then update its contents
-
-	    	if (mDetailsPanel->isVisible())
-	       	{
-				//Change Score and Timer Value each Frame
-	       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(hud->timer));
-	       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(hud->score));
-
-
-	       	    std::string hud_status_message;
-	       	    if(hud->hud_status == hud->HUD_STATUS_PLAYING)
-	       	    	hud_status_message = "Playing";
-	       	    else if(hud->hud_status == hud->HUD_STATUS_WIN)
-	       	    	hud_status_message = "You Win";
-	       	    else if(hud->hud_status == hud->HUD_STATUS_LOSE)
-	       	    	hud_status_message = "You Lose";
-
-
-	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-	       	}
-	    }
-	    */
-	}
+	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
+	m_pTrayMgr->frameRenderingQueued(m_FrameEvent);
+	m_pTrayMgr->adjustTrays();
 }
+
+void OgreFramework::updateDebugCamera(double timeSinceLastFrame)
+{
+	m_MoveScale = 15 * m_MoveSpeed   * (float)timeSinceLastFrame;
+	m_RotScale  = 15 * m_RotateSpeed * (float)timeSinceLastFrame;
+ 
+	m_TranslateVector = Vector3::ZERO;
+
+	getCameraInput();
+	moveCamera();
+}
+
+//=========================
+// Private Methods
+//=========================
 
 void OgreFramework::moveCamera()
 {

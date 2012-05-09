@@ -44,8 +44,7 @@ public:
  
 	bool initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener = 0, OIS::MouseListener *pMouseListener = 0);
 	void updateOgre(double timeSinceLastFrame);
-	void moveCamera();
-	void getCameraInput();
+	void updateDebugCamera(double timeSinceLastFrame);
  
 	bool isOgreToBeShutDown()const{return m_bShutDownOgre;}
  
@@ -69,13 +68,12 @@ public:
 	OIS::Keyboard*				m_pKeyboard;
 	OIS::Mouse*					m_pMouse;
 
-	MyController*				controller;
-	SoundWrapper*				sounds;
-	HUD*						hud;
+	MyController*				controller; // Will Remove
+	SoundWrapper*				sounds;		// Will Remove
+	HUD*						hud;		// Will Remove
 
 	OgreBites::SdkTrayManager*	m_pTrayMgr;
 
-	bool						is_gamestate;
 	bool						m_bShutDownOgre;
 
 	ServerNet 					*server;
@@ -84,6 +82,9 @@ public:
 private:
 	OgreFramework(const OgreFramework&);
 	OgreFramework& operator= (const OgreFramework&);
+
+	void moveCamera();
+	void getCameraInput();
  
 	OgreBites::ParamsPanel* 			mDetailsPanel;
     Ogre::FrameEvent                    m_FrameEvent;

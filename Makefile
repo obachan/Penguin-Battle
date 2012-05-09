@@ -70,7 +70,7 @@ am_Project1_OBJECTS = Project1-AppStateManager.$(OBJEXT) \
 	Project1-WorldObjectPenguin.$(OBJEXT) \
 	Project1-WorldObjectRoom.$(OBJEXT) \
 	Project1-WorldObjectTerrain.$(OBJEXT) \
-	Project1-WorldObjectPaddle.$(OBJEXT) \
+	Project1-WorldObjectPaddle.$(OBJEXT) Project1-World.$(OBJEXT) \
 	Project1-OgreApp.$(OBJEXT) Project1-main.$(OBJEXT)
 Project1_OBJECTS = $(am_Project1_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -243,13 +243,13 @@ top_srcdir = .
 #-------------------------------------------
 # noinst_HEADERS: WorldObject classes .hpp
 #-------------------------------------------
-noinst_HEADERS = WorldObjectAbstract.hpp WorldObjectFactory.hpp WorldObjectGoal.hpp WorldObjectBall.hpp WorldObjectPenguin.hpp WorldObjectRoom.hpp WorldObjectTerrain.hpp  WorldObjectPaddle.hpp OgreApp.hpp
+noinst_HEADERS = WorldObjectAbstract.hpp WorldObjectFactory.hpp WorldObjectGoal.hpp WorldObjectBall.hpp WorldObjectPenguin.hpp WorldObjectRoom.hpp WorldObjectTerrain.hpp  WorldObjectPaddle.hpp World.hpp OgreApp.hpp
 Project1_CPPFLAGS = -I$(top_srcdir)
 
 #-------------------------------------------
 # Project1_SOURCES: .cpp
 #-------------------------------------------
-Project1_SOURCES = AppStateManager.cpp MenuState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp PauseState.cpp ServerState.cpp ClientState.cpp GameState.cpp Network.cpp Physics.cpp HUD.cpp SoundWrapper.cpp Controller.cpp OgreFramework.cpp WorldObjectAbstract.cpp WorldObjectFactory.cpp WorldObjectGoal.cpp WorldObjectBall.cpp WorldObjectPenguin.cpp WorldObjectRoom.cpp WorldObjectTerrain.cpp WorldObjectPaddle.cpp OgreApp.cpp main.cpp
+Project1_SOURCES = AppStateManager.cpp MenuState.cpp MultiplayerMenuState.cpp ClientMenuState.cpp ServerMenuState.cpp PauseState.cpp ServerState.cpp ClientState.cpp GameState.cpp Network.cpp Physics.cpp HUD.cpp SoundWrapper.cpp Controller.cpp OgreFramework.cpp WorldObjectAbstract.cpp WorldObjectFactory.cpp WorldObjectGoal.cpp WorldObjectBall.cpp WorldObjectPenguin.cpp WorldObjectRoom.cpp WorldObjectTerrain.cpp WorldObjectPaddle.cpp World.cpp OgreApp.cpp main.cpp
 Project1_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(sdl_CFLAGS) $(SDL_mixer_CFLAGS) $(SDL_net_CFLAGS)
 Project1_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(sdl_LIBS) $(SDL_mixer_LIBS) $(SDL_net_LIBS)
 EXTRA_DIST = buildit makeit
@@ -379,6 +379,7 @@ include ./$(DEPDIR)/Project1-Physics.Po
 include ./$(DEPDIR)/Project1-ServerMenuState.Po
 include ./$(DEPDIR)/Project1-ServerState.Po
 include ./$(DEPDIR)/Project1-SoundWrapper.Po
+include ./$(DEPDIR)/Project1-World.Po
 include ./$(DEPDIR)/Project1-WorldObjectAbstract.Po
 include ./$(DEPDIR)/Project1-WorldObjectBall.Po
 include ./$(DEPDIR)/Project1-WorldObjectFactory.Po
@@ -731,6 +732,20 @@ Project1-WorldObjectPaddle.obj: WorldObjectPaddle.cpp
 #	source='WorldObjectPaddle.cpp' object='Project1-WorldObjectPaddle.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-WorldObjectPaddle.obj `if test -f 'WorldObjectPaddle.cpp'; then $(CYGPATH_W) 'WorldObjectPaddle.cpp'; else $(CYGPATH_W) '$(srcdir)/WorldObjectPaddle.cpp'; fi`
+
+Project1-World.o: World.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-World.o -MD -MP -MF $(DEPDIR)/Project1-World.Tpo -c -o Project1-World.o `test -f 'World.cpp' || echo '$(srcdir)/'`World.cpp
+	$(am__mv) $(DEPDIR)/Project1-World.Tpo $(DEPDIR)/Project1-World.Po
+#	source='World.cpp' object='Project1-World.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-World.o `test -f 'World.cpp' || echo '$(srcdir)/'`World.cpp
+
+Project1-World.obj: World.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-World.obj -MD -MP -MF $(DEPDIR)/Project1-World.Tpo -c -o Project1-World.obj `if test -f 'World.cpp'; then $(CYGPATH_W) 'World.cpp'; else $(CYGPATH_W) '$(srcdir)/World.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Project1-World.Tpo $(DEPDIR)/Project1-World.Po
+#	source='World.cpp' object='Project1-World.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -c -o Project1-World.obj `if test -f 'World.cpp'; then $(CYGPATH_W) 'World.cpp'; else $(CYGPATH_W) '$(srcdir)/World.cpp'; fi`
 
 Project1-OgreApp.o: OgreApp.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Project1_CPPFLAGS) $(CPPFLAGS) $(Project1_CXXFLAGS) $(CXXFLAGS) -MT Project1-OgreApp.o -MD -MP -MF $(DEPDIR)/Project1-OgreApp.Tpo -c -o Project1-OgreApp.o `test -f 'OgreApp.cpp' || echo '$(srcdir)/'`OgreApp.cpp

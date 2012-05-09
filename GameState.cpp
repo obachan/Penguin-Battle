@@ -1,9 +1,9 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 #include "GameState.hpp"
-#include "WorldObjectBall.hpp"
-
 #include "OgreBillboardParticleRenderer.h"
+
+#include "World.hpp"
 
 #include <iostream>
 
@@ -174,64 +174,54 @@ void GameState::update(double timeSinceLastFrame)
 {
 
 
- 		// Our Team's main loop
-		ball->update(timeSinceLastFrame);
+	// Our Team's main loop
+	ball->update(timeSinceLastFrame);
+	penguin->update(timeSinceLastFrame, controller, m_pCamera);
 
-		penguin->update(timeSinceLastFrame, controller, OgreFramework::getSingletonPtr()->m_pCamera);
+	OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
-		OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-
-		if (timeSinceLastFrame!=0)
-		{
-	 		physics->stepPhysics(timeSinceLastFrame, 5);
-		
-		}
-
-		//paddle->update(timeSinceLastFrame, OgreFramework::getSingletonPtr()->controller);
+	if (timeSinceLastFrame!=0){
+		physics->stepPhysics(timeSinceLastFrame, 5);
+	}
 	
-		// Handles the event in which the player scores
+	// Handles the event in which the player scores
+	bool scored = false;
+	if(ball->inGoal(goal)){
+		scored = true;
+		ball->reset(physics);
+	}
 
-		bool scored = false;
-
-		if(ball->inGoal(goal))
-		{
-			scored = true;
-			ball->reset(physics);
-		}
-
-
-		OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
-
-
-		if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
-	    {
-	       	//mCameraMan->frameRenderingQueued(m_FrameEvent);
+	// Update HUD
+	OgreFramework::getSingletonPtr()->hud->update(timeSinceLastFrame, scored);
+	if (!OgreFramework::getSingletonPtr()->m_pTrayMgr->isDialogVisible())
+	{
+	   	//mCameraMan->frameRenderingQueued(m_FrameEvent);
 	    	
-	    	// if dialog isn't up, then update the camera
-	    	// if details panel is visible, then update its contents
+	  	// if dialog isn't up, then update the camera
+	   	// if details panel is visible, then update its contents
 
-	    	if (mDetailsPanel->isVisible())
-	       	{
-				//Change Score and Timer Value each Frame
-	       	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->timer));
-	       	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->score));
-
-
-	       	    std::string hud_status_message;
-	       	    if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_PLAYING)
-	       	    	hud_status_message = "Playing";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_WIN)
-	       	    	hud_status_message = "You Win";
-	       	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_LOSE)
-	       	    	hud_status_message = "You Lose";
+	   	if (mDetailsPanel->isVisible())
+	   	{
+			//Change Score and Timer Value each Frame
+	   	    mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->timer));
+	   	    mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(OgreFramework::getSingletonPtr()->hud->score));
 
 
-	       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
-	       	}
-	    }
+	   	    std::string hud_status_message;
+	   	    if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_PLAYING)
+	   	    	hud_status_message = "Playing";
+	  	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_WIN)
+	  	    	hud_status_message = "You Win";
+	   	    else if(OgreFramework::getSingletonPtr()->hud->hud_status == HUD::HUD_STATUS_LOSE)
+	   	    	hud_status_message = "You Lose";
 
-	////////////////////////////////////////////////
-	//OgreFramework::getSingletonPtr()->m_pRoot->renderOneFrame();	
+       	    mDetailsPanel->setParamValue(3, hud_status_message);    	
+       	}
+    }
+
+    // Update Debug Camera
+    if(controller->debugCameraOn())
+    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -260,31 +250,6 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
 		if(!penguin->in_air)
 			soundFactory->playJumpSoundEffect();
 	}
-
-	// Key Presses to Debug
-	// if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
-	// 	m_pRenderWnd->writeContentsToTimestampedFile("BOF_Screenshot_", ".png");
-	// if(m_pKeyboard->isKeyDown(OIS::KC_M)) {
-	// 	static int mode = 0;
-	// 	if(mode == 2) {
-	// 		m_pCamera->setPolygonMode(PM_SOLID);
-	// 		mode = 0;
-	// 	} else if(mode == 0) {
-	// 		 m_pCamera->setPolygonMode(PM_WIREFRAME);
-	// 		 mode = 1;
-	// 	} else if(mode == 1) {
-	// 		m_pCamera->setPolygonMode(PM_POINTS);
-	// 		mode = 2;
-	// 	}
-	// }
-	// if(m_pKeyboard->isKeyDown(OIS::KC_O)) {
-	// 	if(m_pTrayMgr->isLogoVisible())	{
-	// 		m_pTrayMgr->hideFrameStats();
-	// 	} else {
-	// 		m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	// 	}
-	// }
-
 	return true;
 }
  
@@ -313,8 +278,8 @@ bool GameState::mouseMoved(const OIS::MouseEvent &evt)
 
 	// If it's in debug mode, allow the mouse to navigate the scene
 	if(!controller->thirdPersonCameraOn()){
-		OgreFramework::getSingletonPtr()->m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-		OgreFramework::getSingletonPtr()->m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
 	}
     return true;
 }

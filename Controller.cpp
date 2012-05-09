@@ -36,3 +36,8 @@ bool MyController::thirdPersonCameraOn()
 {
 	return third_person_camera;
 }
+
+bool MyController::debugCameraOn()
+{
+	return !third_person_camera;
+}

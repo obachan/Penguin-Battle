@@ -59,6 +59,11 @@ public:
 	
 private: 
 	bool					m_bShutdown;
+
+	// ========================
+	// Parameters to control debug camera
+	// ========================
+
 };
  
 //|||||||||||||||||||||||||||||||||||||||||||||||

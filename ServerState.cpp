@@ -30,7 +30,6 @@ void ServerState::enter()
 	physics = new PhysicsWrapper();
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
-    OgreFramework::getSingletonPtr()->is_gamestate = true;
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ServerSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
@@ -56,30 +55,14 @@ void ServerState::enter()
 
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("2ndLight")->setPosition(50, 50, 50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("3rdLight")->setPosition(-50, 50, -50);
-	//OgreFramework::getSingletonPtr()->m_pSceneMgr->createLight("4thLight")->setPosition(50, 50, -50);
-
-	// Create Ball
-	ball = new Ball(m_pSceneMgr, physics);
-	//test_ball = new Ball(OgreFramework::getSingletonPtr()->m_pSceneMgr, OgreFramework::getSingletonPtr()->physics, 30, 30, 30);
 
 
-	// Create Room
-	room = new Room(m_pSceneMgr, physics);
 
-	// Create Paddle
-	//paddle = new Paddle(OgreFramework::getSingletonPtr()->m_pSceneMgr);
-	//OgreFramework::getSingletonPtr()->physics->add_object_to_dynamicWorld(paddle->paddleRigidBody);
-
-	// Create Player 1's Penguin
-	penguin = new Penguin(m_pSceneMgr, physics);
-
-	// Create Player 2's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, physics);
-
-	// Create Goal
-	goal = new Goal(m_pSceneMgr, physics);
+	penguin = new Penguin(m_pSceneMgr, physics);		// Create Player 1's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, physics);	// Create Player 2's Penguin
+	ball = new Ball(m_pSceneMgr, physics);				// Create Ball
+	room = new Room(m_pSceneMgr, physics);				// Create Room
+	goal = new Goal(m_pSceneMgr, physics);				// Create Goal
 
 
 	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
@@ -135,8 +118,6 @@ void ServerState::exit()
     OgreFramework::getSingletonPtr()->m_pTrayMgr->clearAllTrays();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->setListener(0);
-
-    OgreFramework::getSingletonPtr()->is_gamestate = false;
 
     OgreFramework::getSingletonPtr()->sounds->musicDone();
 }
