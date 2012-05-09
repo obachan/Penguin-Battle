@@ -65,11 +65,6 @@ void ServerState::enter()
 	room = new Room(m_pSceneMgr, physics);				// Create Room
 	goal = new Goal(m_pSceneMgr, physics);				// Create Goal
 
-
-	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
-	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
-
-
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
@@ -157,7 +152,7 @@ void ServerState::update(double timeSinceLastFrame)
  	// Our Team's main loop
 	ball->update(timeSinceLastFrame);
 
-	penguin->update(timeSinceLastFrame, server_controller, OgreFramework::getSingletonPtr()->m_pCamera);
+	penguin->update(timeSinceLastFrame, server_controller, m_pCamera);
 	penguin_two->update(timeSinceLastFrame, client_controller, NULL);
 
 
@@ -174,7 +169,7 @@ void ServerState::update(double timeSinceLastFrame)
 
 	// Update Debug Camera
     if(server_controller->debugCameraOn())
-    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
+    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame, m_pCamera);
 
     // Update Base Framework
     OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
@@ -261,7 +256,7 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	// Key Presses to Activate Sound Effect
     if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
-	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
+	OgreFramework::getSingletonPtr()->debugKeyPressed(keyEventRef, m_pCamera);
 
 	return true;
 }
@@ -271,7 +266,6 @@ bool ServerState::keyPressed(const OIS::KeyEvent &keyEventRef)
 bool ServerState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
 	server_controller->keyReleased(keyEventRef);
-	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
 	return true;
 }
 
@@ -281,7 +275,10 @@ bool ServerState::mouseMoved(const OIS::MouseEvent &evt)
 {
 
 	server_controller->mouseMoved(evt);
-	if(!server_controller->thirdPersonCameraOn())		OgreFramework::getSingletonPtr()->mouseMoved(evt);
+	if(!server_controller->thirdPersonCameraOn()){
+		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	}
     return true;
 }
  

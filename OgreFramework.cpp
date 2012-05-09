@@ -14,9 +14,7 @@ OgreFramework::OgreFramework()
 	m_iNumScreenShots	    = 0;
  
 	m_pRoot					= 0;
-	m_pSceneMgr				= 0;
 	m_pRenderWnd		    = 0;
-	m_pCamera				= 0;
 	m_pViewport				= 0;
 	m_pLog					= 0;
 	m_pTimer				= 0;
@@ -112,6 +110,32 @@ OgreFramework::~OgreFramework()
 
 bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 { 
+	return true;
+}
+
+bool OgreFramework::keyReleased(const OIS::KeyEvent &keyEventRef)
+{	
+	return true;
+}
+
+bool OgreFramework::mouseMoved(const OIS::MouseEvent &evt)
+{
+	return true;
+}
+
+bool OgreFramework::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+{
+	return true;
+}
+ 
+bool OgreFramework::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
+{
+	return true;
+}
+
+
+bool OgreFramework::debugKeyPressed(const OIS::KeyEvent &keyEventRef, Ogre::Camera* camera)
+{ 
 	if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ)){
 		m_pRenderWnd->writeContentsToTimestampedFile("BOF_Screenshot_", ".png");
 		return true;
@@ -121,15 +145,15 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 		static int mode = 0;
  
 		if(mode == 2){
-			m_pCamera->setPolygonMode(PM_SOLID);
+			camera->setPolygonMode(PM_SOLID);
 			mode = 0;
 		}
 		else if(mode == 0){
-			 m_pCamera->setPolygonMode(PM_WIREFRAME);
+			 camera->setPolygonMode(PM_WIREFRAME);
 			 mode = 1;
 		}
 		else if(mode == 1){
-			m_pCamera->setPolygonMode(PM_POINTS);
+			camera->setPolygonMode(PM_POINTS);
 			mode = 2;
 		}
 	}
@@ -146,28 +170,6 @@ bool OgreFramework::keyPressed(const OIS::KeyEvent &keyEventRef)
 	return true;
 }
 
-bool OgreFramework::keyReleased(const OIS::KeyEvent &keyEventRef)
-{	
-	return true;
-}
-
-bool OgreFramework::mouseMoved(const OIS::MouseEvent &evt)
-{
-	m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-	m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
- 
-	return true;
-}
-
-bool OgreFramework::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
-{
-	return true;
-}
- 
-bool OgreFramework::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id)
-{
-	return true;
-}
 
 void OgreFramework::updateOgre(double timeSinceLastFrame)
 {
@@ -176,7 +178,7 @@ void OgreFramework::updateOgre(double timeSinceLastFrame)
 	m_pTrayMgr->adjustTrays();
 }
 
-void OgreFramework::updateDebugCamera(double timeSinceLastFrame)
+void OgreFramework::updateDebugCamera(double timeSinceLastFrame, Ogre::Camera* camera)
 {
 	m_MoveScale = 15 * m_MoveSpeed   * (float)timeSinceLastFrame;
 	m_RotScale  = 15 * m_RotateSpeed * (float)timeSinceLastFrame;
@@ -184,20 +186,12 @@ void OgreFramework::updateDebugCamera(double timeSinceLastFrame)
 	m_TranslateVector = Vector3::ZERO;
 
 	getCameraInput();
-	moveCamera();
+	moveCamera(camera);
 }
 
 //=========================
 // Private Methods
 //=========================
-
-void OgreFramework::moveCamera()
-{
-	if(m_pKeyboard->isKeyDown(OIS::KC_LSHIFT)) 
-		m_pCamera->moveRelative(m_TranslateVector);
-	else
-		m_pCamera->moveRelative(m_TranslateVector / 10);
-}
 
 void OgreFramework::getCameraInput()
 {
@@ -213,4 +207,12 @@ void OgreFramework::getCameraInput()
  
 	if(m_pKeyboard->isKeyDown(OIS::KC_S))
 		m_TranslateVector.z = m_MoveScale;
+}
+
+void OgreFramework::moveCamera(Ogre::Camera* camera)
+{
+	if(m_pKeyboard->isKeyDown(OIS::KC_LSHIFT)) 
+		camera->moveRelative(m_TranslateVector);
+	else
+		camera->moveRelative(m_TranslateVector / 10);
 }

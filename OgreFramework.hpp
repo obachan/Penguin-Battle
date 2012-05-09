@@ -44,7 +44,7 @@ public:
  
 	bool initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener = 0, OIS::MouseListener *pMouseListener = 0);
 	void updateOgre(double timeSinceLastFrame);
-	void updateDebugCamera(double timeSinceLastFrame);
+	void updateDebugCamera(double timeSinceLastFrame, Ogre::Camera* camera);
  
 	bool keyPressed(const OIS::KeyEvent &keyEventRef);
 	bool keyReleased(const OIS::KeyEvent &keyEventRef);
@@ -53,11 +53,10 @@ public:
 	bool mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id); 
 	bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
  
+	bool debugKeyPressed(const OIS::KeyEvent &keyEventRef, Ogre::Camera*)
+;
 	Ogre::Root*					m_pRoot;
-	Ogre::SceneManager*			m_pSceneMgr; // Will Remove
-	
 	Ogre::RenderWindow*			m_pRenderWnd;
-	Ogre::Camera*				m_pCamera;	// Will Remove
 	Ogre::Viewport*				m_pViewport;
 	Ogre::Log*					m_pLog;
 	Ogre::Timer*				m_pTimer;
@@ -68,15 +67,15 @@ public:
 
 	OgreBites::SdkTrayManager*	m_pTrayMgr;
 
-	ServerNet 					*server;
-	ClientNet 					*client;
+	ServerNet*					server;
+	ClientNet*					client;
 	
 private:
 	OgreFramework(const OgreFramework&);
 	OgreFramework& operator= (const OgreFramework&);
 
-	void moveCamera();
 	void getCameraInput();
+	void moveCamera(Ogre::Camera* camera);
  
 	OgreBites::ParamsPanel* 			mDetailsPanel;
     Ogre::FrameEvent                    m_FrameEvent;

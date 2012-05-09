@@ -57,9 +57,6 @@ void GameState::enter()
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
 
-	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
-	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
-
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
@@ -136,7 +133,7 @@ void GameState::update(double timeSinceLastFrame)
 
     // Update Debug Camera
     if(controller->debugCameraOn())
-    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
+    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame, m_pCamera);
 
     // Update Base Framework
     OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
@@ -155,7 +152,7 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
 	// Key Presses to Activate Sound Effect
     if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
-	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
+	OgreFramework::getSingletonPtr()->debugKeyPressed(keyEventRef, m_pCamera);
 
 	return true;
 }
@@ -164,7 +161,6 @@ bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef){
  
 bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef){
 	controller->keyReleased(keyEventRef);
-	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
 	return true;
 }
 
@@ -173,7 +169,10 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef){
 bool GameState::mouseMoved(const OIS::MouseEvent &evt){
 	controller->mouseMoved(evt);
 	// If it's in debug mode, allow the mouse to navigate the scene
-	if(!controller->thirdPersonCameraOn())		OgreFramework::getSingletonPtr()->mouseMoved(evt);
+	if(!controller->thirdPersonCameraOn()){
+		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	}
     return true;
 }
  

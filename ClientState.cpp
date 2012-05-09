@@ -47,7 +47,13 @@ void ClientState::enter()
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
 
-	client_controller = new MyController();
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+
+	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
+	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
+    OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
 
 	penguin = new Penguin(m_pSceneMgr, NULL);									// Create Player 1's Penguin
 	penguin_two = new Penguin(m_pSceneMgr, NULL);								// Create Player 2's Penguin
@@ -55,25 +61,11 @@ void ClientState::enter()
 	room = new Room(m_pSceneMgr, NULL);											// Create Room
 	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
 
+	client_controller = new MyController();
 	sound_factory = new SoundWrapper();
     sound_factory->playMusic();
-
-	OgreFramework::getSingletonPtr()->m_pSceneMgr = m_pSceneMgr;
-	OgreFramework::getSingletonPtr()->m_pCamera = m_pCamera;
-
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-
-
-	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
-	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
-
-    OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
-
- 
- 	penguin->update(0.1f, client_controller, OgreFramework::getSingletonPtr()->m_pCamera);
+ 	penguin->update(0.1f, client_controller, m_pCamera);
 	penguin_two->update(0.1f, client_controller, NULL);
 	ball->update(0.1f);
 	
@@ -212,7 +204,7 @@ void ClientState::update(double timeSinceLastFrame)
 	
   	// Update Debug Camera
     if(client_controller->debugCameraOn())
-    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame);
+    	OgreFramework::getSingletonPtr()->updateDebugCamera(timeSinceLastFrame, m_pCamera);
 
     // Update Base Framework
     OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
@@ -248,7 +240,7 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	// Key Presses to Activate Sound Effect
     if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
-	OgreFramework::getSingletonPtr()->keyPressed(keyEventRef);
+	OgreFramework::getSingletonPtr()->debugKeyPressed(keyEventRef, m_pCamera);
 
 	return true;
 }
@@ -258,7 +250,6 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 bool ClientState::keyReleased(const OIS::KeyEvent &keyEventRef)
 {
 	client_controller->keyReleased(keyEventRef);
-	OgreFramework::getSingletonPtr()->keyReleased(keyEventRef);
 	return true;
 }
 
@@ -268,7 +259,10 @@ bool ClientState::mouseMoved(const OIS::MouseEvent &evt)
 {
 	client_controller->mouseMoved(evt);
 	// If it's in debug mode, allow the mouse to navigate the scene
-	if(!client_controller->thirdPersonCameraOn())		OgreFramework::getSingletonPtr()->mouseMoved(evt);
+	if(!client_controller->thirdPersonCameraOn()){
+		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	}
     return true;
 }
  
