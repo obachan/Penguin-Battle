@@ -12,6 +12,9 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics)
 	penguin =  worldObjectFactory->createNewPenguin(); 	// Create Penguin
 	goal = worldObjectFactory->createNewGoal(); 		// Create Goal
 	terrain = worldObjectFactory->createNewTerrain(); 	// Create Terrain
+
+
+	
 }
 
 World::~World()

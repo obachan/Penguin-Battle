@@ -105,6 +105,7 @@ particle_system Examples/Rain
         width           1000
         height          1000
         depth           0
+
     }
 
     // Gravity

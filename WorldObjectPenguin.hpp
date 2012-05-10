@@ -30,6 +30,13 @@ public:
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
 
+
+	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
+	Ogre::SceneManager* mgr;
+	PhysicsWrapper* phyWrap;
+
+
+
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
@@ -51,6 +58,7 @@ private:
 	void handleGravity(double, Ogre::Vector3*);
 	void handleCollisions(Ogre::Vector3*);
 	void animate(double, MyController*);
+	void fireWeapon();
 
 	static int 				scene_node_counter;
 };

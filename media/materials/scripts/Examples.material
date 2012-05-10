@@ -716,11 +716,12 @@ material Examples/Droplet
 			scene_blend alpha_blend
 			depth_write off
 			diffuse vertexcolour
-			fog_override true
+			fog_override true none
 
 			texture_unit
 			{
-				texture snowflake.jpg
+				colour-op colour-blend
+				texture snowflake.png
 			}
 		}
 	}

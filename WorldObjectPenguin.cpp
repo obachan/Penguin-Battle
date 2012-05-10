@@ -1,10 +1,16 @@
 #include "WorldObjectPenguin.hpp"
+#include "WorldObjectBall.hpp"
 
 int Penguin::scene_node_counter = 0;
 
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract()
 {
+
+	//Blasphemy!!!
+	mgr = m_pSceneMgr;
+	phyWrap = physics;
+	
 	createPenguin(m_pSceneMgr);
 
 	if(physics != NULL)
@@ -17,6 +23,10 @@ Penguin::~Penguin()
 
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 {
+
+
+	
+
 
 	//--------------------
 	// Physics - Penguin
@@ -176,10 +186,10 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	// Space on the keyboard will cause the penguin to jump
 	if(controller->jump_control_down == true){
 		controller->jump_control_down = false;
-		//if(!in_air){
+		if(!in_air){
 			in_air = true;
 			penguin_velocity[1] = jump_vel;
-		//}
+		}
 	}
 
 
@@ -195,6 +205,22 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		controller->mouse_x_movement = 0.0;
 	
 	}
+	
+	if( controller->left_mouse_button_down == true) {
+		controller->left_mouse_button_down = false;
+		fireWeapon();
+	
+	}
+}
+
+
+void Penguin::fireWeapon() {
+
+	Ogre::Vector3 pos = worldObjectSceneNode->getPosition();
+
+	Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
+	
+//double start_pos_x, double start_pos_y, double start_pos_z
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
