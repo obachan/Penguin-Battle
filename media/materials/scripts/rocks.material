@@ -1,4 +1,4 @@
-material rockMat/rock2
+material rockMat/rock1
 {
 	technique
 	{
@@ -22,7 +22,7 @@ material rockMat/rock2
 	}
 }
 
-material rockMat/rock4
+material rockMat/rockGroup
 {
 	technique
 	{
@@ -46,7 +46,7 @@ material rockMat/rock4
 	}
 }
 
-material rockMat/rock5
+material rockMat/flatPebble
 {
 	technique
 	{
