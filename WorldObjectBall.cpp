@@ -210,12 +210,18 @@ Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physi
 	return ball;
 }
 
-Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
-	Ogre::Vector3 pos, Ogre::Vector3 dir)
+Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, Penguin* penguin)
 {
+	Ogre::Vector3 penguin_pos = penguin->getVisualPosition();
+	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
+
+	Ogre::Vector3 ball_start_pos = penguin_pos + 8*penguin_dir;
+	Ogre::Vector3 ball_start_dir = penguin_dir.midPoint(Ogre::Vector3(0, 1, 0));
+	ball_start_dir.normalise();
+
 	Ball* ball = new Ball();
 	ball->initWorldObject(m_pSceneMgr, physics);
-	ball->resetPosition(pos);
-	ball->resetVelocity(Ogre::Vector3(dir[0], dir[1], dir[2]), ball_launch_vel);
+	ball->resetPosition(ball_start_pos);
+	ball->resetVelocity(ball_start_dir, ball_launch_vel);
 	return ball;
 }

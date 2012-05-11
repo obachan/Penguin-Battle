@@ -8,6 +8,7 @@
 
 #include "WorldObjectAbstract.hpp"
 #include "WorldObjectGoal.hpp"
+#include "WorldObjectPenguin.hpp"
 
 
 class Ball : public WorldObjectAbstract
@@ -26,8 +27,8 @@ public:
 	// ==========================
 	void update(); 			// From abstract class AbstractWorldObject
 
-	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*, Ogre::Vector3 pos);
-	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*, Ogre::Vector3 pos, Ogre::Vector3 dir);
+	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*, Ogre::Vector3);
+	static Ball* createNewBall(Ogre::SceneManager*, PhysicsWrapper*, Penguin*);
 
 protected:
 	// ==========================

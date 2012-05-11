@@ -18,14 +18,7 @@ Ball* WorldObjectFactory::createNewBall(){
 
 
 Ball* WorldObjectFactory::createNewBall(Penguin* penguin){
-	Ogre::Vector3 penguin_pos = penguin->getVisualPosition();
-	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
-
-	Ogre::Vector3 ball_start_pos = penguin_pos + 8*penguin_dir;
-	//ball_start_pos[1] = ball_start_pos[1] + 10;
-
-	Ball* ball = Ball::createNewBall(mSceneMgr, mPhysics, ball_start_pos, penguin_dir);
-	return ball;
+	return Ball::createNewBall(mSceneMgr, mPhysics, penguin);
 }
 
 Ball* WorldObjectFactory::createNewBall(float px, float py, float pz){
