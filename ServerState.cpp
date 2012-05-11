@@ -150,7 +150,7 @@ void ServerState::update(double timeSinceLastFrame)
 	
 
  	// Our Team's main loop
-	ball->update(timeSinceLastFrame);
+	ball->update();
 
 	penguin->update(timeSinceLastFrame, server_controller, m_pCamera);
 	penguin_two->update(timeSinceLastFrame, client_controller, NULL);
@@ -174,6 +174,7 @@ void ServerState::update(double timeSinceLastFrame)
     // Update Base Framework
     OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
+    // ===========================================================================
 	// SEND Server Message (Visuals of all the items)!!!!!!
 	Ogre::Vector3 newballVector = ball->getVisualPosition();
 	memcpy(buffer, &newballVector[0], 4);
@@ -196,6 +197,7 @@ void ServerState::update(double timeSinceLastFrame)
 
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
+    // ===========================================================================
 	memcpy(buffer, &newPenguinServerVector[1], 4);
 	memcpy(buffer+4, &newPenguinServerVector[2], 4);
 
@@ -221,6 +223,7 @@ void ServerState::update(double timeSinceLastFrame)
 	memcpy(buffer+28, &newPenguinClientVector[1], 4);
 
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
+    // ===========================================================================
 
 	memcpy(buffer, &newPenguinClientVector[2], 4);
 		
@@ -237,6 +240,7 @@ void ServerState::update(double timeSinceLastFrame)
 		
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
+    // ===========================================================================
 
 	// TODO - SEND!!!!!!
 	// Send penguins' and ball's position

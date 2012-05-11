@@ -47,6 +47,8 @@ public:
 	SoundWrapper* 	sound_factory;
 	
 private:
+	ServerNet*					server;
+
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  

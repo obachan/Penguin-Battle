@@ -35,7 +35,7 @@ public:
 	Goal*								goal;
 	Terrain*							terrain;
 
-	vector<WorldObjectAbstract*> 		balls;
+	vector<WorldObjectAbstract*> 		world_objects;
 
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;

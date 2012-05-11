@@ -111,9 +111,9 @@ void WorldObjectAbstract::attachToDynamicWorld(PhysicsWrapper* physics)
 // Abstract methods
 // ========================================
 
-void WorldObjectAbstract::update(double timeSinceLastFrame)
+void WorldObjectAbstract::update()
 {
-	std::cout << "WorldObjectAbstract::update()" << std::endl;
+	updateWorldObjectVisual();
 }
 
 void WorldObjectAbstract::initWorldObject(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)

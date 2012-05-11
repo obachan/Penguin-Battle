@@ -13,7 +13,10 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics)
 	room = worldObjectFactory->createNewRoom(); 				// Create Room
 	penguin =  worldObjectFactory->createNewPenguin(); 			// Create Penguin
 	goal = worldObjectFactory->createNewGoal(); 				// Create Goal
-	terrain = worldObjectFactory->createNewTerrain(); 			// Create Terrain
+	// terrain = worldObjectFactory->createNewTerrain(); 			// Create Terrain
+
+
+	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
 }
 
 World::~World()
@@ -23,7 +26,6 @@ World::~World()
 
 void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
-
 	/* Update Physics Engine */
 	if (timeSinceLastFrame!=0){
 		mPhysics->stepPhysics(timeSinceLastFrame, 5);
@@ -33,11 +35,8 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 	penguin->update(timeSinceLastFrame, controller, camera);
 
 	// /* Update World Objects */
-	// ball->update(timeSinceLastFrame);
-	// ball2->update(timeSinceLastFrame);
-
-	for(int i=0; i<balls.size(); ++i){
-		balls[i]->update(timeSinceLastFrame);
+	for(int i=0; i<world_objects.size(); ++i){
+		world_objects[i]->update();
 	}
 }
 
@@ -45,6 +44,6 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 /* Callback Function */
 bool World::CallbackAddBall(void *Param)
 {
-	balls.push_back(worldObjectFactory->createNewBall(penguin));
+	world_objects.push_back(worldObjectFactory->createNewBall(penguin));
 	return true;
 }

@@ -238,16 +238,16 @@ void Penguin::handleCollisions(Ogre::Vector3* pos)
 	// 	(*pos)[0] = room_width/2 - penguin_length/2;
 
 
-	if((*pos)[1] > room_width/2 - penguin_length/2)
-		(*pos)[1] = room_width/2 - penguin_length/2;
+	// if((*pos)[1] > room_width/2 - penguin_length/2)
+	// 	(*pos)[1] = room_width/2 - penguin_length/2;
 
 
-	if((*pos)[2] < -room_length/2 + penguin_length/2)
-		(*pos)[2] = -room_length/2 + penguin_length/2;
+	// if((*pos)[2] < -room_length/2 + penguin_length/2)
+	// 	(*pos)[2] = -room_length/2 + penguin_length/2;
 
 
-	if((*pos)[2] > room_length/2 - penguin_length/2)
-		(*pos)[2] = room_length/2 - penguin_length/2;
+	// if((*pos)[2] > room_length/2 - penguin_length/2)
+	// 	(*pos)[2] = room_length/2 - penguin_length/2;
 
 
 	// If penguin touches the ground, change the penguin to ground state

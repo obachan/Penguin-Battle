@@ -67,11 +67,6 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 
 }
 
-void Ball::update(double timeSinceLastFrame)
-{
-	updateWorldObjectVisual();	// Parent method
-}
-
 // Checks whether the ball is contained
 // in the Goal Object which is passed in
 bool Ball::inGoal(Goal* goal)
@@ -126,15 +121,6 @@ void Ball::reset(PhysicsWrapper* physics)
 	btMotionState *motionState = worldObjectRigidBody->getMotionState();
 	motionState->setWorldTransform(trans);
 	worldObjectRigidBody->setMotionState (motionState);
-}
-
-// ========================================
-// From Parent Class, WorldObjectAbstract
-// ========================================
-
-void Ball::update()
-{
-
 }
 
 void Ball::createRigidBody(PhysicsWrapper* physics)
