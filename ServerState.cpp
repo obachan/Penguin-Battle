@@ -143,10 +143,7 @@ void ServerState::update(double timeSinceLastFrame)
 	client_controller->boost_control_down = (recvbuffer[7] == '1') ? true : false;
 	
 	world->update(timeSinceLastFrame, server_controller, m_pCamera);		// Update World
-
-	std::cout << "Here ====================================" << std::endl;
-	penguin_two->update(timeSinceLastFrame, client_controller, NULL);
-	std::cout << "Here ====================================" << std::endl;
+	penguin_two->update(timeSinceLastFrame, NULL);
 
 	// Update Debug Camera
     if(server_controller->debugCameraOn())

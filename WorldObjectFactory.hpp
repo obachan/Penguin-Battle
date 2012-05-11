@@ -20,9 +20,16 @@ public:
 	Ball* createNewBall();
 	Ball* createNewBall(Penguin* penguin);
 	Ball* createNewBall(float, float, float);
+	Ball* createNewBallClient();
+
 	Room* createNewRoom();
+	Room* createNewRoomClient();
+
 	Penguin* createNewPenguin(MyController*, cCallback*);
+
 	Goal* createNewGoal();
+	Goal* createNewGoalClient();
+
 	Terrain* createNewTerrain();
 
 private:

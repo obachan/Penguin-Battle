@@ -24,8 +24,16 @@ Ball* WorldObjectFactory::createNewBall(float px, float py, float pz){
 	return Ball::createNewBall(mSceneMgr, mPhysics, Ogre::Vector3(px, py, pz));
 }
 
+Ball* WorldObjectFactory::createNewBallClient(){
+	return Ball::createNewBall(mSceneMgr, NULL, Ogre::Vector3(0, 0, 0));
+}
+
 Room* WorldObjectFactory::createNewRoom(){
 	return new Room(mSceneMgr, mPhysics);
+}
+
+Room* WorldObjectFactory::createNewRoomClient(){
+	return new Room(mSceneMgr, NULL);
 }
 
 // Penguin* WorldObjectFactory::createNewPenguin(){
@@ -38,6 +46,10 @@ Penguin* WorldObjectFactory::createNewPenguin(MyController* controller, cCallbac
 
 Goal* WorldObjectFactory::createNewGoal(){
 	return new Goal(mSceneMgr, mPhysics);
+}
+
+Goal* WorldObjectFactory::createNewGoalClient(){
+	return new Goal(mSceneMgr, NULL);
 }
 
 Terrain* WorldObjectFactory::createNewTerrain(){
