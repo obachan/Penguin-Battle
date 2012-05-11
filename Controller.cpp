@@ -48,19 +48,22 @@ bool MyController::debugCameraOn()
 bool MyController::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
 	// Key Presses to Modify Controller
-	//if(keyEventRef.key == OIS::KC_A)			left_control_down =true;
+	if(keyEventRef.key == OIS::KC_A)			left_control_down = true;
 	if(keyEventRef.key == OIS::KC_LEFT)			left_control_down = true;
-	//if(keyEventRef.key == OIS::KC_D)		right_control_down = true;
+	if(keyEventRef.key == OIS::KC_D)		right_control_down = true;
 	if(keyEventRef.key == OIS::KC_RIGHT)		right_control_down = true;
-	if(keyEventRef.key == OIS::KC_W)			forward_control_down = true;
 	if(keyEventRef.key == OIS::KC_UP)			forward_control_down = true;
-	if(keyEventRef.key == OIS::KC_S)			backward_control_down = true;
 	if(keyEventRef.key == OIS::KC_DOWN)			backward_control_down = true;
 	if(keyEventRef.key == OIS::KC_P)			up_control_down = true;
 	if(keyEventRef.key == OIS::KC_SEMICOLON)	bottom_control_down = true;
 	if(keyEventRef.key == OIS::KC_SPACE)		jump_control_down = true;
 	if(keyEventRef.key == OIS::KC_Z)			boost_control_down = true;
 	if(keyEventRef.key == OIS::KC_Q)			toggleThirdPersonCamera();
+
+	if(third_person_camera){
+		if(keyEventRef.key == OIS::KC_W)			forward_control_down = true;
+		if(keyEventRef.key == OIS::KC_S)			backward_control_down = true;
+	}
 
 	return true;
 }
@@ -70,14 +73,18 @@ bool MyController::keyPressed(const OIS::KeyEvent &keyEventRef)
 bool MyController::keyReleased(const OIS::KeyEvent &keyEventRef){
 	// Key Presses to Modify Controller
 	if(keyEventRef.key == OIS::KC_LEFT)			left_control_down = false;
+	if(keyEventRef.key == OIS::KC_A)			left_control_down = false;
+	if(keyEventRef.key == OIS::KC_D)		right_control_down = false;
 	if(keyEventRef.key == OIS::KC_RIGHT)		right_control_down = false;
-	if(keyEventRef.key == OIS::KC_W)			forward_control_down = false;	
 	if(keyEventRef.key == OIS::KC_UP)			forward_control_down = false;
-	if(keyEventRef.key == OIS::KC_S)			backward_control_down = false;	
 	if(keyEventRef.key == OIS::KC_DOWN)			backward_control_down = false;	
 	if(keyEventRef.key == OIS::KC_P)			up_control_down = false;
 	if(keyEventRef.key == OIS::KC_SEMICOLON)	bottom_control_down = false;
 	if(keyEventRef.key == OIS::KC_Z)			boost_control_down = false;
+
+	if(keyEventRef.key == OIS::KC_W)			forward_control_down = false;
+	if(keyEventRef.key == OIS::KC_S)			backward_control_down = false;	
+
 	return true;
 }
 

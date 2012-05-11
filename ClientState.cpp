@@ -55,19 +55,19 @@ void ClientState::enter()
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
 
-	penguin = new Penguin(m_pSceneMgr, NULL);									// Create Player 1's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, NULL);								// Create Player 2's Penguin
-	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
-	room = new Room(m_pSceneMgr, NULL);											// Create Room
-	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
-
 	client_controller = new MyController();
 	sound_factory = new SoundWrapper();
     sound_factory->playMusic();
+
+	penguin = new Penguin(m_pSceneMgr, NULL, client_controller);				// Create Player 1's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, NULL, client_controller);								// Create Player 2's Penguin
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
+	room = new Room(m_pSceneMgr, NULL);											// Create Room
+	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
  
  	penguin->update(0.1f, client_controller, m_pCamera);
 	penguin_two->update(0.1f, client_controller, NULL);
-	ball->update(0.1f);
+	ball->update();
 	
 	sendbuffer[0] = '0';
 	sendbuffer[1] = '0';
@@ -139,6 +139,7 @@ void ClientState::update(double timeSinceLastFrame)
 	// TODO - RECEIVE!!!!!!
 	// ball position and penguin's positions
 
+    // ===========================================================================
 	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 		
 	Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
@@ -160,6 +161,8 @@ void ClientState::update(double timeSinceLastFrame)
 	Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
 	memcpy(&newPenguinServerPosition[0], buffer+28, 4);
 
+
+    // ===========================================================================
 	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 
 	memcpy(&newPenguinServerPosition[1], buffer, 4);
@@ -180,6 +183,8 @@ void ClientState::update(double timeSinceLastFrame)
 	memcpy(&newPenguinClientPosition[0], buffer+24, 4);
 	memcpy(&newPenguinClientPosition[1], buffer+28, 4);
 
+
+    // ===========================================================================
 	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 
 	memcpy(&newPenguinClientPosition[2], buffer, 4);

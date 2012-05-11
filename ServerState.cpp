@@ -24,12 +24,6 @@ ServerState::~ServerState()
 
 void ServerState::enter()
 {
-
-	server_controller = new MyController();
-	client_controller = new MyController();
-	physics = new PhysicsWrapper();
-	sound_factory = new SoundWrapper();
-
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ServerSceneMgr");
@@ -48,33 +42,33 @@ void ServerState::enter()
 
 	// Sets global world conditions
 	m_pSceneMgr->setSkyBox(true, "Examples/StarsSkyBox");
-
-
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.1, 0.1, 0.1));
 	m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
- 
 
     // Create a light
   	m_pSceneMgr->createLight("MainLight")->setPosition(0,50,0);
-
-
-
-	penguin = new Penguin(m_pSceneMgr, physics);		// Create Player 1's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, physics);	// Create Player 2's Penguin
-	ball = new Ball(m_pSceneMgr, physics);				// Create Ball
-	room = new Room(m_pSceneMgr, physics);				// Create Room
-	goal = new Goal(m_pSceneMgr, physics);				// Create Goal
 
     OgreFramework::getSingletonPtr()->m_pTrayMgr->destroyAllWidgets();
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     OgreFramework::getSingletonPtr()->m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
-
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
- 
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
-
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
+
+	// penguin = new Penguin(m_pSceneMgr, physics);		// Create Player 1's Penguin
+	// ball = new Ball(m_pSceneMgr, physics);				// Create Ball
+	// room = new Room(m_pSceneMgr, physics);				// Create Room
+	// goal = new Goal(m_pSceneMgr, physics);				// Create Goal
+
+	server_controller = new MyController();
+	client_controller = new MyController();
+	physics = new PhysicsWrapper();
+	sound_factory = new SoundWrapper();
+
+    world = new World(m_pSceneMgr, physics, server_controller);
+    penguin_two = new Penguin(m_pSceneMgr, physics, client_controller);	// Create Player 2's Penguin
+
     sound_factory->playMusic(); 
 }
 
@@ -148,24 +142,11 @@ void ServerState::update(double timeSinceLastFrame)
 	client_controller->jump_control_down = (recvbuffer[6] == '1') ? true : false;
 	client_controller->boost_control_down = (recvbuffer[7] == '1') ? true : false;
 	
+	world->update(timeSinceLastFrame, server_controller, m_pCamera);		// Update World
 
- 	// Our Team's main loop
-	ball->update(timeSinceLastFrame);
-
-	penguin->update(timeSinceLastFrame, server_controller, m_pCamera);
+	std::cout << "Here ====================================" << std::endl;
 	penguin_two->update(timeSinceLastFrame, client_controller, NULL);
-
-
-	if (timeSinceLastFrame!=0)
-		physics->stepPhysics(timeSinceLastFrame, 5);
-
-	
-	// Handles the event in which the player scores
-	bool scored = false;
-	if(ball->inGoal(goal)){
-		scored = true;
-		ball->reset(physics);
-	}
+	std::cout << "Here ====================================" << std::endl;
 
 	// Update Debug Camera
     if(server_controller->debugCameraOn())
@@ -174,8 +155,9 @@ void ServerState::update(double timeSinceLastFrame)
     // Update Base Framework
     OgreFramework::getSingletonPtr()->updateOgre(timeSinceLastFrame);
 
+    // ===========================================================================
 	// SEND Server Message (Visuals of all the items)!!!!!!
-	Ogre::Vector3 newballVector = ball->getVisualPosition();
+	Ogre::Vector3 newballVector = world->world_objects[0]->getVisualPosition();
 	memcpy(buffer, &newballVector[0], 4);
 	memcpy(buffer+4, &newballVector[1], 4);
 	memcpy(buffer+8, &newballVector[2], 4);
@@ -185,17 +167,18 @@ void ServerState::update(double timeSinceLastFrame)
 	printf("%f\n", newballVector[1]);
 	printf("%f\n", newballVector[2]);
 
-	Ogre::Quaternion newballQuaternion = ball->getVisualOrientation();
+	Ogre::Quaternion newballQuaternion = world->world_objects[0]->getVisualOrientation();
 	memcpy(buffer+12, &newballQuaternion[0], 4);	
 	memcpy(buffer+16, &newballQuaternion[1], 4);	
 	memcpy(buffer+20, &newballQuaternion[2], 4);	
 	memcpy(buffer+24, &newballQuaternion[3], 4);
 
-	Ogre::Vector3 newPenguinServerVector = penguin->getVisualPosition();
+	Ogre::Vector3 newPenguinServerVector = world->penguin->getVisualPosition();
 	memcpy(buffer+28, &newPenguinServerVector[0], 4);
 
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
+    // ===========================================================================
 	memcpy(buffer, &newPenguinServerVector[1], 4);
 	memcpy(buffer+4, &newPenguinServerVector[2], 4);
 
@@ -207,7 +190,7 @@ void ServerState::update(double timeSinceLastFrame)
 	//printf("Before Quaternion");
 	//printf("%02X%02X%02X%02X\n", buffer[12],buffer[13],buffer[14],buffer[15]);
 		
-	Ogre::Quaternion newPenguinServerQuaternion = penguin->getVisualOrientation();
+	Ogre::Quaternion newPenguinServerQuaternion = world->penguin->getVisualOrientation();
 	memcpy(buffer+8, &newPenguinServerQuaternion[0], 4);	
 	memcpy(buffer+12, &newPenguinServerQuaternion[1], 4);	
 	memcpy(buffer+16, &newPenguinServerQuaternion[2], 4);	
@@ -221,6 +204,7 @@ void ServerState::update(double timeSinceLastFrame)
 	memcpy(buffer+28, &newPenguinClientVector[1], 4);
 
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
+    // ===========================================================================
 
 	memcpy(buffer, &newPenguinClientVector[2], 4);
 		
@@ -237,6 +221,7 @@ void ServerState::update(double timeSinceLastFrame)
 		
 	OgreFramework::getSingletonPtr()->server->SendMessage(buffer, 32, 0);
 
+    // ===========================================================================
 
 	// TODO - SEND!!!!!!
 	// Send penguins' and ball's position

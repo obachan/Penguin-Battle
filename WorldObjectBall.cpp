@@ -1,7 +1,5 @@
 #include "WorldObjectBall.hpp"
 
-int Ball::scene_node_counter = 0;
-
 Ball::Ball() : WorldObjectAbstract()
 {
 }
@@ -9,9 +7,7 @@ Ball::Ball() : WorldObjectAbstract()
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
 	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
 {
-
 	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius);
-	
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
 	
@@ -47,14 +43,12 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
+ 	std::string unique_id_string;
  	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
 
-	std::string ball_name = "ball" + scene_node_counter_string;
-	scene_node_counter++;
-
+	std::string ball_name = "ball" + unique_id_string;
 
 	//--------------------
 	// Visual - Ball
@@ -71,11 +65,6 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	worldObjectSceneNode->setScale(v3SphereScaleFactor);
 	objSphereEntity->setMaterialName("Ball/Snow");
 
-}
-
-void Ball::update(double timeSinceLastFrame)
-{
-	updateWorldObjectVisual();	// Parent method
 }
 
 // Checks whether the ball is contained
@@ -134,15 +123,6 @@ void Ball::reset(PhysicsWrapper* physics)
 	worldObjectRigidBody->setMotionState (motionState);
 }
 
-// ========================================
-// From Parent Class, WorldObjectAbstract
-// ========================================
-
-void Ball::update()
-{
-
-}
-
 void Ball::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "Ball::createRigidBody()" << std::endl;
@@ -169,16 +149,14 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
 	std::cout << "Ball::createSceneNode()" << std::endl;
 
-
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
+ 	std::string unique_id_string;
  	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
 
-	std::string ball_name = "ball" + scene_node_counter_string;
-	scene_node_counter++;
+	std::string ball_name = "ball" + unique_id_string;
 
 	//--------------------
 	// Visual - Ball
@@ -207,5 +185,21 @@ Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physi
 	Ball* ball = new Ball();
 	ball->initWorldObject(m_pSceneMgr, physics);
 	ball->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
+	return ball;
+}
+
+Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, Penguin* penguin)
+{
+	Ogre::Vector3 penguin_pos = penguin->getVisualPosition();
+	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
+
+	Ogre::Vector3 ball_start_pos = penguin_pos + 8*penguin_dir;
+	Ogre::Vector3 ball_start_dir = penguin_dir.midPoint(Ogre::Vector3(0, 1, 0));
+	ball_start_dir.normalise();
+
+	Ball* ball = new Ball();
+	ball->initWorldObject(m_pSceneMgr, physics);
+	ball->resetPosition(ball_start_pos);
+	ball->resetVelocity(ball_start_dir, ball_launch_vel);
 	return ball;
 }

@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldObjectFactory.hpp"
+#include "World.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -34,19 +34,22 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	Ball*			ball;
-	Room*			room;
-	Paddle*			paddle;
-	Penguin*		penguin;
+	// Ball*			ball;
+	// Room*			room;
+	// Paddle*			paddle;
+	// Penguin*		penguin;
 	Penguin*		penguin_two;
-	Goal*			goal;
+	// Goal*			goal;
 
 	MyController* 	server_controller;
 	MyController* 	client_controller;
 	PhysicsWrapper*	physics;
 	SoundWrapper* 	sound_factory;
+	World*			world;
 	
 private:
+	ServerNet*					server;
+
 	Ogre::SceneNode*			m_pOgreHeadNode;
 	Ogre::Entity*				m_pOgreHeadEntity;
  

@@ -68,6 +68,12 @@ void WorldObjectAbstract::resetPosition(Ogre::Vector3 new_pos)
 	worldObjectRigidBody->setMotionState (motionState);
 }
 
+void WorldObjectAbstract::resetVelocity(Ogre::Vector3 dir, float vel)
+{
+	worldObjectRigidBody->setLinearVelocity(btVector3(vel * dir[0], vel * dir[1], vel * dir[2]));
+}
+
+
 void WorldObjectAbstract::updateWorldObjectVisual()
 {
 	worldObjectSceneNode->setOrientation(getRigidBodyOrientation());
@@ -105,9 +111,9 @@ void WorldObjectAbstract::attachToDynamicWorld(PhysicsWrapper* physics)
 // Abstract methods
 // ========================================
 
-void WorldObjectAbstract::update(double timeSinceLastFrame)
+void WorldObjectAbstract::update()
 {
-	std::cout << "WorldObjectAbstract::update()" << std::endl;
+	updateWorldObjectVisual();
 }
 
 void WorldObjectAbstract::initWorldObject(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)

@@ -8,12 +8,14 @@
 
 
 #include "WorldObjectFactory.hpp"
+#include "Controller.hpp"
+
 #include "Callback.h"
 
 class World
 {
 public:
-	World(Ogre::SceneManager*, PhysicsWrapper*);
+	World(Ogre::SceneManager*, PhysicsWrapper*, MyController*);
 	~World();
 
 	void update(double, MyController*, Ogre::Camera*);
@@ -35,7 +37,7 @@ public:
 	Goal*								goal;
 	Terrain*							terrain;
 
-	vector<WorldObjectAbstract*> 		balls;
+	vector<WorldObjectAbstract*> 		world_objects;
 
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;
