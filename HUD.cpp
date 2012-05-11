@@ -10,22 +10,9 @@ int HUD::HUD_STATUS_LOSE = 2;
 
 HUD::HUD(OgreBites::SdkTrayManager* trayMgr)
 {
-	reset();
-
 	mTrayMgr = trayMgr;
-
-	Ogre::StringVector items;
-	items.push_back("Time Left      ");
-    items.push_back("Target Score  ");
-    items.push_back("Score          ");
-    items.push_back("Status         "); 
-
-    mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
-    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
-    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
-    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
-	mDetailsPanel->show();	
+	
+	reset();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -36,6 +23,8 @@ HUD::~HUD()
 
 void HUD::update(double timeSinceLastFrame, bool scored)
 {
+
+
 	if(hud_status == HUD_STATUS_PLAYING)
 	{
 		timer -= timeSinceLastFrame / 1000.0;
@@ -75,4 +64,33 @@ void HUD::reset()
 	timer = start_timer;
 	score = 0;
 	hud_status = HUD_STATUS_PLAYING;
+
+	Ogre::StringVector items;
+	items.push_back("Time Left      ");
+    items.push_back("Target Score  ");
+    items.push_back("Score          ");
+    items.push_back("Status         "); 
+
+    mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
+    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
+    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
+    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
+    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
+	mDetailsPanel->show();	
+}
+
+void HUD::resume()
+{
+	Ogre::StringVector items;
+	items.push_back("Time Left      ");
+    items.push_back("Target Score  ");
+    items.push_back("Score          ");
+    items.push_back("Status         "); 
+
+    mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT, "DetailsPanel", 200, items);
+    mDetailsPanel->setParamValue(0, "60"); 	//Set initial Timer Value
+    mDetailsPanel->setParamValue(1, "5");	//Set Target Score Value
+    mDetailsPanel->setParamValue(2, "0");	//Set initial Score Value
+    mDetailsPanel->setParamValue(3, "Playing");	//Set initial Score Value
+	mDetailsPanel->show();	
 }

@@ -119,6 +119,8 @@ void GameState::resume()
 	OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
  
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
+
+	hud->resume();
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

@@ -15,6 +15,10 @@ Ball* WorldObjectFactory::createNewBall(){
 	return Ball::createNewBall(mSceneMgr, mPhysics, Ogre::Vector3(0, 300, 0));
 }
 
+Ball* WorldObjectFactory::createNewBall(float px, float py, float pz){
+	return Ball::createNewBall(mSceneMgr, mPhysics, Ogre::Vector3(px, py, pz));
+}
+
 Room* WorldObjectFactory::createNewRoom(){
 	return new Room(mSceneMgr, mPhysics);
 }
