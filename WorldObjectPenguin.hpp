@@ -15,6 +15,7 @@ public:
 
 
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
 	~Penguin();
 
 	btDefaultMotionState* 	penguinMotionState;
@@ -31,15 +32,10 @@ public:
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
 
-	vector<WorldObjectAbstract*>* mBalls;
-	void registerBallsList(vector<WorldObjectAbstract*>*); // This is here so that penguins can populate the list in world
-
 	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
-	Ogre::SceneManager* mgr;
-	PhysicsWrapper* phyWrap;
-
-
+	
 	/* Callback */
+	cCallback* mCallbackAddBall;
 	void testFireWeapon(cCallback*);
 
 

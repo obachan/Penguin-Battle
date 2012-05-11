@@ -14,7 +14,7 @@
 
 class WorldObjectFactory {
 public:
-	WorldObjectFactory(Ogre::SceneManager*, PhysicsWrapper*);
+	WorldObjectFactory(Ogre::SceneManager*, PhysicsWrapper*,  cCallback* callbackAddBall);
 	~WorldObjectFactory();
 
 	Ball* createNewBall();
@@ -27,6 +27,8 @@ public:
 private:
 	Ogre::SceneManager*		mSceneMgr;
 	PhysicsWrapper*			mPhysics;
+	cCallback* 				mCallbackAddBall;
+
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

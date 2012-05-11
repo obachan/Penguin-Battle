@@ -7,15 +7,22 @@ int Penguin::scene_node_counter = 0;
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract()
 {
 
-	//Blasphemy!!!
-	mgr = m_pSceneMgr;
-	phyWrap = physics;
-	
 	createPenguin(m_pSceneMgr);
 
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
 }
+
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, cCallback* callbackAddBall) : WorldObjectAbstract()
+{
+
+	mCallbackAddBall = callbackAddBall;
+	createPenguin(m_pSceneMgr);
+
+	if(physics != NULL)
+		attachToDynamicWorld(physics);
+}
+
 
 Penguin::~Penguin()
 {
@@ -23,11 +30,6 @@ Penguin::~Penguin()
 
 void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 {
-
-
-	
-
-
 	//--------------------
 	// Physics - Penguin
 	//--------------------	
@@ -196,7 +198,7 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		}
 	}
 
-	cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
+	//cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
 	// Mouse controls
 	
 	if(controller->mouse_x_movement != 0.0000 ) {
@@ -221,11 +223,10 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 void Penguin::fireWeapon() {
 
 	Ogre::Vector3 pos = worldObjectSceneNode->getPosition();
-
-	Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
+	char s8_Out[50];
+	mCallbackAddBall->Execute((void*)s8_Out);
+	//Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
 	//objectList.pushBack(b);
-	
-//double start_pos_x, double start_pos_y, double start_pos_z
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)

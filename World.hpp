@@ -38,8 +38,8 @@ public:
 	vector<WorldObjectAbstract*> 		balls;
 
 	/* Callback Function */
-	TCallback<World> i_CallbackTest;
-	bool CallbackTest(void *Param);
+	TCallback<World> i_callbackAddBall;
+	bool CallbackAddBall(void *Param);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
