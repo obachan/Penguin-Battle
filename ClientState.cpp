@@ -59,14 +59,16 @@ void ClientState::enter()
 	sound_factory = new SoundWrapper();
     sound_factory->playMusic();
 
-	penguin = new Penguin(m_pSceneMgr, NULL, client_controller);				// Create Player 1's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, NULL, client_controller);								// Create Player 2's Penguin
-	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
-	room = new Room(m_pSceneMgr, NULL);											// Create Room
-	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
- 
- 	penguin->update(0.1f, client_controller, m_pCamera);
-	penguin_two->update(0.1f, client_controller, NULL);
+    //worldObjectFactory = new WorldObjectFactory(m_pSceneMgr, NULL);
+
+	penguin = new Penguin(m_pSceneMgr, NULL, client_controller);
+	penguin_two = new Penguin(m_pSceneMgr, NULL, client_controller);		
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);
+	room = new Room(m_pSceneMgr, NULL);
+	goal = new Goal(m_pSceneMgr, NULL); 
+
+ 	penguin->update(0.1f, m_pCamera);
+	penguin_two->update(0.1f, NULL); // HERE
 	ball->update();
 	
 	sendbuffer[0] = '0';
@@ -204,8 +206,8 @@ void ClientState::update(double timeSinceLastFrame)
 	//ball->update(timeSinceLastFrame);
 	ball->updateAsClient(newballPosition);
 
-	penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
-	penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
+	penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion, m_pCamera);
+	penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion, NULL);
 	
   	// Update Debug Camera
     if(client_controller->debugCameraOn())
@@ -245,7 +247,7 @@ bool ClientState::keyPressed(const OIS::KeyEvent &keyEventRef)
 	// Key Presses to Activate Sound Effect
     if(keyEventRef.key == OIS::KC_SPACE)		sound_factory->playJumpSoundEffect();
 
-	OgreFramework::getSingletonPtr()->debugKeyPressed(keyEventRef, m_pCamera);
+	//OgreFramework::getSingletonPtr()->debugKeyPressed(keyEventRef, m_pCamera);
 
 	return true;
 }

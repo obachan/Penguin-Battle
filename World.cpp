@@ -31,7 +31,7 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 	}
 
 	/* Update Players */
-	penguin->update(timeSinceLastFrame, controller, camera);
+	penguin->update(timeSinceLastFrame, camera);
 
 	// /* Update World Objects */
 	for(int i=0; i<world_objects.size(); ++i){
