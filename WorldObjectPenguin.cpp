@@ -1,8 +1,8 @@
 #include "WorldObjectPenguin.hpp"
 #include "WorldObjectBall.hpp"
 
-Penguin::Penguin(cCallback* callbackAddBall)
-{
+Penguin::Penguin(MyController* controller, cCallback* callbackAddBall){
+	mController = controller;
 	mCallbackAddBall = callbackAddBall;
 }
 
@@ -371,10 +371,9 @@ void Penguin::createRigidBody(PhysicsWrapper* physics)
 // ========================================
 
 
-Penguin* Penguin::createNewPenguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, cCallback* callbackAddBall)
+Penguin* Penguin::createNewPenguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, MyController* controller, cCallback* callbackAddBall)
 {
-	Penguin* penguin = new Penguin(callbackAddBall);
+	Penguin* penguin = new Penguin(controller, callbackAddBall);
 	penguin->initWorldObject(m_pSceneMgr, physics);
-	//penguin->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
 	return penguin;
 }

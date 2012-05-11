@@ -8,12 +8,14 @@
 
 
 #include "WorldObjectFactory.hpp"
+#include "Controller.hpp"
+
 #include "Callback.h"
 
 class WorldServer
 {
 public:
-	WorldServer(Ogre::SceneManager*, PhysicsWrapper*);
+	WorldServer(Ogre::SceneManager*, PhysicsWrapper*, MyController*);
 	~WorldServer();
 
 	void update(double, MyController*, Ogre::Camera*);

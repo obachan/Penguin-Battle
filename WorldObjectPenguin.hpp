@@ -7,13 +7,15 @@
 
 
 #include "WorldObjectAbstract.hpp"
+#include "Controller.hpp"
+
 #include "Callback.h"
 
 class Penguin : public WorldObjectAbstract
 {
 public:
 
-	Penguin(cCallback*);
+	Penguin(MyController*, cCallback*);
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
 	~Penguin();
@@ -22,16 +24,13 @@ public:
 	Ogre::Entity* 			penguinEntity;
 	Ogre::AnimationState*	mAnimationState;
 
-	/* Callback */
-	cCallback* mCallbackAddBall;
-
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
 
 	Ogre::Vector3 			getPenguinDirection();
 
 
-	static Penguin* createNewPenguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
+	static Penguin* createNewPenguin(Ogre::SceneManager*, PhysicsWrapper*, MyController*, cCallback*);
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
@@ -45,6 +44,9 @@ protected:
 	void createRigidBody(PhysicsWrapper*);	
 
 private:
+	MyController*			mController;
+	cCallback* 				mCallbackAddBall;
+
 	btTransform* 			penguin_position;
 	Ogre::Vector3 			penguin_velocity;
 	Ogre::Vector3 			penguin_direction;
@@ -59,8 +61,6 @@ private:
 	void handleCollisions(Ogre::Vector3*);
 	void animate(double, MyController*);
 	void fireWeapon();
-	
-	static int 				scene_node_counter;
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

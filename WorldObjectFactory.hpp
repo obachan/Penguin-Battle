@@ -21,7 +21,7 @@ public:
 	Ball* createNewBall(Penguin* penguin);
 	Ball* createNewBall(float, float, float);
 	Room* createNewRoom();
-	Penguin* createNewPenguin();
+	Penguin* createNewPenguin(MyController*);
 	Goal* createNewGoal();
 	Terrain* createNewTerrain();
 

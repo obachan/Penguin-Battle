@@ -65,7 +65,8 @@ void ServerState::enter()
 	client_controller = new MyController();
 	physics = new PhysicsWrapper();
 	sound_factory = new SoundWrapper();
-    world_server = new WorldServer(m_pSceneMgr, physics);
+
+    world_server = new WorldServer(m_pSceneMgr, physics, server_controller);
     penguin_two = new Penguin(m_pSceneMgr, physics);	// Create Player 2's Penguin
 
     sound_factory->playMusic(); 

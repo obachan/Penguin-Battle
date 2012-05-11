@@ -33,8 +33,8 @@ Room* WorldObjectFactory::createNewRoom(){
 // 	return new Penguin(mSceneMgr, mPhysics, mCallbackAddBall);
 // }
 
-Penguin* WorldObjectFactory::createNewPenguin(){
-	return Penguin::createNewPenguin(mSceneMgr, mPhysics, mCallbackAddBall);
+Penguin* WorldObjectFactory::createNewPenguin(MyController* controller){
+	return Penguin::createNewPenguin(mSceneMgr, mPhysics, controller, mCallbackAddBall);
 }
 
 Goal* WorldObjectFactory::createNewGoal(){
