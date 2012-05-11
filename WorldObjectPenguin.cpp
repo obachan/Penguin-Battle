@@ -148,21 +148,24 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 
 	// Left and Right on the keyboard will rotate the Penguin
 	if(mController->left_control_down == true){
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
+		/*quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
-		previous_direction = penguin_direction;
+		previous_direction = penguin_direction;*/
+		*pos = *pos + (-(penguin_direction.crossProduct(Ogre::Vector3(0,1,0) ).normalisedCopy())  * move_vel * timeSinceLastFrame) * (boost_modifier);
 	}
 
 	if(mController->right_control_down == true){
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
+		/*quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
-		previous_direction = penguin_direction;
+		previous_direction = penguin_direction;*/
+
+		*pos = *pos + ((penguin_direction.crossProduct(Ogre::Vector3(0,1,0) ).normalisedCopy())  * move_vel * timeSinceLastFrame) * (boost_modifier);
 	}
 
 	// Up and Down on the keyboard will move Penguin forwards and backwards
@@ -173,8 +176,6 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 	} else if(mController->backward_control_down == true){
 		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame) * (boost_modifier);
 		//worldObjectRigidBody->setLinearVelocity(btVector3(-100*penguin_direction.x,-100*penguin_direction.y, -100*penguin_direction.z));
-	} else {
-	//	worldObjectRigidBody->setLinearVelocity(btVector3(0, 0, 0));
 	}
 
 	// Space on the keyboard will cause the penguin to jump
@@ -199,9 +200,9 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 }
 
 
-void Penguin::fireWeapon(){
-	char s8_Out[50];
-	mCallbackAddBall->Execute((void*)s8_Out);
+
+void Penguin::fireWeapon() {
+	mCallbackAddBall->Execute((void*)this);
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos){

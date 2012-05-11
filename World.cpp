@@ -43,6 +43,7 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 /* Callback Function */
 bool World::CallbackAddBall(void *Param)
 {
-	world_objects.push_back(worldObjectFactory->createNewBall(penguin));
+	Penguin* pen = static_cast<Penguin*>(Param);
+	world_objects.push_back(worldObjectFactory->createNewBall(pen));
 	return true;
 }
