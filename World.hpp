@@ -34,7 +34,7 @@ public:
 	Terrain*				terrain;
 
 	vector<WorldObjectAbstract*> objects;
-
+	//Vector<Ball*> 				balls;	
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

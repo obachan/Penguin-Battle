@@ -18,7 +18,7 @@ Terrain::Terrain(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 	terrainEntity->setMaterialName("lambert3");
 	//scene_node_counter++;
 
-	ifstream myfile;
+/*	ifstream myfile;
 	myfile.open("heightInfo.data");
 
 	if(!myfile) {
@@ -36,7 +36,7 @@ Terrain::Terrain(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 	
 /*	for(int i = 0; i < 256*256; i++) {
 		heightdata[i] = 0.0;
-	}*/
+	}
 	terrainShape = new btHeightfieldTerrainShape(256, 256, heightdata, 1.0f, -256, 256, 1, PHY_FLOAT, false);
 
 	terrainShape->setLocalScaling(btVector3(5,100,5));
@@ -45,7 +45,7 @@ Terrain::Terrain(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics)
 	btRigidBody::btRigidBodyConstructionInfo terrainRigidBodyCI(0,terrainMotionState,terrainShape,btVector3(0,0,0));
 	//bottomRigidBodyCI.m_restitution = wall_restitution;
     	terrainRigidBody = new btRigidBody(terrainRigidBodyCI);
-	physics->add_object_to_dynamicWorld(terrainRigidBody);
+	physics->add_object_to_dynamicWorld(terrainRigidBody);*/
 }
 
 void Terrain::attachToDynamicWorld(PhysicsWrapper* physics)

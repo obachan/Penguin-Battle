@@ -32,7 +32,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	// Physics - Ball
 	//--------------------
 
-	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(start_pos_x, 300, start_pos_z)));
+	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(start_pos_x, start_pos_y, start_pos_z)));
 
     btScalar mass = ball_mass;
     btVector3 ballInertia(0,0,0);
@@ -43,7 +43,7 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
     btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
 	worldObjectRigidBodyCI.m_restitution = 0.765f;
     worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
-	worldObjectRigidBody->setLinearVelocity(btVector3(5,0,0));
+	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
