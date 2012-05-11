@@ -18,6 +18,7 @@ public:
 	~WorldObjectFactory();
 
 	Ball* createNewBall();
+	Ball* createNewBall(float, float, float);
 	Room* createNewRoom();
 	Penguin* createNewPenguin();
 	Goal* createNewGoal();

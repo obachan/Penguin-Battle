@@ -23,6 +23,7 @@ public:
 
 	void update(double, bool);
 	void reset();
+	void resume();
 
 	int				score;
 	float			timer;

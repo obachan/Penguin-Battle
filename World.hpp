@@ -26,13 +26,17 @@ public:
 	WorldObjectFactory* 	worldObjectFactory;
 
 	Ball*					ball;
+	Ball*					ball2;
 	Room*					room;
 	Paddle*					paddle;
 	Penguin*				penguin;
 	Goal*					goal;
 	Terrain*				terrain;
 
-	vector<WorldObjectAbstract*>		objectList;
+
+	vector<WorldObjectAbstract*> objects;
+	//Vector<Ball*> 				balls;	
+
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
