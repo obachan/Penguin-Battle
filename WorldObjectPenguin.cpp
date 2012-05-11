@@ -300,9 +300,9 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
 // From Parent Class, WorldObjectAbstract
 // ========================================
 
-void Penguin::update()
+void Penguin::update(double timeSinceLastFrame)
 {
-
+	// THIS IS A DUMMY OVERRIDING SINCE PENGUIN IS A USER CONTROLLER OBJECT
 }
 
 void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
@@ -313,4 +313,11 @@ void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 void Penguin::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "Penguin::createRigidBody()" << std::endl;
+}
+
+/* Callback */
+void Penguin::testFireWeapon(cCallback* p_CallbackOutput)
+{
+	char s8_Out[50];
+	p_CallbackOutput->Execute((void*)s8_Out);
 }

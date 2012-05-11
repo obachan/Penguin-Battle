@@ -105,7 +105,7 @@ void WorldObjectAbstract::attachToDynamicWorld(PhysicsWrapper* physics)
 // Abstract methods
 // ========================================
 
-void WorldObjectAbstract::update()
+void WorldObjectAbstract::update(double timeSinceLastFrame)
 {
 	std::cout << "WorldObjectAbstract::update()" << std::endl;
 }

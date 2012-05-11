@@ -86,7 +86,7 @@ public:
 
 	int getUniqueId();
 
-	virtual void update() = 0;
+	virtual void update(double) = 0;
 
 protected:
 	void resetPosition(Ogre::Vector3);			// Resets the location to the passed in parameter, and velocity is 0

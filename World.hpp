@@ -8,6 +8,7 @@
 
 
 #include "WorldObjectFactory.hpp"
+#include "Callback.h"
 
 class World
 {
@@ -23,18 +24,21 @@ public:
 	// ===============================
 	// World Object
 	// ===============================
-	WorldObjectFactory* 	worldObjectFactory;
+	WorldObjectFactory* 				worldObjectFactory;
 
-	Ball*					ball;
-	Ball*					ball2;
-	Room*					room;
-	Paddle*					paddle;
-	Penguin*				penguin;
-	Goal*					goal;
-	Terrain*				terrain;
+	Ball*								ball;
+	Ball*								ball2;
+	Room*								room;
+	Paddle*								paddle;
+	Penguin*							penguin;
+	Goal*								goal;
+	Terrain*							terrain;
 
-	vector<WorldObjectAbstract*> objects;
-	//Vector<Ball*> 				balls;	
+	vector<WorldObjectAbstract*> 		balls;
+
+	/* Callback Function */
+	TCallback<World> i_CallbackTest;
+	bool CallbackTest(void *Param);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

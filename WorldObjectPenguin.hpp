@@ -7,6 +7,7 @@
 
 
 #include "WorldObjectAbstract.hpp"
+#include "Callback.h"
 
 class Penguin : public WorldObjectAbstract
 {
@@ -30,17 +31,22 @@ public:
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
 
+	vector<WorldObjectAbstract*>* mBalls;
+	void registerBallsList(vector<WorldObjectAbstract*>*); // This is here so that penguins can populate the list in world
 
 	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
 	Ogre::SceneManager* mgr;
 	PhysicsWrapper* phyWrap;
 
 
+	/* Callback */
+	void testFireWeapon(cCallback*);
+
 
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================
-	void update();
+	void update(double);
 
 protected:
 	// ==========================
@@ -59,7 +65,7 @@ private:
 	void handleCollisions(Ogre::Vector3*);
 	void animate(double, MyController*);
 	void fireWeapon();
-
+	
 	static int 				scene_node_counter;
 };
 
