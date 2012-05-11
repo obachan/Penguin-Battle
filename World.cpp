@@ -6,14 +6,14 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 	mPhysics = physics;
 	i_callbackAddBall.SetCallback(this, &World::CallbackAddBall);
 
-	worldObjectFactory = new WorldObjectFactory(mSceneMgr, mPhysics, &i_callbackAddBall);	// World Object Factory
+	worldObjectFactory = new WorldObjectFactory(mSceneMgr, mPhysics);
 
-	// ball = worldObjectFactory->createNewBall(0, 100, 0); 		// Create Ball
-	// ball2 = worldObjectFactory->createNewBall(0, 200, 0); 		// Create Ball
-	room = worldObjectFactory->createNewRoom(); 					// Create Room
-	penguin =  worldObjectFactory->createNewPenguin(controller); 	// Create Penguin
-	goal = worldObjectFactory->createNewGoal(); 					// Create Goal
-	// terrain = worldObjectFactory->createNewTerrain(); 			// Create Terrain
+	// ball = worldObjectFactory->createNewBall(0, 100, 0);
+	// ball2 = worldObjectFactory->createNewBall(0, 200, 0);
+	room = worldObjectFactory->createNewRoom();
+	penguin =  worldObjectFactory->createNewPenguin(controller, &i_callbackAddBall);
+	goal = worldObjectFactory->createNewGoal();
+	// terrain = worldObjectFactory->createNewTerrain();
 
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
 }

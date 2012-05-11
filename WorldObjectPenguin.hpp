@@ -16,8 +16,9 @@ class Penguin : public WorldObjectAbstract
 public:
 
 	Penguin(MyController*, cCallback*);
-	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
-	Penguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
+
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*, MyController*);				// To be deleted
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*);				// To be deleted
 	~Penguin();
 
 	btDefaultMotionState* 	penguinMotionState;
@@ -31,11 +32,6 @@ public:
 
 
 	static Penguin* createNewPenguin(Ogre::SceneManager*, PhysicsWrapper*, MyController*, cCallback*);
-	// ==========================
-	// From Parent Class, WorldObjectAbstract
-	// ==========================
-	void update(double);
-
 protected:
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
@@ -56,10 +52,10 @@ private:
 
 	void createPenguin(Ogre::SceneManager*);
 
-	void processController(double, MyController*, Ogre::Vector3*);
+	void processController(double, Ogre::Vector3*);
 	void handleGravity(double, Ogre::Vector3*);
 	void handleCollisions(Ogre::Vector3*);
-	void animate(double, MyController*);
+	void animate(double);
 	void fireWeapon();
 };
 

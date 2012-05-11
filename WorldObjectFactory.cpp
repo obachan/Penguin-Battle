@@ -2,10 +2,9 @@
 
 #include <iostream>
 
-WorldObjectFactory::WorldObjectFactory(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, cCallback* callbackAddBall){
+WorldObjectFactory::WorldObjectFactory(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics){
 	mSceneMgr = sceneMgr;
 	mPhysics = physics;
-	mCallbackAddBall = callbackAddBall;
 }
 
 WorldObjectFactory::~WorldObjectFactory(){
@@ -33,8 +32,8 @@ Room* WorldObjectFactory::createNewRoom(){
 // 	return new Penguin(mSceneMgr, mPhysics, mCallbackAddBall);
 // }
 
-Penguin* WorldObjectFactory::createNewPenguin(MyController* controller){
-	return Penguin::createNewPenguin(mSceneMgr, mPhysics, controller, mCallbackAddBall);
+Penguin* WorldObjectFactory::createNewPenguin(MyController* controller, cCallback* callbackAddBall){
+	return Penguin::createNewPenguin(mSceneMgr, mPhysics, controller, callbackAddBall);
 }
 
 Goal* WorldObjectFactory::createNewGoal(){

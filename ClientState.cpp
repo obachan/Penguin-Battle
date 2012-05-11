@@ -55,15 +55,15 @@ void ClientState::enter()
 	OgreFramework::getSingletonPtr()->m_pRenderWnd->setActive(true);
     OgreFramework::getSingletonPtr()->m_pRenderWnd->resetStatistics();
 
-	penguin = new Penguin(m_pSceneMgr, NULL);									// Create Player 1's Penguin
-	penguin_two = new Penguin(m_pSceneMgr, NULL);								// Create Player 2's Penguin
-	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
-	room = new Room(m_pSceneMgr, NULL);											// Create Room
-	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
-
 	client_controller = new MyController();
 	sound_factory = new SoundWrapper();
     sound_factory->playMusic();
+
+	penguin = new Penguin(m_pSceneMgr, NULL, client_controller);				// Create Player 1's Penguin
+	penguin_two = new Penguin(m_pSceneMgr, NULL, client_controller);								// Create Player 2's Penguin
+	ball = new Ball(m_pSceneMgr, NULL, 0, -(room_width/2) + ball_radius, 0);	// Create Ball
+	room = new Room(m_pSceneMgr, NULL);											// Create Room
+	goal = new Goal(m_pSceneMgr, NULL);											// Create Goal
  
  	penguin->update(0.1f, client_controller, m_pCamera);
 	penguin_two->update(0.1f, client_controller, NULL);

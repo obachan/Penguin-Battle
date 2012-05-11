@@ -14,22 +14,20 @@
 
 class WorldObjectFactory {
 public:
-	WorldObjectFactory(Ogre::SceneManager*, PhysicsWrapper*,  cCallback* callbackAddBall);
+	WorldObjectFactory(Ogre::SceneManager*, PhysicsWrapper*);
 	~WorldObjectFactory();
 
 	Ball* createNewBall();
 	Ball* createNewBall(Penguin* penguin);
 	Ball* createNewBall(float, float, float);
 	Room* createNewRoom();
-	Penguin* createNewPenguin(MyController*);
+	Penguin* createNewPenguin(MyController*, cCallback*);
 	Goal* createNewGoal();
 	Terrain* createNewTerrain();
 
 private:
 	Ogre::SceneManager*		mSceneMgr;
 	PhysicsWrapper*			mPhysics;
-	cCallback* 				mCallbackAddBall;
-
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

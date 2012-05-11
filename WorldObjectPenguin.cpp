@@ -6,6 +6,15 @@ Penguin::Penguin(MyController* controller, cCallback* callbackAddBall){
 	mCallbackAddBall = callbackAddBall;
 }
 
+Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, MyController* controller) : WorldObjectAbstract()
+{
+	mController = controller;
+	createPenguin(m_pSceneMgr);
+
+	if(physics != NULL)
+		attachToDynamicWorld(physics);
+}
+
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract()
 {
 
@@ -14,17 +23,6 @@ Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : Wor
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
 }
-
-Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, cCallback* callbackAddBall) : WorldObjectAbstract()
-{
-
-	mCallbackAddBall = callbackAddBall;
-	createPenguin(m_pSceneMgr);
-
-	if(physics != NULL)
-		attachToDynamicWorld(physics);
-}
-
 
 Penguin::~Penguin()
 {
@@ -116,10 +114,10 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 	// Process User Input to move player
 	// new penguin position is put in pos
-	processController(timeSinceLastFrame, controller, &pos);
+	processController(timeSinceLastFrame, &pos);
 
 	// Animate Penguin
-	animate(timeSinceLastFrame, controller);	
+	animate(timeSinceLastFrame);	
 
 	// Sync Visuals: We don't use the parent's updateWorldObjectVisual
 	// to sync because that method is for objects not under user control
@@ -128,7 +126,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 
 	// Modify Camera
-	if(controller->thirdPersonCameraOn() && camera != NULL){
+	if(mController->thirdPersonCameraOn() && camera != NULL){
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 
@@ -141,7 +139,7 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 }
 
-void Penguin::processController(double timeSinceLastFrame, MyController* controller, Ogre::Vector3* pos)
+void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 {
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
 
@@ -152,12 +150,12 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	float boost_modifier = 1.0;
 
 	// Z causes the player to move faster
-	if(controller->boost_control_down == true){
+	if(mController->boost_control_down == true){
 		boost_modifier = 2.0;
 	}
 
 	// Left and Right on the keyboard will rotate the Penguin
-	if(controller->left_control_down == true){
+	if(mController->left_control_down == true){
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
@@ -166,7 +164,7 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		previous_direction = penguin_direction;
 	}
 
-	if(controller->right_control_down == true){
+	if(mController->right_control_down == true){
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree(rotation_speed*-timeSinceLastFrame)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
@@ -177,11 +175,11 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 
 	// Up and Down on the keyboard will move Penguin forwards and backwards
 
-	if(controller->forward_control_down == true){
+	if(mController->forward_control_down == true){
 		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame) * (boost_modifier);
 		//worldObjectRigidBody->setLinearVelocity(btVector3(100,100, 100));
 		
-	} else if(controller->backward_control_down == true){
+	} else if(mController->backward_control_down == true){
 		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame) * (boost_modifier);
 		//worldObjectRigidBody->setLinearVelocity(btVector3(-100*penguin_direction.x,-100*penguin_direction.y, -100*penguin_direction.z));
 	} else {
@@ -189,27 +187,27 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	}
 
 	// Space on the keyboard will cause the penguin to jump
-	if(controller->jump_control_down == true){
-		controller->jump_control_down = false;
+	if(mController->jump_control_down == true){
+		mController->jump_control_down = false;
 		penguin_velocity[1] = jump_vel;
 	}
 
 	//cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
 	// Mouse controls
 	
-	if(controller->mouse_x_movement != 0.0000 ) {
-		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*controller->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
+	if(mController->mouse_x_movement != 0.0000 ) {
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*mController->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
-		controller->mouse_x_movement = 0.0;
+		mController->mouse_x_movement = 0.0;
 	
 	}
 	
-	if( controller->left_mouse_button_down == true) {
-		controller->left_mouse_button_down = false;
+	if( mController->left_mouse_button_down == true) {
+		mController->left_mouse_button_down = false;
 		fireWeapon();
 	}
 }
@@ -261,10 +259,10 @@ void Penguin::handleCollisions(Ogre::Vector3* pos)
 	}
 }
 
-void Penguin::animate(double timeSinceLastFrame, MyController* controller)
+void Penguin::animate(double timeSinceLastFrame)
 {
 	// Animation
-	if(controller->boost_control_down == true)
+	if(mController->boost_control_down == true)
 	{
 		mAnimationState = penguinEntity->getAnimationState("amuse");
         mAnimationState->setLoop(true);
@@ -273,12 +271,12 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
         float time_scale = timeSinceLastFrame; // Scale the time back so it doesn't animate as fast
 		mAnimationState->addTime(time_scale);
 	}
-	else if(controller->left_control_down == true ||
-		controller->right_control_down == true ||
-		controller->up_control_down == true ||
-		controller->bottom_control_down == true ||
-		controller->forward_control_down == true ||
-		controller->backward_control_down == true
+	else if(mController->left_control_down == true ||
+		mController->right_control_down == true ||
+		mController->up_control_down == true ||
+		mController->bottom_control_down == true ||
+		mController->forward_control_down == true ||
+		mController->backward_control_down == true
 		)
 	{
 		mAnimationState = penguinEntity->getAnimationState("amuse");
@@ -300,12 +298,6 @@ Ogre::Vector3 Penguin::getPenguinDirection()
 // =========================================
 // From Parent Class, WorldObjectAbstract
 // ========================================
-
-void Penguin::update(double timeSinceLastFrame)
-{
-	// THIS IS A DUMMY OVERRIDING SINCE PENGUIN IS A USER CONTROLLER OBJECT
-}
-
 void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
 	//--------------------

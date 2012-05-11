@@ -8,7 +8,7 @@
 #include "AppState.hpp"
  
 #include "OgreFramework.hpp"
-#include "WorldServer.hpp"
+#include "World.hpp"
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -45,7 +45,7 @@ public:
 	MyController* 	client_controller;
 	PhysicsWrapper*	physics;
 	SoundWrapper* 	sound_factory;
-	WorldServer*	world_server;
+	World*			world;
 	
 private:
 	ServerNet*					server;
