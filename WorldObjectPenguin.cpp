@@ -216,7 +216,7 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 
 void Penguin::fireWeapon() {
 
-	char s8_Out[50];
+	//char s8_Out[50];
 	mCallbackAddBall->Execute((void*)this);
 }
 

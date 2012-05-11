@@ -165,13 +165,13 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(ball_radius, ball_radius, ball_radius);
 
-	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "igloo.mesh");
+	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphere.mesh");
 	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(ball_name);
 	worldObjectSceneNode->attachObject(objSphereEntity);
 
 	worldObjectSceneNode->setPosition(v3SpherePosition);
 	worldObjectSceneNode->setScale(v3SphereScaleFactor);
-	objSphereEntity->setMaterialName("snowIgloo/snowBrick");
+	objSphereEntity->setMaterialName("Ball/Snow");
 
 }
 
