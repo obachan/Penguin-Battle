@@ -40,8 +40,6 @@ protected:
 private:
 
 	void createSphere(Ogre::SceneManager*, Ogre::Real, Ogre::Real, Ogre::Real, Ogre::Real);
-
-	static int 				scene_node_counter;
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

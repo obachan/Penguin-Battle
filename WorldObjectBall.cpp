@@ -1,7 +1,5 @@
 #include "WorldObjectBall.hpp"
 
-int Ball::scene_node_counter = 0;
-
 Ball::Ball() : WorldObjectAbstract()
 {
 }
@@ -9,9 +7,7 @@ Ball::Ball() : WorldObjectAbstract()
 Ball::Ball(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
 	double start_pos_x, double start_pos_y, double start_pos_z) : WorldObjectAbstract()
 {
-
 	createSphere(m_pSceneMgr, start_pos_x, start_pos_y, start_pos_z, ball_radius);
-	
 	if(physics != NULL)
 		attachToDynamicWorld(physics);
 	
@@ -47,14 +43,12 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
+ 	std::string unique_id_string;
  	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
 
-	std::string ball_name = "ball" + scene_node_counter_string;
-	scene_node_counter++;
-
+	std::string ball_name = "ball" + unique_id_string;
 
 	//--------------------
 	// Visual - Ball
@@ -172,13 +166,12 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
+ 	std::string unique_id_string;
  	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
 
-	std::string ball_name = "ball" + scene_node_counter_string;
-	scene_node_counter++;
+	std::string ball_name = "ball" + unique_id_string;
 
 	//--------------------
 	// Visual - Ball

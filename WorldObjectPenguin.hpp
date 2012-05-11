@@ -22,7 +22,8 @@ public:
 	Ogre::Entity* 			penguinEntity;
 	Ogre::AnimationState*	mAnimationState;
 
-	bool 					in_air;
+	/* Callback */
+	cCallback* mCallbackAddBall;
 
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
@@ -32,10 +33,6 @@ public:
 
 	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
 	
-	/* Callback */
-	cCallback* mCallbackAddBall;
-	void testFireWeapon(cCallback*);
-
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================

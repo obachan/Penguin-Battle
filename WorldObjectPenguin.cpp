@@ -38,8 +38,6 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, room_length/4));
 	penguin_velocity = Ogre::Vector3(0, 0, 0);
-	in_air = false;
-
 	
 	penguinMotionState = new btDefaultMotionState(*penguin_position);
 
@@ -192,10 +190,7 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	// Space on the keyboard will cause the penguin to jump
 	if(controller->jump_control_down == true){
 		controller->jump_control_down = false;
-		if(!in_air){
-			in_air = true;
-			penguin_velocity[1] = jump_vel;
-		}
+		penguin_velocity[1] = jump_vel;
 	}
 
 	//cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
@@ -223,28 +218,24 @@ void Penguin::fireWeapon() {
 
 	char s8_Out[50];
 	mCallbackAddBall->Execute((void*)s8_Out);
-	//Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
-	//objectList.pushBack(b);
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
 {
-	if(in_air){
 		penguin_velocity[1] = penguin_velocity[1] + world_grav * timeSinceLastFrame;
 		// if penguin is falling too fast
 		if(penguin_velocity[1] < max_fall_vel)
 			penguin_velocity[1] = max_fall_vel;
 		(*pos)[1] =  (*pos)[1] + penguin_velocity[1] * timeSinceLastFrame + (0.5) * world_grav * timeSinceLastFrame * timeSinceLastFrame;
-	}
 }
 
 void Penguin::handleCollisions(Ogre::Vector3* pos)
 {
-	if((*pos)[0] < -room_width/2 + penguin_length/2)
-		(*pos)[0] = -room_width/2 + penguin_length/2;
+	// if((*pos)[0] < -room_width/2 + penguin_length/2)
+	// 	(*pos)[0] = -room_width/2 + penguin_length/2;
 
-	if((*pos)[0] > room_width/2 - penguin_length/2)
-		(*pos)[0] = room_width/2 - penguin_length/2;
+	// if((*pos)[0] > room_width/2 - penguin_length/2)
+	// 	(*pos)[0] = room_width/2 - penguin_length/2;
 
 
 	if((*pos)[1] > room_width/2 - penguin_length/2)
@@ -261,7 +252,6 @@ void Penguin::handleCollisions(Ogre::Vector3* pos)
 
 	// If penguin touches the ground, change the penguin to ground state
 	if((*pos)[1] < -room_width/2 + penguin_length/2){
-		in_air = false;
 		(*pos)[1] = -room_width/2 + penguin_length/2;
 		float tolerance = abs((*pos)[1] - (-room_width/2 + penguin_length/2));
 		if(tolerance < 0.01f){
@@ -287,8 +277,8 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
 		controller->up_control_down == true ||
 		controller->bottom_control_down == true ||
 		controller->forward_control_down == true ||
-		controller->backward_control_down == true ||
-		in_air)
+		controller->backward_control_down == true
+		)
 	{
 		mAnimationState = penguinEntity->getAnimationState("amuse");
         mAnimationState->setLoop(true);
@@ -321,11 +311,4 @@ void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 void Penguin::createRigidBody(PhysicsWrapper* physics)
 {
 	std::cout << "Penguin::createRigidBody()" << std::endl;
-}
-
-/* Callback */
-void Penguin::testFireWeapon(cCallback* p_CallbackOutput)
-{
-	char s8_Out[50];
-	p_CallbackOutput->Execute((void*)s8_Out);
 }
