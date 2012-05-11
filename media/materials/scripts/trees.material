@@ -1,0 +1,117 @@
+material bareTree2/treeBareBrown2Shader
+{
+	technique
+	{
+		pass
+		{
+			shading phong
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 12.8
+			emissive 0 0 0
+
+			scene_blend alpha_blend
+			depth_write off
+		}
+	}
+}
+material bareTree2/treeBareBrown1Shader
+{
+	technique
+	{
+		pass
+		{
+			shading phong
+			ambient 0 0 0 1
+			diffuse 0 0 0 1
+			specular 0 0 0 12.8
+			emissive 0 0 0
+
+			scene_blend alpha_blend
+			depth_write off
+		}
+	}
+}
+material bareTree2/treeBareBrown1Shader1
+{
+	technique
+	{
+		pass
+		{
+			shading phong
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 12.8
+			emissive 0 0 0
+
+			scene_blend alpha_blend
+			depth_write off
+
+			texture_unit
+			{
+				texture ramp4-tree4.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
+material bareTree2/treeBareBrown2Shader1
+{
+	technique
+	{
+		pass
+		{
+			shading phong
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 12.8
+			emissive 0 0 0
+
+			scene_blend alpha_blend
+			depth_write off
+
+			texture_unit
+			{
+				texture ramp3-bareTree.1.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
+
+material bareTree1/treeBareBrown2Shader1
+{
+	technique
+	{
+		pass
+		{
+			shading phong
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 12.8
+			emissive 0 0 0
+
+			scene_blend alpha_blend
+			depth_write off
+
+			texture_unit
+			{
+				texture ramp3-bareTree.1.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
+

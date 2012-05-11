@@ -1,0 +1,71 @@
+material rockMat/rock2
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+
+			texture_unit
+			{
+				texture rock1-pCube1.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
+
+material rockMat/rock4
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+
+			texture_unit
+			{
+				texture rock1-flatRocks.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
+
+material rockMat/rock5
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 1 1 1 1
+			specular 0 0 0 1
+			emissive 0 0 0
+
+			texture_unit
+			{
+				texture rock1-flatPebble.jpg
+				tex_coord_set 0
+				colour_op modulate
+				scale 1 1
+				scroll 0 0
+				rotate 0
+			}
+		}
+	}
+}
