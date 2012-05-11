@@ -32,7 +32,7 @@ public:
 	Goal*					goal;
 	Terrain*				terrain;
 
-	//Vector<Ball*> 				balls;	
+	vector<WorldObjectAbstract*>		objectList;
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

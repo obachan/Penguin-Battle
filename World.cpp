@@ -36,6 +36,12 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 	/* Update World Objects */
 	ball->update(timeSinceLastFrame);
 
+
+	for(vector<WorldObjectAbstract*>::iterator i = objectList.begin(); i != objectList.end(); ++i) {
+
+		(*i)->update();
+	}
+
 	/* Check Events */
 	bool scored = false;
 	if(ball->inGoal(goal)){
