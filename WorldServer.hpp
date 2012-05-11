@@ -1,22 +1,20 @@
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
  
-#ifndef WORLD_HPP
-#define WORLD_HPP
+#ifndef WORLD_SERVER_HPP
+#define WORLD_SERVER_HPP
  
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 
 #include "WorldObjectFactory.hpp"
-#include "Controller.hpp"
-
 #include "Callback.h"
 
-class World
+class WorldServer
 {
 public:
-	World(Ogre::SceneManager*, PhysicsWrapper*, MyController*);
-	~World();
+	WorldServer(Ogre::SceneManager*, PhysicsWrapper*);
+	~WorldServer();
 
 	void update(double, MyController*, Ogre::Camera*);
 
@@ -38,9 +36,10 @@ public:
 	Terrain*							terrain;
 
 	vector<WorldObjectAbstract*> 		world_objects;
+	vector<Penguin*>			 		penguin_clients;
 
 	/* Callback Function */
-	TCallback<World> i_callbackAddBall;
+	TCallback<WorldServer> i_callbackAddBall;
 	bool CallbackAddBall(void *Param);
 };
 

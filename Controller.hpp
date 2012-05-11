@@ -1,3 +1,9 @@
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+#ifndef CONTROLLER_HPP
+#define CONTROLLER_HPP
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||
 
 #include <btBulletDynamicsCommon.h>
 #include <OgreVector3.h>
@@ -47,3 +53,9 @@ public:
 private:
 	bool 		third_person_camera;
 };
+
+//|||||||||||||||||||||||||||||||||||||||||||||||
+ 
+#endif
+ 
+//|||||||||||||||||||||||||||||||||||||||||||||||

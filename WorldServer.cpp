@@ -1,10 +1,10 @@
-#include "World.hpp"
+#include "WorldServer.hpp"
 
-World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController* controller)
+WorldServer::WorldServer(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics)
 {
 	mSceneMgr = sceneMgr;
 	mPhysics = physics;
-	i_callbackAddBall.SetCallback(this, &World::CallbackAddBall);
+	i_callbackAddBall.SetCallback(this, &WorldServer::CallbackAddBall);
 
 	worldObjectFactory = new WorldObjectFactory(mSceneMgr, mPhysics, &i_callbackAddBall);	// World Object Factory
 
@@ -18,12 +18,12 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
 }
 
-World::~World()
+WorldServer::~WorldServer()
 {
 	
 }
 
-void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
+void WorldServer::update(double timeSinceLastFrame, MyController* controller, Ogre::Camera* camera)
 {
 	/* Update Physics Engine */
 	if (timeSinceLastFrame!=0){
@@ -41,7 +41,7 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 
 
 /* Callback Function */
-bool World::CallbackAddBall(void *Param)
+bool WorldServer::CallbackAddBall(void *Param)
 {
 	world_objects.push_back(worldObjectFactory->createNewBall(penguin));
 	return true;

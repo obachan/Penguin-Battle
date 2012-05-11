@@ -1,8 +1,10 @@
 #include "WorldObjectPenguin.hpp"
 #include "WorldObjectBall.hpp"
 
-int Penguin::scene_node_counter = 0;
-
+Penguin::Penguin(cCallback* callbackAddBall)
+{
+	mCallbackAddBall = callbackAddBall;
+}
 
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics) : WorldObjectAbstract()
 {
@@ -67,12 +69,11 @@ void Penguin::createPenguin(Ogre::SceneManager* m_pSceneMgr)
 
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
- 	std::string scene_node_counter_string;
+ 	std::string unique_id_string;
  	std::stringstream out;
- 	out << scene_node_counter;
- 	scene_node_counter_string = out.str();
-	std::string penguin_name = "penguin" + scene_node_counter_string;
-	scene_node_counter++;
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
+	std::string penguin_name = "penguin" + unique_id_string;
 
 	//std::cout << penguin_name << std::endl;
 
@@ -294,6 +295,8 @@ Ogre::Vector3 Penguin::getPenguinDirection()
 	return Ogre::Vector3(penguin_direction[0], penguin_direction[1], penguin_direction[2]);
 }
 
+
+
 // =========================================
 // From Parent Class, WorldObjectAbstract
 // ========================================
@@ -305,10 +308,73 @@ void Penguin::update(double timeSinceLastFrame)
 
 void Penguin::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
+	//--------------------
+	// Visuals - Penguin
+	//--------------------
 
+	float penguin_scale = penguin_length / 50.0;
+	btTransform trans;
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 vec = Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+
+	// Convert static scene_node_counter to string
+	// to give each instance a unique string name
+ 	std::string unique_id_string;
+ 	std::stringstream out;
+ 	out << getUniqueId();
+ 	unique_id_string = out.str();
+	std::string penguin_name = "penguin" + unique_id_string;
+
+	//std::cout << penguin_name << std::endl;
+
+	penguinEntity = m_pSceneMgr->createEntity(penguin_name, "penguin.mesh");
+	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(penguin_name);
+	worldObjectSceneNode->attachObject(penguinEntity);
+	worldObjectSceneNode->setScale(penguin_scale, penguin_scale, penguin_scale);
+	worldObjectSceneNode->setPosition(vec[0], vec[1], vec[2]);
+	penguinEntity->setMaterialName("Penguin");
+	worldObjectSceneNode->yaw( Ogre::Degree( -180 ) );
+	penguin_direction = Ogre::Vector3(0,0,-1);
+	previous_direction = Ogre::Vector3(0,0,-1);
 }
 
 void Penguin::createRigidBody(PhysicsWrapper* physics)
 {
-	std::cout << "Penguin::createRigidBody()" << std::endl;
+		//--------------------
+	// Physics - Penguin
+	//--------------------	
+
+	const float penguin_half_length = penguin_length / 2;
+
+	penguin_position = new btTransform(btQuaternion(0,0,0,1),btVector3(0, -room_width/2, room_length/4));
+	penguin_velocity = Ogre::Vector3(0, 0, 0);
+	
+	penguinMotionState = new btDefaultMotionState(*penguin_position);
+
+    btScalar mass = 0;
+    btVector3 penguinInertia(0,0,0);
+	penguin_collision_shape = new btSphereShape(penguin_half_length);
+    penguin_collision_shape->calculateLocalInertia(mass,penguinInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo penguinRigidBodyCI(mass,penguinMotionState,penguin_collision_shape,penguinInertia);
+	penguinRigidBodyCI.m_restitution = 1;
+    worldObjectRigidBody = new btRigidBody(penguinRigidBodyCI);
+
+    // Disable Gravity because this object will be controlled by the player
+    worldObjectRigidBody->setGravity(btVector3(0,0,0));
+	worldObjectRigidBody->setCollisionFlags( worldObjectRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+	worldObjectRigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+// ========================================
+// Static Classes
+// ========================================
+
+
+Penguin* Penguin::createNewPenguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, cCallback* callbackAddBall)
+{
+	Penguin* penguin = new Penguin(callbackAddBall);
+	penguin->initWorldObject(m_pSceneMgr, physics);
+	//penguin->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
+	return penguin;
 }

@@ -149,7 +149,6 @@ void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 {
 	std::cout << "Ball::createSceneNode()" << std::endl;
 
-
 	// Convert static scene_node_counter to string
 	// to give each instance a unique string name
  	std::string unique_id_string;

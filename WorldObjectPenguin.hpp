@@ -13,7 +13,7 @@ class Penguin : public WorldObjectAbstract
 {
 public:
 
-
+	Penguin(cCallback*);
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*);
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
 	~Penguin();
@@ -31,8 +31,7 @@ public:
 	Ogre::Vector3 			getPenguinDirection();
 
 
-	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
-	
+	static Penguin* createNewPenguin(Ogre::SceneManager*, PhysicsWrapper*, cCallback*);
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
 	// ==========================

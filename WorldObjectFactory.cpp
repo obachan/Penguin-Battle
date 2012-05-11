@@ -29,10 +29,13 @@ Room* WorldObjectFactory::createNewRoom(){
 	return new Room(mSceneMgr, mPhysics);
 }
 
-Penguin* WorldObjectFactory::createNewPenguin(){
-	return new Penguin(mSceneMgr, mPhysics, mCallbackAddBall);
-}
+// Penguin* WorldObjectFactory::createNewPenguin(){
+// 	return new Penguin(mSceneMgr, mPhysics, mCallbackAddBall);
+// }
 
+Penguin* WorldObjectFactory::createNewPenguin(){
+	return Penguin::createNewPenguin(mSceneMgr, mPhysics, mCallbackAddBall);
+}
 
 Goal* WorldObjectFactory::createNewGoal(){
 	return new Goal(mSceneMgr, mPhysics);
