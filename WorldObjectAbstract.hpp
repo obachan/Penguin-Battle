@@ -49,9 +49,10 @@ const float room_length = 400.0f; // represents the length of the prism
 // Parameters for WorldObjectBall
 // ==========================
 
-const float ball_radius = 7.0f;
+const float ball_radius = 2.0f;
 const float ball_mass = 40.0f;
 
+const float ball_launch_vel = 10.0f;
 // ==========================
 // Parameters for WorldObjectPenguin
 // ==========================
@@ -90,6 +91,7 @@ public:
 
 protected:
 	void resetPosition(Ogre::Vector3);			// Resets the location to the passed in parameter, and velocity is 0
+	void resetVelocity(Ogre::Vector3, float);
 
 	void updateWorldObjectVisual();				// Syncs visuals with Physics
 	Ogre::Vector3 getRigidBodyPosition(); 		// Only server objects can call this method

@@ -215,14 +215,12 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	if( controller->left_mouse_button_down == true) {
 		controller->left_mouse_button_down = false;
 		fireWeapon();
-	
 	}
 }
 
 
 void Penguin::fireWeapon() {
 
-	Ogre::Vector3 pos = worldObjectSceneNode->getPosition();
 	char s8_Out[50];
 	mCallbackAddBall->Execute((void*)s8_Out);
 	//Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
@@ -301,6 +299,10 @@ void Penguin::animate(double timeSinceLastFrame, MyController* controller)
 	}
 }
 
+Ogre::Vector3 Penguin::getPenguinDirection()
+{
+	return Ogre::Vector3(penguin_direction[0], penguin_direction[1], penguin_direction[2]);
+}
 
 // =========================================
 // From Parent Class, WorldObjectAbstract

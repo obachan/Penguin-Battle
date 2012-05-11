@@ -45,6 +45,6 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 /* Callback Function */
 bool World::CallbackAddBall(void *Param)
 {
-	balls.push_back(worldObjectFactory->createNewBall(0, 6, 0));
+	balls.push_back(worldObjectFactory->createNewBall(penguin));
 	return true;
 }

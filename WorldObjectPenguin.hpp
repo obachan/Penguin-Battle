@@ -22,23 +22,19 @@ public:
 	Ogre::Entity* 			penguinEntity;
 	Ogre::AnimationState*	mAnimationState;
 
-	btTransform* 			penguin_position;
-	Ogre::Vector3 			penguin_velocity;
-	Ogre::Vector3 			penguin_direction;
-	Ogre::Vector3 			previous_direction;
-
 	bool 					in_air;
 
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
+
+	Ogre::Vector3 			getPenguinDirection();
+
 
 	//don't know how else to fire a snow ball yet...quick dumb hack cuz I'm tired of sitting around thinking about it
 	
 	/* Callback */
 	cCallback* mCallbackAddBall;
 	void testFireWeapon(cCallback*);
-
-
 
 	// ==========================
 	// From Parent Class, WorldObjectAbstract
@@ -53,6 +49,11 @@ protected:
 	void createRigidBody(PhysicsWrapper*);	
 
 private:
+	btTransform* 			penguin_position;
+	Ogre::Vector3 			penguin_velocity;
+	Ogre::Vector3 			penguin_direction;
+	Ogre::Vector3 			previous_direction;
+
 	btCollisionShape* 		penguin_collision_shape;
 
 	void createPenguin(Ogre::SceneManager*);

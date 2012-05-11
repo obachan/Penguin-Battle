@@ -209,3 +209,13 @@ Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physi
 	ball->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
 	return ball;
 }
+
+Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, 
+	Ogre::Vector3 pos, Ogre::Vector3 dir)
+{
+	Ball* ball = new Ball();
+	ball->initWorldObject(m_pSceneMgr, physics);
+	ball->resetPosition(pos);
+	ball->resetVelocity(Ogre::Vector3(dir[0], dir[1], dir[2]), ball_launch_vel);
+	return ball;
+}
