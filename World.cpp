@@ -54,4 +54,5 @@ bool World::CallbackTest(void *Param)
 	std::cout << "World::CallbackTest() WORKS" << std::endl;
 	std::cout << "World::CallbackTest() WORKS" << std::endl;
 	return true;
+
 }

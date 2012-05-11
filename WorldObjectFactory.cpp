@@ -12,7 +12,7 @@ WorldObjectFactory::~WorldObjectFactory(){
 }
 
 Ball* WorldObjectFactory::createNewBall(){
-	return Ball::createNewBall(mSceneMgr, mPhysics, Ogre::Vector3(0, 300, 0));
+	return Ball::createNewBall(mSceneMgr, mPhysics, Ogre::Vector3(0, 5, 0));
 }
 
 Ball* WorldObjectFactory::createNewBall(float px, float py, float pz){

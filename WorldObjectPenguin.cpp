@@ -175,12 +175,16 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 	}
 
 	// Up and Down on the keyboard will move Penguin forwards and backwards
+
 	if(controller->forward_control_down == true){
 		*pos = *pos + (penguin_direction * move_vel * timeSinceLastFrame) * (boost_modifier);
-	}
-
-	if(controller->backward_control_down == true){
+		//worldObjectRigidBody->setLinearVelocity(btVector3(100,100, 100));
+		
+	} else if(controller->backward_control_down == true){
 		*pos = *pos + (penguin_direction * -move_vel * timeSinceLastFrame) * (boost_modifier);
+		//worldObjectRigidBody->setLinearVelocity(btVector3(-100*penguin_direction.x,-100*penguin_direction.y, -100*penguin_direction.z));
+	} else {
+	//	worldObjectRigidBody->setLinearVelocity(btVector3(0, 0, 0));
 	}
 
 	// Space on the keyboard will cause the penguin to jump
@@ -192,7 +196,7 @@ void Penguin::processController(double timeSinceLastFrame, MyController* control
 		}
 	}
 
-
+	cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
 	// Mouse controls
 	
 	if(controller->mouse_x_movement != 0.0000 ) {
@@ -219,6 +223,7 @@ void Penguin::fireWeapon() {
 	Ogre::Vector3 pos = worldObjectSceneNode->getPosition();
 
 	Ball* b = new Ball(mgr, phyWrap, pos.x, pos.y, pos.z);
+	//objectList.pushBack(b);
 	
 //double start_pos_x, double start_pos_y, double start_pos_z
 }

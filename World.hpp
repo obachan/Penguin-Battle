@@ -24,6 +24,7 @@ public:
 	// ===============================
 	// World Object
 	// ===============================
+
 	WorldObjectFactory* 				worldObjectFactory;
 
 	Ball*								ball;
