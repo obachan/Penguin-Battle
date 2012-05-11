@@ -15,7 +15,6 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics)
 	goal = worldObjectFactory->createNewGoal(); 				// Create Goal
 	// terrain = worldObjectFactory->createNewTerrain(); 			// Create Terrain
 
-
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
 }
 
