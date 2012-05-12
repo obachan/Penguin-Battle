@@ -37,6 +37,11 @@ Igloo* WorldObjectFactory::createNewIgloo(){
 	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(40, -room_width/2, 0));
 }
 
+
+Igloo* WorldObjectFactory::createNewIgloo(float px, float py, float pz){
+	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(px, py, pz));
+}
+
 Room* WorldObjectFactory::createNewRoom(){
 	return new Room(mSceneMgr, mPhysics);
 }

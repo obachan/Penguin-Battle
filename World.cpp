@@ -11,12 +11,16 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 
 	worldObjectFactory = new WorldObjectFactory(mSceneMgr, mPhysics);
 
-	// ball = worldObjectFactory->createNewBall(0, 100, 0);
-	// ball2 = worldObjectFactory->createNewBall(0, 200, 0);
 	room = worldObjectFactory->createNewRoom();
 	penguin =  worldObjectFactory->createNewPenguin(controller, &i_callbackAddBall, &i_callbackRightClick);
 	goal = worldObjectFactory->createNewGoal();
-	// terrain = worldObjectFactory->createNewTerrain();
+
+
+	igloos.push_back(worldObjectFactory->createNewIgloo(40, -room_width/2, 0));
+	igloos.push_back(worldObjectFactory->createNewIgloo(-30, -room_width/2, 300));
+	igloos.push_back(worldObjectFactory->createNewIgloo(10, -room_width/2, -200));
+	//igloos.push_back(worldObjectFactory->createNewIgloo(40, -room_width/2, 0));
+
 	//pSys4 = mSceneMgr->createParticleSystem("Jet", "Examples/JetEngine1");
 	//rNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	//rNode->attachObject(pSys4);
@@ -30,7 +34,6 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
     		clientPenguins.push_back(worldObjectFactory->createNewPenguin(client_controllers[i], &i_callbackAddBall, &i_callbackRightClick));	// Create Player 2's Penguin
 		
 	}
-	world_objects.push_back(worldObjectFactory->createNewIgloo());
 }
 
 World::~World()
@@ -47,15 +50,17 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 
 	/* Update Players */
 	penguin->update(timeSinceLastFrame, controller, camera);
+
 	for (int i = 0;i<clientNum; i++)
 	{
 		clientPenguins[i]->update(timeSinceLastFrame, client_controllers[i], NULL);
 	}
 
 	// /* Update World Objects */
-	for(int i=0; i<world_objects.size(); ++i){
-		world_objects[i]->update();
-	}
+	for(int i=0; i<world_objects.size(); ++i)		world_objects[i]->update();
+
+	for(int i=0; i<icecubes.size(); ++i)			icecubes[i]->update();
+	for(int i=0; i<igloos.size(); ++i)				igloos[i]->update();
 
 
 
@@ -99,6 +104,6 @@ bool World::CallbackAddBall(void *Param)
 bool World::CallbackRightClick(void *Param)
 {
 	Penguin* pen = static_cast<Penguin*>(Param);
-	world_objects.push_back(worldObjectFactory->createNewIcecube(pen));
+	icecubes.push_back(worldObjectFactory->createNewIcecube(pen));
 	return true;
 }

@@ -24,6 +24,7 @@ public:
 	Icecube* createNewIcecube();
 	Icecube* createNewIcecube(Penguin* penguin);
 	Igloo* createNewIgloo();
+	Igloo* createNewIgloo(float, float, float);
 
 	Room* createNewRoom();
 	Penguin* createNewPenguin(MyController*, cCallback*);

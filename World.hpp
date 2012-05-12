@@ -30,8 +30,6 @@ public:
 
 	WorldObjectFactory* 				worldObjectFactory;
 
-	Ball*								ball;
-	Ball*								ball2;
 	Room*								room;
 	Icecube*							icecube;
 	Penguin*							penguin;
@@ -41,9 +39,13 @@ public:
 	Ogre::ParticleSystem* pSys4;
 	Ogre::SceneNode* rNode;
 
-	vector<WorldObjectAbstract*> 		world_objects;
-	vector<Penguin*> 		clientPenguins;
-	vector<MyController*>		client_controllers;
+	vector<WorldObjectAbstract*> 		world_objects; // List of Balls and ONLY BALLS
+	vector<Icecube*> 					icecubes; 		// List of Icecubes
+	vector<Igloo*> 						igloos; 		// List of Icecubes
+
+
+	vector<Penguin*> 					clientPenguins;
+	vector<MyController*>				client_controllers;
 	int clientNum;
 
 	/* Callback Function */
