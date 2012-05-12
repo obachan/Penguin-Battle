@@ -34,17 +34,15 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	Ball*				ball;
-	Room*				room;
-	Paddle*				paddle;
-	Penguin*			penguin;
-	Penguin*			penguin_two;
-	Goal*				goal;
+	Ball*			ball;
+	Room*			room;
+	Paddle*			paddle;
+	Penguin*		penguin;
+	Penguin*		penguin_two;
+	Goal*			goal;
 
-	MyController* 		client_controller;
-	SoundWrapper*		sound_factory;
-
-	WorldObjectFactory* worldObjectFactory;
+	MyController* 	client_controller;
+	SoundWrapper*	sound_factory;	
 	
 private:
 	bool						m_bShutdown;

@@ -18,16 +18,18 @@ public:
 	Penguin(MyController*, cCallback*);
 
 	Penguin(Ogre::SceneManager*, PhysicsWrapper*, MyController*);				// To be deleted
+	Penguin(Ogre::SceneManager*, PhysicsWrapper*);				// To be deleted
 	~Penguin();
 
 	btDefaultMotionState* 	penguinMotionState;
 	Ogre::Entity* 			penguinEntity;
 	Ogre::AnimationState*	mAnimationState;
 
-	void update(double, Ogre::Camera*);
-	void updateAsClient(Ogre::Vector3, Ogre::Quaternion, Ogre::Camera*);
+	void update(double, MyController*, Ogre::Camera*);
+	void updateCamera(Ogre::Camera*);
 
-	Ogre::Vector3 getPenguinDirection();
+	Ogre::Vector3 			getPenguinDirection();
+
 
 	static Penguin* createNewPenguin(Ogre::SceneManager*, PhysicsWrapper*, MyController*, cCallback*);
 protected:
@@ -48,16 +50,13 @@ private:
 
 	btCollisionShape* 		penguin_collision_shape;
 
-	void syncPenguin(Ogre::Vector3);		
-	void updateCamera(Ogre::Camera*);
+	void createPenguin(Ogre::SceneManager*);
 
 	void processController(double, Ogre::Vector3*);
 	void handleGravity(double, Ogre::Vector3*);
 	void handleCollisions(Ogre::Vector3*);
 	void animate(double);
 	void fireWeapon();
-
-	void createPenguin(Ogre::SceneManager*); // To Be Deleted
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
