@@ -18,7 +18,7 @@ void Icecube::createRigidBody(PhysicsWrapper* physics)
 
 	btDefaultMotionState* ballMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0, 0, 0)));
 
-    btScalar mass = ball_mass;
+    btScalar mass = ice_mass;
     btVector3 ballInertia(0,0,0);
 
 	btCollisionShape* ball_collision_shape = new btBoxShape(btVector3(paddle_length, paddle_length, paddle_length));
@@ -26,6 +26,7 @@ void Icecube::createRigidBody(PhysicsWrapper* physics)
 
     btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
 	worldObjectRigidBodyCI.m_restitution = 0.765f;
+	worldObjectRigidBodyCI.m_friction = 0.0f;
     worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
 	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
 	worldObjectRigidBody->setLinearFactor(btVector3(1,0,1));
@@ -67,8 +68,26 @@ void Icecube::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 
 Icecube* Icecube::createNewIcecube(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, Ogre::Vector3 pos)
 {
-	Icecube* ball = new Icecube();
-	ball->initWorldObject(m_pSceneMgr, physics);
-	ball->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
-	return ball;
+	Icecube* icecube = new Icecube();
+	icecube->initWorldObject(m_pSceneMgr, physics);
+	icecube->resetPosition(Ogre::Vector3(pos[0], pos[1], pos[2]));
+	return icecube;
+}
+
+Icecube* Icecube::createNewIcecube(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, Penguin* penguin)
+{
+	const float launch_vel = 20.0f;
+
+	Ogre::Vector3 penguin_pos = penguin->getVisualPosition();
+	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
+
+	Ogre::Vector3 start_pos = penguin_pos + 8*penguin_dir;
+	Ogre::Vector3 start_dir = penguin_dir;
+	start_dir.normalise();
+
+	Icecube* icecube = new Icecube();
+	icecube->initWorldObject(m_pSceneMgr, physics);
+	icecube->resetPosition(start_pos);
+	icecube->resetVelocity(start_dir, launch_vel);
+	return icecube;
 }

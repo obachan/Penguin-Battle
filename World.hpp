@@ -42,6 +42,9 @@ public:
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;
 	bool CallbackAddBall(void *Param);
+
+	TCallback<World> i_callbackRightClick;
+	bool CallbackRightClick(void *Param);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

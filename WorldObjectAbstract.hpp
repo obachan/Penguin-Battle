@@ -71,6 +71,8 @@ const float penguin_length = 10.0f;
 // ==========================
 
 const float paddle_length = 10.0f;
+const float ice_mass = 4000.0f;
+
 
 class WorldObjectAbstract {
 public:

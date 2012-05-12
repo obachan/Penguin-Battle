@@ -6,6 +6,12 @@ Penguin::Penguin(MyController* controller, cCallback* callbackAddBall){
 	mCallbackAddBall = callbackAddBall;
 }
 
+Penguin::Penguin(MyController* controller, cCallback* callbackLeftClick, cCallback* callbackRightClick){
+	mController = controller;
+	mCallbackAddBall = callbackLeftClick;
+	mCallbackRightClick = callbackRightClick;
+}
+
 Penguin::Penguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, MyController* controller) : WorldObjectAbstract()
 {
 	mController = controller;
@@ -209,15 +215,26 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 	
 	if( mController->left_mouse_button_down == true) {
 		mController->left_mouse_button_down = false;
-		fireWeapon();
+		fireLeftClickWeapon();
+	}
+
+	if( mController->right_mouse_button_down == true) {
+		mController->right_mouse_button_down = false;
+		fireRightClickWeapon();
 	}
 }
 
 
-void Penguin::fireWeapon() {
+void Penguin::fireLeftClickWeapon() {
 
 	//char s8_Out[50];
 	mCallbackAddBall->Execute((void*)this);
+}
+
+void Penguin::fireRightClickWeapon() {
+
+	//char s8_Out[50];
+	mCallbackRightClick->Execute((void*)this);
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)
@@ -367,6 +384,14 @@ void Penguin::createRigidBody(PhysicsWrapper* physics)
 Penguin* Penguin::createNewPenguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, MyController* controller, cCallback* callbackAddBall)
 {
 	Penguin* penguin = new Penguin(controller, callbackAddBall);
+	penguin->initWorldObject(m_pSceneMgr, physics);
+	return penguin;
+}
+
+Penguin* Penguin::createNewPenguin(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physics, MyController* controller, 
+	cCallback* callbackAddBall, cCallback* callbackRightClick)
+{
+	Penguin* penguin = new Penguin(controller, callbackAddBall, callbackRightClick);
 	penguin->initWorldObject(m_pSceneMgr, physics);
 	return penguin;
 }

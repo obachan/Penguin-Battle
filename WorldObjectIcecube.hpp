@@ -6,6 +6,7 @@
 //|||||||||||||||||||||||||||||||||||||||||||||||
 
 #include "WorldObjectAbstract.hpp"
+#include "WorldObjectPenguin.hpp"
 
 class Icecube : public WorldObjectAbstract
 {
@@ -14,6 +15,7 @@ public:
 	~Icecube();
 
 	static Icecube* createNewIcecube(Ogre::SceneManager*, PhysicsWrapper*, Ogre::Vector3);
+	static Icecube* createNewIcecube(Ogre::SceneManager*, PhysicsWrapper*, Penguin*);
 
 protected:
 	// ==========================
