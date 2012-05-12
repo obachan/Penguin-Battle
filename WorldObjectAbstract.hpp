@@ -43,7 +43,7 @@
 // ==========================
 
 const float room_width = 200.0f; // represents width/height or room
-const float room_length = 400.0f; // represents the length of the prism
+const float room_length = 2400.0f; // represents the length of the prism
 
 // ==========================
 // Parameters for WorldObjectBall

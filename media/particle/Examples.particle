@@ -99,7 +99,7 @@ particle_system Examples/Rain
     {
         angle           0
         emission_rate   200
-        time_to_live    10
+        time_to_live    15
         direction       0 -1 0
         velocity    	100
         width           1000

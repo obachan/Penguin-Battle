@@ -20,7 +20,7 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 	//rNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	//rNode->attachObject(pSys4);
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
-	world_objects.push_back(worldObjectFactory->createNewIgloo());
+	//world_objects.push_back(worldObjectFactory->createNewIgloo());
 }
 
 World::~World()

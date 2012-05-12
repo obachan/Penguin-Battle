@@ -164,6 +164,58 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	btRigidBody::btRigidBodyConstructionInfo frontRigidBodyCI(0,frontMotionState,front,btVector3(0,0,0));
 	frontRigidBodyCI.m_restitution = wall_restitution;
 	frontRigidBody = new btRigidBody(frontRigidBodyCI);
+
+	Ogre::SceneNode* rockGroup = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* rockGroupEntity = m_pSceneMgr->createEntity("rock1", "rockGroup.mesh");
+	rockGroup = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rock1");
+	rockGroup->attachObject(rockGroupEntity);
+
+	rockGroup->setPosition(Ogre::Vector3(0,-99.5,0));
+	rockGroup->setScale(Ogre::Vector3(10,10,10));
+	rockGroupEntity->setMaterialName("rockMat/rockGroup");
+
+	Ogre::SceneNode* rockGroup2 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* rockGroupEntity2 = m_pSceneMgr->createEntity("rock2", "rockGroup.mesh");
+	rockGroup2 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rock2");
+	rockGroup2->attachObject(rockGroupEntity2);
+
+	rockGroup2->setPosition(Ogre::Vector3(50,-99.5,50));
+	rockGroup2->setScale(Ogre::Vector3(20,20,20));
+	rockGroupEntity2->setMaterialName("rockMat/rockGroup");
+
+
+
+	Ogre::SceneNode* rockGroup3 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* rockGroupEntity3 = m_pSceneMgr->createEntity("rock3", "rockGroup.mesh");
+	rockGroup3 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rock3");
+	rockGroup3->attachObject(rockGroupEntity3);
+
+	rockGroup3->setPosition(Ogre::Vector3(50,-99.5,-1000));
+	rockGroup3->setScale(Ogre::Vector3(20,20,20));
+	rockGroup3->setOrientation(90,0,1,0);
+	rockGroupEntity3->setMaterialName("rockMat/rockGroup");
+
+
+	Ogre::SceneNode* rockGroup4 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* rockGroupEntity4 = m_pSceneMgr->createEntity("rock4", "rockGroup.mesh");
+	rockGroup4 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("rock4");
+	rockGroup4->attachObject(rockGroupEntity4);
+
+	rockGroup4->setPosition(Ogre::Vector3(-50,-99.5,550));
+	rockGroup4->setScale(Ogre::Vector3(20,20,20));
+	rockGroup4->setOrientation(90,0,1,0);
+	rockGroupEntity4->setMaterialName("rockMat/rockGroup");
+
+
+	Ogre::SceneNode* treeGroup4 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* treeGroupEntity4 = m_pSceneMgr->createEntity("tree4", "bareTree2.mesh");
+	treeGroup4 = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("tree4");
+	treeGroup4->attachObject(treeGroupEntity4);
+
+	treeGroup4->setPosition(Ogre::Vector3(-50,-98.5,550));
+	treeGroup4->setScale(Ogre::Vector3(20,20,20));
+	treeGroup4->setOrientation(90,0,1,0);
+	treeGroupEntity4->setMaterialName("bareTree2/treeBareBrown2Shader");
 }
 
 void Room::attachToDynamicWorld(PhysicsWrapper* physics)
