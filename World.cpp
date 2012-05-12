@@ -17,6 +17,7 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 	// terrain = worldObjectFactory->createNewTerrain();
 
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
+	world_objects.push_back(worldObjectFactory->createNewIgloo());
 }
 
 World::~World()

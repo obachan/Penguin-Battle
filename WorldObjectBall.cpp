@@ -57,7 +57,8 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
-	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphereCheck.mesh");
+	//Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphereCheck.mesh");
+	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "igloo.mesh");
 	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(ball_name);
 	worldObjectSceneNode->attachObject(objSphereEntity);
 

@@ -34,16 +34,12 @@ Icecube* WorldObjectFactory::createNewIcecube(Penguin* penguin){
 
 
 Igloo* WorldObjectFactory::createNewIgloo(){
-	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(0, -95, 0));
+	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(0, 0, 0));
 }
 
 Room* WorldObjectFactory::createNewRoom(){
 	return new Room(mSceneMgr, mPhysics);
 }
-
-// Penguin* WorldObjectFactory::createNewPenguin(){
-// 	return new Penguin(mSceneMgr, mPhysics, mCallbackAddBall);
-// }
 
 Penguin* WorldObjectFactory::createNewPenguin(MyController* controller, cCallback* callbackAddBall){
 	return Penguin::createNewPenguin(mSceneMgr, mPhysics, controller, callbackAddBall);

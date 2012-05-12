@@ -81,7 +81,7 @@ Icecube* Icecube::createNewIcecube(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapp
 	Ogre::Vector3 penguin_pos = penguin->getVisualPosition();
 	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
 
-	Ogre::Vector3 start_pos = penguin_pos + 8*penguin_dir;
+	Ogre::Vector3 start_pos = penguin_pos + 20*penguin_dir;
 	Ogre::Vector3 start_dir = penguin_dir;
 	start_dir.normalise();
 
