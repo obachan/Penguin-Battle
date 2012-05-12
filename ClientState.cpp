@@ -169,16 +169,16 @@ void ClientState::update(double timeSinceLastFrame)
 
 	int totalBalls = balls.size();
 
-	/*if (balls.size()<ballNum)
+	if (balls.size()<ballNum)
 	{
 		for (int i=0;i<totalBalls; i++)
 		{
 			balls.push_back(new Ball(m_pSceneMgr, NULL, 0, 0, 0));
 		}
-	}*/
+	}
 	
-	//for (int i=0;i<ballNum;i++)
-	//{
+	for (int i=0;i<ballNum;i++)
+	{
 		std::cout << "Ball Number" << ballNum << std::endl;
 		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 		Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
@@ -197,12 +197,12 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newballQuaternion[1], buffer+16, 4);
 		memcpy(&newballQuaternion[2], buffer+20, 4);
 		memcpy(&newballQuaternion[3], buffer+24, 4);
-		balls[0]->updateAsClient(newballPosition, newballQuaternion);
-	//}
+		balls[i]->updateAsClient(newballPosition, newballQuaternion);
+	}
 
 	
-	//for (int i = 0; i<totalNumberPlayers;i++)
-	//{
+	for (int i = 0; i<totalNumberPlayers;i++)
+	{
 		printf("Before Receive player %d", 0);
 		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
 		printf("After Receive player %d", 0);
@@ -222,10 +222,10 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newPenguinServerQuaternion[2], buffer+20, 4);
 		memcpy(&newPenguinServerQuaternion[3], buffer+24, 4);
 		printf("Before Update As Client");
-		penguins[0]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
+		penguins[i]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
 		printf("After Update As Client");
 
-
+/*
 		//printf("Before Receive player %d", 1);
 		std::cout << "Before Receive player 1" << std::endl;
 
@@ -249,11 +249,11 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newPenguinServerQuaternion[1], buffer+16, 4);
 		memcpy(&newPenguinServerQuaternion[2], buffer+20, 4);
 		memcpy(&newPenguinServerQuaternion[3], buffer+24, 4);
-		penguins[1]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
+		penguins[1]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);*/
 
 
 
-	//}
+	}
 
 
 /*
@@ -318,6 +318,9 @@ void ClientState::update(double timeSinceLastFrame)
 	sendbuffer[12] = (client_controller->jump_control_down) ? '1' : '0';
 	sendbuffer[13] = (client_controller->boost_control_down) ? '1' : '0';
 	sendbuffer[14] = '\0';
+
+	client_controller->left_mouse_button_down = false;
+	client_controller->jump_control_down = false;
 
 	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 15);
 

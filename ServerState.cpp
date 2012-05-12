@@ -199,10 +199,10 @@ void ServerState::update(double timeSinceLastFrame)
 
 	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
 
-	//for (int i = 0; i<ballNum;i++)
-	//{
+	for (int i = 0; i<ballNum;i++)
+	{
 	
-		Ogre::Vector3 newballVector = world->world_objects[0]->getVisualPosition();
+		Ogre::Vector3 newballVector = world->world_objects[i]->getVisualPosition();
 		memcpy(buffer, &newballVector[0], 4);
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
@@ -212,13 +212,13 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newballVector[1]);
 		printf("%f\n", newballVector[2]);	
 
-		Ogre::Quaternion newballQuaternion = world->world_objects[0]->getVisualOrientation();
+		Ogre::Quaternion newballQuaternion = world->world_objects[i]->getVisualOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
 		memcpy(buffer+20, &newballQuaternion[2], 4);	
 		memcpy(buffer+24, &newballQuaternion[3], 4);
 		OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
-	//}
+	}
 
 	Ogre::Vector3 newPenguinServerVector = world->penguin->getVisualPosition();
 	memcpy(buffer, &newPenguinServerVector[0], 4);
@@ -240,10 +240,10 @@ void ServerState::update(double timeSinceLastFrame)
 	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
 	printf("After Server Send");
 
-	//for (int i = 0; i<numberOfClients;i++)
-	//{
+	for (int i = 0; i<numberOfClients;i++)
+	{
 		
-		Ogre::Vector3 newPenguinClientVector = world->clientPenguins[0]->getVisualPosition();
+		Ogre::Vector3 newPenguinClientVector = world->clientPenguins[i]->getVisualPosition();
 		//Ogre::Vector3 newPenguinClientVector = Ogre::Vector3(0, 0, 0);
 		memcpy(buffer, &newPenguinClientVector[0], 4);
 		memcpy(buffer+4, &newPenguinClientVector[1], 4);
@@ -254,7 +254,7 @@ void ServerState::update(double timeSinceLastFrame)
 	printf("%f\n", newPenguinServerVector[1]);
 	printf("%f\n", newPenguinServerVector[2]);
 
-		Ogre::Quaternion newPenguinClientQuaternion = world->clientPenguins[0]->getVisualOrientation();
+		Ogre::Quaternion newPenguinClientQuaternion = world->clientPenguins[i]->getVisualOrientation();
 		//Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1, 0, 0, 0);
 		memcpy(buffer+12, &newPenguinClientQuaternion[0], 4);	
 		memcpy(buffer+16, &newPenguinClientQuaternion[1], 4);	
@@ -267,7 +267,7 @@ void ServerState::update(double timeSinceLastFrame)
 		OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
 		//printf("After Client %d Send", 0);
 		std::cout << "After Client 0 Send" << std::endl;
-	//}
+	}
 		printf("End Server UPDATE\n\n\n\n\n");
     // ===========================================================================
 
