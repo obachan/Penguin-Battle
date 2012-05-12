@@ -75,6 +75,25 @@ void WorldObjectAbstract::resetPosition(Ogre::Vector3 new_pos)
 	worldObjectRigidBody->setMotionState (motionState);
 }
 
+void WorldObjectAbstract::resetPosition(Ogre::Vector3 new_pos, Ogre::Quaternion new_quat)
+{
+	std::cout << new_quat[0] << " " << new_quat[1] << " " << new_quat[2] << " " << new_quat[3] << std::endl;
+
+	btTransform trans;
+    worldObjectRigidBody->getMotionState()->getWorldTransform(trans);
+	trans.setOrigin(btVector3(new_pos[0], new_pos[1], new_pos[2]));
+	trans.setRotation(btQuaternion(new_quat[0], new_quat[1], new_quat[2], new_quat[3]));
+	worldObjectRigidBody->setLinearVelocity(btVector3(0, 0, 0));
+
+	//----------------------------------
+	// Set new position and velocity
+	//----------------------------------
+
+	btMotionState *motionState = worldObjectRigidBody->getMotionState();
+	motionState->setWorldTransform(trans);
+	worldObjectRigidBody->setMotionState (motionState);
+}
+
 void WorldObjectAbstract::resetVelocity(Ogre::Vector3 dir, float vel)
 {
 	worldObjectRigidBody->setLinearVelocity(btVector3(vel * dir[0], vel * dir[1], vel * dir[2]));

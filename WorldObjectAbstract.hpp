@@ -99,6 +99,9 @@ public:
 
 	virtual void update();
 
+
+	void resetPosition(Ogre::Vector3, Ogre::Quaternion); // SHOULD BE PROTECTED BUT PUBLIC FOR DEMO DAY
+
 protected:
 	void resetPosition(Ogre::Vector3);			// Resets the location to the passed in parameter, and velocity is 0
 	void resetVelocity(Ogre::Vector3, float);

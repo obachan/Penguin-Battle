@@ -331,7 +331,7 @@ void ClientState::update(double timeSinceLastFrame)
 	sendbuffer[13] = (client_controller->boost_control_down) ? '1' : '0';
 
 	std::cout << "CLient X movement (Float)" << client_controller->mouse_x_movement << std::endl;
-	int mouseX = (int)client_controller->mouse_x_movement;
+	int mouseX = client_controller->mouse_x_movement;
 	std::cout << "CLient X movement (Int)" << mouseX << std::endl;
 
 	memcpy(buffer+14, &(mouseX), 4);

@@ -13,6 +13,7 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 
 	room = worldObjectFactory->createNewRoom();
 	penguin =  worldObjectFactory->createNewPenguin(controller, &i_callbackAddBall, &i_callbackRightClick);
+	penguin->resetPosition(Ogre::Vector3(0, -95, -800), Ogre::Quaternion(Ogre::Degree(180), Ogre::Vector3::UNIT_Y));
 	goal = worldObjectFactory->createNewGoal();
 
 
