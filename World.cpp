@@ -44,6 +44,7 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 bool World::CallbackAddBall(void *Param)
 {
 	Penguin* pen = static_cast<Penguin*>(Param);
-	world_objects.push_back(worldObjectFactory->createNewBall(pen));
+	//world_objects.push_back(worldObjectFactory->createNewBall(pen));
+	world_objects.push_back(worldObjectFactory->createNewIcecube());
 	return true;
 }

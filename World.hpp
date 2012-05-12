@@ -32,7 +32,7 @@ public:
 	Ball*								ball;
 	Ball*								ball2;
 	Room*								room;
-	Paddle*								paddle;
+	Icecube*							icecube;
 	Penguin*							penguin;
 	Goal*								goal;
 	Terrain*							terrain;

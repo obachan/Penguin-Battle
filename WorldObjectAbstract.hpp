@@ -67,7 +67,7 @@ const double rotation_speed = 5.0f;
 const float penguin_length = 10.0f;
 
 // ==========================
-// Parameters for WorldObjectPaddle
+// Parameters for WorldObjectIcecube
 // ==========================
 
 const float paddle_length = 10.0f;

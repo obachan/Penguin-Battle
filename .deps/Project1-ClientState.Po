@@ -890,7 +890,7 @@ Project1-ClientState.o: ClientState.cpp ClientState.hpp AppState.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
  WorldObjectGoal.hpp WorldObjectPenguin.hpp Callback.h \
- WorldObjectRoom.hpp WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
+ WorldObjectRoom.hpp WorldObjectIcecube.hpp WorldObjectTerrain.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
 
 ClientState.hpp:
@@ -2925,7 +2925,7 @@ Callback.h:
 
 WorldObjectRoom.hpp:
 
-WorldObjectPaddle.hpp:
+WorldObjectIcecube.hpp:
 
 WorldObjectTerrain.hpp:
 

@@ -36,7 +36,7 @@ public:
 
 	Ball*			ball;
 	Room*			room;
-	Paddle*			paddle;
+	Icecube*		icecube;
 	Penguin*		penguin;
 	Penguin*		penguin_two;
 	Goal*			goal;
