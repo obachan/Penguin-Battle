@@ -165,6 +165,8 @@ void Penguin::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre:
 	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
 	//animate(timeSinceLastFrame);
 
+	//Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
+
 	/*if(mController->mouse_x_movement != 0.0000 ) {
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*mController->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
@@ -257,7 +259,7 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 		penguin_direction.y = 0;
 		penguin_direction.normalise();
 		previous_direction = penguin_direction;
-		mController->mouse_x_movement = 0.0;
+		mController->mouse_x_movement = 0;
 	
 	}
 	

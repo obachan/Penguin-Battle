@@ -36,8 +36,8 @@ public:
 
 	bool 	boost_control_down;
 
-	float	mouse_x_movement;
-	float	mouse_y_movement;
+	int	mouse_x_movement;
+	int	mouse_y_movement;
 
 	void 	toggleThirdPersonCamera();
 	bool 	thirdPersonCameraOn();

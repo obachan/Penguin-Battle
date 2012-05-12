@@ -172,9 +172,12 @@ void ServerState::update(double timeSinceLastFrame)
 		world->client_controllers[tempClientID]->backward_control_down = (recvbuffer[11] == '1') ? true : false;
 		world->client_controllers[tempClientID]->jump_control_down = (recvbuffer[12] == '1') ? true : false;
 		world->client_controllers[tempClientID]->boost_control_down = (recvbuffer[13] == '1') ? true : false;
-		memcpy(&(world->client_controllers[tempClientID]->mouse_x_movement), recvbuffer+14, 4);
-
-		std::cout << "Client Controller X Movement (Server Side)" << world->client_controllers[tempClientID]->mouse_x_movement << std::endl;
+		
+		int mouseX = 0;
+		memcpy(&(mouseX), recvbuffer+14, 4);
+		std::cout << "Client Controller X Movement (Server Side INTEGER)" << mouseX << std::endl;
+		world->client_controllers[tempClientID]->mouse_x_movement = mouseX;
+		std::cout << "Client Controller X Movement (Server Side INTEGER)" << world->client_controllers[tempClientID]->mouse_x_movement << std::endl;
 //		printf("BEFORE CLIENT PENGUIN UPDATE");
 		//world->clientPenguins[tempClientID]->update(timeSinceLastFrame, world->client_controllers[tempClientID], NULL);
 //		printf("After client penguin update");
@@ -217,6 +220,60 @@ void ServerState::update(double timeSinceLastFrame)
 		printf("%f\n", newballVector[2]);	*/
 
 		Ogre::Quaternion newballQuaternion = world->world_objects[i]->getVisualOrientation();
+		memcpy(buffer+12, &newballQuaternion[0], 4);	
+		memcpy(buffer+16, &newballQuaternion[1], 4);	
+		memcpy(buffer+20, &newballQuaternion[2], 4);	
+		memcpy(buffer+24, &newballQuaternion[3], 4);
+		OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
+	}
+
+	int iceNum = world->icecubes.size();
+
+	memcpy(buffer, &iceNum, 4);
+
+	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
+
+	for (int i = 0; i<iceNum;i++)
+	{
+	
+		Ogre::Vector3 newballVector = world->icecubes[i]->getVisualPosition();
+		memcpy(buffer, &newballVector[0], 4);
+		memcpy(buffer+4, &newballVector[1], 4);
+		memcpy(buffer+8, &newballVector[2], 4);
+	
+		/*printf("BallPosition\n");
+		printf("%f\n", newballVector[0]);
+		printf("%f\n", newballVector[1]);
+		printf("%f\n", newballVector[2]);	*/
+
+		Ogre::Quaternion newballQuaternion = world->icecubes[i]->getVisualOrientation();
+		memcpy(buffer+12, &newballQuaternion[0], 4);	
+		memcpy(buffer+16, &newballQuaternion[1], 4);	
+		memcpy(buffer+20, &newballQuaternion[2], 4);	
+		memcpy(buffer+24, &newballQuaternion[3], 4);
+		OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
+	}
+
+	int iglooNum = world->igloos.size();
+
+	memcpy(buffer, &iglooNum, 4);
+
+	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 32);
+
+	for (int i = 0; i<iglooNum;i++)
+	{
+	
+		Ogre::Vector3 newballVector = world->igloos[i]->getVisualPosition();
+		memcpy(buffer, &newballVector[0], 4);
+		memcpy(buffer+4, &newballVector[1], 4);
+		memcpy(buffer+8, &newballVector[2], 4);
+	
+		/*printf("BallPosition\n");
+		printf("%f\n", newballVector[0]);
+		printf("%f\n", newballVector[1]);
+		printf("%f\n", newballVector[2]);	*/
+
+		Ogre::Quaternion newballQuaternion = world->igloos[i]->getVisualOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
 		memcpy(buffer+16, &newballQuaternion[1], 4);	
 		memcpy(buffer+20, &newballQuaternion[2], 4);	

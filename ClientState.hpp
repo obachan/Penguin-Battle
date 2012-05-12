@@ -46,6 +46,8 @@ public:
 
 	vector<WorldObjectAbstract*> 		balls;
 	vector<Penguin*> penguins;
+	vector<Icecube*> 				icecubes;
+	vector<Igloo*> 					igloos; 
 	
 private:
 	bool						m_bShutdown;

@@ -101,10 +101,11 @@ void ClientState::enter()
 	sendbuffer[11] = '0';
 	sendbuffer[12] = '0';
 	sendbuffer[13] = '0';
-	sendbuffer[14] = '\0';
+	int blank = 0;
+	memcpy(sendbuffer+14, &blank, 4);
 	
 	std::cout << "Before Client Send Blank Control" << std::endl;
-	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 15);
+	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 32);
 	std::cout << "After Client Send Blank Control" << std::endl;
 }
 
@@ -174,14 +175,9 @@ void ClientState::update(double timeSinceLastFrame)
 	int ballNum = 0;
 	memcpy(&ballNum, buffer, 4);
 
-	int totalBalls = balls.size();
-
-	if (balls.size()<ballNum)
+	while(balls.size()<ballNum)
 	{
-		for (int i=0;i<totalBalls; i++)
-		{
-			balls.push_back(new Ball(m_pSceneMgr, NULL, 0, 0, 0));
-		}
+		balls.push_back(new Ball(m_pSceneMgr, NULL, 0, 0, 0));
 	}
 	
 	for (int i=0;i<ballNum;i++)
@@ -207,6 +203,71 @@ void ClientState::update(double timeSinceLastFrame)
 		balls[i]->updateAsClient(newballPosition, newballQuaternion);
 	}
 
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	int iceNum = 0;
+	memcpy(&iceNum, buffer, 4);
+
+	while(icecubes.size()<iceNum)
+	{
+		icecubes.push_back(Icecube::createNewIcecube(m_pSceneMgr, NULL, Ogre::Vector3(0, -95, 0)));
+	}
+
+
+	std::cout<< "NUMBER OF ICECUBES" << icecubes.size() << std::endl;
+	
+	for (int i=0;i<iceNum;i++)
+	{
+		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+		Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
+		memcpy(&newballPosition[0], buffer, 4);
+		memcpy(&newballPosition[1], buffer+4, 4);
+		memcpy(&newballPosition[2], buffer+8, 4);
+			
+	//printf("BallPosition\n");
+/*	std::cout << "BallPosition" << 0 << std::endl;
+	printf("%f\n", newballPosition[0]);
+	printf("%f\n", newballPosition[1]);
+	printf("%f\n", newballPosition[2]);*/
+
+		Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
+		memcpy(&newballQuaternion[0], buffer+12, 4);
+		memcpy(&newballQuaternion[1], buffer+16, 4);
+		memcpy(&newballQuaternion[2], buffer+20, 4);
+		memcpy(&newballQuaternion[3], buffer+24, 4);
+		icecubes[i]->updateAsClient(newballPosition, newballQuaternion);
+	}
+
+	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	int iglooNum = 0;
+	memcpy(&iglooNum, buffer, 4);
+
+	while(igloos.size()<iglooNum)
+	{
+		igloos.push_back(Igloo::createNewIgloo(m_pSceneMgr, NULL, Ogre::Vector3(40, -room_width/2, 0)));
+	}
+
+	
+	for (int i=0;i<iglooNum;i++)
+	{
+		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+		Ogre::Vector3 newballPosition = Ogre::Vector3(0,0,0);
+		memcpy(&newballPosition[0], buffer, 4);
+		memcpy(&newballPosition[1], buffer+4, 4);
+		memcpy(&newballPosition[2], buffer+8, 4);
+			
+	//printf("BallPosition\n");
+/*	std::cout << "BallPosition" << 0 << std::endl;
+	printf("%f\n", newballPosition[0]);
+	printf("%f\n", newballPosition[1]);
+	printf("%f\n", newballPosition[2]);*/
+
+		Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
+		memcpy(&newballQuaternion[0], buffer+12, 4);
+		memcpy(&newballQuaternion[1], buffer+16, 4);
+		memcpy(&newballQuaternion[2], buffer+20, 4);
+		memcpy(&newballQuaternion[3], buffer+24, 4);
+		igloos[i]->updateAsClient(newballPosition, newballQuaternion);
+	}
 	
 	for (int i = 0; i<totalNumberPlayers;i++)
 	{
@@ -240,72 +301,8 @@ void ClientState::update(double timeSinceLastFrame)
 		}
 		printf("After Update As Client");
 
-/*
-		//printf("Before Receive player %d", 1);
-		std::cout << "Before Receive player 1" << std::endl;
-
-		OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
-
-		//printf("After Receive player %d", 1);
-		std::cout << "After Receive player 1" << std::endl;
-
-		//Ogre::Vector3 newPenguinServerPosition = Ogre::Vector3(0,0,0);
-		memcpy(&newPenguinServerPosition[0], buffer, 4);
-		memcpy(&newPenguinServerPosition[1], buffer+4, 4);
-		memcpy(&newPenguinServerPosition[2], buffer+8, 4);
-
-	printf("ServerPosition\n");
-	printf("%f\n", newPenguinServerPosition[0]);
-	printf("%f\n", newPenguinServerPosition[1]);
-	printf("%f\n", newPenguinServerPosition[2]);
-
-		//Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
-		memcpy(&newPenguinServerQuaternion[0], buffer+12, 4);
-		memcpy(&newPenguinServerQuaternion[1], buffer+16, 4);
-		memcpy(&newPenguinServerQuaternion[2], buffer+20, 4);
-		memcpy(&newPenguinServerQuaternion[3], buffer+24, 4);
-		penguins[1]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);*/
-
-
-
 	}
 
-
-/*
-	Ogre::Vector3 newPenguinClientPosition = Ogre::Vector3(0,0,0);
-	memcpy(&newPenguinClientPosition[0], buffer+24, 4);
-	memcpy(&newPenguinClientPosition[1], buffer+28, 4);
-
-
-    // ===========================================================================
-	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
-
-	memcpy(&newPenguinClientPosition[2], buffer, 4);
-
-	printf("ClientPosition\n");
-	printf("%f\n", newPenguinClientPosition[0]);
-	printf("%f\n", newPenguinClientPosition[1]);
-	printf("%f\n", newPenguinClientPosition[2]);
-
-	Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1,0,0,0);
-	memcpy(&newPenguinClientQuaternion[0], buffer+4, 4);
-	memcpy(&newPenguinClientQuaternion[1], buffer+8, 4);
-	memcpy(&newPenguinClientQuaternion[2], buffer+12, 4);
-	memcpy(&newPenguinClientQuaternion[3], buffer+16, 4);
-
- 	// Our Team's main loop
-	//ball->update(timeSinceLastFrame);
-	
-	
-	printf("Before Penguin UPDATE\n\n\n\n");
-
-	//penguin->updateAsClient(timeSinceLastFrame, newPenguinClientPosition, newPenguinClientQuaternion, m_pCamera);
-	//penguin->updateAsClient(timeSinceLastFrame, newPenguinClientPosition, newPenguinClientQuaternion);
-	penguin->updateAsClient(newPenguinClientPosition, newPenguinClientQuaternion);
-
-	printf("Before Penguin 2 update\n\n\n\n");
-	//penguin_two->updateAsClient(timeSinceLastFrame, newPenguinServerPosition, newPenguinServerQuaternion);
-	penguin_two->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);*/
 	
   	// Update Debug Camera
     if(client_controller->debugCameraOn())
@@ -333,13 +330,18 @@ void ClientState::update(double timeSinceLastFrame)
 	sendbuffer[12] = (client_controller->jump_control_down) ? '1' : '0';
 	sendbuffer[13] = (client_controller->boost_control_down) ? '1' : '0';
 
-	memcpy(buffer+14, &(client_controller->mouse_x_movement), 4);
+	std::cout << "CLient X movement (Float)" << client_controller->mouse_x_movement << std::endl;
+	int mouseX = (int)client_controller->mouse_x_movement;
+	std::cout << "CLient X movement (Int)" << mouseX << std::endl;
 
-	std::cout << "CLient X movement" << client_controller->mouse_x_movement << std::endl;
+	memcpy(buffer+14, &(mouseX), 4);
+
+	std::cout << "After Memcpy CLient X movement (Int)" << mouseX << std::endl;
 
 	client_controller->left_mouse_button_down = false;
 	client_controller->jump_control_down = false;
 	client_controller->right_mouse_button_down = false;
+	client_controller->mouse_x_movement = 0;
 
 	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 32);
 

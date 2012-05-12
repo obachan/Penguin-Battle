@@ -18,8 +18,8 @@ MyController::MyController()
 
 	boost_control_down = false;
 
-	mouse_x_movement = 0.0;
-	mouse_y_movement = 0.0;
+	mouse_x_movement = 0;
+	mouse_y_movement = 0;
 
 	third_person_camera = true;
 }
