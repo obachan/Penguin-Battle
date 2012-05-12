@@ -59,6 +59,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
 	btDefaultMotionState* bottomMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
     btRigidBody::btRigidBodyConstructionInfo bottomRigidBodyCI(0,bottomMotionState,bottom,btVector3(0,0,0));
 	bottomRigidBodyCI.m_restitution = wall_restitution;
+	bottomRigidBodyCI.m_friction = 0.0f;
     bottomRigidBody = new btRigidBody(bottomRigidBodyCI);
 
 	//---------------

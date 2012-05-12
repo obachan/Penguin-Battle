@@ -33,7 +33,7 @@ public:
 	Ball*								ball;
 	Ball*								ball2;
 	Room*								room;
-	Paddle*								paddle;
+	Icecube*							icecube;
 	Penguin*							penguin;
 	Goal*								goal;
 	Terrain*							terrain;
@@ -46,6 +46,9 @@ public:
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;
 	bool CallbackAddBall(void *Param);
+
+	TCallback<World> i_callbackRightClick;
+	bool CallbackRightClick(void *Param);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
