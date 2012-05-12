@@ -1,5 +1,5 @@
-Project1-World.o: World.cpp World.hpp WorldObjectFactory.hpp \
- WorldObjectBall.hpp WorldObjectAbstract.hpp OgreFramework.hpp \
+Project1-WorldObjectIcecube.o: WorldObjectIcecube.cpp \
+ WorldObjectIcecube.hpp WorldObjectAbstract.hpp OgreFramework.hpp \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgreCamera.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePrerequisites.h \
  /lusr/opt/ogre-1.7.4/include/OGRE/OgrePlatform.h \
@@ -889,15 +889,9 @@ Project1-World.o: World.cpp World.hpp WorldObjectFactory.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btBox2dShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
- WorldObjectGoal.hpp WorldObjectPenguin.hpp Callback.h \
- WorldObjectRoom.hpp WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
- /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
+ WorldObjectPenguin.hpp Callback.h
 
-World.hpp:
-
-WorldObjectFactory.hpp:
-
-WorldObjectBall.hpp:
+WorldObjectIcecube.hpp:
 
 WorldObjectAbstract.hpp:
 
@@ -2915,16 +2909,6 @@ usr/include/SDL_net/SDL_net.h:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h:
 
-WorldObjectGoal.hpp:
-
 WorldObjectPenguin.hpp:
 
 Callback.h:
-
-WorldObjectRoom.hpp:
-
-WorldObjectPaddle.hpp:
-
-WorldObjectTerrain.hpp:
-
-/usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:

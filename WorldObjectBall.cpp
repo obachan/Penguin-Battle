@@ -57,7 +57,11 @@ void Ball::createSphere(Ogre::SceneManager* m_pSceneMgr, Ogre::Real start_pos_x,
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
 	Ogre::Vector3 v3SphereScaleFactor = Ogre::Vector3(rScaleFactor, rScaleFactor, rScaleFactor);
 
+
 	Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphere.mesh");
+	//Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "sphereCheck.mesh");
+	//Ogre::Entity* objSphereEntity = m_pSceneMgr->createEntity(ball_name, "igloo.mesh");
+
 	worldObjectSceneNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(ball_name);
 	worldObjectSceneNode->attachObject(objSphereEntity);
 
@@ -143,6 +147,14 @@ void Ball::createRigidBody(PhysicsWrapper* physics)
 	worldObjectRigidBodyCI.m_restitution = 0.765f;
     worldObjectRigidBody = new btRigidBody(worldObjectRigidBodyCI);
 	worldObjectRigidBody->setLinearVelocity(btVector3(0,0,0));
+
+
+
+
+
+
+
+
 }
 
 void Ball::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
@@ -194,7 +206,7 @@ Ball* Ball::createNewBall(Ogre::SceneManager* m_pSceneMgr, PhysicsWrapper* physi
 	Ogre::Vector3 penguin_dir = penguin->getPenguinDirection();
 
 	Ogre::Vector3 ball_start_pos = penguin_pos + 8*penguin_dir;
-	Ogre::Vector3 ball_start_dir = penguin_dir.midPoint(Ogre::Vector3(0, 1, 0));
+	Ogre::Vector3 ball_start_dir = penguin_dir.midPoint(Ogre::Vector3(0, 0.1, 0));
 	ball_start_dir.normalise();
 
 	Ball* ball = new Ball();

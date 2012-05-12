@@ -43,7 +43,7 @@
 // ==========================
 
 const float room_width = 200.0f; // represents width/height or room
-const float room_length = 400.0f; // represents the length of the prism
+const float room_length = 2400.0f; // represents the length of the prism
 
 // ==========================
 // Parameters for WorldObjectBall
@@ -52,7 +52,7 @@ const float room_length = 400.0f; // represents the length of the prism
 const float ball_radius = 2.0f;
 const float ball_mass = 40.0f;
 
-const float ball_launch_vel = 10.0f;
+const float ball_launch_vel = 30.0f;
 // ==========================
 // Parameters for WorldObjectPenguin
 // ==========================
@@ -67,10 +67,19 @@ const double rotation_speed = 5.0f;
 const float penguin_length = 10.0f;
 
 // ==========================
-// Parameters for WorldObjectPaddle
+// Parameters for WorldObjectIcecube
 // ==========================
 
 const float paddle_length = 10.0f;
+const float ice_mass = 4000.0f;
+
+// ==========================
+// Parameters for WorldObjectIgloo
+// ==========================
+
+const float igloo_length = 20.0f;
+const float igloo_width = 20.0f;
+const float igloo_height = 0.1f;
 
 class WorldObjectAbstract {
 public:

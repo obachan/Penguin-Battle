@@ -9,6 +9,7 @@
 
 #include "WorldObjectFactory.hpp"
 #include "Controller.hpp"
+#include "OgreBillboardParticleRenderer.h"
 
 #include "Callback.h"
 
@@ -32,10 +33,13 @@ public:
 	Ball*								ball;
 	Ball*								ball2;
 	Room*								room;
-	Paddle*								paddle;
+	Icecube*							icecube;
 	Penguin*							penguin;
 	Goal*								goal;
 	Terrain*							terrain;
+
+	Ogre::ParticleSystem* pSys4;
+	Ogre::SceneNode* rNode;
 
 	vector<WorldObjectAbstract*> 		world_objects;
 	vector<Penguin*> 		clientPenguins;
@@ -45,6 +49,9 @@ public:
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;
 	bool CallbackAddBall(void *Param);
+
+	TCallback<World> i_callbackRightClick;
+	bool CallbackRightClick(void *Param);
 };
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

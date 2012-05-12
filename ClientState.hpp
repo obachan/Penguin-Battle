@@ -36,9 +36,9 @@ public:
 
 	Ball*			ball;
 	Room*			room;
-	Paddle*			paddle;
-	//Penguin*		penguin;
-	//Penguin*		penguin_two;
+	Icecube*		icecube;
+	Penguin*		penguin;
+	Penguin*		penguin_two;
 	Goal*			goal;
 
 	MyController* 	client_controller;
