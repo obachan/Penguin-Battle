@@ -61,7 +61,7 @@ void Igloo::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 
 	worldObjectSceneNode->setPosition(v3SpherePosition);
 	worldObjectSceneNode->setScale(v3SphereScaleFactor);
-	objSphereEntity->setMaterialName("Ball/Snow");
+	objSphereEntity->setMaterialName("snowIgloo/snowBrick");
 
 }
 // ========================================
