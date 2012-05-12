@@ -52,7 +52,7 @@ const float room_length = 400.0f; // represents the length of the prism
 const float ball_radius = 2.0f;
 const float ball_mass = 40.0f;
 
-const float ball_launch_vel = 10.0f;
+const float ball_launch_vel = 30.0f;
 // ==========================
 // Parameters for WorldObjectPenguin
 // ==========================

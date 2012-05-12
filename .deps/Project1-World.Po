@@ -890,9 +890,16 @@ Project1-World.o: World.cpp World.hpp WorldObjectFactory.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h \
  WorldObjectGoal.hpp WorldObjectPenguin.hpp Callback.h \
+<<<<<<< HEAD
+ WorldObjectRoom.hpp WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
+ /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h
+=======
  WorldObjectRoom.hpp WorldObjectIcecube.hpp WorldObjectIgloo.hpp \
  WorldObjectTerrain.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
+>>>>>>> e492d324178f4cbd48c3f69502ae3e12361f74c6
 
 World.hpp:
 
@@ -2931,3 +2938,7 @@ WorldObjectIgloo.hpp:
 WorldObjectTerrain.hpp:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h:

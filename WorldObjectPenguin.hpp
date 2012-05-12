@@ -11,6 +11,7 @@
 
 #include "Callback.h"
 
+
 class Penguin : public WorldObjectAbstract
 {
 public:
