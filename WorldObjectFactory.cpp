@@ -34,7 +34,7 @@ Icecube* WorldObjectFactory::createNewIcecube(Penguin* penguin){
 
 
 Igloo* WorldObjectFactory::createNewIgloo(){
-	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(0, 0, 0));
+	return Igloo::createNewIgloo(mSceneMgr, mPhysics, Ogre::Vector3(40, -room_width/2, 0));
 }
 
 Room* WorldObjectFactory::createNewRoom(){

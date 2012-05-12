@@ -21,7 +21,7 @@ void Igloo::createRigidBody(PhysicsWrapper* physics)
     btScalar mass = ball_mass;
     btVector3 ballInertia(0,0,0);
 
-	btCollisionShape* ball_collision_shape = new btBoxShape(btVector3(igloo_length, igloo_length, igloo_length));
+	btCollisionShape* ball_collision_shape = new btBoxShape(btVector3(igloo_length, igloo_height, igloo_length));
     ball_collision_shape->calculateLocalInertia(mass,ballInertia);
 
     btRigidBody::btRigidBodyConstructionInfo worldObjectRigidBodyCI(mass,ballMotionState,ball_collision_shape,ballInertia);
@@ -49,7 +49,7 @@ void Igloo::createSceneNode(Ogre::SceneManager* m_pSceneMgr)
 	// Visual - Ball
 	//--------------------
 
-	float igloo_length_scale_factor = 5*igloo_length;
+	float igloo_length_scale_factor = igloo_length/2;
 
 	Ogre::Vector3 v3SpherePosition = Ogre::Vector3(1000, 1000, 1000);
 	Ogre::Vector3 v3SphereScaleFactor = 

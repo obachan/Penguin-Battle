@@ -77,9 +77,9 @@ const float ice_mass = 4000.0f;
 // Parameters for WorldObjectIgloo
 // ==========================
 
-const float igloo_length = 10.0f;
-const float igloo_width = 10.0f;
-const float igloo_height = 5.0f;
+const float igloo_length = 20.0f;
+const float igloo_width = 20.0f;
+const float igloo_height = 0.1f;
 
 class WorldObjectAbstract {
 public:
