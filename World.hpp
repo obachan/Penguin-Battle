@@ -9,6 +9,7 @@
 
 #include "WorldObjectFactory.hpp"
 #include "Controller.hpp"
+#include "OgreBillboardParticleRenderer.h"
 
 #include "Callback.h"
 
@@ -36,6 +37,9 @@ public:
 	Penguin*							penguin;
 	Goal*								goal;
 	Terrain*							terrain;
+
+	Ogre::ParticleSystem* pSys4;
+	Ogre::SceneNode* rNode;
 
 	vector<WorldObjectAbstract*> 		world_objects;
 

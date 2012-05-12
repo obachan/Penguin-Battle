@@ -52,7 +52,7 @@ void Room::createRoom(Ogre::SceneManager* m_pSceneMgr, int room_width, int room_
     Ogre::Entity* entGround = m_pSceneMgr->createEntity("GroundEntity", "ground");
     botNode->attachObject(entGround);
     botNode->setPosition(0, -room_width/2, 0);
-	entGround->setMaterialName("Examples/Rockwall");
+	entGround->setMaterialName("Ball/Snow");
 
 	// Physics
 	bottom = new btStaticPlaneShape(btVector3(0,1,0),-room_width/2);

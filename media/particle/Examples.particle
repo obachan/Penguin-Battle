@@ -45,7 +45,7 @@ particle_system Examples/GreenyNimbus
 // A sparkly purple fountain
 particle_system Examples/PurpleFountain
 {
-    material        Examples/Flare2
+    material        Examples/Flare1
     particle_width  20
     particle_height 40
     cull_each       false
@@ -101,7 +101,7 @@ particle_system Examples/Rain
         emission_rate   200
         time_to_live    10
         direction       0 -1 0
-        velocity    	30
+        velocity    	100
         width           1000
         height          1000
         depth           0
@@ -111,7 +111,7 @@ particle_system Examples/Rain
     // Gravity
     affector LinearForce
     {
-        force_vector      5 -30 0
+        force_vector      5 -0 0
         force_application add
     }
 
@@ -124,17 +124,17 @@ particle_system Examples/JetEngine1
 	particle_width 	25
 	particle_height	25
 	cull_each		false
-	quota			200
+	quota			2000
 	billboard_type	point
 
 	emitter Point
 	{
 		angle 5
-		emission_rate 100
-        time_to_live    1
+		emission_rate 1000
+        time_to_live    100
         direction       0 -1 0
-        velocity_min    250
-        velocity_max    300
+        velocity_min    0
+        velocity_max    0
         colour_range_start  1 1 0.5
         colour_range_end    1 0.8 0.3
 		

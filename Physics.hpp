@@ -22,12 +22,18 @@ public:
 
 	btDiscreteDynamicsWorld* dynamicsWorld;
  
+
+
+
 private:
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;	
 };
+
+
+
 
 
 //|||||||||||||||||||||||||||||||||||||||||||||||

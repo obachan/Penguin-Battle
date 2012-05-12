@@ -893,6 +893,8 @@ Project1-OgreApp.o: OgreApp.cpp OgreApp.hpp OgreFramework.hpp \
  WorldObjectGoal.hpp WorldObjectPenguin.hpp Callback.h \
  WorldObjectRoom.hpp WorldObjectPaddle.hpp WorldObjectTerrain.hpp \
  /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h \
+ /lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h \
  PauseState.hpp MultiplayerMenuState.hpp ClientMenuState.hpp \
  ServerMenuState.hpp ServerState.hpp ClientState.hpp
 
@@ -2941,6 +2943,10 @@ WorldObjectPaddle.hpp:
 WorldObjectTerrain.hpp:
 
 /usr/local/include/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreBillboardParticleRenderer.h:
+
+/lusr/opt/ogre-1.7.4/include/OGRE/OgreParticleSystemRenderer.h:
 
 PauseState.hpp:
 
