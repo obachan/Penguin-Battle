@@ -21,12 +21,19 @@ WorldObjectAbstract::~WorldObjectAbstract()
 // Public Methods
 // ======================
 
-void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos)
+void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
 {
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
 }
 
-void WorldObjectAbstract::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+void WorldObjectAbstract::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+}
+
+void WorldObjectAbstract::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre::Quaternion rot, Ogre::Camera*)
 {
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);

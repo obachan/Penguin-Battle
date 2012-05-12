@@ -80,8 +80,9 @@ public:
 	void initWorldObject(Ogre::SceneManager*, PhysicsWrapper*);
 
 
-	void updateAsClient(Ogre::Vector3);
-	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);			
+	virtual void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
+	virtual void updateAsClient(double, Ogre::Vector3, Ogre::Quaternion);
+	virtual void updateAsClient(double, Ogre::Vector3, Ogre::Quaternion, Ogre::Camera*);			
    	Ogre::Vector3 getVisualPosition(); 			// Client Safe		
 	Ogre::Quaternion getVisualOrientation(); 	// Client Safe
 

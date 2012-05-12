@@ -139,6 +139,38 @@ void Penguin::update(double timeSinceLastFrame, MyController* controller, Ogre::
 
 }
 
+void Penguin::updateAsClient(Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+	printf("Inside Update As client");
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+}
+
+void Penguin::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre::Quaternion rot)
+{
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+	animate(timeSinceLastFrame);
+}
+
+void Penguin::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre::Quaternion rot, Ogre::Camera* camera)
+{
+	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
+	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
+	animate(timeSinceLastFrame);
+	
+	if(mController->thirdPersonCameraOn() && camera != NULL){
+		Ogre::Vector3 cameraPosition;
+		Ogre::Vector3 cameraDirection;
+
+		cameraDirection = penguin_direction;
+		camera->setDirection(cameraDirection);
+		cameraPosition = pos - (20*penguin_direction);
+		cameraPosition.y += 7;
+		camera->setPosition(cameraPosition);
+	}
+}
+
 void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 {
 	Ogre::Quaternion quat = Ogre::Quaternion(1, 0, 0, 0);
@@ -217,7 +249,10 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 void Penguin::fireWeapon() {
 
 	//char s8_Out[50];
+std::cout << "Reaches Here" <<std::endl;
 	mCallbackAddBall->Execute((void*)this);
+
+std::cout << "Not Here though" <<std::endl;
 }
 
 void Penguin::handleGravity(double timeSinceLastFrame, Ogre::Vector3* pos)

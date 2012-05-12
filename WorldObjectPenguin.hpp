@@ -27,6 +27,9 @@ public:
 
 	void update(double, MyController*, Ogre::Camera*);
 	void updateCamera(Ogre::Camera*);
+	void updateAsClient(Ogre::Vector3, Ogre::Quaternion);
+	void updateAsClient(double, Ogre::Vector3, Ogre::Quaternion);
+	void updateAsClient(double, Ogre::Vector3, Ogre::Quaternion, Ogre::Camera*);
 
 	Ogre::Vector3 			getPenguinDirection();
 

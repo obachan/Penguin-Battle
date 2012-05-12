@@ -38,22 +38,24 @@ public:
 	// Room*			room;
 	// Paddle*			paddle;
 	// Penguin*		penguin;
-	Penguin*		penguin_two;
+	//Penguin*		penguin_two;
+	//vector<Penguin*> 		clientPenguins;
+	//vector<MyController*>		client_controllers;
 	// Goal*			goal;
 
 	MyController* 	server_controller;
 	MyController* 	client_controller;
 	PhysicsWrapper*	physics;
 	SoundWrapper* 	sound_factory;
+	HUD*			hud;
 	World*			world;
 	
 private:
 	ServerNet*					server;
-
-	Ogre::SceneNode*			m_pOgreHeadNode;
-	Ogre::Entity*				m_pOgreHeadEntity;
  
 	bool						m_bShutdown;
+
+	int numberOfClients;
 	
 	char buffer[1024];
 	char recvbuffer[1024];

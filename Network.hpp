@@ -13,6 +13,7 @@ class ServerNet
 		bool Broadcast(char[], int);
 		int ReceiveMessage(char[], int);
 		int getIP(); 
+		int getNumberOfClients();
 	private:
 		IPaddress ip,*remoteIP;
 		TCPsocket server;
@@ -28,6 +29,7 @@ class ClientNet
 		bool SendMessage(char[], int);
 		int ReceiveMessage(char[]);
 		void SetID(int);
+		int GetClientID();
 	private:
 		IPaddress ip;
 		TCPsocket sd; //server socket descriptor

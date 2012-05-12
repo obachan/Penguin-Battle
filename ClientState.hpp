@@ -37,15 +37,20 @@ public:
 	Ball*			ball;
 	Room*			room;
 	Paddle*			paddle;
-	Penguin*		penguin;
-	Penguin*		penguin_two;
+	//Penguin*		penguin;
+	//Penguin*		penguin_two;
 	Goal*			goal;
 
 	MyController* 	client_controller;
-	SoundWrapper*	sound_factory;	
+	SoundWrapper*	sound_factory;
+
+	vector<WorldObjectAbstract*> 		balls;
+	vector<Penguin*> penguins;
 	
 private:
 	bool						m_bShutdown;
+	int clientID; 
+	int totalNumberPlayers;
 	char buffer[1024];
 	char sendbuffer[1024];
 };

@@ -70,7 +70,7 @@ void GameState::enter()
 	sound_factory = new SoundWrapper();
 	hud = new HUD(OgreFramework::getSingletonPtr()->m_pTrayMgr);
 	
-    world = new World(m_pSceneMgr, physics, controller); 
+    world = new World(m_pSceneMgr, physics, controller,0);
 
     sound_factory->playMusic();  
 }

@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController* controller)
+World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController* controller, int numberOfClients)
 {
 	mSceneMgr = sceneMgr;
 	mPhysics = physics;
@@ -16,6 +16,15 @@ World::World(Ogre::SceneManager* sceneMgr, PhysicsWrapper* physics, MyController
 	// terrain = worldObjectFactory->createNewTerrain();
 
 	world_objects.push_back(worldObjectFactory->createNewBall(0, 10, 0));
+	
+	clientNum = numberOfClients;
+
+	for (int i = 0;i<clientNum; i++)
+	{
+		client_controllers.push_back(new MyController());
+    		clientPenguins.push_back(worldObjectFactory->createNewPenguin(client_controllers[i], &i_callbackAddBall));	// Create Player 2's Penguin
+		
+	}
 }
 
 World::~World()
@@ -32,6 +41,10 @@ void World::update(double timeSinceLastFrame, MyController* controller, Ogre::Ca
 
 	/* Update Players */
 	penguin->update(timeSinceLastFrame, controller, camera);
+	for (int i = 0;i<clientNum; i++)
+	{
+		clientPenguins[i]->update(timeSinceLastFrame, client_controllers[i], NULL);
+	}
 
 	// /* Update World Objects */
 	for(int i=0; i<world_objects.size(); ++i){

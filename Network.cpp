@@ -121,6 +121,11 @@ int ServerNet::getIP()
 	return ip.host;
 }
 
+int ServerNet::getNumberOfClients()
+{
+	return clients.size();
+}
+
 ClientNet::ClientNet(Uint16 port, char hostname[])
 {
 	/* initialize SDL */
@@ -173,6 +178,11 @@ bool ClientNet::SendMessage(char* message, int length)
 void ClientNet::SetID(int id)
 {
 	clientID = id;
+}
+
+int ClientNet::GetClientID()
+{
+	return clientID;
 }
 
 int ClientNet::ReceiveMessage(char message[])

@@ -15,7 +15,7 @@
 class World
 {
 public:
-	World(Ogre::SceneManager*, PhysicsWrapper*, MyController*);
+	World(Ogre::SceneManager*, PhysicsWrapper*, MyController*, int);
 	~World();
 
 	void update(double, MyController*, Ogre::Camera*);
@@ -38,6 +38,9 @@ public:
 	Terrain*							terrain;
 
 	vector<WorldObjectAbstract*> 		world_objects;
+	vector<Penguin*> 		clientPenguins;
+	vector<MyController*>		client_controllers;
+	int clientNum;
 
 	/* Callback Function */
 	TCallback<World> i_callbackAddBall;
