@@ -22,7 +22,6 @@ ClientState::~ClientState()
 
 void ClientState::enter()
 {
-
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ClientState...");
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ClientSceneMgr");
@@ -73,7 +72,10 @@ void ClientState::enter()
  
  	//penguin->update(0.1f, client_controller, m_pCamera);
 	//penguin_two->update(0.1f, client_controller, NULL);
+
+	std::cout << "Before Client Receive" << std::endl;
 	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	std::cout << "After Client Receive" << std::endl;
 	memcpy(&totalNumberPlayers, buffer, 4);
 
 	for(int i = 0; i<totalNumberPlayers; i++)
@@ -100,8 +102,10 @@ void ClientState::enter()
 	sendbuffer[12] = '0';
 	sendbuffer[13] = '0';
 	sendbuffer[14] = '\0';
-
+	
+	std::cout << "Before Client Send Blank Control" << std::endl;
 	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 15);
+	std::cout << "After Client Send Blank Control" << std::endl;
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||
@@ -162,7 +166,10 @@ void ClientState::update(double timeSinceLastFrame)
 	// ball position and penguin's positions
 
     // ===========================================================================
+
+	std::cout << "Entered Client UPDATE" << std::endl;
 	OgreFramework::getSingletonPtr()->client->ReceiveMessage(buffer);
+	std::cout << "Received Message from Server" << std::endl;
 
 	int ballNum = 0;
 	memcpy(&ballNum, buffer, 4);
