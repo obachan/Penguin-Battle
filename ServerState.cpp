@@ -22,8 +22,7 @@ ServerState::~ServerState()
 
 void ServerState::enter()
 {
-
-	printf("ENTERED SERVER STATE\n\n\n\n\n");
+	//printf("ENTERED SERVER STATE\n\n\n\n\n");
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Entering ServerState...");
 
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(ST_GENERIC, "ServerSceneMgr");
@@ -78,7 +77,9 @@ void ServerState::enter()
 	int totalPlayers = numberOfClients+1;
 	memcpy(buffer, &totalPlayers, 4);
 	
+	std::cout << "Before broadcast players" << std::endl;
 	OgreFramework::getSingletonPtr()->server->Broadcast(buffer, 4);
+	std::cout << "After broadcast players" << std::endl;
 
 	/*
 	for (int i = 0;i<numberOfClients; i++)
@@ -150,8 +151,8 @@ void ServerState::update(double timeSinceLastFrame)
 		// TODO - RECEIVE!!!!!!
 		// Retrieve the input over the network and
 		// update player two's controller
-	printf("Before Server UPDATE");
-
+	//printf("Before Server UPDATE");
+	std::cout<< "Before Server UPDATE" << std::endl;
 
 
 	int tempClientID = 0;
@@ -159,7 +160,7 @@ void ServerState::update(double timeSinceLastFrame)
 	
 	for (int i = 0; i< numberOfClients; i++)
 	{
-		OgreFramework::getSingletonPtr()->server->ReceiveMessage(recvbuffer, 0);
+		OgreFramework::getSingletonPtr()->server->ReceiveMessage(recvbuffer, i);
 		memcpy(&tempClientID, recvbuffer, 4);
 		world->client_controllers[tempClientID]->left_mouse_button_down = (recvbuffer[4] == '1') ? true : false;
 		world->client_controllers[tempClientID]->right_mouse_button_down = (recvbuffer[5] == '1') ? true : false;
