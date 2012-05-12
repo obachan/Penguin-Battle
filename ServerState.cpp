@@ -172,9 +172,12 @@ void ServerState::update(double timeSinceLastFrame)
 		world->client_controllers[tempClientID]->backward_control_down = (recvbuffer[11] == '1') ? true : false;
 		world->client_controllers[tempClientID]->jump_control_down = (recvbuffer[12] == '1') ? true : false;
 		world->client_controllers[tempClientID]->boost_control_down = (recvbuffer[13] == '1') ? true : false;
-		printf("BEFORE CLIENT PENGUIN UPDATE");
+		memcpy(&(world->client_controllers[tempClientID]->mouse_x_movement), recvbuffer+14, 4);
+
+		std::cout << "Client Controller X Movement (Server Side)" << world->client_controllers[tempClientID]->mouse_x_movement << std::endl;
+//		printf("BEFORE CLIENT PENGUIN UPDATE");
 		//world->clientPenguins[tempClientID]->update(timeSinceLastFrame, world->client_controllers[tempClientID], NULL);
-		printf("After client penguin update");
+//		printf("After client penguin update");
 	}
 	
 	world->update(timeSinceLastFrame, server_controller, m_pCamera);		// Update World
@@ -208,10 +211,10 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+4, &newballVector[1], 4);
 		memcpy(buffer+8, &newballVector[2], 4);
 	
-		printf("BallPosition\n");
+		/*printf("BallPosition\n");
 		printf("%f\n", newballVector[0]);
 		printf("%f\n", newballVector[1]);
-		printf("%f\n", newballVector[2]);	
+		printf("%f\n", newballVector[2]);	*/
 
 		Ogre::Quaternion newballQuaternion = world->world_objects[i]->getVisualOrientation();
 		memcpy(buffer+12, &newballQuaternion[0], 4);	
@@ -226,10 +229,10 @@ void ServerState::update(double timeSinceLastFrame)
 	memcpy(buffer+4, &newPenguinServerVector[1], 4);
 	memcpy(buffer+8, &newPenguinServerVector[2], 4);
 
-	printf("ServerPosition\n");
+	/*printf("ServerPosition\n");
 	printf("%f\n", newPenguinServerVector[0]);
 	printf("%f\n", newPenguinServerVector[1]);
-	printf("%f\n", newPenguinServerVector[2]);
+	printf("%f\n", newPenguinServerVector[2]);*/
 
 	Ogre::Quaternion newPenguinServerQuaternion = world->penguin->getVisualOrientation();
 	memcpy(buffer+12, &newPenguinServerQuaternion[0], 4);	
@@ -250,10 +253,10 @@ void ServerState::update(double timeSinceLastFrame)
 		memcpy(buffer+4, &newPenguinClientVector[1], 4);
 		memcpy(buffer+8, &newPenguinClientVector[2], 4);
 		
-	printf("ClientPosition\n");
+	/*printf("ClientPosition\n");
 	printf("%f\n", newPenguinServerVector[0]);
 	printf("%f\n", newPenguinServerVector[1]);
-	printf("%f\n", newPenguinServerVector[2]);
+	printf("%f\n", newPenguinServerVector[2]);*/
 
 		Ogre::Quaternion newPenguinClientQuaternion = world->clientPenguins[i]->getVisualOrientation();
 		//Ogre::Quaternion newPenguinClientQuaternion = Ogre::Quaternion(1, 0, 0, 0);

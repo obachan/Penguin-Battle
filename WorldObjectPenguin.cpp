@@ -156,16 +156,32 @@ void Penguin::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre:
 {
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
-	animate(timeSinceLastFrame);
+	//animate(timeSinceLastFrame);
 }
 
 void Penguin::updateAsClient(double timeSinceLastFrame, Ogre::Vector3 pos, Ogre::Quaternion rot, Ogre::Camera* camera)
 {
 	worldObjectSceneNode->setPosition(pos[0], pos[1], pos[2]);
 	worldObjectSceneNode->setOrientation(rot[0], rot[1], rot[2], rot[3]);
-	animate(timeSinceLastFrame);
+	//animate(timeSinceLastFrame);
+
+	/*if(mController->mouse_x_movement != 0.0000 ) {
+		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*mController->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
+		worldObjectSceneNode->rotate(quat);
+		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
+		penguin_direction.y = 0;
+		penguin_direction.normalise();
+		previous_direction = penguin_direction;
+		mController->mouse_x_movement = 0.0;
+	
+	}*/
+
+	penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);
+	penguin_direction.y = 0;
+	penguin_direction.normalise();
 	
 	if(mController->thirdPersonCameraOn() && camera != NULL){
+		std::cout <<" Entered Camera" << std::endl;
 		Ogre::Vector3 cameraPosition;
 		Ogre::Vector3 cameraDirection;
 
@@ -234,7 +250,7 @@ void Penguin::processController(double timeSinceLastFrame, Ogre::Vector3* pos)
 	//cout << worldObjectRigidBody->getLinearVelocity().getX() << endl;
 	// Mouse controls
 	
-	if(mController->mouse_x_movement != 0.0000 ) {
+	if(mController->mouse_x_movement != 0.0000) {
 		quat = Ogre::Quaternion(Ogre::Radian(Ogre::Degree( 0.15f*mController->mouse_x_movement)), Ogre::Vector3::UNIT_Y);
 		worldObjectSceneNode->rotate(quat);
 		penguin_direction = worldObjectSceneNode->getOrientation() * Ogre::Vector3(0,0,1);

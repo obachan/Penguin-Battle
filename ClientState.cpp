@@ -194,10 +194,10 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newballPosition[2], buffer+8, 4);
 			
 	//printf("BallPosition\n");
-	std::cout << "BallPosition" << 0 << std::endl;
+/*	std::cout << "BallPosition" << 0 << std::endl;
 	printf("%f\n", newballPosition[0]);
 	printf("%f\n", newballPosition[1]);
-	printf("%f\n", newballPosition[2]);
+	printf("%f\n", newballPosition[2]);*/
 
 		Ogre::Quaternion newballQuaternion = Ogre::Quaternion(1,0,0,0);
 		memcpy(&newballQuaternion[0], buffer+12, 4);
@@ -217,11 +217,11 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newPenguinServerPosition[0], buffer, 4);
 		memcpy(&newPenguinServerPosition[1], buffer+4, 4);
 		memcpy(&newPenguinServerPosition[2], buffer+8, 4);
-
+/*
 	printf("ServerPosition\n");
 	printf("%f\n", newPenguinServerPosition[0]);
 	printf("%f\n", newPenguinServerPosition[1]);
-	printf("%f\n", newPenguinServerPosition[2]);
+	printf("%f\n", newPenguinServerPosition[2]);*/
 
 		Ogre::Quaternion newPenguinServerQuaternion = Ogre::Quaternion(1,0,0,0);
 		memcpy(&newPenguinServerQuaternion[0], buffer+12, 4);
@@ -229,7 +229,15 @@ void ClientState::update(double timeSinceLastFrame)
 		memcpy(&newPenguinServerQuaternion[2], buffer+20, 4);
 		memcpy(&newPenguinServerQuaternion[3], buffer+24, 4);
 		printf("Before Update As Client");
-		penguins[i]->updateAsClient(newPenguinServerPosition, newPenguinServerQuaternion);
+		if((i-1) == clientID)
+		{
+			std::cout <<"Same Client ID" << std::endl;
+			penguins[i]->updateAsClient(timeSinceLastFrame, newPenguinServerPosition, newPenguinServerQuaternion, m_pCamera);
+		}
+		else
+		{
+			penguins[i]->updateAsClient(timeSinceLastFrame, newPenguinServerPosition, newPenguinServerQuaternion);
+		}
 		printf("After Update As Client");
 
 /*
@@ -324,12 +332,16 @@ void ClientState::update(double timeSinceLastFrame)
 	sendbuffer[11] = (client_controller->backward_control_down) ? '1' : '0';
 	sendbuffer[12] = (client_controller->jump_control_down) ? '1' : '0';
 	sendbuffer[13] = (client_controller->boost_control_down) ? '1' : '0';
-	sendbuffer[14] = '\0';
+
+	memcpy(buffer+14, &(client_controller->mouse_x_movement), 4);
+
+	std::cout << "CLient X movement" << client_controller->mouse_x_movement << std::endl;
 
 	client_controller->left_mouse_button_down = false;
 	client_controller->jump_control_down = false;
+	client_controller->right_mouse_button_down = false;
 
-	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 15);
+	OgreFramework::getSingletonPtr()->client->SendMessage(sendbuffer, 32);
 
 	printf("Ended Update\n\n\n\n\n");
 }
